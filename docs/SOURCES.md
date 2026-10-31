@@ -129,4 +129,4 @@ commit 日期是源码提交日期，发布日期是 GitHub `published_at`（均
 - 网页可读取只说明来源当时可访问，不说明软件安全、服务可用或未来链接稳定。
 - 产品目录和论文目录的新增，不表示原有源码项目经过再次实测，也不把研究系统自动认定为公开可用产品。
 - 更新某条目时同步更改其来源与核验日期。若只复查了一部分，不应把整份清单的核验日期整体刷新。
-- 维护者已选择 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en) 用于本仓库的原创文档文字与原创编选内容，见 [docs/LICENSE.md 的范围声明](LICENSE.md#zh)。第三方材料与商标保留自身条款；源码、脚本及可执行代码不在范围内，代码许可证待单独决定。未添加覆盖整个仓库的根 `LICENSE`。
+- 维护者已选择 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en) 用于原创文档文字与原创编选内容，并选择 [MIT](../scripts/LICENSE) 用于本仓库原创脚本与测试代码；适用文件和排除项见 [docs/LICENSE.md](LICENSE.md#zh)。MIT 正文于 2026-10-31 核对 [OSI 官方文本](https://opensource.org/license/mit)，不代表重新核验上表项目。第三方材料与商标保留自身条款；独立机器可读夹具和结果模板没有因此获许。未添加覆盖整个仓库的根 `LICENSE`，也不是全仓库双重许可。
