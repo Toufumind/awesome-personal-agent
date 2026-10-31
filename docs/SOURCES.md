@@ -15,6 +15,8 @@
 | Eval / Benchmark 论文 | [PAPERS](PAPERS.md) 的评测/基准组 | 在明确阅读范围内可确认的任务、环境、指标与局限 |
 | Agent 方法 / 系统论文 | [PAPERS](PAPERS.md) 的方法/系统组 | 在明确阅读范围内可确认的机制与实验；原文成绩仍是作者报告 |
 
+[任务协议](TASKS.md) 是尚未执行的试验设计，不是新增实测证据或统一 benchmark。
+
 产品与论文条目的详细依据集中保存在各自目录，避免复制出两份不同步的可用性或阅读记录。
 
 ## 分类型核验口径
@@ -27,7 +29,7 @@
 
 ## 源码项目依据
 
-这部分通过网页读取官方仓库 README，核对项目身份、主要用途、部署层次和明显限制。**没有安装、运行、代码审计、漏洞审计或基准测试**；也未穷尽所有操作系统、版本、价格与服务条款。下列“边界”包括由文档事实推导的选型提醒，不是对产品缺陷的测试结论。
+首批 14 项通过网页读取官方仓库 README，核对项目身份、主要用途、部署层次和明显限制。**没有安装、运行、代码审计、漏洞审计或基准测试**；也未穷尽所有操作系统、版本、价格与服务条款。下列“边界”包括由文档事实推导的选型提醒，不是对产品缺陷的测试结论。
 
 | 项目 | 官方依据 | 本轮确认与采用的边界 |
 | --- | --- | --- |
@@ -52,6 +54,40 @@
 - 同日 **01:59 UTC** 的较早阅读记录曾显示任务需 Android 13+。两个时点的页面证据存在差异，未固定到同一 commit，不能据此断言具体哪次发布调整了要求。
 - 因此 README 保留共同明确的安装要求与推荐版本，将 App 操控最低版本写为**按所装版本文档核对**，不把任一主分支快照当作所有发布版本的兼容承诺。
 
+<a id="expansion"></a>
+## 项目扩充：固定来源与发布边界
+
+核验日期：**2026-10-31 UTC**。新增 **15 项（12 项主分类 + 3 项单列预览）**，全部观察到 `archived=false`；这不代表活跃度或可靠性。README/许可按观察到的默认分支 commit 固定；15 个固定 README 与首次读取的 blob SHA 一致。除 README 外仅做必要的构建设置、工具或官方验证文档定点读取，**未安装、未执行、未跑基准、未验签或审计安全**。
+
+发布状态来自官方发布集合及 latest 接口。`latest` 返回 404 仅表示没有该接口的非预发布条目，不表示没有任何预发布；`prerelease=false` 也不覆盖上游 beta/早期警告。固定 README 可能领先发布包，未进行逐项安装验收。以下根许可只说明已读代码文件，不重新授权模型、依赖、商标、数据或服务，也不是为本清单选择许可证。
+
+| 项目及根许可 | 固定官方依据 | 发布记录与核验边界 |
+| --- | --- | --- |
+| Operit · LGPL-3.0-only（主代码） | [README.md](https://github.com/AAswordman/Operit/blob/dbf71916fae9750cfdc9f9a774f5a0fee56633fb/README.md) · [LICENSE](https://github.com/AAswordman/Operit/blob/dbf71916fae9750cfdc9f9a774f5a0fee56633fb/LICENSE) · [app/build.gradle.kts](https://github.com/AAswordman/Operit/blob/dbf71916fae9750cfdc9f9a774f5a0fee56633fb/app/build.gradle.kts) | 非预发布 [v1.12.2](https://github.com/AAswordman/Operit/releases/tag/v1.12.2) (2026-09-18 UTC). 构建文件核对 Android 8.0+ / ARM64；根许可只覆盖相应主代码，设备权限与模型数据流另看。 |
+| Open-AutoGLM · Apache-2.0（仓库代码） | [README.md](https://github.com/zai-org/Open-AutoGLM/blob/86f55382982fb054e8fc98ca80609dff8a2cdc3c/README.md) · [LICENSE](https://github.com/zai-org/Open-AutoGLM/blob/86f55382982fb054e8fc98ca80609dff8a2cdc3c/LICENSE) · [resources/privacy_policy.txt](https://github.com/zai-org/Open-AutoGLM/blob/86f55382982fb054e8fc98ca80609dff8a2cdc3c/resources/privacy_policy.txt) | latest 无非预发布条目; [发布集合为空](https://api.github.com/repos/zai-org/Open-AutoGLM/releases?per_page=3). 研究框架；读取各平台设置、模型、操作回调和隐私说明。发布集合为空，不是 APK；模型权重许可另查。 |
+| QwenPaw（原 CoPaw） · Apache-2.0 | [README.md](https://github.com/agentscope-ai/QwenPaw/blob/c26d31c0688aa9cce9bc1aef688177d2e14e25df/README.md) · [LICENSE](https://github.com/agentscope-ai/QwenPaw/blob/c26d31c0688aa9cce9bc1aef688177d2e14e25df/LICENSE) | 非预发布 [v2.2.2.post1](https://github.com/agentscope-ai/QwenPaw/releases/tag/v2.2.2.post1) (2026-10-22 UTC); 所见预发布 [v2.3.0-beta.1](https://github.com/agentscope-ai/QwenPaw/releases/tag/v2.3.0-beta.1) (2026-10-27 UTC). 读取渠道、桌面 Beta、权限层与遥测说明；`--defaults` 接受文档声明的遥测。CoPaw 是同一仓库，不重复计数。 |
+| LobsterAI（有道龙虾） · MIT | [README.md](https://github.com/netease-youdao/LobsterAI/blob/da88493b5a8d3a977c82a13901bbe99ad162393a/README.md) · [LICENSE](https://github.com/netease-youdao/LobsterAI/blob/da88493b5a8d3a977c82a13901bbe99ad162393a/LICENSE) | 非预发布 [2026.10.30](https://github.com/netease-youdao/LobsterAI/releases/tag/2026.10.30) (2026-10-31 UTC). 当前采用 OpenClaw 运行时；发布标签日期与 UTC 实际发布日期不同。会话本地存储不代表模型/插件完全离线。 |
+| OpenWorker · MIT | [README.md](https://github.com/andrewyng/openworker/blob/bea25db6f2034ec3093933a267f5933cbea04cd5/README.md) · [LICENSE](https://github.com/andrewyng/openworker/blob/bea25db6f2034ec3093933a267f5933cbea04cd5/LICENSE) | 非预发布 [v0.3.1](https://github.com/andrewyng/openworker/releases/tag/v0.3.1) (2026-10-05 UTC). README 明确 open beta，Windows 构建未代码签名；安装资产与设计说明不是审批/沙箱已通过安全验证。 |
+| Rowboat · Apache-2.0 | [README.md](https://github.com/rowboatlabs/rowboat/blob/5f2af08bbf0ff9176d9224fa9b79c4a77798b669/README.md) · [LICENSE](https://github.com/rowboatlabs/rowboat/blob/5f2af08bbf0ff9176d9224fa9b79c4a77798b669/LICENSE) | 非预发布 [v1.0.3](https://github.com/rowboatlabs/rowboat/releases/tag/v1.0.3) (2026-09-17 UTC); 所见预发布 [v1.0.5](https://github.com/rowboatlabs/rowboat/releases/tag/v1.0.5) (2026-09-30 UTC). 非预发布 v1.0.3 与所见预发布 v1.0.5 分开；当前 Spaces/Harbor 文档不自动适用于稳定安装包。 |
+| AnythingLLM · MIT | [README.md](https://github.com/Mintplex-Labs/anything-llm/blob/9caf2b4c29d9782f1cba4142be2525ebfa0ecd43/README.md) · [LICENSE](https://github.com/Mintplex-Labs/anything-llm/blob/9caf2b4c29d9782f1cba4142be2525ebfa0ecd43/LICENSE) · [server/utils/agents/aibitat/plugins/create-files/index.js](https://github.com/Mintplex-Labs/anything-llm/blob/9caf2b4c29d9782f1cba4142be2525ebfa0ecd43/server/utils/agents/aibitat/plugins/create-files/index.js) | 非预发布 [v1.19.0](https://github.com/Mintplex-Labs/anything-llm/releases/tag/v1.19.0) (2026-10-26 UTC). 除 README 外定点读取 create-files 工具，确认 PDF/DOCX/XLSX/PPTX/文本注册；未实际生成或检查产物。桌面/Docker 权限与遥测另辨。 |
+| goose · Apache-2.0 | [README.md](https://github.com/aaif-goose/goose/blob/b23d21cabd9b4de0c045dcdd731821a3a15c2bfc/README.md) · [LICENSE](https://github.com/aaif-goose/goose/blob/b23d21cabd9b4de0c045dcdd731821a3a15c2bfc/LICENSE) · [documentation/docs/guides/file-management.md](https://github.com/aaif-goose/goose/blob/b23d21cabd9b4de0c045dcdd731821a3a15c2bfc/documentation/docs/guides/file-management.md) · [documentation/docs/guides/running-tasks.md](https://github.com/aaif-goose/goose/blob/b23d21cabd9b4de0c045dcdd731821a3a15c2bfc/documentation/docs/guides/running-tasks.md) · [documentation/docs/guides/managing-tools/tool-permissions.md](https://github.com/aaif-goose/goose/blob/b23d21cabd9b4de0c045dcdd731821a3a15c2bfc/documentation/docs/guides/managing-tools/tool-permissions.md) | 非预发布 [v1.57.0](https://github.com/aaif-goose/goose/releases/tag/v1.57.0) (2026-10-28 UTC). 当前 general-purpose 定位及文件/任务/工具权限文档已读；block/goose 是重定向，不重复计数。未测任何扩展执行。 |
+| IronClaw · MIT OR Apache-2.0 | [README.md](https://github.com/nearai/ironclaw/blob/b0b999d96781516ee05e6ba961d6f3ead900da96/README.md) · [LICENSE-MIT](https://github.com/nearai/ironclaw/blob/b0b999d96781516ee05e6ba961d6f3ead900da96/LICENSE-MIT) · [LICENSE-APACHE](https://github.com/nearai/ironclaw/blob/b0b999d96781516ee05e6ba961d6f3ead900da96/LICENSE-APACHE) · [FEATURE_PARITY.md](https://github.com/nearai/ironclaw/blob/b0b999d96781516ee05e6ba961d6f3ead900da96/FEATURE_PARITY.md) | 非预发布 [ironclaw-v1.4.1](https://github.com/nearai/ironclaw/releases/tag/ironclaw-v1.4.1) (2026-09-29 UTC); 所见预发布 [ironclaw-v1.4.1-rc.2](https://github.com/nearai/ironclaw/releases/tag/ironclaw-v1.4.1-rc.2) (2026-09-24 UTC). 双许可证均读取；FEATURE_PARITY 有部分/未实现项且时间早于当前文档，不能称完全对等；WASM 不等于所有工具隔离或提示注入免疫。 |
+| Moltis · MIT | [README.md](https://github.com/moltis-org/moltis/blob/8a12400dc10551dfb9a6b568414b91a343ef2d5d/README.md) · [LICENSE.md](https://github.com/moltis-org/moltis/blob/8a12400dc10551dfb9a6b568414b91a343ef2d5d/LICENSE.md) | 非预发布 [20261023.01](https://github.com/moltis-org/moltis/releases/tag/20261023.01) (2026-10-23 UTC). 根许可实际文件为 LICENSE.md；读取安装、认证、容器 socket 与远程执行配置。未下载或验签发行包。 |
+| PicoClaw · MIT | [README.md](https://github.com/sipeed/picoclaw/blob/bbf6893ca7afad27f1d00a0f5a45982a549c6ed6/README.md) · [LICENSE](https://github.com/sipeed/picoclaw/blob/bbf6893ca7afad27f1d00a0f5a45982a549c6ed6/LICENSE) | 非预发布 [v0.3.1](https://github.com/sipeed/picoclaw/releases/tag/v0.3.1) (2026-07-03 UTC); 所见预发布 [nightly](https://github.com/sipeed/picoclaw/releases/tag/nightly) (2026-07-02 UTC). 官方警告 v1.0 前勿部署生产；低内存数字有不同构建限定，未作为本仓库实测引用。Android 入口不证明任意 App 操控。 |
+| ZeroClaw · MIT OR Apache-2.0 | [README.md](https://github.com/zeroclaw-labs/zeroclaw/blob/1c1cd118ac536a1dd1bc79b9cce69cbdc04e4f29/README.md) · [LICENSE-MIT](https://github.com/zeroclaw-labs/zeroclaw/blob/1c1cd118ac536a1dd1bc79b9cce69cbdc04e4f29/LICENSE-MIT) · [LICENSE-APACHE](https://github.com/zeroclaw-labs/zeroclaw/blob/1c1cd118ac536a1dd1bc79b9cce69cbdc04e4f29/LICENSE-APACHE) | 非预发布 [v0.8.7](https://github.com/zeroclaw-labs/zeroclaw/releases/tag/v0.8.7) (2026-10-27 UTC). 双许可证均读取；核对 supervised 默认及 YOLO 放宽路径、SOP/硬件与模型配置。不将列出的渠道/硬件当成已验收。 |
+| Leon · MIT | [README.md](https://github.com/leon-ai/leon/blob/54180f99e17c7dcb062a0c98b06562b7b66597e5/README.md) · [LICENSE.md](https://github.com/leon-ai/leon/blob/54180f99e17c7dcb062a0c98b06562b7b66597e5/LICENSE.md) | latest 无非预发布条目; 所见预发布 [tcp-server_v2.0.0](https://github.com/leon-ai/leon/releases/tag/tcp-server_v2.0.0) (2026-02-19 UTC). develop 为 2.0 Developer Preview，旧 master 为不同架构；新文档未完成，已见发布为桥接/服务预发布组件，非完整成品。 |
+| OpenMuse · MIT | [README.md](https://github.com/CopilotKit/openmuse/blob/a4944f4c471d3dc93b8bfc060b5da309b5216ab2/README.md) · [LICENSE](https://github.com/CopilotKit/openmuse/blob/a4944f4c471d3dc93b8bfc060b5da309b5216ab2/LICENSE) · [docs/VERIFICATION.md](https://github.com/CopilotKit/openmuse/blob/a4944f4c471d3dc93b8bfc060b5da309b5216ab2/docs/VERIFICATION.md) | latest 无非预发布条目; [发布集合为空](https://api.github.com/repos/CopilotKit/openmuse/releases?per_page=3). Alpha；需 Intelligence project key。读取官方 VERIFICATION 边界，但这是上游自报，未独立复现；示例、JS 导出不代表真实账号或签名移动 App 验收。 |
+| Operit2 · AGPL-3.0（根许可） | [README.md](https://github.com/AAswordman/Operit2/blob/f476f4357b3323ae27f89038ad51a30b31cce383/README.md) · [LICENSE](https://github.com/AAswordman/Operit2/blob/f476f4357b3323ae27f89038ad51a30b31cce383/LICENSE) | latest 无非预发布条目; 所见预发布 [v2.0.0-preview.3](https://github.com/AAswordman/Operit2/releases/tag/v2.0.0-preview.3) (2026-06-28 UTC). Preview；preview.3 为四个 Linux/Windows CLI 包，其余平台有源码/构建路径。跨设备续接边界、权限与未完成 Server 产品均保留。 |
+
+### 未纳入本次主清单的边界候选
+
+15 个已选候选均已整合；以下是研究过程中另行发现、没有为凑数量纳入的项目。
+
+- **Mycroft Core**：官方记录已归档，README 明示不再维护且可能无法运行；保留历史学习价值，不推荐新装。[README](https://github.com/MycroftAI/mycroft-core/blob/dev/README.md)
+- **Suna / Kortix CompanyOS**：当前定位偏公司操作系统，不作为本次个人助理补充；根许可为 **Elastic License 2.0（ELv2，source-available，不称开源许可）**，不能沿用旧 MIT 叙述。[README](https://github.com/kortix-ai/suna/blob/dev/README.md) · [LICENSE](https://github.com/kortix-ai/suna/blob/dev/LICENSE)
+- **Open Interpreter**：当前主线定位编码 Agent，不沿用旧 Python 时代的通用助理描述，暂不加入本次个人助理扩充。[README](https://github.com/openinterpreter/openinterpreter/blob/main/README.md)
+- **simular-ai/simular**：候选仓库查询返回 404，仅保留为未解决的身份/访问问题，不推断不存在、许可、停更或产品可用性。
+
 ## 候选发现与相关清单
 
 实际查看了以下清单，仅用于了解覆盖范围与发现候选项目；本仓库的项目描述依据上表官方来源独立撰写。
@@ -62,8 +98,8 @@
 
 ## 核验范围和维护约定
 
-- README 源码板块的首批快照包含 **14 个项目，4 类主要用途**；这个数字不包含产品与论文目录，也不是完整市场盘点。
-- 没有记录 Star、最新 commit 时间或量化可靠性；本轮未核实的指标不作推断。
+- README 源码板块目前为 **29 项：26 个主分类条目 + 3 个单列预览条目**，覆盖五类主要用途和一个预览区。初始 14 项保留并新增 15 项；不含产品与论文目录，不是完整市场盘点。
+- 不以 Star、commit 时间或量化可靠性作排名；扩充部分固定 commit 只用于追溯证据，不是活跃度指标。本轮未核实的指标不作推断。
 - 参考主分支 README 不代表所有版本均支持该能力，安装前应再次核对具体版本。
 - 网页可读取只说明来源当时可访问，不说明软件安全、服务可用或未来链接稳定。
 - 产品目录和论文目录的新增，不表示原有源码项目经过再次实测，也不把研究系统自动认定为公开可用产品。
