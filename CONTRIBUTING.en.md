@@ -26,6 +26,7 @@ This repository uses consistent **Markdown documents** in Chinese and English. I
 | [docs/PRODUCTS.md](docs/PRODUCTS.md) | [docs/PRODUCTS.en.md](docs/PRODUCTS.en.md) |
 | [docs/PAPERS.md](docs/PAPERS.md) | [docs/PAPERS.en.md](docs/PAPERS.en.md) |
 | [docs/SOURCES.md](docs/SOURCES.md) | [docs/SOURCES.en.md](docs/SOURCES.en.md) |
+| [docs/TASKS.md](docs/TASKS.md) | [docs/TASKS.en.md](docs/TASKS.en.md) |
 
 - Link each document to its counterpart at the top. Keep categories, entry order, table fields, and evidence conventions aligned.
 - Update both languages for the same change. Names, canonical links, versions, review dates, availability, and limitations must not contradict each other.
