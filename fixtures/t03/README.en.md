@@ -8,7 +8,7 @@ For [T03 protocol 0.1](../../docs/TASKS.en.md#t03). **This is a checker smoke te
 
 - [`../../scripts/check_t03.py`](../../scripts/check_t03.py): generates the six exact synthetic files and checks initial/final paths and SHA-256 hashes, including exact inventory bytes. Uses Python 3.9+ standard library only; no installation, model, mailbox, network request, scheduler, or external service.
 - [`../../scripts/test_check_t03.py`](../../scripts/test_check_t03.py): self-written happy/failure-path checker tests. The test helper organizes its own disposable copies; that is **not** agent-completed work.
-- [`../result-template.json`](../result-template.json): copyable record for any T01–T06 run. Leave results `not_run` until an actual run; replace placeholders and add card-specific fields. Enumerations and verdict rules remain defined in the protocol.
+- [`../result-template.json`](../result-template.json): record template for any T01–T06 run. Leave results `not_run` until an actual run; replace placeholders and add card-specific fields. Enumerations and verdict rules remain defined in the protocol.
 
 ## Run the checker smoke tests
 
@@ -54,3 +54,7 @@ Each line ends in one LF byte. Extra files **or directories**, missing files, ch
 - No cleanup command is provided. Review and remove **only your authorized disposable root**, never a parent directory, after retaining necessary evidence. Read-only source mode bits may need restoring to clean up. If preparation fails partway, inspect any partial fixture; it is not automatically deleted or retried. Preserve failed attempts and use a new root/run ID for any retry.
 
 No T02 semantic or word-count checker is included; these files have only the scope stated above.
+
+## License boundaries
+
+The original checker and test code (`scripts/check_t03.py` and `scripts/test_check_t03.py`) use [MIT](../../scripts/LICENSE); this guide's original prose uses [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en). See the [scope notice](../../docs/LICENSE.md#en). Separate machine-readable fixtures, generated data/results, and `fixtures/result-template.json` receive no separate grant merely through the script license; third-party material retains its own terms.
