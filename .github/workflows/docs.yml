@@ -1,0 +1,28 @@
+name: Documentation checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+# Read-only checkout; no publishing, issue edits, credentials, or external URL checks.
+permissions:
+  contents: read
+
+jobs:
+  offline-checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Validate local documentation links and bilingual file presence
+        run: python3 scripts/check_docs.py
+      - name: Run offline checker self-tests (not third-party agent tests)
+        run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
+      - name: Validate result template JSON syntax (not a result verdict)
+        run: python3 -m json.tool fixtures/result-template.json > /dev/null
