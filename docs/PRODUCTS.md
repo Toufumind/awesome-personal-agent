@@ -2,7 +2,7 @@
 
 [English](PRODUCTS.en.md) · [返回主清单](../README.md)
 
-**核验日期：2026-10-31（UTC）。** 这页补充可直接使用的商业 / 专有 personal-agent 产品，不替代主清单中的开源应用、运行时与框架。排序按使用方式，不是推荐排名。
+**核验日期：2026-10-31（UTC）。** 本页收录 **12 项**公开商业 / 专有 personal-agent 产品，包含明确标注的地区分批开放、实验性与预览产品，不替代主清单中的开源应用、运行时与框架。排序按使用方式，不是推荐排名。
 
 ## 怎么读
 
@@ -23,7 +23,9 @@
 | [Perplexity Computer](#perplexity-computer) | 后台工作、研究、文件及本机扩展 | 已提供；Brain 记忆仍为研究预览 |
 | [Comet Assistant](#comet) | 已登录浏览器中的网页任务 | 已提供；浏览器下载与 agent 额度不同 |
 | [Lindy](#lindy) | 邮箱、日程与消息入口的工作助理 | 已提供；偏个人工作 / 团队场景 |
+| [Poke](#poke) | 消息里的个人助理与生活事务 | 已提供；Poke Human 是另有套餐条件的真人服务 |
 | [Alexa+](#alexa) | 家庭语音、日程、设备与生活服务 | 美国已开放；其他地区阶段和能力不同 |
+| [Meta Muse](#muse) | 消息里的长期目标与云电脑执行 | 美国分批开放；不是全球全面可用 |
 | [Gemini Tasks](#gemini) | Google 上下文、浏览器与定时任务 | 已开放但仍属实验性；地区限制明显 |
 | [Copilot Cowork（个人版）](#copilot) | Microsoft 365 文件、邮件与日程 | **Preview**；美国 / 加拿大，Premium / Pro |
 
@@ -101,6 +103,16 @@
 
 **建议首测（未执行）：** 用测试邮箱制作每日简报与回复草稿，禁止发送、归档和删除。
 
+<a id="poke"></a>
+### Poke — 消息里的个人助理与生活事务
+
+- **入口 / 门槛：** 公开注册入口，支持 Messages、WhatsApp、Telegram 等消息界面；有 Free、Pro、Ultra，完整地区 / 号码支持清单待确认。[官网与入口](https://poke.com/) · [套餐](https://poke.com/pricing)
+- **任务 / 模型：** 提醒、主动更新、邮箱 / 日程与 recipes 自动化；支持 Gmail / Outlook，不能把 iCloud / Yahoo 的规划当现有支持。模型按套餐提供，本轮未确认固定底座。[官方 FAQ](https://poke.com/faq)
+- **真人边界：** **Poke Human 是真人执行，不是纯 AI 自主完成。** FAQ 将其列为 Ultra 权益，可处理电话、预订等，实际消费另从 credits 扣除；厂商称执行人员只见任务所需详情，不能访问聊天历史、记忆或集成。[Poke Human 说明](https://poke.com/faq)
+- **数据 / 权限：** 接入邮箱会暴露其中的私人资料；当前隐私政策允许将数据用于模型训练，但选择 Maximum Privacy 的用户数据除外。不要把真人的受限视图理解为整项服务不处理私人数据。[隐私政策](https://poke.com/privacy)
+
+**建议首测（未执行）：** 在消息里创建并取消一条测试提醒，不连接私人邮箱、不调用真人、不委托购买或外发。
+
 <a id="alexa"></a>
 ### Alexa+ — 家庭语音与生活服务
 
@@ -110,6 +122,18 @@
 - **数据 / 权限：** 家庭偏好、语音、共享资料和连接服务进入助理上下文；Privacy dashboard 可管理交互、附件及录音保留设置。多成员家庭还需确认谁能调用购买、日历和设备能力。[同一官方说明的隐私部分](https://www.aboutamazon.com/news/devices/alexa-plus-international-launch)
 
 **建议首测（未执行）：** 在支持的地区添加一条无私人信息的测试提醒并删除，先不启用购物或门锁控制。
+
+## 分批开放：不要当作全球可用
+
+<a id="muse"></a>
+### Meta Muse — 长期目标与消息型云助理
+
+- **阶段 / 入口：** 官方公告为**美国分批开放**，入口包括 iOS、Android、Web；官网另列 WhatsApp 与 Mac。免费能力与订阅并存，不据“为所有人打造”推断全球或所有账户已开通。[发布与地区说明](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/) · [当前官网](https://muse.ai/)
+- **任务 / 模型：** 邮件、日程、预订、购物及长期目标推进；在专属云 VM 和浏览器中工作，官方标明 Muse Spark 模型。这里是成品服务，不能由模型品牌推断开源或本地推理。
+- **审批 / 数据：** 用户控制连接范围；发信、购买等敏感操作需审批。Sentinel 控制连接器与网络出口，但低风险或已授权操作不一定逐次询问；可查看审计记录和撤销接入。[安全架构说明](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse)
+- **边界：** 官方称 VM 数据不分享给 Meta 广告系统，但训练使用需单独退出；当前 Secure VM 不等于 Meta 技术上无法访问。Confidential VM、AI 眼镜、Shop Pay、1Password 在所核官方说明中仍属未来项，不计作已交付。[安全与数据说明](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse) · [发布说明](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
+
+**建议首测（未执行）：** 在已开放账户中把公开资料整理成计划，检查任务记录与停止操作；先不接邮箱、不购物、不替他人发送消息。
 
 ## 实验性与预览：不要当作全面正式开放
 
