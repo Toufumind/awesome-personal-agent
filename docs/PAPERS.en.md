@@ -27,21 +27,23 @@ Years and versions identify the listed paper, not the current project. Original 
 
 | Research question | Start here | Still needs separate testing |
 | --- | --- | --- |
-| Does it remember user statements and updates? | LongMemEval, LoCoMo; MemoryAgentBench for general incremental memory | Erasure, correction, user isolation, real longitudinal use |
-| Does the answer fit this person's preferences? | LaMP, PersonaMem / v2, PersonaBench, PrefEval | Human satisfaction, safe private-document deployment; compare QA / generation / MCQ protocols separately |
-| Does memory change tool arguments and subsequent actions? | Mem2ActBench, MemoryArena | Real execution, side-effect authorization, interrupted-task recovery |
-| When should it help, clarify, or stay quiet? | ProactiveBench / Proactive Agent, KnowU-Bench, MemoProBench / MemoProAgent | Human acceptance, interruption cost, restraint after rejection, undo, authorization |
-| Can it complete multi-app tasks? | AppWorld, WebArena, OSWorld, AndroidWorld | Real accounts, environment changes, irreversible actions |
-| Does it reliably follow workflows across repeated runs? | τ-bench | Simulated versus real users and process-level safety |
-| Should accessible information be shared outward? | PrivacyLens; AgentDojo separately tests indirect prompt injection | Full privacy compliance, cross-user / multi-agent isolation, all attack surfaces |
-| How should persistent memory and its lifecycle be managed? | MemGPT, MemoryBank, A-MEM, Mem0, Zep, MemOS | Invalidation or non-use is not physical erasure; permissions, scheduling, observability |
-| How can experience, skills, and agent coordination be reused? | ReAct, Reflexion, Voyager, ExpeL, AutoGen (historical) | Longitudinal human utility, single-agent controls, stale experience, operating cost |
+| Does it remember user statements and updates? | [LongMemEval](#benchmark-longmemeval), [LoCoMo](#benchmark-locomo); [MemoryAgentBench](#benchmark-memoryagentbench) for general incremental memory | Erasure, correction, user isolation, real longitudinal use |
+| Does the answer fit this person's preferences? | [LaMP](#benchmark-lamp), [PersonaMem](#benchmark-personamem-v1) / [PersonaMem-v2](#benchmark-personamem-v2), [PersonaBench](#benchmark-personabench), [PrefEval](#benchmark-prefeval) | Human satisfaction, safe private-document deployment; compare QA / generation / MCQ protocols separately |
+| Does memory change tool arguments and subsequent actions? | [Mem2ActBench](#benchmark-mem2actbench), [MemoryArena](#benchmark-memoryarena) | Real execution, side-effect authorization, interrupted-task recovery |
+| When should it help, clarify, or stay quiet? | [ProactiveBench](#benchmark-proactivebench-lu) / [Proactive Agent](#method-proactive-agent), [KnowU-Bench](#benchmark-knowu-bench), [MemoProBench](#benchmark-memoprobench) / [MemoProAgent](#method-memoproagent) | Human acceptance, interruption cost, restraint after rejection, undo, authorization |
+| Can it complete multi-app tasks? | [AppWorld](#benchmark-appworld), [WebArena](#benchmark-webarena), [OSWorld](#benchmark-osworld), [AndroidWorld](#benchmark-androidworld) | Real accounts, environment changes, irreversible actions |
+| Does it reliably follow workflows across repeated runs? | [τ-bench](#benchmark-tau-bench) | Simulated versus real users and process-level safety |
+| Should accessible information be shared outward? | [PrivacyLens](#benchmark-privacylens); [AgentDojo](#benchmark-agentdojo) separately tests indirect prompt injection | Full privacy compliance, cross-user / multi-agent isolation, all attack surfaces |
+| How should persistent memory and its lifecycle be managed? | [MemGPT](#method-memgpt), [MemoryBank](#method-memorybank), [A-MEM](#method-a-mem), [Mem0](#method-mem0), [Zep](#method-zep), [MemOS](#method-memos) | Invalidation or non-use is not physical erasure; permissions, scheduling, observability |
+| How can experience, skills, and agent coordination be reused? | [ReAct](#method-react), [Reflexion](#method-reflexion), [Voyager](#method-voyager), [ExpeL](#method-expel), [AutoGen](#method-autogen) (historical) | Longitudinal human utility, single-agent controls, stale experience, operating cost |
+
 
 <a id="personal-evaluation"></a>
 ## Evaluation A: personal context, memory, and proactivity
 
 These benchmarks directly involve user history, preferences, or proactive help. **None alone evaluates an entire personal agent.**
 
+<a id="benchmark-lamp"></a>
 ### B1. LaMP · Personalized language tasks
 
 [LaMP: When Large Language Models Meet Personalization](https://aclanthology.org/2024.acl-long.399/) — ACL 2024.
@@ -53,6 +55,7 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Tests personalized retrieval and generation, not multi-step tool execution or longitudinal use with real users.
 - **Resources:** [Official code](https://github.com/LaMP-Benchmark/LaMP), [data](https://lamp-benchmark.github.io/download). Code and construction methods use CC BY-NC-SA 4.0; underlying datasets retain their own licenses.
 
+<a id="benchmark-locomo"></a>
 ### B2. LoCoMo · Long-term conversational memory
 
 [Evaluating Very Long-Term Conversational Memory of LLM Agents](https://aclanthology.org/2024.acl-long.747/) — ACL 2024.
@@ -64,6 +67,7 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** The current official release contains **10 long conversations**, not the earlier 50-conversation release. Offline history is not months of real assistant use.
 - **Resources:** [Code / data](https://github.com/snap-research/locomo). Original images are not distributed; URLs and related information are provided. [License](https://github.com/snap-research/locomo/blob/main/LICENSE.txt): CC BY-NC 4.0.
 
+<a id="benchmark-longmemeval"></a>
 ### B3. LongMemEval · Cross-session recall, updates, and abstention
 
 [LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory](https://arxiv.org/abs/2410.10813) — 2024 preprint; ICLR 2025.
@@ -75,6 +79,7 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Retrieval recall is not answer accuracy; constructed-history QA does not establish task execution, deletion, or continuous availability.
 - **Resources:** [Evaluation code](https://github.com/xiaowu0162/LongMemEval), [official cleaned data](https://huggingface.co/datasets/xiaowu0162/longmemeval-cleaned). Pin the data revision and judge version.
 
+<a id="benchmark-personamem-v1"></a>
 ### B4. PersonaMem · Evolving user profiles
 
 [Know Me, Respond to Me: Benchmarking LLMs for Dynamic User Profiling and Personalized Responses at Scale](https://arxiv.org/abs/2504.14225) — COLM 2025; this entry covers the original benchmark / v1 data.
@@ -86,17 +91,19 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Four-choice accuracy is not open-ended personalized response quality. Synthetic personas are not longitudinal human participants. Do not mix with PersonaMem-v2 data.
 - **Resources:** [Official code](https://github.com/bowen-upenn/PersonaMem), [v1 data](https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1), including 32k, 128k, and 1M context settings.
 
+<a id="benchmark-mem2actbench"></a>
 ### B5. Mem2ActBench · From memory to tool arguments
 
 [Mem2ActBench: A Benchmark for Evaluating Long-Term Memory Utilization in Task-Oriented Autonomous Agents](https://aclanthology.org/2026.acl-long.370/) — ACL 2026.
 
-**Checked / reading scope:** 2026-10-31; Paper abstract, relevant §4.1 experimental-setup and §5.4 tool-selection passages; official README, root listing, and data-directory entry points.
+**Checked / reading scope:** 2026-10-31; Paper abstract, relevant §4.1 experimental-setup and §5.4 tool-selection passages; official README (including its License statement), root listing, and data-directory entry points.
 
 - **Input → output:** Historical memory, an implicitly constrained request, and tool schemas → tool selection and arguments. The paper constructs 400 memory-dependent tasks.
 - **Measures:** Argument matching / F1, tool selection, and whole-call matching. Main experiments supply the correct tool; separate experiments add distractor tools.
 - **Limits:** Correct arguments are not a completed real transaction. Main results should not be presented as open-ended tool-selection performance.
-- **Resources:** [Official construction code / data directories](https://github.com/Cantaloupe-M/Mem2ActBench). No explicit root LICENSE was found. Check upstream ToolACE, BFCL, OASST1, and repository permissions before reuse.
+- **Resources:** [Official construction code / data directories](https://github.com/Cantaloupe-M/Mem2ActBench). The [README License section](https://github.com/Cantaloupe-M/Mem2ActBench#license) declares MIT License, but no separate LICENSE file was observed in the root listing. Confirm the full license text and scope before reuse. Check upstream ToolACE, BFCL, and OASST1 terms separately; this declaration does not establish MIT licensing for all data.
 
+<a id="benchmark-proactivebench-lu"></a>
 ### B6. ProactiveBench (Lu et al.) · When to offer help
 
 [Proactive Agent: Shifting LLM Agents from Reactive Responses to Active Assistance](https://arxiv.org/abs/2410.12361) — 2024 preprint; ICLR 2025.
@@ -108,6 +115,7 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Appropriate offers are not long-term human satisfaction or task completion. A proactive suggestion does not authorize execution.
 - **Resources:** [Code, data, evaluation](https://github.com/thunlp/ProactiveAgent). Other papers use the same benchmark name; this entry specifically means Lu et al. See M11 for the method.
 
+<a id="benchmark-personabench"></a>
 ### B7. PersonaBench · Understanding users through private documents
 
 [PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data](https://aclanthology.org/2025.findings-acl.49/) — Findings of ACL 2025; inspected text: [arXiv v2, 2025-08-20](https://arxiv.org/html/2502.20616v2).
@@ -119,6 +127,7 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Personal-context QA, not autonomous execution or privacy protection. Synthetic social context does not establish real-user personalization. The v1.0 public examples describe two communities of three people each, not the full paper dataset.
 - **Resources:** [Official code, public evaluation data, and README](https://github.com/SalesforceAIResearch/personabench). CC BY-NC-SA 4.0, with additional usage restrictions in the README; inspect both before reuse.
 
+<a id="benchmark-prefeval"></a>
 ### B8. PrefEval · Remembering is not following preferences
 
 [Do LLMs Recognize Your Preferences? Evaluating Personalized Preference Following in LLMs](https://arxiv.org/html/2502.09597v1) — ICLR 2025; inspected v1, 2025-02-13.
@@ -130,6 +139,7 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Directly tests preference following. Here personalization proactiveness means applying known preferences without reminders, not background monitoring or independently launching tasks, nor actual user satisfaction.
 - **Resources:** [Official code and complete formats](https://github.com/amazon-science/PrefEval), [explicit-preference data](https://huggingface.co/datasets/siyanzhao/prefeval_explicit). The [repository license](https://github.com/amazon-science/PrefEval/blob/main/LICENSE) is CC BY-NC 4.0. The linked HF data is only the explicit subset, not all three forms.
 
+<a id="benchmark-personamem-v2"></a>
 ### B9. PersonaMem-v2 · Implicit preferences, ownership, and non-use
 
 [PersonaMem-v2: Towards Personalized Intelligence via Learning Implicit User Personas and Agentic Memory](https://arxiv.org/html/2512.06688v1) — 2025 preprint; inspected v1, 2025-12-07. Distinct from the original PersonaMem paper in B4.
@@ -141,6 +151,7 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Not using a fact after a forget request does not prove erasure from storage, backups, or model weights. The paper also trains a readable-memory system; those results are not generic deployed-agent capabilities. This entry covers text settings.
 - **Resources:** [Official data](https://huggingface.co/datasets/bowen-upenn/PersonaMem-v2): CC BY 4.0; [family repository](https://github.com/bowen-upenn/PersonaMem): MIT. The current card includes later multimodal resources. Pin text revision, split, 32k / 128k setting, and evaluation mode. A complete v2 RL reproduction package was not confirmed.
 
+<a id="benchmark-knowu-bench"></a>
 ### B10. KnowU-Bench · Clarification, consent, and restraint
 
 [KnowU-Bench: Towards Interactive, Proactive, and Personalized Mobile Agent Evaluation](https://arxiv.org/html/2604.08455v1) — 2026 preprint; inspected v1, 2026-04-09.
@@ -152,6 +163,7 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Directly studies personalized and proactive mobile agents. Simulator, rubric, and judge dependence preclude interpreting scores as human acceptance rates. The environment was not downloaded or execution-tested.
 - **Resources:** [Official project](https://zju-real.github.io/KnowU-Bench/), [environment, tasks, and code](https://github.com/ZJU-REAL/KnowU-Bench). Repository: Apache-2.0; third-party Android apps, images, and models have separate terms.
 
+<a id="benchmark-memoprobench"></a>
 ### B11. MemoProBench · When to speak, what to say, and when not to
 
 [MemoProAgent: Toward Memory-Driven Proactive Assistance](https://arxiv.org/html/2610.22671v2) — 2026 preprint; inspected v2, 2026-10-21. Earlier indexes may use ProPerAgent / ProPerMem; this entry uses v2 names. See M12 for the method.
@@ -161,13 +173,14 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Input → output:** Egocentric video streams and long personal histories, without an explicit query → grounded, timely reminders or silence.
 - **Measures:** Perfect requires exactly one correct intervention within the allowed window. Also report Hit, early, late, repeated, and negative-case false triggers; Hit alone hides unwanted interruptions.
 - **Limits:** Direct personal-memory-driven proactivity, but constructed histories are not a year-long human study. It does not evaluate authorized transaction completion or establish all-day usability.
-- **Resources:** [Official inference code](https://github.com/facebookresearch/Memo-Pro-Agent), [history data](https://huggingface.co/datasets/facebook/MemProBench). Code: CC BY-NC 4.0; videos require separate [Ego4D](https://ego4d-data.org/) access and terms. Independent history-data licensing remains unconfirmed; code licensing cannot substitute. An inference harness is not a complete RL reproduction package.
+- **Resources:** [Official inference code](https://github.com/facebookresearch/Memo-Pro-Agent): CC BY-NC 4.0; [history data (restricted)](https://huggingface.co/datasets/facebook/MemProBench). The official [README data notes](https://github.com/facebookresearch/Memo-Pro-Agent#data-and-reproducibility) state that `facebook/MemProBench` histories are currently private and require authorized Hugging Face access. Download access was not obtained in this review; independent dataset licensing remains unconfirmed and cannot be inferred from the code license. Videos require separate [Ego4D](https://ego4d-data.org/) access and terms; an inference harness is not a complete RL reproduction package.
 
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
 These study incremental memory or cross-session task dependencies: **transferable general capabilities**, not complete personal assistants or longitudinal human studies.
 
+<a id="benchmark-memoryagentbench"></a>
 ### B12. MemoryAgentBench · Incremental memory and conflicting updates
 
 [Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions](https://arxiv.org/html/2507.05257v1) — 2025 preprint; the repository identifies ICLR 2026. This entry pins v1, 2025-07-07.
@@ -179,6 +192,7 @@ These study incremental memory or cross-session task dependencies: **transferabl
 - **Limits:** General memory-component evaluation, not a complete personal assistant. Chunked ingestion is not longitudinal human interaction; conflict resolution is not privacy erasure. Later selective-forgetting terminology must not silently replace v1 settings or results.
 - **Resources:** [Official code](https://github.com/HUST-AI-HYZ/MemoryAgentBench), [dataset card](https://huggingface.co/datasets/ai-hyz/MemoryAgentBench): both mark MIT. Check upstream terms for repackaged datasets separately.
 
+<a id="benchmark-memoryarena"></a>
 ### B13. MemoryArena · Cross-session action dependencies
 
 [Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks](https://arxiv.org/html/2602.16313v2) — inspected v2, 2026-09-17; project name: MemoryArena.
@@ -195,6 +209,7 @@ These study incremental memory or cross-session task dependencies: **transferabl
 
 These can test a personal assistant's ability to act, but most are **general-agent, web / GUI, or service-domain benchmarks**, not personal-specific evaluations. AppWorld includes simulated personal apps and people, but not longitudinal personalization with real users.
 
+<a id="benchmark-assistantbench"></a>
 ### B14. AssistantBench · Realistic web information tasks
 
 [AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?](https://aclanthology.org/2024.emnlp-main.505/) — EMNLP 2024.
@@ -206,6 +221,7 @@ These can test a personal assistant's ability to act, but most are **general-age
 - **Limits:** Primarily information gathering, not writes to real accounts. Web changes and answer freshness affect reproducibility; persistent preferences are not tested.
 - **Resources:** [Project](https://assistantbench.github.io/), [code](https://github.com/oriyor/assistantbench), [data](https://huggingface.co/datasets/AssistantBench/AssistantBench).
 
+<a id="benchmark-gaia"></a>
 ### B15. GAIA · General-assistant problem solving
 
 [GAIA: a benchmark for General AI Assistants](https://arxiv.org/abs/2311.12983) — 2023 preprint.
@@ -217,6 +233,7 @@ These can test a personal assistant's ability to act, but most are **general-age
 - **Limits:** Single-question correctness is not personalization, background proactivity, or long-horizon reliability. Development and hidden-answer test sets differ.
 - **Resources:** [Official dataset card and leaderboard entry point](https://huggingface.co/datasets/gaia-benchmark/GAIA). Access is gated; the authors prohibit resharing the dataset in crawlable form.
 
+<a id="benchmark-appworld"></a>
 ### B16. AppWorld · A sandbox for cross-app personal tasks
 
 [AppWorld: A Controllable World of Apps and People for Benchmarking Interactive Coding Agents](https://arxiv.org/abs/2407.18901) — ACL 2024.
@@ -228,6 +245,7 @@ These can test a personal assistant's ability to act, but most are **general-age
 - **Limits:** Simulated APIs are not live services or GUIs. The original benchmark differs from later AppWorld-UL user-in-the-loop tasks.
 - **Resources:** [Project](https://appworld.dev/appworld/), [code / data download workflow](https://github.com/StonyBrookNLP/appworld). Protected content has additional encrypted-redistribution requirements: [license notes](https://github.com/StonyBrookNLP/appworld#-license).
 
+<a id="benchmark-tau-bench"></a>
 ### B17. τ-bench · Tools, users, and domain rules
 
 [τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains](https://arxiv.org/abs/2406.12045) — 2024 preprint.
@@ -239,6 +257,7 @@ These can test a personal assistant's ability to act, but most are **general-age
 - **Limits:** Service-agent workflows are not persistent personal assistance. Correct final state does not establish process-level compliance; user simulation affects results.
 - **Resources:** [Original code / data](https://github.com/sierra-research/tau-bench). The official README now labels these tasks outdated and directs readers to τ³-bench. Distinguish historical reproduction from newer versions.
 
+<a id="benchmark-webarena"></a>
 ### B18. WebArena · Reproducible web interaction
 
 [WebArena: A Realistic Web Environment for Building Autonomous Agents](https://arxiv.org/abs/2307.13854) — 2023 preprint, revised 2024.
@@ -250,6 +269,7 @@ These can test a personal assistant's ability to act, but most are **general-age
 - **Limits:** Self-hosted sites support reproducibility but do not cover every live website, login obstacle, or ongoing personalization. Results are not universal browser success rates.
 - **Resources:** [Official code, environments, evaluation](https://github.com/web-arena-x/webarena). Pin task revisions and site images before comparing runs.
 
+<a id="benchmark-osworld"></a>
 ### B19. OSWorld · Desktop and cross-app workflows
 
 [OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments](https://arxiv.org/abs/2404.07972) — 2024.
@@ -261,6 +281,7 @@ These can test a personal assistant's ability to act, but most are **general-age
 - **Limits:** Not a long-term user-relationship test; depends on VM / software versions. Original OSWorld, OSWorld-Verified, and OSWorld 2.0 differ; some cloud-document tasks require extra setup.
 - **Resources:** [Official project and version links](https://os-world.github.io/), [code / tasks](https://github.com/xlang-ai/OSWorld).
 
+<a id="benchmark-androidworld"></a>
 ### B20. AndroidWorld · Parameterized mobile tasks
 
 [AndroidWorld: A Dynamic Benchmarking Environment for Autonomous Agents](https://arxiv.org/abs/2405.14573) — 2024 preprint, revised 2025.
@@ -277,6 +298,7 @@ These can test a personal assistant's ability to act, but most are **general-age
 
 Distinguish inappropriate sharing from malicious instructions in external content. These evaluations provide evidence about specific risks, **not full privacy, security, or compliance certification**. Interpret low violation rates alongside task utility.
 
+<a id="benchmark-privacylens"></a>
 ### B21. PrivacyLens · Leakage without an attacker
 
 [PrivacyLens: Evaluating Privacy Norm Awareness of Language Models in Action](https://arxiv.org/html/2409.00138v3) — NeurIPS 2024 Datasets and Benchmarks; inspected v3, 2025-03-14.
@@ -288,6 +310,7 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 - **Limits:** Contextual privacy in personal communication without requiring an attacker. Primarily completes supplied trajectories, not full autonomous execution. U.S.-centered norms, synthetic scenarios, and model judges limit generalization; this is not full privacy compliance.
 - **Resources:** [Official code and construction pipeline](https://github.com/SALT-NLP/PrivacyLens): MIT; [official data](https://huggingface.co/datasets/SALT-NLP/PrivacyLens): CC BY 4.0. Code and data licenses differ.
 
+<a id="benchmark-agentdojo"></a>
 ### B22. AgentDojo · Untrusted instructions in tool results
 
 [AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents](https://arxiv.org/html/2406.13352v3) — NeurIPS 2024; inspected v3, 2024-11-24.
@@ -304,6 +327,7 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 
 These entries describe reusable mechanisms, not research prototypes certified as reliable personal-assistant products.
 
+<a id="method-memorybank"></a>
 ### M1. MemoryBank · Updating, reinforcement, and forgetting
 
 [MemoryBank: Enhancing Large Language Models with Long-Term Memory](https://arxiv.org/abs/2305.10250) — 2023 preprint.
@@ -314,6 +338,7 @@ These entries describe reusable mechanisms, not research prototypes certified as
 - **Relevance and limits:** Directly targets long-term conversational companionship. SiliconFriend is not a tool-execution system, and its experiments are not clinical evidence for psychological services.
 - **Resources:** [Code and Chinese / English evaluation data](https://github.com/zhongwanjun/MemoryBank-SiliconFriend), [ChatGLM / BELLE LoRA checkpoint release](https://github.com/zhongwanjun/MemoryBank-SiliconFriend/releases/tag/LoRA_checkpoint). Adapters and base models are different artifacts with separate permissions.
 
+<a id="method-memgpt"></a>
 ### M2. MemGPT · Hierarchical memory and context management
 
 [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) — 2023 preprint, revised 2024.
@@ -324,6 +349,7 @@ These entries describe reusable mechanisms, not research prototypes certified as
 - **Relevance and limits:** Includes multi-session chat and long-document experiments. Virtual context does not mean infinite, lossless, or cost-free memory.
 - **Resources:** [Research page / experimental data entry point](https://research.memgpt.ai/), [historical MemGPT / Letta entry point](https://github.com/letta-ai/letta), [current Letta Code source](https://github.com/letta-ai/letta-code). The legacy entry point directs readers to letta-code and keeps the retired V1 server on its archive branch. Reproduction requires locating the original version; neither the current product nor retired V1 automatically matches the paper implementation.
 
+<a id="method-a-mem"></a>
 ### M3. A-MEM · Linked notes and evolving memory
 
 [A-MEM: Agentic Memory for LLM Agents](https://arxiv.org/abs/2502.12110) — NeurIPS 2025.
@@ -334,6 +360,7 @@ These entries describe reusable mechanisms, not research prototypes certified as
 - **Relevance and limits:** A structure for associative assistant memory. Long-dialogue QA does not establish real task completion or consistently correct memory edits.
 - **Resources:** [Paper evaluation code](https://github.com/WujiangXu/A-mem), [integrable system](https://github.com/WujiangXu/A-mem-sys). These repositories have different purposes; this is an external-memory method, not a new foundation model.
 
+<a id="method-mem0"></a>
 ### M4. Mem0 · Extraction, consolidation, and retrieval
 
 [Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory](https://arxiv.org/abs/2504.19413) — 2025 arXiv paper version.
@@ -344,6 +371,7 @@ These entries describe reusable mechanisms, not research prototypes certified as
 - **Relevance and limits:** Supports cross-session personal context. LoCoMo accuracy, latency, and token measurements cannot be generalized to every task or deployment.
 - **Resources:** [Official project code](https://github.com/mem0ai/mem0). Code, hosted services, and algorithms continue evolving. This entry covers the 2025 approach, not current marketing scores presented as independent reproduction.
 
+<a id="method-zep"></a>
 ### M5. Zep / Graphiti · Temporal validity and historical records
 
 [Zep: A Temporal Knowledge Graph Architecture for Agent Memory](https://arxiv.org/html/2501.13956v1) — 2025 preprint; inspected v1, 2025-01-20.
@@ -354,6 +382,7 @@ These entries describe reusable mechanisms, not research prototypes certified as
 - **Relevance and limits:** Supports versioning of personal facts and preferences. DMR and LongMemEval measure QA accuracy and latency. Models can misjudge conflicts; invalidation is not physical erasure, and QA gains do not establish tool-task success.
 - **Resources:** [Official Graphiti code](https://github.com/getzep/graphiti), Apache-2.0; [official Zep / Graphiti distinction](https://help.getzep.com/zep-vs-graphiti). The public engine, full hosted service, and 2025 paper configuration are not interchangeable, nor is this a new foundation-model release.
 
+<a id="method-memos"></a>
 ### M6. MemOS · Memory as a governed resource
 
 [MemOS: A Memory OS for AI System](https://arxiv.org/html/2507.03724v1) — this entry pins the 2025 preprint v1, 2025-07-04.
@@ -369,6 +398,7 @@ These entries describe reusable mechanisms, not research prototypes certified as
 
 This group includes direct proactive-assistant research and transferable skill-learning or orchestration methods. Accumulating external experience does not solve parameter-level continual learning, and multiple agents are not automatically more reliable.
 
+<a id="method-generative-agents"></a>
 ### M7. Generative Agents · Memory, reflection, and planning
 
 [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) — 2023.
@@ -379,6 +409,7 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Relevance and limits:** Offers patterns for persistent state and plans. Its goal is believable human-behavior simulation, not completing authorized tasks for real users.
 - **Resources:** [Official simulator, environment, and replay instructions](https://github.com/joonspk-research/generative_agents). Uses external model calls; not a standalone model-weight release.
 
+<a id="method-react"></a>
 ### M8. ReAct · Interleaving reasoning and action
 
 [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — 2022 preprint; ICLR 2023.
@@ -389,6 +420,7 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Relevance and limits:** A foundation for general tool-use loops. Original experiments cover QA, fact verification, and interactive environments, not persistent memory, permissions, or continuous scheduling.
 - **Resources:** [Official code, prompts, and experimental notebooks](https://github.com/ysymyth/ReAct). Primarily a prompting implementation, not a complete personal assistant.
 
+<a id="method-reflexion"></a>
 ### M9. Reflexion · Carrying feedback into another attempt
 
 [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) — NeurIPS 2023.
@@ -399,6 +431,7 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Relevance and limits:** Useful for retries and experience memory. Gains depend on feedback quality and retry budget; reflection does not guarantee correction or continual improvement.
 - **Resources:** [Official code, logs, and demos](https://github.com/noahshinn/reflexion). Original evaluations cover decision-making, reasoning, and coding, not long-term personal assistance.
 
+<a id="method-toolformer"></a>
 ### M10. Toolformer · Learning when to call tools
 
 [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) — 2023 preprint.
@@ -409,6 +442,7 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Relevance and limits:** Shows how tool use can be learned. The original method lacks chained and interactive tool use; it is not a complete multi-step agent.
 - **Resources:** [Official research page](https://ai.meta.com/research/publications/toolformer-language-models-can-teach-themselves-to-use-tools/). The checked paper / official page did not provide corresponding full code, training-data, and weight releases. Third-party reproductions are not official artifacts.
 
+<a id="method-proactive-agent"></a>
 ### M11. Proactive Agent · Predicting acceptable assistance
 
 [Proactive Agent: Shifting LLM Agents from Reactive Responses to Active Assistance](https://arxiv.org/abs/2410.12361) — 2024 preprint; ICLR 2025; same paper as B6.
@@ -419,6 +453,7 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Relevance and limits:** Directly studies proactive assistance. Anticipated needs are not authorization; deployment must address activity-capture privacy and unwanted interruptions.
 - **Resources:** [Code / data / evaluation](https://github.com/thunlp/ProactiveAgent), [officially linked Agent and Reward Model weights](https://huggingface.co/YancyLee/ProactiveAgent/tree/main). Check weight, base-model, and code licenses separately.
 
+<a id="method-memoproagent"></a>
 ### M12. MemoProAgent · Using memory to decide whether to interrupt
 
 [MemoProAgent: Toward Memory-Driven Proactive Assistance](https://arxiv.org/html/2610.22671v2) — 2026 preprint v2, 2026-10-21; same paper as B11.
@@ -427,8 +462,9 @@ This group includes direct proactive-assistant research and transferable skill-l
 
 - **Idea:** Organize personal history as graph memory, retrieve experiences relevant to current video activity, and gate delivery to the generator by interruption value. The paper also includes an RL post-training stage.
 - **Relevance and limits:** Directly studies proactive assistance without explicit queries. MemoProBench evaluates reminder content, timing, and repetition. Constructed histories are not longitudinal human deployment, and inferred needs are not execution permission.
-- **Resources:** [Official inference harness](https://github.com/facebookresearch/Memo-Pro-Agent): CC BY-NC 4.0. Independent [history-data](https://huggingface.co/datasets/facebook/MemProBench) licensing remains unconfirmed; [Ego4D videos](https://ego4d-data.org/) require separate access and terms. Public inference code is not a complete RL training-code or weight reproduction package.
+- **Resources:** [Official inference harness](https://github.com/facebookresearch/Memo-Pro-Agent): CC BY-NC 4.0. The official [README data notes](https://github.com/facebookresearch/Memo-Pro-Agent#data-and-reproducibility) identify the [history data (restricted)](https://huggingface.co/datasets/facebook/MemProBench) as currently private, requiring authorized Hugging Face access. Download access was not obtained in this review; independent dataset licensing remains unconfirmed. [Ego4D videos](https://ego4d-data.org/) require separate access and terms. Public inference code is not a complete RL training-code or weight reproduction package.
 
+<a id="method-voyager"></a>
 ### M13. Voyager · Reusable executable skills
 
 [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/html/2305.16291v2) — inspected 2023 preprint v2, 2023-10-19.
@@ -439,6 +475,7 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Relevance and limits:** A general embodied / game method with reusable skill-learning patterns. Evaluation covers items, milestones, traversal, and new-task transfer. Lifelong learning primarily accumulates external skills rather than updating base-model weights; Minecraft results do not establish email, calendar, or real-computer competence.
 - **Resources:** [Official code, prompts, and skill library](https://github.com/MineDojo/Voyager), MIT. Minecraft and model / API terms are separate. Experiments used historical GPT-4 / GPT-3.5 APIs; replacement models change the setup.
 
+<a id="method-expel"></a>
 ### M14. ExpeL · Distilling experience across tasks
 
 [ExpeL: LLM Agents Are Experiential Learners](https://arxiv.org/html/2308.10144v3) — AAAI 2024; inspected v3, 2024-12-20.
@@ -449,6 +486,7 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Relevance and limits:** Offers patterns for assistant experience memory. Wikipedia QA / fact verification, ALFWorld household tasks, and WebShop use exact match, success, and shopping rewards. Four-fold experience learning is not longitudinal human use; stale insights and privacy need separate tests.
 - **Resources:** [Official code, data directories, and prompts](https://github.com/LeapLabTHU/ExpeL), Apache-2.0; check environment and dataset terms separately. No weight fine-tuning does not mean no cost: collecting episodes and extracting insights still require model calls.
 
+<a id="method-autogen"></a>
 ### M15. AutoGen · Multi-agent conversation and human participation (historical)
 
 [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/html/2308.08155v2) — inspected 2023 preprint v2, 2023-10-03.
