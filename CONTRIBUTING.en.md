@@ -12,6 +12,7 @@ Thank you for making this list more useful. The goal is not to collect the most 
 | Publicly available products, including commercial services | [PRODUCTS](docs/PRODUCTS.en.md) | Official access point, help center, availability, and pricing documentation |
 | Eval / Benchmark papers | Evaluation/benchmark group in [PAPERS](docs/PAPERS.en.md) | Original paper, publication page or preprint; official code and task specifications if available |
 | Agent Methods / Systems papers | Methods/systems group in [PAPERS](docs/PAPERS.en.md) | Original paper, publication page or preprint; official implementation if available |
+| A task-oriented guide connecting research, projects, and products | [LANDSCAPE](docs/LANDSCAPE.en.md) | Dated evidence from existing entries and direct primary sources; thematic similarity does not establish adoption or benchmark results |
 
 A brand may have both a source project and a commercial service; a system may have both a paper and code. Cross-links are welcome, but do not count them as independently verified results.
 
@@ -27,6 +28,8 @@ This repository uses consistent **Markdown documents** in Chinese and English. I
 | [docs/PAPERS.md](docs/PAPERS.md) | [docs/PAPERS.en.md](docs/PAPERS.en.md) |
 | [docs/SOURCES.md](docs/SOURCES.md) | [docs/SOURCES.en.md](docs/SOURCES.en.md) |
 | [docs/TASKS.md](docs/TASKS.md) | [docs/TASKS.en.md](docs/TASKS.en.md) |
+| [docs/LANDSCAPE.md](docs/LANDSCAPE.md) | [docs/LANDSCAPE.en.md](docs/LANDSCAPE.en.md) |
+| [docs/LICENSE.md · 中文范围说明](docs/LICENSE.md#zh) | [docs/LICENSE.md · English scope notice](docs/LICENSE.md#en) |
 
 - Link each document to its counterpart at the top. Keep categories, entry order, table fields, and evidence conventions aligned.
 - Update both languages for the same change. Names, canonical links, versions, review dates, availability, and limitations must not contradict each other.
@@ -111,6 +114,8 @@ Usage records may include date, project version/commit, operating system and dev
 - [ ] Local document links and contents anchors have been checked.
 - [ ] No secrets, private data, affiliate links, or unauthorized copying of long passages are included.
 
-## License status
+## Documentation license and code boundary
 
-No content license has yet been selected for this repository; keep that status in mind before contributing. Contributions do not relicense third-party projects. Do not add a repository license without the maintainer's decision.
+Original documentation prose and original curated content are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en). See the [bilingual documentation license notice](docs/LICENSE.md#en) for scope and exclusions. Contribute only original material you have authority to offer under that license, retain existing credits, and identify third-party material and sources.
+
+Third-party content, projects, data, and trademarks retain their own terms; contributions do not relicense them. **Source code, scripts, automated tests, and executable examples are not covered by the documentation license; the maintainer's separate code-license decision is pending.** Do not infer a grant for non-documentation assets either. Do not add a blanket root `LICENSE` or select a code license without that separate decision.
