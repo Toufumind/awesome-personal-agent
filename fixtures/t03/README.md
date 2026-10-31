@@ -53,3 +53,7 @@ readme.txt
 - 不提供清理命令。保留必要证据后，只检查并移除**获授权的一次性根目录**，不要移除父目录；清理前可能需恢复 source 模式位。初始化中途失败时检查残余样本，工具不会自动删除或重试。保留失败记录，重试使用新根目录与新 run ID。
 
 不包含 T02 语义或词数检查器；本目录仅覆盖上述范围。
+
+## 许可边界
+
+原创检查脚本与测试代码（`scripts/check_t03.py`、`scripts/test_check_t03.py`）采用 [MIT](../../scripts/LICENSE)；本说明的原创文字采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en)。完整范围见[许可声明](../../docs/LICENSE.md#zh)。独立机器可读夹具、生成的数据/结果及 `fixtures/result-template.json` 不因脚本许可获得单独授权；第三方材料保留各自条款。
