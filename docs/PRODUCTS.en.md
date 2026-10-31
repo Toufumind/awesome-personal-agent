@@ -2,7 +2,7 @@
 
 [中文](PRODUCTS.md) · [Main list](../README.en.md)
 
-**Verified: 2026-10-31 (UTC).** This page adds ready-to-use commercial / proprietary personal-agent products alongside, not instead of, the open-source applications, runtimes, and frameworks in the main list. Order reflects usage patterns, not rankings.
+**Verified: 2026-10-31 (UTC).** This page covers **12 public commercial / proprietary personal-agent products**, including explicitly labeled regional rollouts, experimental features, and previews, alongside—not instead of—the open-source applications, runtimes, and frameworks in the main list. Order reflects usage patterns, not rankings.
 
 ## Reading this page
 
@@ -23,7 +23,9 @@
 | [Perplexity Computer](#perplexity-computer) | Background work, research, files, local extensions | Available; Brain memory remains a research preview |
 | [Comet Assistant](#comet) | Tasks inside a signed-in browser | Available; browser downloads and agent quotas differ |
 | [Lindy](#lindy) | Email, scheduling, and messaging-based assistance | Available; oriented toward personal work / teams |
+| [Poke](#poke) | Messaging-based personal assistance and everyday tasks | Available; Poke Human is a human service with separate plan requirements |
 | [Alexa+](#alexa) | Household voice, schedules, devices, services | Open in the US; stages and capabilities differ elsewhere |
+| [Meta Muse](#muse) | Messaging, long-term goals, and cloud-computer execution | Rolling out in the US; not worldwide general availability |
 | [Gemini Tasks](#gemini) | Google context, browsers, scheduled work | Available but experimental; substantial regional restrictions |
 | [Copilot Cowork for personal accounts](#copilot) | Microsoft 365 files, email, calendars | **Preview**; US / Canada, Premium / Pro |
 
@@ -101,6 +103,16 @@ See the corresponding entries for supporting sources, platforms, and permission 
 
 **Suggested first test—not performed:** Create a briefing and drafts from a test mailbox; prohibit sending, archiving, and deletion.
 
+<a id="poke"></a>
+### Poke — messaging-based personal assistance and everyday tasks
+
+- **Access:** Public signup, with Messages, WhatsApp, and Telegram interfaces; Free, Pro, and Ultra plans. Complete regional / phone-number coverage remains unconfirmed. [Product and signup](https://poke.com/) · [Plans](https://poke.com/pricing)
+- **Tasks / models:** Reminders, proactive updates, email / calendars, recipe automations. Gmail / Outlook are supported; iCloud / Yahoo plans are not current support. Models vary by plan; a fixed underlying model was not verified. [FAQ](https://poke.com/faq)
+- **Human boundary:** **Poke Human uses real people, not autonomous AI alone.** The FAQ includes it with Ultra for calls, bookings, and other tasks; real-world expenses separately consume credits. Operators reportedly see necessary task details, not chat history, memories, or integrations. [Human service](https://poke.com/faq)
+- **Data / permissions:** Mail connections expose private content. Current policy allows model training except for users selecting Maximum Privacy. A restricted operator view does not mean the service avoids processing private data. [Privacy policy](https://poke.com/privacy)
+
+**Suggested first test—not performed:** Create and cancel a test reminder by message; avoid private email connections, human operators, purchases, and external sending.
+
 <a id="alexa"></a>
 ### Alexa+ — household voice and services
 
@@ -110,6 +122,18 @@ See the corresponding entries for supporting sources, platforms, and permission 
 - **Data / permissions:** Household preferences, voice, shared material, and connected services supply context. The privacy dashboard manages interactions, attachments, and recording retention. Check which household members can use purchases, calendars, and devices. [Privacy section](https://www.aboutamazon.com/news/devices/alexa-plus-international-launch)
 
 **Suggested first test—not performed:** In a supported region, add and remove a nonsensitive test reminder before enabling purchasing or lock control.
+
+## Regional rollout—not worldwide availability
+
+<a id="muse"></a>
+### Meta Muse — long-term goals and a messaging-based cloud agent
+
+- **Stage / access:** Officially **rolling out in the US** on iOS, Android, and web; the current site also lists WhatsApp and Mac. Free capabilities and subscriptions coexist. “Built for everyone” does not establish worldwide or universal account access. [Launch / regions](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/) · [Current product](https://muse.ai/)
+- **Tasks / models:** Email, calendars, reservations, shopping, ongoing goals, using a dedicated cloud VM / browser and the named Muse Spark model. The product is not thereby open source or locally inferred.
+- **Approvals / data:** Users control connections; sensitive sending and purchases need approval. Sentinel governs connectors and network egress, but low-risk or previously authorized actions need not prompt every time. Audit trails and revocation are available. [Safety architecture](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse)
+- **Limits:** Meta states VM data is not shared with its ad systems; training requires a separate opt-out. Secure VM does not technically prevent Meta access. Reviewed sources still describe Confidential VM, AI glasses, Shop Pay, and 1Password as future features. [Safety / data](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse) · [Announcement](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
+
+**Suggested first test—not performed:** On an enabled account, organize public material into a plan and inspect task records and stopping; avoid email connections, purchases, and messaging others.
 
 ## Experimental and preview—not general availability
 
