@@ -12,6 +12,7 @@
 | 公开可用产品，包括商业产品 | [PRODUCTS](docs/PRODUCTS.md) | 官方产品入口、帮助中心、开放范围与定价说明 |
 | Eval / Benchmark 论文 | [PAPERS](docs/PAPERS.md) 的评测/基准组 | 论文原文、正式发表页或预印本；官方代码与任务说明若有 |
 | Agent 方法 / 系统论文 | [PAPERS](docs/PAPERS.md) 的方法/系统组 | 论文原文、正式发表页或预印本；官方实现若有 |
+| 从任务联系研究、项目与产品的导读 | [LANDSCAPE](docs/LANDSCAPE.md) | 已有条目的带日期依据与直接一手来源；主题相近不证明采用关系或基准成绩 |
 
 同一品牌可有源码项目和商业产品，同一系统可同时有论文和代码；允许交叉链接，但不得重复统计为独立验证结果。
 
@@ -27,6 +28,8 @@
 | [docs/PAPERS.md](docs/PAPERS.md) | [docs/PAPERS.en.md](docs/PAPERS.en.md) |
 | [docs/SOURCES.md](docs/SOURCES.md) | [docs/SOURCES.en.md](docs/SOURCES.en.md) |
 | [docs/TASKS.md](docs/TASKS.md) | [docs/TASKS.en.md](docs/TASKS.en.md) |
+| [docs/LANDSCAPE.md](docs/LANDSCAPE.md) | [docs/LANDSCAPE.en.md](docs/LANDSCAPE.en.md) |
+| [docs/LICENSE.md · 中文范围说明](docs/LICENSE.md#zh) | [docs/LICENSE.md · English scope notice](docs/LICENSE.md#en) |
 
 - 对应文档在顶部互链，分类、条目顺序、表格字段与证据口径保持一致。
 - 同一变更同步更新中英文；名称、规范链接、版本、核验日期、可用性与限制不得相互矛盾。
@@ -111,6 +114,8 @@
 - [ ] 已检查本地文档链接与目录锚点。
 - [ ] 不含秘密、私人数据、推广返佣链接或未授权复制的长段文字。
 
-## 许可状态
+## 文档许可与代码边界
 
-本仓库暂未指定内容许可证；提交前请注意这一状态。不得把贡献理解为第三方项目的重新授权，也不要在未取得维护者决定时替仓库添加许可证。
+本仓库的原创文档文字与原创编选内容采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en)，适用范围与排除项见[双语文档许可声明](docs/LICENSE.md#zh)。请只贡献你有权按该许可提供的原创内容，保留已有署名，明确标注第三方材料和来源。
+
+第三方内容、项目、数据与商标仍适用各自条款，贡献不构成重新授权。**源码、脚本、自动化测试与可执行代码示例不适用上述文档许可，代码许可证待维护者单独决定。** 非文档资产亦不得据此推定获许。不要添加覆盖全部仓库文件的根 `LICENSE`，或在未获单独决定时给代码选择许可证。
