@@ -26,6 +26,7 @@
 | [docs/PRODUCTS.md](docs/PRODUCTS.md) | [docs/PRODUCTS.en.md](docs/PRODUCTS.en.md) |
 | [docs/PAPERS.md](docs/PAPERS.md) | [docs/PAPERS.en.md](docs/PAPERS.en.md) |
 | [docs/SOURCES.md](docs/SOURCES.md) | [docs/SOURCES.en.md](docs/SOURCES.en.md) |
+| [docs/TASKS.md](docs/TASKS.md) | [docs/TASKS.en.md](docs/TASKS.en.md) |
 
 - 对应文档在顶部互链，分类、条目顺序、表格字段与证据口径保持一致。
 - 同一变更同步更新中英文；名称、规范链接、版本、核验日期、可用性与限制不得相互矛盾。
