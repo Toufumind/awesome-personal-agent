@@ -4,7 +4,7 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **35 篇不同论文**：22 个评测条目、15 个方法条目；Proactive Agent 与 MemoProAgent 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **37 篇不同论文**：24 个评测条目、15 个方法条目；Proactive Agent 与 MemoProAgent 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -30,10 +30,10 @@
 | 记得用户说过什么、是否更新过 | [LongMemEval](#benchmark-longmemeval)、[LoCoMo](#benchmark-locomo)；[MemoryAgentBench](#benchmark-memoryagentbench) 测通用增量记忆 | 删除、纠错、跨用户隔离、真实长期使用 |
 | 回答是否符合这个人的偏好 | [LaMP](#benchmark-lamp)、[PersonaMem](#benchmark-personamem-v1) / [PersonaMem-v2](#benchmark-personamem-v2)、[PersonaBench](#benchmark-personabench)、[PrefEval](#benchmark-prefeval) | 真人满意度、私人文档部署安全；不同 QA / 生成 / MCQ 协议分别比较 |
 | 记忆是否影响工具参数与后续行动 | [Mem2ActBench](#benchmark-mem2actbench)、[MemoryArena](#benchmark-memoryarena) | 真实执行、副作用授权、任务中断后的恢复 |
-| 何时主动帮忙、何时澄清或不打扰 | [ProactiveBench](#benchmark-proactivebench-lu) / [Proactive Agent](#method-proactive-agent)、[KnowU-Bench](#benchmark-knowu-bench)、[MemoProBench](#benchmark-memoprobench) / [MemoProAgent](#method-memoproagent) | 真人接受率、打扰成本、拒绝后克制、撤销与授权 |
+| 何时主动帮忙、何时澄清或不打扰 | [ProactiveBench](#benchmark-proactivebench-lu) / [Proactive Agent](#method-proactive-agent)、[KnowU-Bench](#benchmark-knowu-bench)、[MemoProBench](#benchmark-memoprobench) / [MemoProAgent](#method-memoproagent)、[π-Bench](#benchmark-pi-bench) | 真人接受率、打扰成本、拒绝后克制、撤销与授权 |
 | 多应用任务能否真的完成 | [AppWorld](#benchmark-appworld)、[WebArena](#benchmark-webarena)、[OSWorld](#benchmark-osworld)、[AndroidWorld](#benchmark-androidworld) | 真实账号、环境变化、不可逆操作 |
 | 多次尝试是否稳定遵守流程 | [τ-bench](#benchmark-tau-bench) | 模拟用户与真人差异、完整过程安全 |
-| 读到的信息是否应该向外分享 | [PrivacyLens](#benchmark-privacylens)；[AgentDojo](#benchmark-agentdojo) 另测间接提示注入 | 完整隐私合规、跨用户 / 多代理隔离、所有攻击面 |
+| 读到的信息是否应该向外分享 | [PrivacyLens](#benchmark-privacylens)、[AgentCIBench](#benchmark-agentcibench)；[AgentDojo](#benchmark-agentdojo) 另测间接提示注入 | 完整隐私合规、跨用户 / 多代理隔离、所有攻击面 |
 | 怎样管理长期记忆与生命周期 | [MemGPT](#method-memgpt)、[MemoryBank](#method-memorybank)、[A-MEM](#method-a-mem)、[Mem0](#method-mem0)、[Zep](#method-zep)、[MemOS](#method-memos) | 失效或不再使用不等于物理删除；还需权限、调度与可观测性 |
 | 怎样复用经验、技能与多代理协作 | [ReAct](#method-react)、[Reflexion](#method-reflexion)、[Voyager](#method-voyager)、[ExpeL](#method-expel)、[AutoGen](#method-autogen)（历史） | 长期真人效用、单代理对照、经验过时与运行成本 |
 
@@ -174,6 +174,18 @@
 - **测量**：Perfect 要求允许时间窗内恰好一次正确提醒；另报 Hit、过早、过晚、重复提醒及负例误触发，不能只报“曾命中”。
 - **边界**：直接研究个人记忆驱动主动性，但长历史是受控构造，不是真人一年跟踪；不测真实授权交易完成，也不证明全天候体验。
 - **资源**：[官方推理代码](https://github.com/facebookresearch/Memo-Pro-Agent)为 CC BY-NC 4.0；[历史数据入口（受限）](https://huggingface.co/datasets/facebook/MemProBench)。官方 [README 数据说明](https://github.com/facebookresearch/Memo-Pro-Agent#data-and-reproducibility)明确：`facebook/MemProBench` 历史数据当前为 private，须有获授权的 Hugging Face 访问权限；本次未取得下载访问，独立数据许可仍未确认，不能套用代码许可。视频须按 [Ego4D](https://ego4d-data.org/) 条款另行取得；公开推理 harness 不等于完整 RL 训练复现包。
+
+<a id="benchmark-pi-bench"></a>
+### B23. π-Bench · 跨会话隐含意图与主动澄清
+
+[π-Bench: Evaluating Proactive Personal Assistant Agents in Long-Horizon Workflows](https://arxiv.org/html/2605.14678v1) — 2026 预印本；本条初读 v1，2026-05-14；官方 README 宣布获 NeurIPS 2026 接收，不将其等同已核验正式会议论文集。
+
+**核验日期 / 阅读范围**：2026-10-31；v1 摘要、评测讨论与 §4 相关段落；官方项目页的指标定义、README 的资源与接收说明。文献初读，不是安装或实测。
+
+- **输入 → 输出**：未充分说明的请求、先前会话与持久工作区 → 定向澄清、工具操作及文件产物；5 个用户角色各有 20 会话，共 100 个任务。
+- **测量**：Proc 计入 Agent 主动满足、或通过定向提问澄清的隐含意图；Comp 评估完整轨迹、工具记录和产物的清单要求。最终完成不等于主动发现需求，两个指标分开报告。
+- **边界**：这里的主动性是在交互中减少用户补充需求的负担，不是后台自主发起任务，也不授予执行权限。模拟用户与模型评分不证明长期真人满意度。
+- **资源**：[官方代码 / 数据](https://github.com/Simplified-Reasoning/Pi-Bench)、[项目与指标说明](https://simplified-reasoning.github.io/Pi-Bench/)。仓库 Apache-2.0；AppWorld、NanoBot 及其他依赖另按各自条款。固定论文版本、代码、模型与 judge 配置后再比较。
 
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
@@ -321,6 +333,18 @@
 - **测量**：正常任务效用、受攻击时任务效用与 targeted ASR 同时报；既未执行攻击又未完成用户任务，不能算好助理。
 - **边界**：通用工具 Agent 间接注入环境，不是个人化评测；不覆盖全部隐私、权限、长期记忆投毒或多代理风险。本次没有生成或运行攻击。
 - **资源**：[官方环境、任务和评测](https://github.com/ethz-spylab/agentdojo)，MIT。项目可扩展且 API 仍演进；固定 suite、攻击集合、工具 schema、模型与预算再比较。
+
+<a id="benchmark-agentcibench"></a>
+### B24. AgentCIBench · 跨应用分享与收件人边界
+
+[Capable but Careless: Do Computer-Use Agents Follow Contextual Integrity?](https://arxiv.org/html/2606.23189v2) — 初读 v2，2026-09-10；[作者提交的 arXiv 元数据](https://arxiv.org/abs/2606.23189)标 EMNLP 2026 Main。
+
+**核验日期 / 阅读范围**：2026-10-31；v2 摘要、§3 指标与失败分类相关段落；官方 README 和数据卡的资源 / 许可说明。文献初读，不是安装或实测。
+
+- **输入 → 输出**：个人应用状态、未充分说明的任务与指定收件人 → 对外可见的消息、日程或帖子；关注界面相邻信息混入、模糊任务下过度分享与收件人不匹配。
+- **测量**：效用 U、泄漏 L、拒绝 R 及参与条件下泄漏 L/(1−R)。§3 明确使用确定性匹配与 LLM 改写检测的混合评分，不能因摘要称“deterministically scored”就把全流程写成纯确定性。
+- **边界**：没有攻击者也可能发生上下文隐私违规；这是精选披露压力测试，不代表总体真实发生率或全面法律合规。最终披露与端到端 UI 执行设置须分开，不能靠拒绝全部任务换取低泄漏。
+- **资源**：[官方代码](https://github.com/UKPLab/emnlp2026-agentcibench)、[官方数据](https://huggingface.co/datasets/UKPLab/agentcibench)。代码 Apache-2.0；数据 / 场景池 CC BY 4.0。旧 arxiv2026-agentcibench 路径与现行仓库名称不同，复现应固定版本；未运行环境或生成攻击。
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -520,3 +544,4 @@
 - **公开可读不等于任意再利用**：LaMP、LoCoMo、PersonaBench、PrefEval 与 MemoPro 代码的非商业条款，GAIA 的门控 / 防污染要求，以及 AppWorld / Ego4D 的额外资源规则已在对应条目提示。未列许可不代表没有限制；代码、数据、模型和第三方素材可能适用不同条款。
 - 本次未进行逐资产法律审查、下载完整权重验证或全依赖复现。根目录缺许可、文件访问失败或外部服务变化均不能被“有 GitHub 链接”消除。
 - 维护时先修正文献版本、任务范围与失效资源，再补新论文；欢迎提供具体一手证据，不以榜单名次、引用量或 Star 作为可靠性结论。
+
