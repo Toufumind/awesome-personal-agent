@@ -15,10 +15,12 @@ Initial documentation review for source-code projects: **2026-10-31**. Product a
 | Understand how agent capabilities are measured | [Papers: Eval / Benchmark](docs/PAPERS.en.md) | Examine tasks, environments, metrics, and limitations—not leaderboard scores as a proxy for real-world reliability |
 | Understand how agents are built | [Papers: Methods / Systems](docs/PAPERS.en.md) | Examine planning, memory, tool use, long-running behavior, and what the paper actually validates |
 | Design your own low-risk task trial | [Task protocols](docs/TASKS.en.md) | These protocols have not been executed; they are not test results, success rates, or product rankings |
+| Connect personal needs to research and implementations | [Task–research–implementation guide](docs/LANDSCAPE.en.md) | Distinguish thematic connections from evidenced direct relationships; do not infer paper adoption or benchmark passes |
 
 ## Contents
 
 - [Start here](#start-here)
+- [Task–research–implementation guide](docs/LANDSCAPE.en.md)
 - [Scope](#scope)
 - [Publicly available products, including commercial services](#products)
 - [Source-code projects](#source-projects)
@@ -41,15 +43,18 @@ These are reading routes, not a “best agent” ranking. Your choice depends on
 
 | Your goal | Start with | Check first |
 | --- | --- | --- |
-| Tell an Android phone to operate apps for you | [Mika](https://github.com/wangzan101/Mika) | Android version, debugging permissions, model provider, and beta limitations |
-| Reach a persistent assistant through messaging apps | [OpenClaw](https://github.com/openclaw/openclaw), [Hermes Agent](https://github.com/NousResearch/hermes-agent), [nanobot](https://github.com/HKUDS/nanobot) | Where it keeps running, how accounts connect, and which actions execute automatically |
-| Focus on persistent memory and personal context | [Letta Code](https://github.com/letta-ai/letta-code), [Khoj](https://github.com/khoj-ai/khoj) | Where memories/documents are stored, whether they can be deleted, and what reaches the model |
-| Customize a messaging assistant with a smaller codebase | [NanoClaw](https://github.com/nanocoai/nanoclaw) | Container mounts, channel installation, and the cost of maintaining custom code |
-| Give an agent an isolated computer environment | [Agent Zero](https://github.com/agent0ai/agent-zero) | Docker, mounted directories, and host-bridge permissions |
-| Write code to automate websites or phones | [Browser Use](https://github.com/browser-use/browser-use), [Mobilerun](https://github.com/droidrun/mobilerun) | Local versus hosted options, device connectivity, and runtime requirements |
-| Build your own assistant rather than install one | [LangGraph](https://github.com/langchain-ai/langgraph), [Mem0](https://github.com/mem0ai/mem0) | You still need interfaces, authorization, scheduling, storage, and evaluation |
+| Tell an Android phone to operate apps for you | [Mobile agents](#mobile-agents): apps such as [Mika](https://github.com/wangzan101/Mika) and [Operit](https://github.com/AAswordman/Operit); frameworks are identified separately | Android / CPU architecture, device permissions, model provider, and the specific release; a framework is not a ready-made APK |
+| Reach a persistent assistant through messaging apps | [Persistent assistants](#personal-assistants): for example [OpenClaw](https://github.com/openclaw/openclaw), [Hermes Agent](https://github.com/NousResearch/hermes-agent), [nanobot](https://github.com/HKUDS/nanobot), and [QwenPaw](https://github.com/agentscope-ai/QwenPaw) | Where it keeps running, account connections, and automatic actions; distinguish desktop Beta from server paths |
+| Work with documents, meetings, spreadsheets, and file deliverables | [Desktop knowledge & work assistants](#desktop-assistants): [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm), [LobsterAI](https://github.com/netease-youdao/LobsterAI), [OpenWorker](https://github.com/andrewyng/openworker), and [Rowboat](https://github.com/rowboatlabs/rowboat) | OS/packages, models/connectors, and data flows; preserve Beta / prerelease distinctions and do not assume identical output formats across projects |
+| Focus on persistent memory and personal context | [Letta Code](https://github.com/letta-ai/letta-code) and [Khoj](https://github.com/khoj-ai/khoj) under [persistent assistants](#personal-assistants); see [desktop assistants](#desktop-assistants) for document knowledge work too | Where memories/documents are stored, whether they can be deleted, and what reaches the model |
+| Customize a messaging assistant with a smaller codebase | [NanoClaw](https://github.com/nanocoai/nanoclaw), compared with other architectures under [persistent assistants](#personal-assistants) | Container mounts, channel installation, and maintenance of custom code; size does not establish security or easier maintenance |
+| Let an agent research, handle files, or use tools on a computer | [Computer & browser use](#computer-and-browser): for example [Agent Zero](https://github.com/agent0ai/agent-zero), [goose](https://github.com/aaif-goose/goose), and [UI-TARS / Agent TARS](https://github.com/bytedance/UI-TARS-desktop) | Distinguish Docker desktops, extension tools, and GUI control; inspect actual isolation, mounts, and host permissions separately |
+| Write code to automate websites or phones | [Browser Use](https://github.com/browser-use/browser-use); [mobile frameworks](#mobile-agents) such as [Mobilerun](https://github.com/droidrun/mobilerun) and [Open-AutoGLM](https://github.com/zai-org/Open-AutoGLM) | Local versus hosted options, device connections, model endpoints, and runtime requirements |
+| Build your own assistant rather than install one | [Building blocks](#building-blocks): [LangGraph](https://github.com/langchain-ai/langgraph) and [Mem0](https://github.com/mem0ai/mem0) | You still need interfaces, authorization, scheduling, storage, and evaluation |
 | Find a service without deploying it yourself | [Product directory](docs/PRODUCTS.en.md) | Whether access is open and requires a subscription, supported region, or eligible account |
 | Study agent evaluation or implementation methods | [Paper directory](docs/PAPERS.en.md) | Benchmark versus method; what was read; whether results are only author-reported |
+| Participate in early projects and accept debugging work | [Developer previews & alpha projects](#previews) | Separate preview components and source paths from finished apps; similar names do not imply shared maturity or licenses |
+| Design your own low-risk trial | [Task protocols](docs/TASKS.en.md) | Not executed yet: establish authorization boundaries, synthetic data, and stop conditions; do not fill in untested scores |
 
 <a id="scope"></a>
 ## Scope
@@ -223,4 +228,4 @@ These lists help discover candidates. Entries here are checked separately agains
 
 Suggestions for projects, products, and papers, corrections, and reproducible usage or research-reproduction records are welcome. Read the [English contribution guide](CONTRIBUTING.en.md) / [中文贡献指南](CONTRIBUTING.md), update the relevant directory's sources and dates, and follow the conventions in the [source notes](docs/SOURCES.en.md).
 
-**No license has yet been selected for this repository's content; the maintainer will decide.** Linked third-party projects retain their own licenses and terms. Inclusion does not relicense their code, trademarks, or documentation.
+**This repository's original documentation prose and original curated content are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en).** See the [documentation license notice](docs/LICENSE.md#en) for the complete scope. Third-party material, linked projects, and their trademarks retain their own terms; inclusion is not relicensing or endorsement. **Source code, scripts, and executable code are excluded; a separate code-license decision is pending.**
