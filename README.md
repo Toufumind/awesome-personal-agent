@@ -230,4 +230,4 @@
 
 欢迎补充项目、产品与论文，纠正过时信息，也欢迎可复现的使用或研究复现记录。请先读 [中文贡献指南](CONTRIBUTING.md) / [English contribution guide](CONTRIBUTING.en.md)，同步更新对应目录的来源与日期，并遵循 [来源记录](docs/SOURCES.md) 的核验口径。
 
-**本仓库的原创文档文字与原创编选内容采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en)。** 完整适用范围见 [文档许可声明](docs/LICENSE.md#zh)。第三方材料、所链接的项目及其商标仍适用各自条款；收录不构成重新授权或背书。**源码、脚本及可执行代码不在该许可范围内，代码许可证待单独决定。**
+**原创文档文字与原创编选内容采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en)；本仓库原创脚本与测试代码采用 [MIT](scripts/LICENSE)。** 完整范围与当前适用文件见 [许可范围声明](docs/LICENSE.md#zh)。这是按材料类型分开的许可，不是全仓库双重许可。第三方材料、所链接的项目及其商标保留各自条款；独立机器可读夹具与结果模板不因上述声明获得授权。收录不构成重新授权或背书。
