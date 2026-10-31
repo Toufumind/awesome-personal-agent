@@ -113,6 +113,16 @@ commit 日期是源码提交日期，发布日期是 GitHub `published_at`（均
 - **Open Interpreter**：当前主线定位编码 Agent，不沿用旧 Python 时代的通用助理描述，暂不加入本次个人助理扩充。[README](https://github.com/openinterpreter/openinterpreter/blob/main/README.md)
 - **simular-ai/simular**：候选仓库查询返回 404，仅保留为未解决的身份/访问问题，不推断不存在、许可、停更或产品可用性。
 
+<a id="personal-work-additions"></a>
+## 个人聊天与桌面工作补充：AstrBot、Eigent
+
+核验日期：**2026-10-31 UTC**。本轮新增 **2 项主分类条目**：AstrBot 归入常驻个人助理，Eigent 归入桌面知识与办公助理；不改写上方首轮 15 项的历史记录。通过官方仓库读取下列固定 commit 的 README、根许可及 Eigent 本地部署指南，并选读 AstrBot 官方沙箱文档与两者发布页面。沙箱网页和发布页是当日可变页面观察，不声称与固定代码逐字同版。**仅文档核验；未安装、未执行项目代码、未连接账号、未跑任务或基准、未下载验签发行包、未审计安全。** 许可只指读取的仓库根文件，不自动覆盖模型、插件、依赖、商标或服务；AGPL v3 正文不进一步推定为 `-only` 或 `-or-later`。
+
+| 项目及根许可 | 固定官方依据 | 发布记录与核验边界 |
+| --- | --- | --- |
+| AstrBot · AGPL-3.0（根许可） | `master` · `831abae85da8b6e58dc44d4544d163f8f9459ba1` · [README.md](https://github.com/AstrBotDevs/AstrBot/blob/831abae85da8b6e58dc44d4544d163f8f9459ba1/README.md) · [LICENSE](https://github.com/AstrBotDevs/AstrBot/blob/831abae85da8b6e58dc44d4544d163f8f9459ba1/LICENSE) · [沙箱 / Sandbox](https://docs.astrbot.app/use/astrbot-agent-sandbox.html) | 官方[发布页面](https://github.com/AstrBotDevs/AstrBot/releases)观察到 [v4.29.4](https://github.com/AstrBotDevs/AstrBot/releases/tag/v4.29.4)，不将主分支全部功能视为该包已验证能力。Python 3.12/uv 或 Docker；模型与渠道需配置。沙箱文档说明 macOS Seatbelt、Linux bubblewrap 与 Docker 内隔离的不同前提；Windows 暂无本机隔离，第三方沙箱为技术预览。按实际权限、挂载和网络配置核对，不从“沙箱”推断安全。消息平台、云模型与插件的数据流分别检查；WhatsApp 仍标为 Coming Soon，不作为已交付渠道。 |
+| Eigent · Apache-2.0 | `main` · `17131f5d3e83d8680a3af5eb9b666afb6ea37c2b` · [README.md](https://github.com/eigent-ai/eigent/blob/17131f5d3e83d8680a3af5eb9b666afb6ea37c2b/README.md) · [LICENSE](https://github.com/eigent-ai/eigent/blob/17131f5d3e83d8680a3af5eb9b666afb6ea37c2b/LICENSE) · [server/README_EN.md](https://github.com/eigent-ai/eigent/blob/17131f5d3e83d8680a3af5eb9b666afb6ea37c2b/server/README_EN.md) | 官方[发布页面](https://github.com/eigent-ai/eigent/releases)观察到 [v1.0.7](https://github.com/eigent-ai/eigent/releases/tag/v1.0.7)。README 的云连接快速启动需注册；独立本地后端是另一条路径。本地指南列 Docker Desktop、Python 3.12、Node >=18 且 <23，并使用 FastAPI/PostgreSQL；配置云模型或远程 MCP 时请求仍会外发。入站 webhook 需公网 HTTPS。没有把 README 的零依赖/完全隔离宣传作为已验证事实，也未验证安装包平台覆盖或文件操作可靠性。 |
+
 ## 候选发现与相关清单
 
 实际查看了以下清单，仅用于了解覆盖范围与发现候选项目；本仓库的项目描述依据上表官方来源独立撰写。
@@ -123,7 +133,7 @@ commit 日期是源码提交日期，发布日期是 GitHub `published_at`（均
 
 ## 核验范围和维护约定
 
-- README 源码板块目前为 **29 项：26 个主分类条目 + 3 个单列预览条目**，覆盖五类主要用途和一个预览区。初始 14 项保留并新增 15 项；不含产品与论文目录，不是完整市场盘点。
+- README 源码板块目前为 **31 项：28 个主分类条目 + 3 个单列预览条目**，覆盖五类主要用途和一个预览区。初始 14 项保留，首轮新增 15 项，本轮再增 2 项（合计新增 17 项）；不含产品与论文目录，不是完整市场盘点。
 - 不以 Star、commit 时间或量化可靠性作排名；固定 commit 只用于追溯证据，不是活跃度指标。本轮未核实的指标不作推断。
 - 参考主分支 README 不代表所有版本均支持该能力，安装前应再次核对具体版本。
 - 网页可读取只说明来源当时可访问，不说明软件安全、服务可用或未来链接稳定。
