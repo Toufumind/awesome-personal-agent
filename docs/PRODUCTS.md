@@ -2,11 +2,11 @@
 
 [English](PRODUCTS.en.md) · [返回主清单](../README.md)
 
-**核验日期：2026-10-31（UTC）。** 本页收录 **12 项**公开商业 / 专有 personal-agent 产品，包含明确标注的地区分批开放、实验性与预览产品，不替代主清单中的开源应用、运行时与框架。排序按使用方式，不是推荐排名。
+**核验日期：2026-10-31（UTC）。** 本页收录 **14 项已有官方开放说明的商业 / 专有 personal-agent 产品**（含明确标注的地区分批开放、实验性与预览），另列 **1 项公开介绍但自助可用性未核实的候选 Instinct**。后者不计入前述 14 项；两组都不替代主清单中的开源应用、运行时与框架。排序按使用方式，不是推荐排名。
 
 ## 怎么读
 
-- **证据级别：官方文档核验。** 下列任务能力和安全机制均为厂商文档所述，**不是本仓库实测结果**。本轮未安装、登录、购买套餐或执行任何对外操作。
+- **证据级别：官方文档核验。** 除单独标明的第三方研究备注外，下列任务能力和安全机制均为厂商文档所述，**不是本仓库实测结果**。本轮未安装、登录、购买套餐或执行任何对外操作。
 - **已提供 ≠ 人人可用。** 套餐、灰度、所在地区、年龄、组织管理员、设备及第三方服务仍可限制访问；预览 / 实验性单列标注，不写成正式全面开放。
 - **商业产品不一定开源；免费使用也不意味着开源。** 此处按完整成品服务收录，不因其使用开放模型、公开 SDK 或 Chromium 就把整套产品称为开源；未主张它们有完整可自托管源码。
 - **“地区待确认”**表示本次查阅的官方来源未提供可确认的完整清单，不代表全球可用。中文界面也不代表中国大陆可注册或使用。
@@ -23,11 +23,19 @@
 | [Perplexity Computer](#perplexity-computer) | 后台工作、研究、文件及本机扩展 | 已提供；Brain 记忆仍为研究预览 |
 | [Comet Assistant](#comet) | 已登录浏览器中的网页任务 | 已提供；浏览器下载与 agent 额度不同 |
 | [Lindy](#lindy) | 邮箱、日程与消息入口的工作助理 | 已提供；偏个人工作 / 团队场景 |
+| [Town](#town) | 跨邮箱、日程、消息的长期工作助理 | 已提供个人免费 / 付费计划；权限模式与地区需核对 |
+| [Grok Bot](#grok-bot) | 有长期记忆的 Bot 与持久云电脑 | 已提供；合资格付费计划；同一用户的 Bots 共用云电脑 |
 | [Poke](#poke) | 消息里的个人助理与生活事务 | 已提供；Poke Human 是另有套餐条件的真人服务 |
 | [Alexa+](#alexa) | 家庭语音、日程、设备与生活服务 | 美国已开放；其他地区阶段和能力不同 |
 | [Meta Muse](#muse) | 消息里的长期目标与云电脑执行 | 美国分批开放；不是全球全面可用 |
 | [Gemini Tasks](#gemini) | Google 上下文、浏览器与定时任务 | 已开放但仍属实验性；地区限制明显 |
 | [Copilot Cowork（个人版）](#copilot) | Microsoft 365 文件、邮件与日程 | **Preview**；美国 / 加拿大，Premium / Pro |
+
+**另列候选：公开介绍，但自助可用性未核实（1 项，不计入上表）。**
+
+| 候选 | 主要交付方式 | 当前核验边界 |
+| --- | --- | --- |
+| [Instinct](#instinct) | 发消息 / 通话交办生活事务 | 官网可读；当前注册、地区、原生 App 与套餐未核实 |
 
 表中摘要的依据、平台及权限边界见对应条目。
 
@@ -103,6 +111,27 @@
 
 **建议首测（未执行）：** 用测试邮箱制作每日简报与回复草稿，禁止发送、归档和删除。
 
+<a id="town"></a>
+### Town — 跨渠道记忆与个人工作助理
+
+- **入口 / 门槛：** 已有个人免费 / 付费计划；Web、iOS、macOS，以及邮件、Slack、短信、WhatsApp、Telegram。iOS 已正式发布；本轮未核实完整地区 / 号码清单，不据消息渠道推断有 Android 原生 App。[套餐](https://www.town.com/pricing) · [当前渠道](https://www.town.com/docs/getting-started/reaching-your-townie) · [iOS 状态](https://www.town.com/docs/using-town/ios)
+- **任务 / 模型：** 邮箱整理、回复草稿、排期、会前简报和后台 routines，适合个人工作事务；使用第三方模型及路由，不是一个固定底座。[产品文档](https://www.town.com/docs) · [模型提供商](https://www.town.com/ai-model-providers)
+- **记忆 / 数据：** 可查看、更改或删除偏好及人物笔记，区分全局与 routine 记忆；连接的工作 / 私人账户会共同形成上下文，不应把不同邮箱当隔离区。厂商称训练默认关闭、Google 数据不用于训练，服务数据托管在美国。[记忆说明](https://www.town.com/docs/features/context-and-memory) · [数据说明](https://www.town.com/trust)
+- **审批 / 边界：** 会话有 Auto、Balanced、Strict；文档称 Strict 会在发送、修改或分享前询问。Routines 与逐工具权限另行配置，Auto / Always allow 可免审批。不要把 Trust 页的概括措辞解释成所有操作都有人逐次确认。[当前权限模式](https://www.town.com/docs/safety/modes-approvals)
+
+**建议首测（未执行）：** 用虚构日程和偏好生成会前简报，核对保存的记忆；将会话设为 Strict，先不启用 routines，不发送或修改外部记录。
+
+<a id="grok-bot"></a>
+### Grok Bot — 持久云电脑与长期角色记忆
+
+- **入口 / 门槛：** macOS、Windows、Linux、iOS、Android；需合资格付费计划，包括当前 X Subscription 的 Premium / Super / Ultra，以及文档列出的旧 Cursor 或关联订阅路径。**不是普通 Grok 聊天 App**，也不等于 Grok Build。[上手与套餐](https://docs.x.ai/grok-bot/get-started) · [区别与计费](https://docs.x.ai/grok-bot/faq)
+- **任务 / 模型：** 研究、收据与费用整理、每日工作摘要、跨应用执行和 routines；关闭个人电脑后云任务仍可运行。模型由后台按任务路由，不能由品牌推断每次都使用 Grok 或固定模型。[任务示例](https://docs.x.ai/grok-bot/use-cases) · [运行方式](https://docs.x.ai/grok-bot/overview) · [模型 FAQ](https://docs.x.ai/grok-bot/faq)
+- **记忆 / 数据：** Bot 保留偏好、事实与工作摘要，可通过聊天查询、纠正或请求遗忘；部分个人事实跨 Bot 共享。所有 Bot 共用该用户的云文件、浏览器和登录态，**不同 Bot 不是安全隔离区**；删除 Bot 不等于清除共享云电脑。[记忆与删除](https://docs.x.ai/grok-bot/bots) · [云电脑边界](https://docs.x.ai/grok-bot/overview)
+- **审批 / 隐私：** Auto Review 可自动放行，不是每次人工批准；Ask first 规则、自动审查设置及具体授权会影响行为。已存 Vault 的付款卡可在结账时填入，不逐次另问。服务需云存储，训练选项遵循适用的 Cursor 账户设置，不能宣传为全本地或默认零留存。[安全与数据](https://docs.x.ai/grok-bot/approvals-security-and-privacy)
+- **地区边界：** 完整产品地区清单待确认；X 上 `@bot` 转交任务另有地区限制，目前不支持澳大利亚、英国、欧盟及冰岛、列支敦士登、挪威的 X 账户。不能把该功能清单当作整个 App 的地区清单。[X 标签入口](https://docs.x.ai/grok-bot/tag-on-x)
+
+**建议首测（未执行）：** 用公开资料生成带出处的摘要，要求记住一个无敏感信息的格式偏好；下次检查是否复用，再请求遗忘，不连接私人账户。
+
 <a id="poke"></a>
 ### Poke — 消息里的个人助理与生活事务
 
@@ -156,6 +185,22 @@
 - **命名 / 边界：** Copilot Tasks 正迁往 Cowork；工作 / 学校版的正式可用状态不等于个人版已正式发布。[迁移说明](https://support.microsoft.com/en-us/microsoft-365-copilot/learning/changes-microsoft-copilot-app)
 
 **建议首测（未执行）：** 用测试 OneDrive 文件生成摘要和新的副本，不覆盖源文件、不发邮件。
+
+## 公开介绍，但自助可用性未核实
+
+本组独立列出 1 项候选，不视为已确认可公开注册的产品。
+
+<a id="instinct"></a>
+### Instinct — 消息与通话里的生活事务助理
+
+- **阶段 / 入口：** 官网公开介绍通过发消息或通话交办；本轮 Try 链接落到登录页，未登录。当前邀请要求、地区、原生 App 发布状态、具体消息渠道和免费 / 付费价格均未核实；条款要求 18+，提及付费服务不等于已核实当前套餐。[官网](https://instinct.com/) · [入口](https://app.instinct.com/login) · [条款](https://instinct.com/terms)
+- **任务 / 模型：** 厂商列出订火车票、购买食材、送花和寻找球场等，称能使用电话与电脑；这些是产品声明，不是本仓库实测。未核实固定模型、可靠完成率或记忆内部架构。[官网](https://instinct.com/)
+- **上下文 / 数据：** 官方政策说明使用用户提供与连接服务的数据进行个性化；允许训练使用，退出仅向后生效且有安全审查例外，Google Workspace API 数据另有不训练承诺，条款也单列 Vault 材料不训练承诺。断开连接不自动删除已索引资料。[隐私政策](https://instinct.com/privacy-policy) · [Vault 条款](https://instinct.com/terms)
+- **审批 / 边界：** 条款不保证安全措施可防止错误动作；本轮未找到可核实的“所有购买 / 外发都逐次确认”规则。不得用第三方演示或体验帖补齐该保证。[服务条款](https://instinct.com/terms)
+
+**建议首测（未执行）：** 仅在账户确有权限时，研究公开行程并返回备选，不订票、支付或联系他人；先核实可用性、记忆管理和审批设置。
+
+**第三方研究备注（非官方、非本仓库实测）：** Supermemory 创始人 Dhravya Shah 的 [2026-09-20 黑盒拆解](https://supermemory.ai/blog/reverse-engineering-instinct-memory/)报告了关键词命中、部分改写 / 拼写错误未命中，并由一次约 23 小时 16 分的写入延迟推测每日批处理。作者未见源码，也经营记忆产品；这些仅是当时的观察和假说，不能证明当前检索实现、固定写入周期、完整架构、遗忘保证或自助开放状态。
 
 ## 比“能不能做”更值得核对的六件事
 
