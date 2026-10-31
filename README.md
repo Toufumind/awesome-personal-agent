@@ -10,53 +10,25 @@
 
 源码项目首批文档核验：**2026-10-31**；产品与论文的日期和核验范围见各自条目。核验不等于安装实测、论文复现或安全审计。源码项目链接官方仓库，产品链接官方入口，论文链接原文；依据与口径见 [来源记录](docs/SOURCES.md)。
 
-| 你想找什么 | 入口 | 如何读 |
-| --- | --- | --- |
-| 安装、自托管或二次开发 | [源码项目](#source-projects) | 分清应用、运行时、框架与组件；查看部署前提 |
-| 直接使用一个个人 Agent 服务 | [公开可用产品](docs/PRODUCTS.md) | 包含商业产品；分别确认开放范围、地区/账号要求与付费条件 |
-| 了解怎样衡量 Agent 能力 | [论文：Eval / Benchmark](docs/PAPERS.md) | 看任务、环境、指标与局限，不把榜单分数当作现实可靠性 |
-| 了解 Agent 如何构建 | [论文：方法 / 系统](docs/PAPERS.md) | 看规划、记忆、工具使用与长期运行等机制，以及论文实际验证范围 |
-| 设计自己的低风险任务试验 | [任务协议](docs/TASKS.md) | 这是尚未执行的测试协议，不是测试结果、成功率或产品排名 |
-| 把个人需求与研究、实现联系起来 | [任务—研究—实现导读](docs/LANDSCAPE.md) | 区分主题关联与有依据的直接关系，不推断产品采用某篇论文或已通过基准 |
-
+<a id="start-here"></a>
 ## 目录 · Contents
 
-- [从需求开始](#start-here)
-- [任务—研究—实现导读](docs/LANDSCAPE.md)
-- [收录范围](#scope)
-- [公开可用产品（含商业产品）](#products)
-- [源码项目](#source-projects)
-  - [常驻个人助理](#personal-assistants)
-  - [手机 Agent](#mobile-agents)
-  - [桌面知识与办公助理](#desktop-assistants)
-  - [电脑与浏览器执行](#computer-and-browser)
-  - [开发框架与记忆层](#building-blocks)
-  - [开发者预览与 Alpha](#previews)
-- [论文：评测基准与方法系统](#papers)
-- [如何比较](#comparison)
-- [安全使用清单](#safety)
-- [相关清单](#related-lists)
-- [贡献与许可](#contributing)
+按任务选择入口，不按排名选产品。[源码项目目录](#source-projects)区分应用、运行时、框架、组件与预览项目；请按设备和具体版本阅读选型提醒。
 
-<a id="start-here"></a>
-## 从需求开始 · Start here
-
-这里是阅读入口，不是“最好用”排名；最终选择取决于设备、模型、权限和维护投入。
-
-| 你的需求 | 先看 | 先确认什么 |
+| 我想…… | 从这里开始 | 先确认什么 |
 | --- | --- | --- |
-| 给 Android 手机一句话，让它替我操作 App | [手机 Agent 分类](#mobile-agents)：应用如 [Mika](https://github.com/wangzan101/Mika)、[Operit](https://github.com/AAswordman/Operit)；开发框架另列 | Android / CPU 架构、设备权限、模型服务商与具体发布版本；框架不是现成 APK |
-| 从聊天软件联系一个长期助理 | [常驻助理分类](#personal-assistants)：如 [OpenClaw](https://github.com/openclaw/openclaw)、[Hermes Agent](https://github.com/NousResearch/hermes-agent)、[nanobot](https://github.com/HKUDS/nanobot)、[QwenPaw](https://github.com/agentscope-ai/QwenPaw) | 常驻运行位置、账号接入方式、哪些操作会自动执行；桌面 Beta 与服务器路径分开 |
-| 围绕文档、会议、表格和文件交付工作 | [桌面知识与办公分类](#desktop-assistants)：[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)、[LobsterAI](https://github.com/netease-youdao/LobsterAI)、[OpenWorker](https://github.com/andrewyng/openworker)、[Rowboat](https://github.com/rowboatlabs/rowboat) | 系统与安装包、模型/连接器和数据流；保留 Beta / 预发布区别，不默认每项都支持同样的产物 |
-| 重点是持续记忆与个人上下文 | [常驻助理分类](#personal-assistants)中的 [Letta Code](https://github.com/letta-ai/letta-code)、[Khoj](https://github.com/khoj-ai/khoj)；文档知识工作也见[桌面分类](#desktop-assistants) | 记忆/文档存在哪里、能否删除、哪些内容会发送给模型 |
-| 想用较小代码库定制聊天助理 | [NanoClaw](https://github.com/nanocoai/nanoclaw)，并与[常驻助理分类](#personal-assistants)的其他架构比较 | 容器挂载、渠道安装、定制代码的维护成本；代码体量不证明安全或维护更省心 |
-| 让 Agent 在电脑环境中研究、处理文件或使用工具 | [电脑与浏览器分类](#computer-and-browser)：如 [Agent Zero](https://github.com/agent0ai/agent-zero)、[goose](https://github.com/aaif-goose/goose)、[UI-TARS / Agent TARS](https://github.com/bytedance/UI-TARS-desktop) | 区分 Docker 桌面、扩展工具与 GUI 操控；实际隔离、文件挂载和宿主机权限分别检查 |
-| 写代码自动操作网页或手机 | [Browser Use](https://github.com/browser-use/browser-use)；[手机框架](#mobile-agents)如 [Mobilerun](https://github.com/droidrun/mobilerun)、[Open-AutoGLM](https://github.com/zai-org/Open-AutoGLM) | 本地与托管方案差异、设备连接、模型端点与运行环境 |
-| 自己开发助理，而不是安装成品 | [开发框架与记忆层](#building-blocks)：[LangGraph](https://github.com/langchain-ai/langgraph)、[Mem0](https://github.com/mem0ai/mem0) | 还需要自己实现界面、授权、调度、存储与评估 |
-| 不想自行部署，寻找可直接使用的服务 | [产品目录](docs/PRODUCTS.md) | 是否已开放使用，是否需要订阅、特定地区或受支持账号 |
-| 研究 Agent 的能力评估或实现方法 | [论文目录](docs/PAPERS.md) | 是 benchmark 还是方法论文；读到哪些部分，结果是否仅为作者报告 |
-| 愿意参与早期项目并承担调试工作 | [开发者预览与 Alpha](#previews) | 预览组件、源码路径与成品应用分开；不因名称相近混用成熟度或许可 |
-| 设计自己的低风险试验 | [任务协议](docs/TASKS.md) | 协议尚未执行；先确定授权边界、合成数据和停止条件，不填未经测试的分数 |
+| 联系长期助理，或使用个人记忆 | [常驻个人助理](#personal-assistants) | 运行环境、聊天渠道、记忆存储与自动执行的操作 |
+| 操作手机 App | [手机 Agent](#mobile-agents) | 成品应用还是框架；系统、CPU、设备权限与模型端点 |
+| 处理文档、会议与文件交付 | [桌面知识与办公助理](#desktop-assistants) | 安装包、连接器、支持的产物与数据流 |
+| 研究、处理文件或自动操作电脑/浏览器 | [电脑与浏览器执行](#computer-and-browser) | GUI 操控还是工具执行；宿主访问、挂载与本地/托管部署 |
+| 自己开发助理 | [开发框架与记忆层](#building-blocks) | 界面、授权、调度、存储与评估仍需集成 |
+| 探索早期项目并参与开发 | [开发者预览与 Alpha](#previews) | 源码/构建路径不等于成品应用；需承担配置和调试 |
+| 不自行部署，直接使用服务 | [公开可用产品](#products) | 开放状态、地区/账号限制与付费条件 |
+| 研究评测或 Agent 设计 | [论文](#papers) | Eval / Benchmark 与方法 / 系统分开；核验范围与作者报告结果 |
+| 设计低风险试验 | [任务协议](docs/TASKS.md) | 协议尚未执行，不是测试结果或产品评分 |
+| 把个人需求与研究、实现联系起来 | [任务—研究—实现导读](docs/LANDSCAPE.md) | 主题关联不证明产品采用某篇论文或通过基准 |
+
+[收录范围](#scope) · [如何比较](#comparison) · [安全使用清单](#safety) · [相关清单](#related-lists) · [贡献与许可](#contributing)
 
 <a id="scope"></a>
 ## 收录范围 · Scope
