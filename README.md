@@ -1,21 +1,33 @@
 # Awesome Personal Agent
 
-> 精选能替个人完成任务的 AI Agent：从长期助理、手机操作，到浏览器执行与开发积木。
+简体中文 | [English](README.en.md)
+
+> 精选个人 AI Agent 的项目、产品与论文：从长期助理、手机操作，到评测基准与系统方法。
 >
-> A curated guide to personal AI agents, mobile agents, computer-use tools, and the building blocks behind them.
+> A curated guide to personal AI agents: open-source projects, publicly available products, evaluation benchmarks, and agent research.
 
-**少一点名单堆砌，多一点选型依据。** 本仓库优先收录有官方源码与使用文档的项目，说明它能做什么、适合谁，以及不能据此推断什么。
+**少一点名单堆砌，多一点选型依据。** 本仓库同时收录源码项目、公开可用产品（含商业产品），以及相关论文。按不同类型记录功能、可用性、研究贡献和证据边界，不把它们混成一张排行榜。
 
-首批内容核验：**2026-10-31**。依据官方 README / 文档，不是安装实测、性能排名或安全审计。项目名称直接链接官方仓库；逐项依据见 [来源记录](docs/SOURCES.md)。
+源码项目首批文档核验：**2026-10-31**；产品与论文的日期和核验范围见各自条目。核验不等于安装实测、论文复现或安全审计。源码项目链接官方仓库，产品链接官方入口，论文链接原文；依据与口径见 [来源记录](docs/SOURCES.md)。
+
+| 你想找什么 | 入口 | 如何读 |
+| --- | --- | --- |
+| 安装、自托管或二次开发 | [源码项目](#source-projects) | 分清应用、运行时、框架与组件；查看部署前提 |
+| 直接使用一个个人 Agent 服务 | [公开可用产品](docs/PRODUCTS.md) | 包含商业产品；分别确认开放范围、地区/账号要求与付费条件 |
+| 了解怎样衡量 Agent 能力 | [论文：Eval / Benchmark](docs/PAPERS.md) | 看任务、环境、指标与局限，不把榜单分数当作现实可靠性 |
+| 了解 Agent 如何构建 | [论文：方法 / 系统](docs/PAPERS.md) | 看规划、记忆、工具使用与长期运行等机制，以及论文实际验证范围 |
 
 ## 目录 · Contents
 
 - [从需求开始](#start-here)
 - [收录范围](#scope)
-- [常驻个人助理](#personal-assistants)
-- [手机 Agent](#mobile-agents)
-- [电脑与浏览器执行](#computer-and-browser)
-- [开发框架与记忆层](#building-blocks)
+- [公开可用产品（含商业产品）](#products)
+- [源码项目](#source-projects)
+  - [常驻个人助理](#personal-assistants)
+  - [手机 Agent](#mobile-agents)
+  - [电脑与浏览器执行](#computer-and-browser)
+  - [开发框架与记忆层](#building-blocks)
+- [论文：评测基准与方法系统](#papers)
 - [如何比较](#comparison)
 - [安全使用清单](#safety)
 - [相关清单](#related-lists)
@@ -35,6 +47,8 @@
 | 让 Agent 在隔离的电脑环境中工作 | [Agent Zero](https://github.com/agent0ai/agent-zero) | Docker、文件挂载范围与宿主机桥接权限 |
 | 写代码自动操作网页或手机 | [Browser Use](https://github.com/browser-use/browser-use)、[Mobilerun](https://github.com/droidrun/mobilerun) | 本地与托管方案差异、设备连接和运行环境 |
 | 自己开发助理，而不是安装成品 | [LangGraph](https://github.com/langchain-ai/langgraph)、[Mem0](https://github.com/mem0ai/mem0) | 还需要自己实现界面、授权、调度、存储与评估 |
+| 不想自行部署，寻找可直接使用的服务 | [产品目录](docs/PRODUCTS.md) | 是否已开放使用，是否需要订阅、特定地区或受支持账号 |
+| 研究 Agent 的能力评估或实现方法 | [论文目录](docs/PAPERS.md) | 是 benchmark 还是方法论文；读到哪些部分，结果是否仅为作者报告 |
 
 <a id="scope"></a>
 ## 收录范围 · Scope
@@ -47,12 +61,30 @@
 - **组件 / Component**：只解决记忆等一部分问题，不是完整助理。
 - **研究 / Research**：以论文、模型、实验代码为主，不能当作成熟消费产品。
 
-同一个项目可能覆盖多个层次，以下按主要使用方式分类。**能在手机聊天，不等于能操作手机；能操控浏览器，不等于能自主处理所有生活事务。**
+这些是技术形态，不是商业模式。商业产品也可能基于开源项目，研究系统也可能提供代码；同名品牌的源码库与托管服务应分别标清。**能在手机聊天，不等于能操作手机；能操控浏览器，不等于能自主处理所有生活事务。**
 
-初版不追求覆盖所有 AI 产品，不把纯聊天界面、纯编码工具、通用企业工作流平台塞进主清单。商业托管产品可在未来单独扩展，不与源码项目混为一谈。没有最低 Star 门槛；不收付费排名、推广返佣链接或仅有路线图的功能。
+本仓库的三条主线：
+
+1. **源码项目**：提供官方代码或可自托管实现，按使用方式分类。公开源码不自动等于开源许可，具体许可仍须查阅上游文件。
+2. **公开可用产品**：包括免费、付费和商业托管服务，不要求公开源码。以可公开注册、下载或订阅的使用入口为主；候补、邀请制或仅宣布的产品如保留，应单独标注，不冒充公开可用。
+3. **研究论文**：分别收录 **Eval / Benchmark** 与 **Agent 方法 / 系统**。不强制论文有开源代码；有论文不代表有可用产品，有代码不代表已复现结果。
+
+不追求覆盖所有 AI 产品，不把纯聊天界面、纯编码工具、通用企业工作流平台塞进主清单；相关基础研究需解释与个人 Agent 的联系。没有最低 Star 门槛；不收付费排名、推广返佣链接，也不把路线图写成已交付功能。
+
+<a id="products"></a>
+## 公开可用产品 · Publicly available products
+
+→ [查看产品目录（含商业产品）](docs/PRODUCTS.md)
+
+产品目录关注用户可以实际尝试的入口，而不是只列公司名称。每项应分开说明：**主要用途、访问方式、当前开放状态、地区/平台/账号限制、收费方式，以及官方依据与核验日期**。这里的“可用”不等于所有人、所有地区都可立即使用，也不等于免费或已由本仓库实测。
+
+<a id="source-projects"></a>
+## 源码项目 · Open-source & source-available projects
+
+以下按主要用途保留项目入口；同一项目的托管产品若另有收录，不视为另一套已验证能力。没有单独列出的付费条件与可用性，仍需按具体版本和服务核对。
 
 <a id="personal-assistants"></a>
-## 常驻个人助理 · Persistent personal assistants
+### 常驻个人助理 · Persistent personal assistants
 
 “常驻”指支持持续运行的使用方式，不保证默认安装即可全天在线。电脑休眠、服务中断、渠道限制和模型额度都可能影响任务。
 
@@ -66,7 +98,7 @@
 | [OpenClaw](https://github.com/openclaw/openclaw) | 应用 / 运行时。通过本地 Gateway 管理会话、工具与消息渠道，支持持久状态、技能和可替换的模型服务。 | 官方提醒：未配置沙箱时，主会话工具可在宿主机执行。连接外部消息源或开放远程入口前先读安全文档。 |
 
 <a id="mobile-agents"></a>
-## 手机 Agent · Mobile agents
+### 手机 Agent · Mobile agents
 
 这一类的关键是**读取和操作手机 App 界面**，而不只是给桌面 Agent 加一个手机聊天入口。
 
@@ -77,7 +109,7 @@
 | [Mobilerun（原 DroidRun）](https://github.com/droidrun/mobilerun) | 框架。通过 CLI / Python 组织手机自动化，结合界面树与截图；官方提供 Android 与 iOS 的不同接入路径。 | 不等同于一个独立手机助理 APK。设备、Portal、调试或 USB 设置按平台分别配置；本地框架与 Cloud 产品分开看。 |
 
 <a id="computer-and-browser"></a>
-## 电脑与浏览器执行 · Computer & browser use
+### 电脑与浏览器执行 · Computer & browser use
 
 这类工具解决“如何动手”，未必自带长期个人身份、后台待办或生活服务整合。
 
@@ -88,7 +120,7 @@
 | [UI-TARS Desktop / Agent TARS](https://github.com/bytedance/UI-TARS-desktop) | 应用 / 工具栈。同仓库包含 GUI 桌面应用 UI-TARS Desktop，以及集成视觉和工具的 Agent TARS CLI / Web UI。 | 两个产品的安装与模型要求不同；不要把演示中的本地、远程电脑及浏览器能力当成同一种配置。 |
 
 <a id="building-blocks"></a>
-## 开发框架与记忆层 · Building blocks
+### 开发框架与记忆层 · Building blocks
 
 **不是开箱即用的私人助理。** 适合已经决定自己开发的人。
 
@@ -96,6 +128,18 @@
 | --- | --- | --- |
 | [LangGraph](https://github.com/langchain-ai/langgraph) | 有状态 Agent 的流程编排、持久执行、人工介入与记忆基础设施。 | 工具权限、用户界面、业务逻辑、部署与真实任务评估。 |
 | [Mem0](https://github.com/mem0ai/mem0) | 给应用提供用户、会话与 Agent 记忆层；有库、自托管服务与托管平台等路径。 | 收集哪些记忆、访问控制、删除与纠错、模型/嵌入配置；记忆层本身不会执行任务。 |
+
+<a id="papers"></a>
+## 论文 · Papers
+
+→ [查看论文目录](docs/PAPERS.md)
+
+论文分为两组，避免把测量工具与被测系统混在一起：
+
+- **Eval / Benchmark（评测与基准）**：研究如何衡量任务完成、工具使用、记忆、长期交互、移动端/网页/电脑操作等能力。记录环境、任务与指标，说明覆盖不到什么。
+- **Agent 方法 / 系统（Methods & Systems）**：研究规划、执行、反思、记忆、主动性与持续运行等机制。记录核心贡献、实验范围和实现/代码状态。
+
+阅读范围应明确标注为摘要、选读章节或全文；论文中的成绩是**作者报告**，除非另有可复现的独立记录，不写成“我们评测发现”。不同任务集、模型、预算和版本的分数不能直接拼接成产品排名。
 
 <a id="comparison"></a>
 ## 如何比较 · Evaluation guide
@@ -141,6 +185,6 @@
 <a id="contributing"></a>
 ## 贡献与许可 · Contributing & licensing
 
-欢迎补充真正用过的项目、纠正过时信息和提交可复现的使用记录。请先读 [贡献指南](CONTRIBUTING.md)，同时更新 [来源记录](docs/SOURCES.md)。
+欢迎补充项目、产品与论文，纠正过时信息，也欢迎可复现的使用或研究复现记录。请先读 [中文贡献指南](CONTRIBUTING.md) / [English contribution guide](CONTRIBUTING.en.md)，同步更新对应目录的来源与日期，并遵循 [来源记录](docs/SOURCES.md) 的核验口径。
 
 **本仓库内容的许可证尚未指定，待维护者决定。** 所链接的第三方项目各自适用其许可证和服务条款；收录不代表重新授权它们的源码、商标或文档。
