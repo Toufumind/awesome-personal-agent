@@ -1,0 +1,53 @@
+name: "推荐项目 / 产品 / 论文 · Suggest an entry"
+description: "推荐公开资源并说明依据。 / Suggest a public resource with evidence."
+body:
+  - type: markdown
+    attributes:
+      value: |
+        不会提 PR 也欢迎参与；中文或英文任选其一。请先搜索已有条目和 Issue。未实测也可推荐，但须说明文档/论文阅读范围，不把作者报告当作自己的结果。
+        No PR needed; Chinese or English is welcome. Search existing entries and issues first. Hands-on testing is not required; state what you read and distinguish author-reported results from your own.
+
+        **公开内容：不要贴 API Key、token、Cookie、私人聊天或个人信息。只用公开或合成示例；无需上传原始日志、截图或账号资料。**
+        **This issue is public: never post API keys, tokens, cookies, private conversations, or personal information. Use public or synthetic examples; raw logs, screenshots, and account details are not required.**
+  - type: textarea
+    id: links
+    attributes:
+      label: "链接 · Links"
+      description: "名称、类型和官方链接：源码项目、公开可用产品，或论文（Eval / Benchmark、方法 / 系统）；如已有条目，请附其位置。 / Name, type, and official link: source project, publicly available product, or paper (Eval / Benchmark or Methods / Systems); include the existing entry if any."
+    validations:
+      required: true
+  - type: textarea
+    id: version-date
+    attributes:
+      label: "版本与日期 · Version and date"
+      description: "版本、commit 或论文版本，以及核验日期（YYYY-MM-DD）；无公开版本或未知可注明。 / Release, commit, or paper version, plus review date (YYYY-MM-DD); state no public version or unknown where applicable."
+    validations:
+      required: true
+  - type: textarea
+    id: task-input-output
+    attributes:
+      label: "任务输入与输出 · Task input and output"
+      description: "用个人任务示例或论文实验说明输入、预期产出及限制；区分设想、作者报告与亲测结果，未实测请注明。 / Describe input, expected output, and limitations for a personal-task example or paper experiment; distinguish hypothetical, author-reported, and hands-on results, and state when not tested."
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: "来源与核验范围 · Sources and review scope"
+      description: "列一手来源及支持的表述，说明读过的文档/论文章节；披露与项目的关系，无则写无。 / Link primary sources to the claims they support, state the documents/paper sections read, and disclose any project affiliation or state none."
+    validations:
+      required: true
+  - type: textarea
+    id: unverified
+    attributes:
+      label: "未验证项 · Unverified items"
+      description: "列未确认的开放范围、条件或能力，不要猜测；确无未验证项也请说明核验边界。 / List unconfirmed access, conditions, or capabilities without guessing; if none remain, still state the limits of your review."
+    validations:
+      required: true
+  - type: checkboxes
+    id: public-content
+    attributes:
+      label: "提交前确认 · Before submitting"
+      options:
+        - label: "我已检查正文、链接及附件，不含秘密或个人信息。 / I checked the text, links, and attachments for secrets and personal information and removed any found."
+          required: true
