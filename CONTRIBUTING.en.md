@@ -4,6 +4,10 @@
 
 Thank you for making this list more useful. The goal is not to collect the most names, but to distinguish **products people can use, source projects people can install or build on, and papers that measure or construct agents**.
 
+## No PR experience? Open an issue
+
+Choose “Suggest an entry,” “Correction or status change,” or “Hands-on report” under [New issue](https://github.com/Toufumind/awesome-personal-agent/issues/new/choose). Chinese or English is welcome; no coding or full-document translation is needed. Provide links, version/date, task input/output, sources, and unverified items; mark unknowns rather than guessing. Issues are public: never post tokens, cookies, API keys, private conversations, or personal information. Public/synthetic examples and minimal summaries are enough; raw logs or screenshots are not required.
+
 ## Where contributions belong
 
 | Content | Location | Primary evidence |
