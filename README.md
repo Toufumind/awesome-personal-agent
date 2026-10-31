@@ -66,7 +66,7 @@
 
 以下按主要用途保留项目入口；同一项目的托管产品若另有收录，不视为另一套已验证能力。没有单独列出的付费条件与可用性，仍需按具体版本和服务核对。
 
-当前收录 **29 个源码项目：26 个主分类条目 + 3 个单列预览条目**，共五类主要用途及一个预览区。初始 14 项全部保留；新增 15 项依据 2026-10-31 的固定 commit、许可和发布记录整理。条目中的发布号不保证该版本具备主分支全部功能，`prerelease=false` 也不代表成熟或已经实测。新增条目的根许可仅指已读仓库代码，不自动覆盖模型、依赖、插件、商标或托管服务；详见 [扩充来源](docs/SOURCES.md#expansion)。
+当前收录 **31 个源码项目：28 个主分类条目 + 3 个单列预览条目**，共五类主要用途及一个预览区。初始 14 项及首轮新增 15 项全部保留；本轮再补充 [AstrBot 与 Eigent](docs/SOURCES.md#personal-work-additions)，共新增 17 项。各轮固定 commit、许可和发布记录及仅文档核验的范围见来源记录。条目中的发布号不保证该版本具备主分支全部功能，`prerelease=false` 也不代表成熟或已经实测。新增条目的根许可仅指已读仓库代码，不自动覆盖模型、依赖、插件、商标或托管服务；详见 [扩充来源](docs/SOURCES.md#expansion)。
 
 <a id="personal-assistants"></a>
 ### 常驻个人助理 · Persistent personal assistants
@@ -75,6 +75,7 @@
 
 | 项目 | 形态与主要用途 | 选型提醒 |
 | --- | --- | --- |
+| [AstrBot](https://github.com/AstrBotDevs/AstrBot) | 应用 / 常驻运行时。通过个人或群聊及 ChatUI 使用知识库、技能、MCP、网页与代码工具。根许可 AGPL-3.0。 | 观察到 v4.29.4；需配置模型和渠道，提供 Python 3.12/uv 与 Docker 路径。隔离能力因系统与部署而异；第三方沙箱仍为技术预览，云模型、消息平台与插件仍可能接收数据。 |
 | [Hermes Agent](https://github.com/NousResearch/hermes-agent) | 应用 / 运行时。Nous Research 的助理，包含持久记忆、历史会话检索、可复用技能、定时任务及聊天渠道入口。 | 需要配置模型和运行环境；技能学习是项目提供的机制，不代表任务效果会自动、持续提高。 |
 | [IronClaw](https://github.com/nearai/ironclaw) | 常驻助理 / Rust 运行时。WebUI、REPL、渠道、cron 与 webhook 任务，配合持久记忆、WASM/MCP 扩展。MIT OR Apache-2.0。 | 观察到 ironclaw-v1.4.1；安装后需配置模型与渠道。不能宣称与 OpenClaw 完全对等，WASM 也不覆盖所有宿主、Docker、MCP 和网络路径，更不证明免疫提示注入。 |
 | [Khoj](https://github.com/khoj-ai/khoj) | 应用。围绕个人文档与网页开展问答、研究、自定义 Agent 和定期信息任务；可自托管，也有云服务。 | 更适合知识与研究工作。接入文档前确认索引、模型与云端的数据流，不应理解为通用手机操控工具。 |
@@ -108,6 +109,7 @@
 | 项目 | 形态与主要用途 | 选型提醒 |
 | --- | --- | --- |
 | [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) | 桌面 / 自托管知识与 Agent 应用。除文档问答外，还提供网页研究、记忆、调度，以及启用工具后的文本与 Office/PDF 产物。MIT。 | 观察到 v1.19.0。桌面与 Docker 功能不同，多用户权限不通用于桌面；自选模型、嵌入和向量库。关闭遥测不阻断这些外部服务和工具的数据传输。 |
+| [Eigent](https://github.com/eigent-ai/eigent) | 桌面应用。用单 Agent 或多 Agent 协作完成研究、写作、文件整理、浏览器及终端任务，并提供定时工作流。Apache-2.0。 | 观察到 v1.0.7；独立本地部署与需账号的云连接快速启动不同。本地指南要求 Docker Desktop、Python 3.12、Node 18–22；外部模型/MCP 仍会外发请求，入站 webhook 需公网 HTTPS。未安装或验证隔离。 |
 | [LobsterAI（有道龙虾）](https://github.com/netease-youdao/LobsterAI) | 桌面应用。围绕本地文件交付文档、表格、演示文稿、网页和图表，提供浏览器、调度与聊天入口。MIT。 | 2026.10.30 版本于 2026-10-31 UTC 发布，提供 Mac/Windows 安装资产。当前使用 OpenClaw 运行时，不是独立引擎的对照实测；模型、分享与插件仍有外部数据流。 |
 | [OpenWorker](https://github.com/andrewyng/openworker) | 桌面应用。通过授权文件与连接器准备会议、报告、表格和待审操作，并提供定时任务。MIT。 | **Open beta**，观察到 v0.3.1。主要下载支持 macOS Apple Silicon 与 Windows x64；Windows 包尚未代码签名。审批、日志和沙箱均需按配置检查，不视为安全认证。 |
 | [Rowboat](https://github.com/rowboatlabs/rowboat) | 个人知识与执行型桌面助理。将邮件、会议和对话连接到 Markdown 知识图谱、草稿、摘要与后台工作。Apache-2.0。 | 非预发布 v1.0.3，v1.0.5 为**预发布**；当前文档可能领先安装包。Mac/Windows/Linux 路径需配置模型和连接器；会议记录需适当同意，本地 Markdown 不保证外发上下文仍留本地。 |
