@@ -4,7 +4,7 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **35 distinct papers**: 22 evaluation entries and 15 method entries. Proactive Agent and MemoProAgent each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **37 distinct papers**: 24 evaluation entries and 15 method entries. Proactive Agent and MemoProAgent each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -30,10 +30,10 @@ Years and versions identify the listed paper, not the current project. Original 
 | Does it remember user statements and updates? | [LongMemEval](#benchmark-longmemeval), [LoCoMo](#benchmark-locomo); [MemoryAgentBench](#benchmark-memoryagentbench) for general incremental memory | Erasure, correction, user isolation, real longitudinal use |
 | Does the answer fit this person's preferences? | [LaMP](#benchmark-lamp), [PersonaMem](#benchmark-personamem-v1) / [PersonaMem-v2](#benchmark-personamem-v2), [PersonaBench](#benchmark-personabench), [PrefEval](#benchmark-prefeval) | Human satisfaction, safe private-document deployment; compare QA / generation / MCQ protocols separately |
 | Does memory change tool arguments and subsequent actions? | [Mem2ActBench](#benchmark-mem2actbench), [MemoryArena](#benchmark-memoryarena) | Real execution, side-effect authorization, interrupted-task recovery |
-| When should it help, clarify, or stay quiet? | [ProactiveBench](#benchmark-proactivebench-lu) / [Proactive Agent](#method-proactive-agent), [KnowU-Bench](#benchmark-knowu-bench), [MemoProBench](#benchmark-memoprobench) / [MemoProAgent](#method-memoproagent) | Human acceptance, interruption cost, restraint after rejection, undo, authorization |
+| When should it help, clarify, or stay quiet? | [ProactiveBench](#benchmark-proactivebench-lu) / [Proactive Agent](#method-proactive-agent), [KnowU-Bench](#benchmark-knowu-bench), [MemoProBench](#benchmark-memoprobench) / [MemoProAgent](#method-memoproagent), [π-Bench](#benchmark-pi-bench) | Human acceptance, interruption cost, restraint after rejection, undo, authorization |
 | Can it complete multi-app tasks? | [AppWorld](#benchmark-appworld), [WebArena](#benchmark-webarena), [OSWorld](#benchmark-osworld), [AndroidWorld](#benchmark-androidworld) | Real accounts, environment changes, irreversible actions |
 | Does it reliably follow workflows across repeated runs? | [τ-bench](#benchmark-tau-bench) | Simulated versus real users and process-level safety |
-| Should accessible information be shared outward? | [PrivacyLens](#benchmark-privacylens); [AgentDojo](#benchmark-agentdojo) separately tests indirect prompt injection | Full privacy compliance, cross-user / multi-agent isolation, all attack surfaces |
+| Should accessible information be shared outward? | [PrivacyLens](#benchmark-privacylens), [AgentCIBench](#benchmark-agentcibench); [AgentDojo](#benchmark-agentdojo) separately tests indirect prompt injection | Full privacy compliance, cross-user / multi-agent isolation, all attack surfaces |
 | How should persistent memory and its lifecycle be managed? | [MemGPT](#method-memgpt), [MemoryBank](#method-memorybank), [A-MEM](#method-a-mem), [Mem0](#method-mem0), [Zep](#method-zep), [MemOS](#method-memos) | Invalidation or non-use is not physical erasure; permissions, scheduling, observability |
 | How can experience, skills, and agent coordination be reused? | [ReAct](#method-react), [Reflexion](#method-reflexion), [Voyager](#method-voyager), [ExpeL](#method-expel), [AutoGen](#method-autogen) (historical) | Longitudinal human utility, single-agent controls, stale experience, operating cost |
 
@@ -174,6 +174,18 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Measures:** Perfect requires exactly one correct intervention within the allowed window. Also report Hit, early, late, repeated, and negative-case false triggers; Hit alone hides unwanted interruptions.
 - **Limits:** Direct personal-memory-driven proactivity, but constructed histories are not a year-long human study. It does not evaluate authorized transaction completion or establish all-day usability.
 - **Resources:** [Official inference code](https://github.com/facebookresearch/Memo-Pro-Agent): CC BY-NC 4.0; [history data (restricted)](https://huggingface.co/datasets/facebook/MemProBench). The official [README data notes](https://github.com/facebookresearch/Memo-Pro-Agent#data-and-reproducibility) state that `facebook/MemProBench` histories are currently private and require authorized Hugging Face access. Download access was not obtained in this review; independent dataset licensing remains unconfirmed and cannot be inferred from the code license. Videos require separate [Ego4D](https://ego4d-data.org/) access and terms; an inference harness is not a complete RL reproduction package.
+
+<a id="benchmark-pi-bench"></a>
+### B23. π-Bench · Hidden intents and proactive clarification across sessions
+
+[π-Bench: Evaluating Proactive Personal Assistant Agents in Long-Horizon Workflows](https://arxiv.org/html/2605.14678v1) — 2026 preprint; initial reading of v1, 2026-05-14. The official README announces NeurIPS 2026 acceptance; this is not an independently checked proceedings record.
+
+**Checked / reading scope:** 2026-10-31; v1 abstract, evaluation discussion and relevant §4 passages; official project-page metric definitions and README resource / acceptance notes. Initial literature reading, not installation or testing.
+
+- **Input → output:** Underspecified requests, earlier sessions and a persistent workspace → targeted clarification, tool actions and artifacts; five personas each have 20 sessions, totaling 100 tasks.
+- **Measures:** Proc counts hidden intents proactively satisfied or elicited through targeted clarification; Comp scores checklist requirements across the full trajectory, tool records and artifacts. Eventual completion is not proactive requirement discovery; report both separately.
+- **Limits:** Proactivity means reducing specification burden during interaction, not initiating background tasks or granting permission to act. Simulated users and model grading do not establish longitudinal human satisfaction.
+- **Resources:** [Official code / data](https://github.com/Simplified-Reasoning/Pi-Bench), [project and metric definitions](https://simplified-reasoning.github.io/Pi-Bench/). Repository Apache-2.0; AppWorld, NanoBot and other dependencies retain their own terms. Pin paper, code, model and judge configurations before comparing.
 
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
@@ -321,6 +333,18 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 - **Measures:** Benign utility, utility under attack, and targeted ASR together. Avoiding an attack while failing the legitimate task is not assistant success.
 - **Limits:** A general tool-agent indirect-injection environment, not personalization evaluation. It does not cover every privacy, authorization, persistent-memory, or multi-agent risk. No attacks were generated or run for this review.
 - **Resources:** [Official environment, tasks, and evaluation](https://github.com/ethz-spylab/agentdojo), MIT. The extensible project and API evolve; pin suites, attacks, tool schemas, models, and budgets before comparisons.
+
+<a id="benchmark-agentcibench"></a>
+### B24. AgentCIBench · Cross-app disclosure and recipient boundaries
+
+[Capable but Careless: Do Computer-Use Agents Follow Contextual Integrity?](https://arxiv.org/html/2606.23189v2) — Initial reading of v2, 2026-09-10; [author-submitted arXiv metadata](https://arxiv.org/abs/2606.23189) identifies EMNLP 2026 Main.
+
+**Checked / reading scope:** 2026-10-31; v2 abstract, §3 metric and failure-taxonomy passages; official README and dataset-card resource / license notes. Initial literature reading, not installation or testing.
+
+- **Input → output:** Personal-app state, an underspecified task and a recipient → an outward-facing message, event or post; targets visual co-location, task-ambiguity oversharing and recipient misalignment.
+- **Measures:** Utility U, leakage L, refusal R and engagement-conditioned leakage L/(1−R). §3 explicitly combines deterministic matching with LLM paraphrase detection; the abstract's “deterministically scored” wording does not make the complete evaluation purely deterministic.
+- **Limits:** Contextual privacy can fail without an attacker. Curated disclosure stress tests do not establish real-world prevalence or comprehensive legal compliance. Keep final-disclosure and end-to-end UI settings separate; blanket refusal is not useful privacy protection.
+- **Resources:** [Official code](https://github.com/UKPLab/emnlp2026-agentcibench), [official data](https://huggingface.co/datasets/UKPLab/agentcibench). Code Apache-2.0; data / scenario pool CC BY 4.0. Older arxiv2026-agentcibench paths differ from the current repository name; pin versions. No environment or attack generation was run.
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -520,3 +544,4 @@ These are this guide's evaluation recommendations, not claims that every listed 
 - **Public access is not unrestricted reuse.** Entries flag noncommercial terms for LaMP, LoCoMo, PersonaBench, PrefEval, and MemoPro code; GAIA gating / contamination controls; and additional AppWorld / Ego4D resource rules. An omitted license does not imply unrestricted use; code, data, weights, and third-party assets may have different terms.
 - This check did not include asset-by-asset legal review, downloading and validating full weights, or reproducing all dependencies. A GitHub link does not resolve missing licenses, inaccessible files, or changing external services.
 - Prioritize correcting versions, scope, and broken resources before adding papers. Contributions should provide specific primary evidence; rankings, citation counts, and stars are not reliability findings.
+
