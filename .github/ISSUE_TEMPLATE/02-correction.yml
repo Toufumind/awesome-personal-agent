@@ -1,0 +1,53 @@
+name: "纠错或状态变更 · Correction or status change"
+description: "修正条目、链接、版本或可用性。 / Correct an entry, link, version, or availability."
+body:
+  - type: markdown
+    attributes:
+      value: |
+        不会提 PR 也欢迎参与；中文或英文任选其一。请先搜索已有 Issue。一次访问失败不等于项目停运；不确定时按未确认报告。
+        No PR needed; Chinese or English is welcome. Search existing issues first. One failed visit does not establish a shutdown; report uncertainty as unconfirmed.
+
+        **公开内容：不要贴 API Key、token、Cookie、私人聊天或个人信息。无需上传原始日志、截图或账号资料。漏洞详情请走受影响项目的官方安全渠道，不贴在这里。**
+        **This issue is public: never post API keys, tokens, cookies, private conversations, or personal information. Raw logs, screenshots, and account details are not required. Use the affected project's official security channel for vulnerability details, not this issue.**
+  - type: textarea
+    id: links
+    attributes:
+      label: "链接 · Links"
+      description: "受影响条目的文档链接或路径、当前表述、建议改法；相关官方链接如有可附。 / Affected document link or path, current wording, and proposed correction; add relevant official links if available."
+    validations:
+      required: true
+  - type: textarea
+    id: version-date
+    attributes:
+      label: "版本与日期 · Version and date"
+      description: "涉及版本或状态时，请写版本及核验日期（YYYY-MM-DD）；未知/不适用可注明。区分变更生效日期与读取日期。 / For version or status changes, give the version and review date (YYYY-MM-DD); mark unknown/not applicable as needed. Distinguish effective and reading dates."
+    validations:
+      required: false
+  - type: textarea
+    id: task-input-output
+    attributes:
+      label: "任务输入与输出 · Task input and output"
+      description: "如涉及使用行为，用公开/合成示例写操作、输入、预期与实际输出；仅文档纠错可填不适用。 / For usage behavior, describe steps, input, expected and actual output using public/synthetic examples; enter not applicable for documentation-only corrections."
+    validations:
+      required: false
+  - type: textarea
+    id: sources
+    attributes:
+      label: "来源与核验范围 · Sources and review scope"
+      description: "说明更正依据；错字/翻译可直接指向本仓库文字，事实或状态更正请附一手来源，并区分亲自观察与转述。 / Explain the basis for the correction: repository text is enough for typos/translations; use primary sources for factual/status changes and distinguish direct observation from others' reports."
+    validations:
+      required: true
+  - type: textarea
+    id: unverified
+    attributes:
+      label: "未验证项 · Unverified items"
+      description: "尚未确认的版本、地区、账号条件或影响范围；无/未知/不适用可注明，不从单次现象推断所有用户。 / Unconfirmed versions, regions, account conditions, or scope; state none/unknown/not applicable as needed, and do not generalize one observation to all users."
+    validations:
+      required: false
+  - type: checkboxes
+    id: public-content
+    attributes:
+      label: "提交前确认 · Before submitting"
+      options:
+        - label: "我已检查正文、链接及附件，不含秘密或个人信息。 / I checked the text, links, and attachments for secrets and personal information and removed any found."
+          required: true
