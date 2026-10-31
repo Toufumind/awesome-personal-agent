@@ -30,7 +30,9 @@
 
 ### 原创脚本与测试代码：MIT
 
-维护者已选择 **MIT License** 用于本仓库原创脚本与测试代码。当前明确适用 [`scripts/check_t03.py`](../scripts/check_t03.py) 和 [`scripts/test_check_t03.py`](../scripts/test_check_t03.py)；完整许可正文位于 [`scripts/LICENSE`](../scripts/LICENSE)，已核对 [OSI 官方 MIT 文本](https://opensource.org/license/mit)。新增原创脚本/测试代码应注明该许可及对应范围。
+维护者已选择 **MIT License** 用于本仓库原创脚本与测试代码。当前明确适用 [`scripts/check_t03.py`](../scripts/check_t03.py)、[`scripts/test_check_t03.py`](../scripts/test_check_t03.py)、[`scripts/check_docs.py`](../scripts/check_docs.py) 和 [`scripts/test_check_docs.py`](../scripts/test_check_docs.py)；完整许可正文位于 [`scripts/LICENSE`](../scripts/LICENSE)，已核对 [OSI 官方 MIT 文本](https://opensource.org/license/mit)。新增原创脚本/测试代码应注明该许可及对应范围。
+
+上述四个文件的明确范围不涵盖 `.github/workflows/` 配置，也不为其他文件增加许可授权。
 
 该 MIT 授权**不是全仓库许可**：原创文档与编选内容继续按 CC BY 4.0 提供，不因此双重许可；第三方材料保留原条款。独立的机器可读测试夹具、生成的数据/结果和 `fixtures/result-template.json` **不因脚本的 MIT 许可获得单独授权**，除非另有明确声明。文档中未单独标为 MIT 的其他可执行代码片段也不自动纳入。
 
@@ -64,7 +66,9 @@ Contribute only original documentation and curated content you have authority to
 
 ### Original scripts and test code: MIT
 
-The maintainer selected the **MIT License** for original repository scripts and test code. The currently designated files are [`scripts/check_t03.py`](../scripts/check_t03.py) and [`scripts/test_check_t03.py`](../scripts/test_check_t03.py). The complete terms are in [`scripts/LICENSE`](../scripts/LICENSE), checked against the [official OSI MIT text](https://opensource.org/license/mit). Add an explicit license and scope notice for new original scripts/test code.
+The maintainer selected the **MIT License** for original repository scripts and test code. The currently designated files are [`scripts/check_t03.py`](../scripts/check_t03.py), [`scripts/test_check_t03.py`](../scripts/test_check_t03.py), [`scripts/check_docs.py`](../scripts/check_docs.py), and [`scripts/test_check_docs.py`](../scripts/test_check_docs.py). The complete terms are in [`scripts/LICENSE`](../scripts/LICENSE), checked against the [official OSI MIT text](https://opensource.org/license/mit). Add an explicit license and scope notice for new original scripts/test code.
+
+The explicit designation of these four files does not include `.github/workflows/` configuration or add a license grant for other files.
 
 This MIT grant is **not repository-wide**: original documentation and curated content remain CC BY 4.0 and are not thereby dual-licensed; third-party material retains its own terms. Separate machine-readable fixtures, generated data/results, and `fixtures/result-template.json` **receive no separate grant merely because the scripts are MIT-licensed**, unless explicitly stated otherwise. Other executable snippets in documentation are not automatically included unless separately marked MIT.
 
