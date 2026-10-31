@@ -27,21 +27,23 @@
 
 | 你想研究什么 | 阅读入口 | 仍需另外验证 |
 | --- | --- | --- |
-| 记得用户说过什么、是否更新过 | LongMemEval、LoCoMo；MemoryAgentBench 测通用增量记忆 | 删除、纠错、跨用户隔离、真实长期使用 |
-| 回答是否符合这个人的偏好 | LaMP、PersonaMem / v2、PersonaBench、PrefEval | 真人满意度、私人文档部署安全；不同 QA / 生成 / MCQ 协议分别比较 |
-| 记忆是否影响工具参数与后续行动 | Mem2ActBench、MemoryArena | 真实执行、副作用授权、任务中断后的恢复 |
-| 何时主动帮忙、何时澄清或不打扰 | ProactiveBench / Proactive Agent、KnowU-Bench、MemoProBench / MemoProAgent | 真人接受率、打扰成本、拒绝后克制、撤销与授权 |
-| 多应用任务能否真的完成 | AppWorld、WebArena、OSWorld、AndroidWorld | 真实账号、环境变化、不可逆操作 |
-| 多次尝试是否稳定遵守流程 | τ-bench | 模拟用户与真人差异、完整过程安全 |
-| 读到的信息是否应该向外分享 | PrivacyLens；AgentDojo 另测间接提示注入 | 完整隐私合规、跨用户 / 多代理隔离、所有攻击面 |
-| 怎样管理长期记忆与生命周期 | MemGPT、MemoryBank、A-MEM、Mem0、Zep、MemOS | 失效或不再使用不等于物理删除；还需权限、调度与可观测性 |
-| 怎样复用经验、技能与多代理协作 | ReAct、Reflexion、Voyager、ExpeL、AutoGen（历史） | 长期真人效用、单代理对照、经验过时与运行成本 |
+| 记得用户说过什么、是否更新过 | [LongMemEval](#benchmark-longmemeval)、[LoCoMo](#benchmark-locomo)；[MemoryAgentBench](#benchmark-memoryagentbench) 测通用增量记忆 | 删除、纠错、跨用户隔离、真实长期使用 |
+| 回答是否符合这个人的偏好 | [LaMP](#benchmark-lamp)、[PersonaMem](#benchmark-personamem-v1) / [PersonaMem-v2](#benchmark-personamem-v2)、[PersonaBench](#benchmark-personabench)、[PrefEval](#benchmark-prefeval) | 真人满意度、私人文档部署安全；不同 QA / 生成 / MCQ 协议分别比较 |
+| 记忆是否影响工具参数与后续行动 | [Mem2ActBench](#benchmark-mem2actbench)、[MemoryArena](#benchmark-memoryarena) | 真实执行、副作用授权、任务中断后的恢复 |
+| 何时主动帮忙、何时澄清或不打扰 | [ProactiveBench](#benchmark-proactivebench-lu) / [Proactive Agent](#method-proactive-agent)、[KnowU-Bench](#benchmark-knowu-bench)、[MemoProBench](#benchmark-memoprobench) / [MemoProAgent](#method-memoproagent) | 真人接受率、打扰成本、拒绝后克制、撤销与授权 |
+| 多应用任务能否真的完成 | [AppWorld](#benchmark-appworld)、[WebArena](#benchmark-webarena)、[OSWorld](#benchmark-osworld)、[AndroidWorld](#benchmark-androidworld) | 真实账号、环境变化、不可逆操作 |
+| 多次尝试是否稳定遵守流程 | [τ-bench](#benchmark-tau-bench) | 模拟用户与真人差异、完整过程安全 |
+| 读到的信息是否应该向外分享 | [PrivacyLens](#benchmark-privacylens)；[AgentDojo](#benchmark-agentdojo) 另测间接提示注入 | 完整隐私合规、跨用户 / 多代理隔离、所有攻击面 |
+| 怎样管理长期记忆与生命周期 | [MemGPT](#method-memgpt)、[MemoryBank](#method-memorybank)、[A-MEM](#method-a-mem)、[Mem0](#method-mem0)、[Zep](#method-zep)、[MemOS](#method-memos) | 失效或不再使用不等于物理删除；还需权限、调度与可观测性 |
+| 怎样复用经验、技能与多代理协作 | [ReAct](#method-react)、[Reflexion](#method-reflexion)、[Voyager](#method-voyager)、[ExpeL](#method-expel)、[AutoGen](#method-autogen)（历史） | 长期真人效用、单代理对照、经验过时与运行成本 |
+
 
 <a id="personal-evaluation"></a>
 ## 评测 A：个人上下文、记忆与主动性
 
 这一组更直接涉及用户历史、偏好或主动帮助；**也没有哪一个单独测完了“个人 Agent”**。
 
+<a id="benchmark-lamp"></a>
 ### B1. LaMP · 个性化语言任务
 
 [LaMP: When Large Language Models Meet Personalization](https://aclanthology.org/2024.acl-long.399/) — ACL 2024。
@@ -53,6 +55,7 @@
 - **边界**：适合测个性化检索与生成，不是多步工具执行，也不是持续真实用户实验。
 - **资源**：[官方代码](https://github.com/LaMP-Benchmark/LaMP)、[数据入口](https://lamp-benchmark.github.io/download)。代码与构建方法标为 CC BY-NC-SA 4.0；底层数据另按各自许可。
 
+<a id="benchmark-locomo"></a>
 ### B2. LoCoMo · 长期对话记忆
 
 [Evaluating Very Long-Term Conversational Memory of LLM Agents](https://aclanthology.org/2024.acl-long.747/) — ACL 2024。
@@ -64,6 +67,7 @@
 - **边界**：官方当前公开集为 **10 段长对话**，不是早期 50 段版本；离线长对话不等于助理陪伴真人数月。
 - **资源**：[官方代码 / 数据](https://github.com/snap-research/locomo)。不发布原始图片，只提供 URL 等信息；[许可](https://github.com/snap-research/locomo/blob/main/LICENSE.txt)为 CC BY-NC 4.0。
 
+<a id="benchmark-longmemeval"></a>
 ### B3. LongMemEval · 跨会话记忆、更新与拒答
 
 [LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory](https://arxiv.org/abs/2410.10813) — 2024 预印本；ICLR 2025。
@@ -75,6 +79,7 @@
 - **边界**：检索召回不等于最终答对；构造历史上的 QA 不证明任务执行、隐私删除或持续在线能力。
 - **资源**：[官方评测代码](https://github.com/xiaowu0162/LongMemEval)、[官方 cleaned 数据](https://huggingface.co/datasets/xiaowu0162/longmemeval-cleaned)。固定数据修订版和 judge 版本。
 
+<a id="benchmark-personamem-v1"></a>
 ### B4. PersonaMem · 动态用户画像
 
 [Know Me, Respond to Me: Benchmarking LLMs for Dynamic User Profiling and Personalized Responses at Scale](https://arxiv.org/abs/2504.14225) — COLM 2025；此处指原始 benchmark / v1 数据。
@@ -86,17 +91,19 @@
 - **边界**：四选一表现不等于开放式个性化回答质量；合成人物也不等于真实长期用户。不要与 PersonaMem-v2 数据混用。
 - **资源**：[官方代码](https://github.com/bowen-upenn/PersonaMem)、[v1 数据](https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1)，含 32k、128k、1M 上下文设置。
 
+<a id="benchmark-mem2actbench"></a>
 ### B5. Mem2ActBench · 从记忆到工具参数
 
 [Mem2ActBench: A Benchmark for Evaluating Long-Term Memory Utilization in Task-Oriented Autonomous Agents](https://aclanthology.org/2026.acl-long.370/) — ACL 2026。
 
-**核验日期 / 阅读范围**：2026-10-31；论文摘要、§4.1 实验设置与 §5.4 工具选择评测相关段落；官方 README、根目录与数据目录入口。
+**核验日期 / 阅读范围**：2026-10-31；论文摘要、§4.1 实验设置与 §5.4 工具选择评测相关段落；官方 README（含 License 声明）、根目录与数据目录入口。
 
 - **输入 → 输出**：历史记忆、隐含约束的请求与工具 schema → 工具选择及参数；论文构建 400 个记忆依赖任务。
 - **测量**：参数匹配 / F1、工具选择及调用整体匹配；主实验给定正确工具，另有干扰工具测试。
 - **边界**：重点是把记忆用于参数，不应把生成正确调用写成已完成真实交易；主实验也不能当作开放工具选择成绩。
-- **资源**：[官方构建代码 / 数据目录](https://github.com/Cantaloupe-M/Mem2ActBench)。根目录未见明确 LICENSE，且使用 ToolACE、BFCL、OASST1 等来源；复用前分别确认许可。
+- **资源**：[官方构建代码 / 数据目录](https://github.com/Cantaloupe-M/Mem2ActBench)。[README 的 License 节](https://github.com/Cantaloupe-M/Mem2ActBench#license)声明 MIT License，但所查根目录未见独立 LICENSE 文件；复用前确认完整许可文本及适用范围。ToolACE、BFCL、OASST1 等上游数据仍须分别核对条款，不能由该声明推定全部数据都获 MIT 授权。
 
+<a id="benchmark-proactivebench-lu"></a>
 ### B6. ProactiveBench（Lu et al.）· 主动帮助时机
 
 [Proactive Agent: Shifting LLM Agents from Reactive Responses to Active Assistance](https://arxiv.org/abs/2410.12361) — 2024 预印本；ICLR 2025。
@@ -108,6 +115,7 @@
 - **边界**：主要测帮助是否合时宜，不能等同真人长期满意度或任务完成率；主动提议也不等于获准执行。
 - **资源**：[官方代码、数据、评测](https://github.com/thunlp/ProactiveAgent)。同名 ProactiveBench 有其他论文，此处只指 Lu et al. 的版本；方法见 M11。
 
+<a id="benchmark-personabench"></a>
 ### B7. PersonaBench · 从私人文档理解用户
 
 [PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data](https://aclanthology.org/2025.findings-acl.49/) — Findings of ACL 2025；查阅原文为 [arXiv v2，2025-08-20](https://arxiv.org/html/2502.20616v2)。
@@ -119,6 +127,7 @@
 - **边界**：直接研究个人上下文 QA，不是自主执行或隐私保护评测。合成社交关系不能证明真人个性化效果；官方 v1.0 公开示例为两个社区、每社区三人，不代表论文全部数据。
 - **资源**：[官方代码、公开评测数据及 README](https://github.com/SalesforceAIResearch/personabench)。CC BY-NC-SA 4.0；README 另有使用限制，复用前一并检查。
 
+<a id="benchmark-prefeval"></a>
 ### B8. PrefEval · 记住偏好不等于遵循偏好
 
 [Do LLMs Recognize Your Preferences? Evaluating Personalized Preference Following in LLMs](https://arxiv.org/html/2502.09597v1) — ICLR 2025；查阅 v1，2025-02-13。
@@ -130,6 +139,7 @@
 - **边界**：直接研究偏好遵循；这里的 personalization proactiveness 是无需提醒便沿用已知偏好，不是后台监控或自主发起任务，也不等于真人满意度。
 - **资源**：[官方代码及完整格式](https://github.com/amazon-science/PrefEval)、[显式偏好数据](https://huggingface.co/datasets/siyanzhao/prefeval_explicit)。[仓库许可](https://github.com/amazon-science/PrefEval/blob/main/LICENSE)为 CC BY-NC 4.0；所链 HF 数据仅为 explicit 子集，不是三种表达的全集。
 
+<a id="benchmark-personamem-v2"></a>
 ### B9. PersonaMem-v2 · 隐含偏好、归属与不再使用
 
 [PersonaMem-v2: Towards Personalized Intelligence via Learning Implicit User Personas and Agentic Memory](https://arxiv.org/html/2512.06688v1) — 2025 预印本；查阅 v1，2025-12-07。不同于 B4 的原始 PersonaMem 论文。
@@ -141,6 +151,7 @@
 - **边界**：要求忘记后不再使用信息，不证明存储、备份或模型参数中已删除。论文另训练可读记忆系统；其结果不是现成 Agent 的普遍能力。本条限定 text 设置。
 - **资源**：[官方数据](https://huggingface.co/datasets/bowen-upenn/PersonaMem-v2)标 CC BY 4.0；[系列仓库](https://github.com/bowen-upenn/PersonaMem)标 MIT。当前数据卡含后续 multimodal 资源，须固定 text revision、split、32k / 128k 与评测模式；未确认系列入口提供完整 v2 RL 训练复现包。
 
+<a id="benchmark-knowu-bench"></a>
 ### B10. KnowU-Bench · 澄清、主动同意与拒绝后克制
 
 [KnowU-Bench: Towards Interactive, Proactive, and Personalized Mobile Agent Evaluation](https://arxiv.org/html/2604.08455v1) — 2026 预印本；查阅 v1，2026-04-09。
@@ -152,6 +163,7 @@
 - **边界**：直接研究个性化与主动移动 Agent；模拟器、rubric 与 judge 影响成绩，不能等同真人接受率。未下载环境或验证全部任务可运行。
 - **资源**：[官方项目](https://zju-real.github.io/KnowU-Bench/)、[环境、任务及代码](https://github.com/ZJU-REAL/KnowU-Bench)。仓库 Apache-2.0；第三方 Android 应用、镜像与模型分别适用各自条款。
 
+<a id="benchmark-memoprobench"></a>
 ### B11. MemoProBench · 何时开口、说什么、何时不说
 
 [MemoProAgent: Toward Memory-Driven Proactive Assistance](https://arxiv.org/html/2610.22671v2) — 2026 预印本；查阅 v2，2026-10-21。早期索引可能仍用 ProPerAgent / ProPerMem；此处按 v2 命名，方法见 M12。
@@ -161,13 +173,14 @@
 - **输入 → 输出**：第一人称视频流及长个人历史，无显式提问 → 有记忆依据的适时提醒，或保持安静。
 - **测量**：Perfect 要求允许时间窗内恰好一次正确提醒；另报 Hit、过早、过晚、重复提醒及负例误触发，不能只报“曾命中”。
 - **边界**：直接研究个人记忆驱动主动性，但长历史是受控构造，不是真人一年跟踪；不测真实授权交易完成，也不证明全天候体验。
-- **资源**：[官方推理代码](https://github.com/facebookresearch/Memo-Pro-Agent)、[历史数据入口](https://huggingface.co/datasets/facebook/MemProBench)。代码 CC BY-NC 4.0；视频须按 [Ego4D](https://ego4d-data.org/) 条款另行取得。历史数据独立许可未确认，不能套用代码许可；公开推理 harness 不等于完整 RL 训练复现包。
+- **资源**：[官方推理代码](https://github.com/facebookresearch/Memo-Pro-Agent)为 CC BY-NC 4.0；[历史数据入口（受限）](https://huggingface.co/datasets/facebook/MemProBench)。官方 [README 数据说明](https://github.com/facebookresearch/Memo-Pro-Agent#data-and-reproducibility)明确：`facebook/MemProBench` 历史数据当前为 private，须有获授权的 Hugging Face 访问权限；本次未取得下载访问，独立数据许可仍未确认，不能套用代码许可。视频须按 [Ego4D](https://ego4d-data.org/) 条款另行取得；公开推理 harness 不等于完整 RL 训练复现包。
 
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
 以下研究增量记忆或跨会话任务依赖，属于**可迁移的通用能力评测**；不能因此称为完整的个人助理或长期真人实验。
 
+<a id="benchmark-memoryagentbench"></a>
 ### B12. MemoryAgentBench · 增量记忆与冲突更新
 
 [Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions](https://arxiv.org/html/2507.05257v1) — 2025 预印本；官方仓库标 ICLR 2026。本条固定 v1，2025-07-07。
@@ -179,6 +192,7 @@
 - **边界**：通用记忆组件评测，不是完整个人助理。分块摄入不等于持续真人互动，冲突更新不等于隐私删除；后续版本的 selective forgetting 命名不能静默替换 v1 设置或成绩。
 - **资源**：[官方代码](https://github.com/HUST-AI-HYZ/MemoryAgentBench)、[数据卡](https://huggingface.co/datasets/ai-hyz/MemoryAgentBench)均标 MIT；重组数据的上游条款仍须逐一核对。
 
+<a id="benchmark-memoryarena"></a>
 ### B13. MemoryArena · 跨会话依赖的行动闭环
 
 [Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks](https://arxiv.org/html/2602.16313v2) — 查阅 v2，2026-09-17；项目名 MemoryArena。
@@ -195,6 +209,7 @@
 
 以下可帮助测个人助理的“动手能力”，但多数属于**通用 Agent、网页 / GUI 或服务场景评测**，不能统称 personal-specific benchmark。AppWorld 有模拟个人应用与人物数据，仍不是长期真人个性化测试。
 
+<a id="benchmark-assistantbench"></a>
 ### B14. AssistantBench · 现实网页信息任务
 
 [AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?](https://aclanthology.org/2024.emnlp-main.505/) — EMNLP 2024。
@@ -206,6 +221,7 @@
 - **边界**：侧重找信息而非真实账号写操作；网页变化和答案时效影响复现，不测长期偏好维护。
 - **资源**：[官方项目页](https://assistantbench.github.io/)、[代码](https://github.com/oriyor/assistantbench)、[数据](https://huggingface.co/datasets/AssistantBench/AssistantBench)。
 
+<a id="benchmark-gaia"></a>
 ### B15. GAIA · 通用助理综合解题
 
 [GAIA: a benchmark for General AI Assistants](https://arxiv.org/abs/2311.12983) — 2023 预印本。
@@ -217,6 +233,7 @@
 - **边界**：单次问题的正确性不是个性化、后台主动性或长期任务可靠性；公开开发集与隐藏答案测试集分开。
 - **资源**：[官方数据卡与榜单入口](https://huggingface.co/datasets/gaia-benchmark/GAIA)。下载有门控条件，官方要求不要把题目集再分发成可爬取内容。
 
+<a id="benchmark-appworld"></a>
 ### B16. AppWorld · 跨应用个人数字任务沙箱
 
 [AppWorld: A Controllable World of Apps and People for Benchmarking Interactive Coding Agents](https://arxiv.org/abs/2407.18901) — ACL 2024。
@@ -228,6 +245,7 @@
 - **边界**：模拟 API 不是实网服务或 GUI；原始 benchmark 不等于后来的 AppWorld-UL 用户在环任务。
 - **资源**：[项目页](https://appworld.dev/appworld/)、[官方代码 / 数据下载流程](https://github.com/StonyBrookNLP/appworld)。保护内容有额外加密再分发要求，见[许可说明](https://github.com/StonyBrookNLP/appworld#-license)。
 
+<a id="benchmark-tau-bench"></a>
 ### B17. τ-bench · 工具、用户与规则交互
 
 [τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains](https://arxiv.org/abs/2406.12045) — 2024 预印本。
@@ -239,6 +257,7 @@
 - **边界**：客服侧领域流程不是长期私人助理；终态正确不保证每一步都合规，模拟用户会影响结果。
 - **资源**：[原论文代码 / 数据](https://github.com/sierra-research/tau-bench)。官方已明确标注该仓库任务过时，并从 README 导向 τ³-bench；复现实验与运行新版必须分别标版本。
 
+<a id="benchmark-webarena"></a>
 ### B18. WebArena · 可复现网页操作
 
 [WebArena: A Realistic Web Environment for Building Autonomous Agents](https://arxiv.org/abs/2307.13854) — 2023 预印本，2024 修订版。
@@ -250,6 +269,7 @@
 - **边界**：自托管站点利于复现，但不覆盖所有真实网站、登录障碍与持续个性化；不可直接代表任意浏览器任务成功率。
 - **资源**：[官方代码、环境与评测](https://github.com/web-arena-x/webarena)。固定任务修订版和网站镜像，避免混合不同环境结果。
 
+<a id="benchmark-osworld"></a>
 ### B19. OSWorld · 电脑操作与跨应用工作流
 
 [OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments](https://arxiv.org/abs/2404.07972) — 2024。
@@ -261,6 +281,7 @@
 - **边界**：不测长期用户关系；依赖 VM / 软件版本。原版、OSWorld-Verified 和 OSWorld 2.0 不能混报；部分云文档任务另需配置。
 - **资源**：[官方项目页及版本入口](https://os-world.github.io/)、[代码 / 任务](https://github.com/xlang-ai/OSWorld)。
 
+<a id="benchmark-androidworld"></a>
 ### B20. AndroidWorld · 动态手机任务
 
 [AndroidWorld: A Dynamic Benchmarking Environment for Autonomous Agents](https://arxiv.org/abs/2405.14573) — 2024 预印本，2025 修订版。
@@ -277,6 +298,7 @@
 
 分别看“本来就不该分享的信息”和“外部内容诱导的越权行为”。这些评测提供特定风险证据，**不构成完整隐私、安全或合规认证**；低违规率必须与任务效用一起看。
 
+<a id="benchmark-privacylens"></a>
 ### B21. PrivacyLens · 没有攻击者也会泄漏
 
 [PrivacyLens: Evaluating Privacy Norm Awareness of Language Models in Action](https://arxiv.org/html/2409.00138v3) — NeurIPS 2024 Datasets and Benchmarks；查阅 v3，2025-03-14。
@@ -288,6 +310,7 @@
 - **边界**：关注个人通信的上下文隐私，不需要攻击者。主要补全预构建轨迹，不是完整自主执行；美国规范、合成场景与模型 judge 限制泛化，也不等于完整隐私合规。
 - **资源**：[官方代码与构建流程](https://github.com/SALT-NLP/PrivacyLens)为 MIT；[官方数据](https://huggingface.co/datasets/SALT-NLP/PrivacyLens)为 CC BY 4.0，代码与数据许可不能混用。
 
+<a id="benchmark-agentdojo"></a>
 ### B22. AgentDojo · 工具结果中的不可信指令
 
 [AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents](https://arxiv.org/html/2406.13352v3) — NeurIPS 2024；查阅 v3，2024-11-24。
@@ -304,6 +327,7 @@
 
 这些条目解释可借鉴的系统机制，不把研究原型写成已验证的个人助理产品。
 
+<a id="method-memorybank"></a>
 ### M1. MemoryBank · 更新、强化与遗忘
 
 [MemoryBank: Enhancing Large Language Models with Long-Term Memory](https://arxiv.org/abs/2305.10250) — 2023 预印本。
@@ -314,6 +338,7 @@
 - **关联与边界**：直接面向长期对话伙伴；SiliconFriend 实验不是工具执行系统，也不是心理服务有效性的临床证据。
 - **资源**：[代码与中英文评测数据](https://github.com/zhongwanjun/MemoryBank-SiliconFriend)、[ChatGLM / BELLE LoRA checkpoint 发布页](https://github.com/zhongwanjun/MemoryBank-SiliconFriend/releases/tag/LoRA_checkpoint)。适配器不等于底座模型，许可分别核对。
 
+<a id="method-memgpt"></a>
 ### M2. MemGPT · 分层记忆与上下文管理
 
 [MemGPT: Towards LLMs as Operating Systems](https://arxiv.org/abs/2310.08560) — 2023 预印本，2024 修订版。
@@ -324,6 +349,7 @@
 - **关联与边界**：论文含多会话聊天与长文档实验；“虚拟上下文”不意味着无限、无损、无需成本的记忆。
 - **资源**：[论文项目页 / 实验数据入口](https://research.memgpt.ai/)、[历史 MemGPT / Letta 入口](https://github.com/letta-ai/letta)、[现行 Letta Code 源码](https://github.com/letta-ai/letta-code)。旧入口的 README 指向 letta-code，并将 V1 服务端保留于 archive 分支；复现论文须另定位当时版本，不能把现行产品或退休 V1 自动等同论文实现。
 
+<a id="method-a-mem"></a>
 ### M3. A-MEM · 关联笔记与记忆演化
 
 [A-MEM: Agentic Memory for LLM Agents](https://arxiv.org/abs/2502.12110) — NeurIPS 2025。
@@ -334,6 +360,7 @@
 - **关联与边界**：可用于助理的可关联记忆；长对话 QA 实验不证明真实任务完成或记忆修改始终正确。
 - **资源**：[论文评测代码](https://github.com/WujiangXu/A-mem)、[可集成系统代码](https://github.com/WujiangXu/A-mem-sys)。两仓库用途不同；是外接记忆方法，不是一个新底座模型。
 
+<a id="method-mem0"></a>
 ### M4. Mem0 · 提取、整合与检索
 
 [Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory](https://arxiv.org/abs/2504.19413) — 2025 arXiv 论文版。
@@ -344,6 +371,7 @@
 - **关联与边界**：适用于跨会话个人上下文；论文基于 LoCoMo 的正确性、延迟与 token 评估，不能外推所有任务或所有部署。
 - **资源**：[官方项目代码](https://github.com/mem0ai/mem0)。项目、托管服务与算法已持续演进；本文链接的是 2025 方案，不将当前宣传数字作为该论文的独立复现结果。
 
+<a id="method-zep"></a>
 ### M5. Zep / Graphiti · 时间有效性与历史保留
 
 [Zep: A Temporal Knowledge Graph Architecture for Agent Memory](https://arxiv.org/html/2501.13956v1) — 2025 预印本；查阅 v1，2025-01-20。
@@ -354,6 +382,7 @@
 - **关联与边界**：可借鉴个人事实 / 偏好版本管理；论文在 DMR、LongMemEval 测 QA 正确性与延迟。模型可能误判冲突；失效不是物理删除，QA 提升不证明工具任务成功。
 - **资源**：[Graphiti 官方代码](https://github.com/getzep/graphiti)，Apache-2.0；[官方 Zep / Graphiti 区分](https://help.getzep.com/zep-vs-graphiti)。公开引擎、完整托管服务及 2025 论文配置不能互相等同，也不是新底座模型发布。
 
+<a id="method-memos"></a>
 ### M6. MemOS · 把记忆当作可治理资源
 
 [MemOS: A Memory OS for AI System](https://arxiv.org/html/2507.03724v1) — 本条固定 2025 预印本 v1，2025-07-04。
@@ -369,6 +398,7 @@
 
 其中既有直接研究主动助理的工作，也有可借鉴的通用技能学习与编排方法。外部经验积累不等于已解决参数级持续学习，多代理也不自动更可靠。
 
+<a id="method-generative-agents"></a>
 ### M7. Generative Agents · 记忆—反思—规划
 
 [Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) — 2023。
@@ -379,6 +409,7 @@
 - **关联与边界**：为长期状态与计划提供结构思路；目标是可信的人类行为模拟，不是替真实用户办事或履行授权的证据。
 - **资源**：[官方模拟器、环境与回放说明](https://github.com/joonspk-research/generative_agents)。依赖外部模型调用，不应当作独立模型权重发布。
 
+<a id="method-react"></a>
 ### M8. ReAct · 交替推理与行动
 
 [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — 2022 预印本；ICLR 2023。
@@ -389,6 +420,7 @@
 - **关联与边界**：通用工具执行循环的基础；原实验为问答、事实核验与交互环境，不自带长期记忆、权限治理或全天候调度。
 - **资源**：[官方代码、提示样例与实验 notebook](https://github.com/ysymyth/ReAct)。主要为 prompting 实现，不是完整个人助理。
 
+<a id="method-reflexion"></a>
 ### M9. Reflexion · 把失败反馈留给下一次
 
 [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) — NeurIPS 2023。
@@ -399,6 +431,7 @@
 - **关联与边界**：可借鉴任务重试与经验记忆；效果依赖反馈质量与重试预算，不保证“想一想”就能纠错或持续自我提升。
 - **资源**：[官方代码、实验日志与示例](https://github.com/noahshinn/reflexion)。原评测含决策、推理与编码，不是长期私人助理研究。
 
+<a id="method-toolformer"></a>
 ### M10. Toolformer · 学会何时调用工具
 
 [Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) — 2023 预印本。
@@ -409,6 +442,7 @@
 - **关联与边界**：说明工具调用可被学习；原方法不支持链式或交互式工具使用，不能当成完整多步 Agent。
 - **资源**：[官方研究页](https://ai.meta.com/research/publications/toolformer-language-models-can-teach-themselves-to-use-tools/)。所查论文 / 官方页未给出对应完整代码、训练数据和模型权重入口；不将第三方复现标作官方发布。
 
+<a id="method-proactive-agent"></a>
 ### M11. Proactive Agent · 从活动预测可接受的帮助
 
 [Proactive Agent: Shifting LLM Agents from Reactive Responses to Active Assistance](https://arxiv.org/abs/2410.12361) — 2024 预印本；ICLR 2025，与 B6 同一论文。
@@ -419,6 +453,7 @@
 - **关联与边界**：直接研究主动助理；预测用户需要不等于被授权替用户行动，部署还需处理活动采集隐私与误打扰。
 - **资源**：[代码 / 数据 / 评测](https://github.com/thunlp/ProactiveAgent)、[官方链接的 Agent 与 Reward Model 权重](https://huggingface.co/YancyLee/ProactiveAgent/tree/main)。权重、底座与代码许可分别确认。
 
+<a id="method-memoproagent"></a>
 ### M12. MemoProAgent · 用记忆决定是否值得打扰
 
 [MemoProAgent: Toward Memory-Driven Proactive Assistance](https://arxiv.org/html/2610.22671v2) — 2026 预印本 v2，2026-10-21；与 B11 同一论文。
@@ -427,8 +462,9 @@
 
 - **核心**：用图记忆组织个人历史，结合当前视频活动检索相关经历，再以打扰价值门控决定何时向生成器提供记忆、何时提醒；论文另有 RL 后训练阶段。
 - **关联与边界**：直接研究无需显式提问的主动助理。MemoProBench 测提醒内容、时机和重复干扰；论文构造历史不是长期真人部署，推断需要也不是执行授权。
-- **资源**：[官方推理 harness](https://github.com/facebookresearch/Memo-Pro-Agent)为 CC BY-NC 4.0；[历史数据](https://huggingface.co/datasets/facebook/MemProBench)独立许可未确认，[Ego4D 视频](https://ego4d-data.org/)须另行申请并遵循其条款。公开推理代码不等于完整 RL 训练代码或权重复现包。
+- **资源**：[官方推理 harness](https://github.com/facebookresearch/Memo-Pro-Agent)为 CC BY-NC 4.0；[历史数据（受限）](https://huggingface.co/datasets/facebook/MemProBench)据官方 [README 数据说明](https://github.com/facebookresearch/Memo-Pro-Agent#data-and-reproducibility)当前为 private，须有获授权的 Hugging Face 访问权限。本次未取得下载访问，独立数据许可仍未确认；[Ego4D 视频](https://ego4d-data.org/)须另行申请并遵循其条款。公开推理代码不等于完整 RL 训练代码或权重复现包。
 
+<a id="method-voyager"></a>
 ### M13. Voyager · 可复用的可执行技能
 
 [Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/html/2305.16291v2) — 查阅 2023 预印本 v2，2023-10-19。
@@ -439,6 +475,7 @@
 - **关联与边界**：通用具身 / 游戏方法，可借鉴技能积累；评测探索物品、里程碑、移动范围和新任务迁移。lifelong learning 主要累积外部技能，不是持续更新底座权重；不能从 Minecraft 外推邮件、日历或真实电脑效果。
 - **资源**：[官方代码、prompt 与技能库](https://github.com/MineDojo/Voyager)，MIT；Minecraft 与模型 / API 分别授权。原实验使用当时的 GPT-4 / GPT-3.5 API，更换模型不属于严格复现。
 
+<a id="method-expel"></a>
 ### M14. ExpeL · 从多任务经历提炼经验
 
 [ExpeL: LLM Agents Are Experiential Learners](https://arxiv.org/html/2308.10144v3) — AAAI 2024；查阅 v3，2024-12-20。
@@ -449,6 +486,7 @@
 - **关联与边界**：可借鉴助理的经验记忆；评测含 Wikipedia QA / 事实核验、ALFWorld 家务和 WebShop 购物，分别用 EM、成功率、购物奖励等。四折经验增长不是长期真人持续学习，过时经验与隐私需另测。
 - **资源**：[官方代码、数据目录和 prompt](https://github.com/LeapLabTHU/ExpeL)，Apache-2.0；各环境和数据集许可分别检查。无参数微调不代表无成本，轨迹采集与经验提取仍需模型调用。
 
+<a id="method-autogen"></a>
 ### M15. AutoGen · 多代理对话与人类介入（历史）
 
 [AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/html/2308.08155v2) — 查阅 2023 预印本 v2，2023-10-03。
