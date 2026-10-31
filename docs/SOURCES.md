@@ -48,10 +48,35 @@
 | LangGraph | [官方 README](https://github.com/langchain-ai/langgraph#readme) | 读到有状态编排、持久执行、人工介入和记忆；定位为开发基础设施，而非消费级助理。 |
 | Mem0 | [官方 README](https://github.com/mem0ai/mem0#readme) | 读到用户/会话/Agent 记忆与库、自托管、云平台路径；不引用其性能数字，也不将记忆层写成任务执行器。 |
 
+<a id="original-projects-audit"></a>
+### 首批 14 项：固定版本、根许可与发布复核
+
+独立复核完成于 **2026-10-31 21:42 UTC**：通过官方 GitHub 仓库元数据确认规范地址及默认分支，读取该分支观察到的 commit、以完整 commit 固定的 README 和根 LICENSE，并检查 `releases/latest` 与最多 3 条近期发布记录。14 个规范地址均与上表一致，均观察到 `archived=false`；28 个固定文件均成功读取。下表为这次复核的可追溯证据；上表保留首次阅读的功能与限制记录，不把未固定的早期页面当成新 commit 的逐字快照。
+
+commit 日期是源码提交日期，发布日期是 GitHub `published_at`（均为 UTC）；两者不表示同一代码版本。`latest` 是当时接口指定的非预发布条目，不保证是所有组件/分支按时间最新的版本，也不是成熟度或任务可靠性认证。除明确标出的预发布外，下表 latest 项均观察到 `prerelease=false`。根许可仅记录已读代码文件，不替代依赖、模型权重、品牌资产、数据及云服务条款核查；本仓库自身的文档许可另见[范围声明](LICENSE.md#zh)。**没有下载发行包、安装运行、验签、安全审计或任务实测。**
+
+| 项目与根许可 | 固定官方证据（观察到的默认分支） | 发布记录与边界 |
+| --- | --- | --- |
+| Hermes Agent · MIT | `main` · [`c419cf7c864a`](https://github.com/NousResearch/hermes-agent/commit/c419cf7c864ac0ee511dbd9f7091a8bba0b567ee) (2026-10-31 UTC) · [README.md](https://github.com/NousResearch/hermes-agent/blob/c419cf7c864ac0ee511dbd9f7091a8bba0b567ee/README.md) · [LICENSE](https://github.com/NousResearch/hermes-agent/blob/c419cf7c864ac0ee511dbd9f7091a8bba0b567ee/LICENSE) | latest [v0.22.5](https://github.com/NousResearch/hermes-agent/releases/tag/v0.22.5) (2026-10-23 UTC). 未安装或验证技能、渠道及模型配置。 |
+| Khoj · GNU AGPL v3 | `master` · [`ae229ca894c0`](https://github.com/khoj-ai/khoj/commit/ae229ca894c0b80ad84664afcfdde523b5e87057) (2026-08-02 UTC) · [README.md](https://github.com/khoj-ai/khoj/blob/ae229ca894c0b80ad84664afcfdde523b5e87057/README.md) · [LICENSE](https://github.com/khoj-ai/khoj/blob/ae229ca894c0b80ad84664afcfdde523b5e87057/LICENSE) | latest [2.0.0-beta.28](https://github.com/khoj-ai/khoj/releases/tag/2.0.0-beta.28) (2026-03-26 UTC). 标签含 **beta**，即使 API 标为 `prerelease=false` 也不改写为成熟版。根文件为 GNU AGPL v3 正文；未据此进一步断言 `-only` 或 `-or-later`。 |
+| Letta Code · Apache-2.0（代码；品牌资产除外） | `main` · [`91897d5c4b0b`](https://github.com/letta-ai/letta-code/commit/91897d5c4b0b6b61d3b2c8df09ff7d86345e2b2e) (2026-10-31 UTC) · [README.md](https://github.com/letta-ai/letta-code/blob/91897d5c4b0b6b61d3b2c8df09ff7d86345e2b2e/README.md) · [LICENSE](https://github.com/letta-ai/letta-code/blob/91897d5c4b0b6b61d3b2c8df09ff7d86345e2b2e/LICENSE) | latest [v0.34.36](https://github.com/letta-ai/letta-code/releases/tag/v0.34.36) (2026-10-31 UTC). 根文件另有 **Brand Assets Exclusion**：Letta / Letta Code 名称、标志、文字标识、图片和 ASCII 图形不在该 Apache 许可授权内。代码许可不等于品牌资产许可。 |
+| nanobot · MIT | `main` · [`8b37976d36c2`](https://github.com/HKUDS/nanobot/commit/8b37976d36c2812c62b464321e729a88872b60f9) (2026-10-31 UTC) · [README.md](https://github.com/HKUDS/nanobot/blob/8b37976d36c2812c62b464321e729a88872b60f9/README.md) · [LICENSE](https://github.com/HKUDS/nanobot/blob/8b37976d36c2812c62b464321e729a88872b60f9/LICENSE) | latest [v0.4.0](https://github.com/HKUDS/nanobot/releases/tag/v0.4.0) (2026-10-28 UTC). 默认分支文档可能领先发布包；功能须按安装版本复核。 |
+| NanoClaw · MIT | `main` · [`acc2b1c8f52a`](https://github.com/nanocoai/nanoclaw/commit/acc2b1c8f52a954368cfaf04b61c32f9a1efc280) (2026-10-26 UTC) · [README.md](https://github.com/nanocoai/nanoclaw/blob/acc2b1c8f52a954368cfaf04b61c32f9a1efc280/README.md) · [LICENSE](https://github.com/nanocoai/nanoclaw/blob/acc2b1c8f52a954368cfaf04b61c32f9a1efc280/LICENSE) | latest [v2026.10.0](https://github.com/nanocoai/nanoclaw/releases/tag/v2026.10.0) (2026-10-09 UTC). 另见预发布 [v2026.10.1-rc.2](https://github.com/nanocoai/nanoclaw/releases/tag/v2026.10.1-rc.2)（2026-10-22 UTC，`prerelease=true`）；不要与 latest 混为一版。 |
+| OpenClaw · MIT | `main` · [`d431ea3ef802`](https://github.com/openclaw/openclaw/commit/d431ea3ef802ccb7d9eba984e5b4e0e72e3fc004) (2026-10-31 UTC) · [README.md](https://github.com/openclaw/openclaw/blob/d431ea3ef802ccb7d9eba984e5b4e0e72e3fc004/README.md) · [LICENSE](https://github.com/openclaw/openclaw/blob/d431ea3ef802ccb7d9eba984e5b4e0e72e3fc004/LICENSE) | latest [v2026.10.9](https://github.com/openclaw/openclaw/releases/tag/v2026.10.9) (2026-10-29 UTC). 另见 [v2026.10.10-beta.5](https://github.com/openclaw/openclaw/releases/tag/v2026.10.10-beta.5)（2026-10-30 UTC，`prerelease=true`）及 [v2026.9.36](https://github.com/openclaw/openclaw/releases/tag/v2026.9.36)（2026-10-29 UTC）。latest 指定项不等于按发布时间排序的全部分支版本。 |
+| Mika · Apache-2.0 | `main` · [`279a5cae405a`](https://github.com/wangzan101/Mika/commit/279a5cae405ac83106b47af9c2794ebfa3333a57) (2026-10-31 UTC) · [README.md](https://github.com/wangzan101/Mika/blob/279a5cae405ac83106b47af9c2794ebfa3333a57/README.md) · [LICENSE](https://github.com/wangzan101/Mika/blob/279a5cae405ac83106b47af9c2794ebfa3333a57/LICENSE) | latest [v0.1.27](https://github.com/wangzan101/Mika/releases/tag/v0.1.27) (2026-10-31 UTC). 发布含 1 个 APK 资产，未下载、安装或验签；`prerelease=false` 不抹去早期测试提示及系统要求快照差异，见下节。 |
+| Mobile-Agent · MIT | `main` · [`81fa28b564ef`](https://github.com/X-PLUG/MobileAgent/commit/81fa28b564ef7a695521500bc15a0e1324b2b394) (2026-10-28 UTC) · [README.md](https://github.com/X-PLUG/MobileAgent/blob/81fa28b564ef7a695521500bc15a0e1324b2b394/README.md) · [LICENSE](https://github.com/X-PLUG/MobileAgent/blob/81fa28b564ef7a695521500bc15a0e1324b2b394/LICENSE) | [latest 接口](https://api.github.com/repos/X-PLUG/MobileAgent/releases/latest) 返回 404；[发布集合](https://api.github.com/repos/X-PLUG/MobileAgent/releases?per_page=3) 为空。 未观察到 GitHub release，不代表没有可运行代码、模型或其他分发渠道；模型权重许可须另查。 |
+| Mobilerun · MIT | `main` · [`11dcdebdec9e`](https://github.com/droidrun/mobilerun/commit/11dcdebdec9ea99f172dd7e80af7ba1eadbeb6c8) (2026-10-28 UTC) · [README.md](https://github.com/droidrun/mobilerun/blob/11dcdebdec9ea99f172dd7e80af7ba1eadbeb6c8/README.md) · [LICENSE](https://github.com/droidrun/mobilerun/blob/11dcdebdec9ea99f172dd7e80af7ba1eadbeb6c8/LICENSE) | latest [v0.7.4](https://github.com/droidrun/mobilerun/releases/tag/v0.7.4) (2026-10-27 UTC). 框架发布号不等于 Portal、设备平台或 Cloud 服务的统一版本。 |
+| Agent Zero · MIT | `main` · [`ff2a5b9c9c4e`](https://github.com/agent0ai/agent-zero/commit/ff2a5b9c9c4e490ba38dd7c313e779510bb2071a) (2026-10-13 UTC) · [README.md](https://github.com/agent0ai/agent-zero/blob/ff2a5b9c9c4e490ba38dd7c313e779510bb2071a/README.md) · [LICENSE](https://github.com/agent0ai/agent-zero/blob/ff2a5b9c9c4e490ba38dd7c313e779510bb2071a/LICENSE) | latest [v2.14](https://github.com/agent0ai/agent-zero/releases/tag/v2.14) (2026-10-13 UTC). MIT 来自实际根 LICENSE 正文，不依赖 GitHub 徽章识别；未安装或检查容器运行时。 |
+| Browser Use · MIT | `main` · [`b49a68e4060a`](https://github.com/browser-use/browser-use/commit/b49a68e4060acb226da8f784194fef301c53a6d7) (2026-10-30 UTC) · [README.md](https://github.com/browser-use/browser-use/blob/b49a68e4060acb226da8f784194fef301c53a6d7/README.md) · [LICENSE](https://github.com/browser-use/browser-use/blob/b49a68e4060acb226da8f784194fef301c53a6d7/LICENSE) | latest [0.13.14](https://github.com/browser-use/browser-use/releases/tag/0.13.14) (2026-10-26 UTC). 发布号对应仓库版本，不是托管浏览器或 Cloud 服务的统一版本。 |
+| UI-TARS Desktop / Agent TARS · Apache-2.0 | `main` · [`3ac2cb8d946d`](https://github.com/bytedance/UI-TARS-desktop/commit/3ac2cb8d946d78d5ff92ad17b318eaafa18c178c) (2026-10-09 UTC) · [README.md](https://github.com/bytedance/UI-TARS-desktop/blob/3ac2cb8d946d78d5ff92ad17b318eaafa18c178c/README.md) · [LICENSE](https://github.com/bytedance/UI-TARS-desktop/blob/3ac2cb8d946d78d5ff92ad17b318eaafa18c178c/LICENSE) | latest [v0.3.1](https://github.com/bytedance/UI-TARS-desktop/releases/tag/v0.3.1) (2026-10-08 UTC). 同仓库含多个入口；历史 [v0.3.0-beta.12](https://github.com/bytedance/UI-TARS-desktop/releases/tag/v0.3.0-beta.12) 也标为 `prerelease=false`，不能用该布尔值消除 beta 限制。 |
+| LangGraph · MIT | `main` · [`e5c961d7fbe7`](https://github.com/langchain-ai/langgraph/commit/e5c961d7fbe7ca6fdd4c94c84d90511372514d55) (2026-10-31 UTC) · [README.md](https://github.com/langchain-ai/langgraph/blob/e5c961d7fbe7ca6fdd4c94c84d90511372514d55/README.md) · [LICENSE](https://github.com/langchain-ai/langgraph/blob/e5c961d7fbe7ca6fdd4c94c84d90511372514d55/LICENSE) | latest [1.2.19](https://github.com/langchain-ai/langgraph/releases/tag/1.2.19) (2026-10-30 UTC). 发布集合另有 [sdk==0.4.11](https://github.com/langchain-ai/langgraph/releases/tag/sdk%3D%3D0.4.11) 与 [checkpointsqlite==3.1.3](https://github.com/langchain-ai/langgraph/releases/tag/checkpointsqlite%3D%3D3.1.3)；不是全部组件共用一个版本。 |
+| Mem0 · Apache-2.0 | `main` · [`753496cf1435`](https://github.com/mem0ai/mem0/commit/753496cf1435d76c3a711f3af51303f7fdcb6420) (2026-10-30 UTC) · [README.md](https://github.com/mem0ai/mem0/blob/753496cf1435d76c3a711f3af51303f7fdcb6420/README.md) · [LICENSE](https://github.com/mem0ai/mem0/blob/753496cf1435d76c3a711f3af51303f7fdcb6420/LICENSE) | latest [ts-v3.3.1](https://github.com/mem0ai/mem0/releases/tag/ts-v3.3.1) (2026-09-25 UTC). latest 标题为 Node SDK；另有 Python SDK [v2.2.1](https://github.com/mem0ai/mem0/releases/tag/v2.2.1)（2026-09-25 UTC）。不能把 TS / Node 标签当作 Python、托管服务和整个项目的统一版本。 |
+
 ### Mika 系统要求复核
 
 - **2026-10-31 20:35 UTC**：重新读取官方仓库首页和原始 README，系统要求表为安装/聊天/网页/沙箱 Android 11+、App 操控 Android 12+，推荐 Android 14+；FAQ 与该表一致。
 - 同日 **01:59 UTC** 的较早阅读记录曾显示任务需 Android 13+。两个时点的页面证据存在差异，未固定到同一 commit，不能据此断言具体哪次发布调整了要求。
+- **2026-10-31 21:42 UTC**：本次[固定 README](https://github.com/wangzan101/Mika/blob/279a5cae405ac83106b47af9c2794ebfa3333a57/README.md)（commit `279a5cae405a`）写明聊天/网页/文件 Android 11+、手机 App 操控 Android 12+、推荐 Android 14+，Linux 沙箱仅 arm64；这是当前源码快照，不追溯替换前两次未固定的记录。[v0.1.27](https://github.com/wangzan101/Mika/releases/tag/v0.1.27) 于 21:22:13 UTC 发布、`prerelease=false`，不能单凭该标记推翻早期测试提示或证明兼容性。
 - 因此 README 保留共同明确的安装要求与推荐版本，将 App 操控最低版本写为**按所装版本文档核对**，不把任一主分支快照当作所有发布版本的兼容承诺。
 
 <a id="expansion"></a>
@@ -59,7 +84,7 @@
 
 核验日期：**2026-10-31 UTC**。新增 **15 项（12 项主分类 + 3 项单列预览）**，全部观察到 `archived=false`；这不代表活跃度或可靠性。README/许可按观察到的默认分支 commit 固定；15 个固定 README 与首次读取的 blob SHA 一致。除 README 外仅做必要的构建设置、工具或官方验证文档定点读取，**未安装、未执行、未跑基准、未验签或审计安全**。
 
-发布状态来自官方发布集合及 latest 接口。`latest` 返回 404 仅表示没有该接口的非预发布条目，不表示没有任何预发布；`prerelease=false` 也不覆盖上游 beta/早期警告。固定 README 可能领先发布包，未进行逐项安装验收。以下根许可只说明已读代码文件，不重新授权模型、依赖、商标、数据或服务，也不是为本清单选择许可证。
+发布状态来自官方发布集合及 latest 接口。`latest` 返回 404 仅表示没有该接口的非预发布条目，不表示没有任何预发布；`prerelease=false` 也不覆盖上游 beta/早期警告。固定 README 可能领先发布包，未进行逐项安装验收。以下根许可只说明已读代码文件，不重新授权模型、依赖、商标、数据或服务，与本仓库的[文档许可](LICENSE.md#zh)分开处理。
 
 | 项目及根许可 | 固定官方依据 | 发布记录与核验边界 |
 | --- | --- | --- |
@@ -99,9 +124,9 @@
 ## 核验范围和维护约定
 
 - README 源码板块目前为 **29 项：26 个主分类条目 + 3 个单列预览条目**，覆盖五类主要用途和一个预览区。初始 14 项保留并新增 15 项；不含产品与论文目录，不是完整市场盘点。
-- 不以 Star、commit 时间或量化可靠性作排名；扩充部分固定 commit 只用于追溯证据，不是活跃度指标。本轮未核实的指标不作推断。
+- 不以 Star、commit 时间或量化可靠性作排名；固定 commit 只用于追溯证据，不是活跃度指标。本轮未核实的指标不作推断。
 - 参考主分支 README 不代表所有版本均支持该能力，安装前应再次核对具体版本。
 - 网页可读取只说明来源当时可访问，不说明软件安全、服务可用或未来链接稳定。
 - 产品目录和论文目录的新增，不表示原有源码项目经过再次实测，也不把研究系统自动认定为公开可用产品。
 - 更新某条目时同步更改其来源与核验日期。若只复查了一部分，不应把整份清单的核验日期整体刷新。
-- 仓库内容许可证待维护者决定，本轮没有添加 `LICENSE` 文件。
+- 维护者已选择 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en) 用于本仓库的原创文档文字与原创编选内容，见 [docs/LICENSE.md 的范围声明](LICENSE.md#zh)。第三方材料与商标保留自身条款；源码、脚本及可执行代码不在范围内，代码许可证待单独决定。未添加覆盖整个仓库的根 `LICENSE`。
