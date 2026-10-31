@@ -8,53 +8,25 @@
 
 Initial documentation review for source-code projects: **2026-10-31**. Product and paper entries carry their own dates and review scopes. Review does not mean hands-on testing, paper reproduction, or a security audit. Project links lead to official repositories, product links to official access points, and paper links to the originals. See the [source notes](docs/SOURCES.en.md) for evidence and review conventions.
 
-| What are you looking for? | Start here | How to read it |
-| --- | --- | --- |
-| Install, self-host, or customize an agent | [Source-code projects](#source-projects) | Distinguish applications, runtimes, frameworks, and components; check deployment requirements |
-| Use a personal-agent service directly | [Publicly available products](docs/PRODUCTS.en.md) | Includes commercial services; check access, region/account requirements, and payment conditions separately |
-| Understand how agent capabilities are measured | [Papers: Eval / Benchmark](docs/PAPERS.en.md) | Examine tasks, environments, metrics, and limitations—not leaderboard scores as a proxy for real-world reliability |
-| Understand how agents are built | [Papers: Methods / Systems](docs/PAPERS.en.md) | Examine planning, memory, tool use, long-running behavior, and what the paper actually validates |
-| Design your own low-risk task trial | [Task protocols](docs/TASKS.en.md) | These protocols have not been executed; they are not test results, success rates, or product rankings |
-| Connect personal needs to research and implementations | [Task–research–implementation guide](docs/LANDSCAPE.en.md) | Distinguish thematic connections from evidenced direct relationships; do not infer paper adoption or benchmark passes |
-
+<a id="start-here"></a>
 ## Contents
 
-- [Start here](#start-here)
-- [Task–research–implementation guide](docs/LANDSCAPE.en.md)
-- [Scope](#scope)
-- [Publicly available products, including commercial services](#products)
-- [Source-code projects](#source-projects)
-  - [Persistent personal assistants](#personal-assistants)
-  - [Mobile agents](#mobile-agents)
-  - [Desktop knowledge & work assistants](#desktop-assistants)
-  - [Computer & browser use](#computer-and-browser)
-  - [Building blocks](#building-blocks)
-  - [Developer previews & alpha projects](#previews)
-- [Papers: benchmarks, methods, and systems](#papers)
-- [Evaluation guide](#comparison)
-- [Safety checklist](#safety)
-- [Related lists](#related-lists)
-- [Contributing & licensing](#contributing)
+Choose by task, not by ranking. The [source-project catalog](#source-projects) separates applications, runtimes, frameworks, components, and previews; check the caveats for your device and version.
 
-<a id="start-here"></a>
-## Start here
-
-These are reading routes, not a “best agent” ranking. Your choice depends on devices, models, permissions, and the maintenance effort you can support.
-
-| Your goal | Start with | Check first |
+| I want to… | Start here | Check first |
 | --- | --- | --- |
-| Tell an Android phone to operate apps for you | [Mobile agents](#mobile-agents): apps such as [Mika](https://github.com/wangzan101/Mika) and [Operit](https://github.com/AAswordman/Operit); frameworks are identified separately | Android / CPU architecture, device permissions, model provider, and the specific release; a framework is not a ready-made APK |
-| Reach a persistent assistant through messaging apps | [Persistent assistants](#personal-assistants): for example [OpenClaw](https://github.com/openclaw/openclaw), [Hermes Agent](https://github.com/NousResearch/hermes-agent), [nanobot](https://github.com/HKUDS/nanobot), and [QwenPaw](https://github.com/agentscope-ai/QwenPaw) | Where it keeps running, account connections, and automatic actions; distinguish desktop Beta from server paths |
-| Work with documents, meetings, spreadsheets, and file deliverables | [Desktop knowledge & work assistants](#desktop-assistants): [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm), [LobsterAI](https://github.com/netease-youdao/LobsterAI), [OpenWorker](https://github.com/andrewyng/openworker), and [Rowboat](https://github.com/rowboatlabs/rowboat) | OS/packages, models/connectors, and data flows; preserve Beta / prerelease distinctions and do not assume identical output formats across projects |
-| Focus on persistent memory and personal context | [Letta Code](https://github.com/letta-ai/letta-code) and [Khoj](https://github.com/khoj-ai/khoj) under [persistent assistants](#personal-assistants); see [desktop assistants](#desktop-assistants) for document knowledge work too | Where memories/documents are stored, whether they can be deleted, and what reaches the model |
-| Customize a messaging assistant with a smaller codebase | [NanoClaw](https://github.com/nanocoai/nanoclaw), compared with other architectures under [persistent assistants](#personal-assistants) | Container mounts, channel installation, and maintenance of custom code; size does not establish security or easier maintenance |
-| Let an agent research, handle files, or use tools on a computer | [Computer & browser use](#computer-and-browser): for example [Agent Zero](https://github.com/agent0ai/agent-zero), [goose](https://github.com/aaif-goose/goose), and [UI-TARS / Agent TARS](https://github.com/bytedance/UI-TARS-desktop) | Distinguish Docker desktops, extension tools, and GUI control; inspect actual isolation, mounts, and host permissions separately |
-| Write code to automate websites or phones | [Browser Use](https://github.com/browser-use/browser-use); [mobile frameworks](#mobile-agents) such as [Mobilerun](https://github.com/droidrun/mobilerun) and [Open-AutoGLM](https://github.com/zai-org/Open-AutoGLM) | Local versus hosted options, device connections, model endpoints, and runtime requirements |
-| Build your own assistant rather than install one | [Building blocks](#building-blocks): [LangGraph](https://github.com/langchain-ai/langgraph) and [Mem0](https://github.com/mem0ai/mem0) | You still need interfaces, authorization, scheduling, storage, and evaluation |
-| Find a service without deploying it yourself | [Product directory](docs/PRODUCTS.en.md) | Whether access is open and requires a subscription, supported region, or eligible account |
-| Study agent evaluation or implementation methods | [Paper directory](docs/PAPERS.en.md) | Benchmark versus method; what was read; whether results are only author-reported |
-| Participate in early projects and accept debugging work | [Developer previews & alpha projects](#previews) | Separate preview components and source paths from finished apps; similar names do not imply shared maturity or licenses |
-| Design your own low-risk trial | [Task protocols](docs/TASKS.en.md) | Not executed yet: establish authorization boundaries, synthetic data, and stop conditions; do not fill in untested scores |
+| Reach a persistent assistant or use personal memory | [Persistent personal assistants](#personal-assistants) | Runtime, messaging channels, memory storage, and automatic actions |
+| Operate phone apps | [Mobile agents](#mobile-agents) | Ready-made app vs. framework; OS, CPU, device permissions, and model endpoint |
+| Work with documents, meetings, and deliverable files | [Desktop knowledge & work assistants](#desktop-assistants) | Packages, connectors, supported outputs, and data flows |
+| Research, handle files, or automate a computer/browser | [Computer & browser use](#computer-and-browser) | GUI control vs. tool execution; host access, mounts, and local vs. hosted setup |
+| Build my own assistant | [Building blocks](#building-blocks) | Interfaces, authorization, scheduling, storage, and evaluation still need integration |
+| Explore early projects and help develop them | [Developer previews & alpha projects](#previews) | Source/build paths vs. finished apps; expect setup and debugging |
+| Use a service without deploying it | [Publicly available products](#products) | Access, region/account restrictions, and payment conditions |
+| Study evaluation or agent design | [Papers](#papers) | Eval / Benchmark vs. Methods / Systems; review scope and author-reported results |
+| Plan a low-risk trial | [Task protocols](docs/TASKS.en.md) | Unexecuted protocols, not results or product scores |
+| Connect personal needs with research and implementations | [Task–research–implementation guide](docs/LANDSCAPE.en.md) | Thematic links do not prove paper adoption or benchmark passes |
+
+[Scope](#scope) · [Evaluation guide](#comparison) · [Safety checklist](#safety) · [Related lists](#related-lists) · [Contributing & licensing](#contributing)
 
 <a id="scope"></a>
 ## Scope
