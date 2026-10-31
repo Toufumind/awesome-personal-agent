@@ -13,6 +13,10 @@ Initial documentation review for source-code projects: **2026-10-31**. Product a
 
 Choose by task, not by ranking. The [source-project catalog](#source-projects) separates applications, runtimes, frameworks, components, and previews; check the caveats for your device and version.
 
+**New here?** Pick one task in the [task–research–implementation guide](docs/LANDSCAPE.en.md) → inspect the linked implementations and evidence → plan a [low-risk trial](docs/TASKS.en.md). Thematic links do not prove paper adoption or benchmark passes; the trial protocols remain unexecuted.
+
+**Recent review · 2026-10-31:** [Original-project recheck](docs/SOURCES.en.md#original-projects-audit) · [Project additions and evidence](docs/SOURCES.en.md#expansion). These are documentation-review dates, not release dates or hands-on test results.
+
 | I want to… | Start here | Check first |
 | --- | --- | --- |
 | Reach a persistent assistant or use personal memory | [Persistent personal assistants](#personal-assistants) | Runtime, messaging channels, memory storage, and automatic actions |
@@ -24,7 +28,6 @@ Choose by task, not by ranking. The [source-project catalog](#source-projects) s
 | Use a service without deploying it | [Publicly available products](#products) | Access, region/account restrictions, and payment conditions |
 | Study evaluation or agent design | [Papers](#papers) | Eval / Benchmark vs. Methods / Systems; review scope and author-reported results |
 | Plan a low-risk trial | [Task protocols](docs/TASKS.en.md) | Unexecuted protocols, not results or product scores |
-| Connect personal needs with research and implementations | [Task–research–implementation guide](docs/LANDSCAPE.en.md) | Thematic links do not prove paper adoption or benchmark passes |
 
 [Scope](#scope) · [Evaluation guide](#comparison) · [Safety checklist](#safety) · [Related lists](#related-lists) · [Contributing & licensing](#contributing)
 
