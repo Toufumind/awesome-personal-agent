@@ -17,10 +17,12 @@
 | 了解怎样衡量 Agent 能力 | [论文：Eval / Benchmark](docs/PAPERS.md) | 看任务、环境、指标与局限，不把榜单分数当作现实可靠性 |
 | 了解 Agent 如何构建 | [论文：方法 / 系统](docs/PAPERS.md) | 看规划、记忆、工具使用与长期运行等机制，以及论文实际验证范围 |
 | 设计自己的低风险任务试验 | [任务协议](docs/TASKS.md) | 这是尚未执行的测试协议，不是测试结果、成功率或产品排名 |
+| 把个人需求与研究、实现联系起来 | [任务—研究—实现导读](docs/LANDSCAPE.md) | 区分主题关联与有依据的直接关系，不推断产品采用某篇论文或已通过基准 |
 
 ## 目录 · Contents
 
 - [从需求开始](#start-here)
+- [任务—研究—实现导读](docs/LANDSCAPE.md)
 - [收录范围](#scope)
 - [公开可用产品（含商业产品）](#products)
 - [源码项目](#source-projects)
@@ -43,15 +45,18 @@
 
 | 你的需求 | 先看 | 先确认什么 |
 | --- | --- | --- |
-| 给 Android 手机一句话，让它替我操作 App | [Mika](https://github.com/wangzan101/Mika) | Android 版本、调试权限、模型服务商与测试版限制 |
-| 从聊天软件联系一个长期助理 | [OpenClaw](https://github.com/openclaw/openclaw)、[Hermes Agent](https://github.com/NousResearch/hermes-agent)、[nanobot](https://github.com/HKUDS/nanobot) | 常驻运行位置、账号接入方式、哪些操作会自动执行 |
-| 重点是持续记忆与个人上下文 | [Letta Code](https://github.com/letta-ai/letta-code)、[Khoj](https://github.com/khoj-ai/khoj) | 记忆/文档存在哪里、能否删除、哪些内容会发送给模型 |
-| 想用较小代码库定制聊天助理 | [NanoClaw](https://github.com/nanocoai/nanoclaw) | 容器挂载、渠道安装、定制代码的维护成本 |
-| 让 Agent 在隔离的电脑环境中工作 | [Agent Zero](https://github.com/agent0ai/agent-zero) | Docker、文件挂载范围与宿主机桥接权限 |
-| 写代码自动操作网页或手机 | [Browser Use](https://github.com/browser-use/browser-use)、[Mobilerun](https://github.com/droidrun/mobilerun) | 本地与托管方案差异、设备连接和运行环境 |
-| 自己开发助理，而不是安装成品 | [LangGraph](https://github.com/langchain-ai/langgraph)、[Mem0](https://github.com/mem0ai/mem0) | 还需要自己实现界面、授权、调度、存储与评估 |
+| 给 Android 手机一句话，让它替我操作 App | [手机 Agent 分类](#mobile-agents)：应用如 [Mika](https://github.com/wangzan101/Mika)、[Operit](https://github.com/AAswordman/Operit)；开发框架另列 | Android / CPU 架构、设备权限、模型服务商与具体发布版本；框架不是现成 APK |
+| 从聊天软件联系一个长期助理 | [常驻助理分类](#personal-assistants)：如 [OpenClaw](https://github.com/openclaw/openclaw)、[Hermes Agent](https://github.com/NousResearch/hermes-agent)、[nanobot](https://github.com/HKUDS/nanobot)、[QwenPaw](https://github.com/agentscope-ai/QwenPaw) | 常驻运行位置、账号接入方式、哪些操作会自动执行；桌面 Beta 与服务器路径分开 |
+| 围绕文档、会议、表格和文件交付工作 | [桌面知识与办公分类](#desktop-assistants)：[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)、[LobsterAI](https://github.com/netease-youdao/LobsterAI)、[OpenWorker](https://github.com/andrewyng/openworker)、[Rowboat](https://github.com/rowboatlabs/rowboat) | 系统与安装包、模型/连接器和数据流；保留 Beta / 预发布区别，不默认每项都支持同样的产物 |
+| 重点是持续记忆与个人上下文 | [常驻助理分类](#personal-assistants)中的 [Letta Code](https://github.com/letta-ai/letta-code)、[Khoj](https://github.com/khoj-ai/khoj)；文档知识工作也见[桌面分类](#desktop-assistants) | 记忆/文档存在哪里、能否删除、哪些内容会发送给模型 |
+| 想用较小代码库定制聊天助理 | [NanoClaw](https://github.com/nanocoai/nanoclaw)，并与[常驻助理分类](#personal-assistants)的其他架构比较 | 容器挂载、渠道安装、定制代码的维护成本；代码体量不证明安全或维护更省心 |
+| 让 Agent 在电脑环境中研究、处理文件或使用工具 | [电脑与浏览器分类](#computer-and-browser)：如 [Agent Zero](https://github.com/agent0ai/agent-zero)、[goose](https://github.com/aaif-goose/goose)、[UI-TARS / Agent TARS](https://github.com/bytedance/UI-TARS-desktop) | 区分 Docker 桌面、扩展工具与 GUI 操控；实际隔离、文件挂载和宿主机权限分别检查 |
+| 写代码自动操作网页或手机 | [Browser Use](https://github.com/browser-use/browser-use)；[手机框架](#mobile-agents)如 [Mobilerun](https://github.com/droidrun/mobilerun)、[Open-AutoGLM](https://github.com/zai-org/Open-AutoGLM) | 本地与托管方案差异、设备连接、模型端点与运行环境 |
+| 自己开发助理，而不是安装成品 | [开发框架与记忆层](#building-blocks)：[LangGraph](https://github.com/langchain-ai/langgraph)、[Mem0](https://github.com/mem0ai/mem0) | 还需要自己实现界面、授权、调度、存储与评估 |
 | 不想自行部署，寻找可直接使用的服务 | [产品目录](docs/PRODUCTS.md) | 是否已开放使用，是否需要订阅、特定地区或受支持账号 |
 | 研究 Agent 的能力评估或实现方法 | [论文目录](docs/PAPERS.md) | 是 benchmark 还是方法论文；读到哪些部分，结果是否仅为作者报告 |
+| 愿意参与早期项目并承担调试工作 | [开发者预览与 Alpha](#previews) | 预览组件、源码路径与成品应用分开；不因名称相近混用成熟度或许可 |
+| 设计自己的低风险试验 | [任务协议](docs/TASKS.md) | 协议尚未执行；先确定授权边界、合成数据和停止条件，不填未经测试的分数 |
 
 <a id="scope"></a>
 ## 收录范围 · Scope
@@ -225,4 +230,4 @@
 
 欢迎补充项目、产品与论文，纠正过时信息，也欢迎可复现的使用或研究复现记录。请先读 [中文贡献指南](CONTRIBUTING.md) / [English contribution guide](CONTRIBUTING.en.md)，同步更新对应目录的来源与日期，并遵循 [来源记录](docs/SOURCES.md) 的核验口径。
 
-**本仓库内容的许可证尚未指定，待维护者决定。** 所链接的第三方项目各自适用其许可证和服务条款；收录不代表重新授权它们的源码、商标或文档。
+**本仓库的原创文档文字与原创编选内容采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en)。** 完整适用范围见 [文档许可声明](docs/LICENSE.md#zh)。第三方材料、所链接的项目及其商标仍适用各自条款；收录不构成重新授权或背书。**源码、脚本及可执行代码不在该许可范围内，代码许可证待单独决定。**
