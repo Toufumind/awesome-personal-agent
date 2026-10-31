@@ -2,11 +2,11 @@
 
 [中文](PRODUCTS.md) · [Main list](../README.en.md)
 
-**Verified: 2026-10-31 (UTC).** This page covers **12 public commercial / proprietary personal-agent products**, including explicitly labeled regional rollouts, experimental features, and previews, alongside—not instead of—the open-source applications, runtimes, and frameworks in the main list. Order reflects usage patterns, not rankings.
+**Verified: 2026-10-31 (UTC).** This page covers **14 commercial / proprietary personal-agent products with official availability documentation**, including explicitly labeled regional rollouts, experimental features, and previews, plus **1 publicly described candidate, Instinct, whose self-service availability is unverified**. The candidate is excluded from the 14. Both groups complement—not replace—the open-source applications, runtimes, and frameworks in the main list. Order reflects usage patterns, not rankings.
 
 ## Reading this page
 
-- **Evidence: official-documentation review.** Capabilities and safeguards below are vendor descriptions, **not repository test results**. We did not install products, sign in, purchase plans, or perform external actions.
+- **Evidence: official-documentation review.** Except for the separately labeled third-party research note, capabilities and safeguards below are vendor descriptions, **not repository test results**. We did not install products, sign in, purchase plans, or perform external actions.
 - **Available does not mean available to everyone.** Plans, rollouts, region, age, administrators, devices, and third-party services can restrict access. Experimental and preview features are explicitly marked, not presented as general availability.
 - **Commercial does not imply open source; free of charge does not imply open source.** Entries describe complete products. Open models, public SDKs, or Chromium do not make the whole service open source. We do not claim these products have complete self-hostable source distributions.
 - **“Regional coverage unconfirmed”** means the reviewed official sources did not establish a complete list, not that access is worldwide. A Chinese interface does not establish availability in mainland China.
@@ -23,11 +23,19 @@
 | [Perplexity Computer](#perplexity-computer) | Background work, research, files, local extensions | Available; Brain memory remains a research preview |
 | [Comet Assistant](#comet) | Tasks inside a signed-in browser | Available; browser downloads and agent quotas differ |
 | [Lindy](#lindy) | Email, scheduling, and messaging-based assistance | Available; oriented toward personal work / teams |
+| [Town](#town) | Persistent assistant across email, calendars, and messages | Individual free / paid plans; check permissions and regional access |
+| [Grok Bot](#grok-bot) | Remembering Bots and a persistent cloud computer | Available on eligible paid plans; one user’s Bots share a computer |
 | [Poke](#poke) | Messaging-based personal assistance and everyday tasks | Available; Poke Human is a human service with separate plan requirements |
 | [Alexa+](#alexa) | Household voice, schedules, devices, services | Open in the US; stages and capabilities differ elsewhere |
 | [Meta Muse](#muse) | Messaging, long-term goals, and cloud-computer execution | Rolling out in the US; not worldwide general availability |
 | [Gemini Tasks](#gemini) | Google context, browsers, scheduled work | Available but experimental; substantial regional restrictions |
 | [Copilot Cowork for personal accounts](#copilot) | Microsoft 365 files, email, calendars | **Preview**; US / Canada, Premium / Pro |
+
+**Separate candidate: publicly described, self-service availability unverified (1 entry, excluded from the table above).**
+
+| Candidate | Main interaction / output | Verification boundary |
+| --- | --- | --- |
+| [Instinct](#instinct) | Life administration through messages / calls | Public site; current signup, regions, native apps, and plans unverified |
 
 See the corresponding entries for supporting sources, platforms, and permission boundaries.
 
@@ -103,6 +111,27 @@ See the corresponding entries for supporting sources, platforms, and permission 
 
 **Suggested first test—not performed:** Create a briefing and drafts from a test mailbox; prohibit sending, archiving, and deletion.
 
+<a id="town"></a>
+### Town — Cross-channel memory and personal work assistance
+
+- **Access / gates:** Individual free and paid plans; web, iOS, macOS, email, Slack, texting, WhatsApp, and Telegram. iOS is generally available. Complete regional/phone-number coverage was not verified; messaging support does not establish a native Android app. [Plans](https://www.town.com/pricing) · [Current channels](https://www.town.com/docs/getting-started/reaching-your-townie) · [iOS status](https://www.town.com/docs/using-town/ios)
+- **Tasks / models:** Inbox handling, reply drafts, scheduling, meeting preparation, and background routines for personal work. Third-party providers and routing, not one fixed model. [Documentation](https://www.town.com/docs) · [Providers](https://www.town.com/ai-model-providers)
+- **Memory / data:** Editable preferences and people notes, with global and routine-specific memories. Connected work and personal accounts contribute context; separate mailboxes are not isolation boundaries. The vendor states training is off by default, Google data is excluded, and hosting is in the US. [Memory](https://www.town.com/docs/features/context-and-memory) · [Data](https://www.town.com/trust)
+- **Approvals / limits:** Threads offer Auto, Balanced, and Strict; the documentation says Strict asks before sending, changing, or sharing. Routines and per-tool permissions are configured separately; Auto / Always allow can remove prompts. Do not read the Trust page's shorthand as universal per-action human approval. [Permission modes](https://www.town.com/docs/safety/modes-approvals)
+
+**Suggested first test—not performed:** Prepare a briefing from fictional schedules and preferences, inspect the saved memory, use a Strict thread, leave routines disabled, and make no external changes.
+
+<a id="grok-bot"></a>
+### Grok Bot — Persistent cloud computer and durable role memory
+
+- **Access / gates:** macOS, Windows, Linux, iOS, and Android on eligible paid plans, including X Subscription Premium/Super/Ultra and documented legacy Cursor or linked-subscription paths. **Distinct from the ordinary Grok chat app** and Grok Build. [Setup/plans](https://docs.x.ai/grok-bot/get-started) · [App distinction/billing](https://docs.x.ai/grok-bot/faq)
+- **Tasks / models:** Research, expense/receipt work, daily work digests, cross-app execution, and routines; cloud work can continue with your laptop closed. Backend model routing is task-dependent, not necessarily a Grok model every time. [Use cases](https://docs.x.ai/grok-bot/use-cases) · [Runtime](https://docs.x.ai/grok-bot/overview) · [Model FAQ](https://docs.x.ai/grok-bot/faq)
+- **Memory / data:** Preferences, facts, and work summaries can be queried, corrected, or removed through chat; some personal facts are shared across Bots. All Bots use the user's shared files, browser, and logins: **separate Bots are not security boundaries**. Deleting a Bot does not clean the shared computer. [Memory/deletion](https://docs.x.ai/grok-bot/bots) · [Computer boundary](https://docs.x.ai/grok-bot/overview)
+- **Approvals / privacy:** Auto Review can allow actions without human prompts; Ask first rules, review settings, and authorization matter. Saved Vault payment cards can fill checkout without separate approval each time. Cloud storage is required, and training choices follow applicable Cursor account settings—not an all-local or zero-retention guarantee. [Security/data](https://docs.x.ai/grok-bot/approvals-security-and-privacy)
+- **Regions:** Complete product coverage remains unverified. The separate X `@bot` handoff excludes X accounts based in Australia, the UK, the EU, Iceland, Liechtenstein, and Norway; that is not the entire app's region list. [X tagging](https://docs.x.ai/grok-bot/tag-on-x)
+
+**Suggested first test—not performed:** Summarize public sources, save a harmless formatting preference, check its reuse, then request removal; connect no private accounts.
+
 <a id="poke"></a>
 ### Poke — messaging-based personal assistance and everyday tasks
 
@@ -156,6 +185,22 @@ See the corresponding entries for supporting sources, platforms, and permission 
 - **Naming / limits:** Copilot Tasks is migrating to Cowork. Work / school general availability does not mean personal-account general availability. [Migration](https://support.microsoft.com/en-us/microsoft-365-copilot/learning/changes-microsoft-copilot-app)
 
 **Suggested first test—not performed:** Summarize a test OneDrive file into a new copy; do not overwrite originals or send mail.
+
+## Publicly described, self-service availability unverified
+
+This separate group contains 1 candidate, not a confirmed public-signup offering.
+
+<a id="instinct"></a>
+### Instinct — Life administration through messages and calls
+
+- **Stage / entry:** The public site describes texting/calling an assistant. Try resolved to a login page; no login was attempted. Current invitations, regions, native-app availability, exact messaging channels, and free/paid pricing remain unverified. Terms require 18+; their paid-service section is not a verified current plan. [Home](https://instinct.com/) · [Entry](https://app.instinct.com/login) · [Terms](https://instinct.com/terms)
+- **Tasks / models:** Vendor examples include train bookings, groceries, flowers, and finding a court, using a phone and computer. These are claims, not repository tests. Fixed models, completion reliability, and internal memory architecture were not verified. [Product](https://instinct.com/)
+- **Context / data:** The policy describes personalization using provided/connected data. Training use is permitted; opt-out is prospective with a safety-review exception, while Google Workspace API data and, separately in the terms, Vault materials have no-training commitments. Disconnecting does not automatically remove indexed data. [Privacy](https://instinct.com/privacy-policy) · [Vault terms](https://instinct.com/terms)
+- **Approvals / limits:** Terms do not guarantee safeguards prevent mistaken actions. No verified universal confirmation rule for purchases or external messages was found; third-party demos and anecdotes cannot supply that guarantee. [Terms](https://instinct.com/terms)
+
+**Suggested first test—not performed:** Only with confirmed access, research public travel options without booking, paying, or contacting anyone; first inspect access, memory controls, and approval settings.
+
+**Third-party research note—not official documentation or our hands-on test:** Supermemory founder Dhravya Shah’s [September 20, 2026 black-box teardown](https://supermemory.ai/blog/reverse-engineering-instinct-memory/) reports keyword hits, some paraphrase / typo misses, and one roughly 23-hour-16-minute write delay that motivated a daily-batch hypothesis. The author had no source access and operates a memory product. These are historical observations and hypotheses, not proof of current retrieval, a fixed write schedule, complete architecture, deletion guarantees, or self-service availability.
 
 ## Six checks beyond “can it do this?”
 
