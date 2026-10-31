@@ -1,0 +1,53 @@
+name: "真实使用 / 测试报告 · Hands-on report"
+description: "分享可复核的成功、失败或中止记录。 / Share a reviewable success, failure, or stopped run."
+body:
+  - type: markdown
+    attributes:
+      value: |
+        不会提 PR 也欢迎参与；中文或英文任选其一。这里只记录亲自执行的任务，不把演示、文档或作者报告当作实测；一次结果不代表普遍成功率。无需为填表购买、注册或执行有风险的操作。
+        No PR needed; Chinese or English is welcome. Report tasks you actually ran, not demos, documentation, or author-reported results. One run is not a general success rate. Do not purchase, register, or perform risky actions just to complete this form.
+
+        **公开内容：不要贴 API Key、token、Cookie、私人聊天或个人信息。用公开/合成输入和最小化结果摘要；无需上传原始日志、截图或账号资料。不能安全公开的部分请省略并说明限制。**
+        **This issue is public: never post API keys, tokens, cookies, private conversations, or personal information. Use public/synthetic inputs and minimal result summaries; raw logs, screenshots, and account details are not required. Omit anything unsafe to share and state the limitation.**
+  - type: textarea
+    id: links
+    attributes:
+      label: "链接 · Links"
+      description: "被测项目/产品的名称、官方链接；如采用仓库任务协议，附任务编号或协议链接。 / Name and official link of the tested project/product; include the task ID or protocol link if using a repository task protocol."
+    validations:
+      required: true
+  - type: textarea
+    id: version-date
+    attributes:
+      label: "版本与日期 · Version and date"
+      description: "测试日期（YYYY-MM-DD）、版本/commit、系统、模型、相关配置与授权边界；不填账号标识，未知项写未知。 / Test date (YYYY-MM-DD), version/commit, OS, model, relevant configuration, and authorized scope; omit account identifiers and mark unknowns."
+    validations:
+      required: true
+  - type: textarea
+    id: task-input-output
+    attributes:
+      label: "任务输入与输出 · Task input and output"
+      description: "给出可安全复核的最小步骤和输入，写明预设成功标准、预期与实际输出、尝试次数、人工干预、成本及失败/中止情况；未知或不适用可注明。 / Give safe minimal steps and input, predefined success criteria, expected and actual output, attempts, human interventions, cost, and failures/stops; mark unknown or not applicable where needed."
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: "来源与核验范围 · Sources and review scope"
+      description: "给出安全的最小结果摘要或公开记录链接，以及所用官方文档；注明哪些是亲测、哪些来自作者报告。无需另建公开日志。 / Provide a safe minimal result summary or public record link and the official documentation used; separate your observations from author-reported claims. No separate public log is required."
+    validations:
+      required: true
+  - type: textarea
+    id: unverified
+    attributes:
+      label: "未验证项 · Unverified items"
+      description: "未测的任务/条件、结果缺口，以及合成替换或省略证据对复核的影响。 / Untested tasks/conditions, gaps in the result, and how synthetic replacements or omitted evidence limit review."
+    validations:
+      required: true
+  - type: checkboxes
+    id: public-content
+    attributes:
+      label: "提交前确认 · Before submitting"
+      options:
+        - label: "我已检查正文、链接及附件，不含秘密或个人信息。 / I checked the text, links, and attachments for secrets and personal information and removed any found."
+          required: true
