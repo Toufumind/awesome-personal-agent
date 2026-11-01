@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **63 篇不同论文**：42 个评测条目、29 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD 与 Me-Agent/User FingerTip 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **68 篇不同论文**：44 个评测条目、34 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille 与 PUMA/PersonalWAB 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B42、M16–M29 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B44、M16–M34 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -382,6 +382,24 @@
 - **评什么**：在 FingerTip 基础上删除应用名或模糊化内容；报告 60 用户、33 应用、300 条 Type I 与 267 条 Type II 指令，分别测应用选择、内容偏好与执行表现。
 - **边界**：总条数与“每用户 15 条训练、5 条测试”的表述需进一步澄清，不能称未见用户测试。表 3 应用选择率 100% 不等于任务全成功，其 TSR 为 80%／50%；未建立长期真人部署证据。
 - **资源**：[作者仓库](https://github.com/Gianthaha/personal-mobile-agent)标 MIT，已有代码目录，但 README 仍预告更新；完整基准发布与可复现性未确认。
+
+<a id="benchmark-userville"></a>
+### B43. UserVille · 隐含任务与交互偏好
+
+与 M30 同篇，不另计。[原文](https://arxiv.org/html/2511.02208v2)阅读范围及资源限制同 M30。
+
+- **自动部分**：修改任务描述并用偏好条件化 LLM 模拟用户；20种交互偏好含8种留出。代码定位用 F1，BrowseComp-Plus 用 EM；个性化指标只统计提问会话。
+- **真人部分**：v2 有33名程序员、300次任务评估；任务来自 SWE-Bench，参与者可见题目与标准补丁，不是自然长期个人部署。满意度 PPP 3.75、GPT-5 3.79；报告解决率71%、85%，不能只宣传满意度接近。
+- **解释**：表1综合均值62.04对 Seed-OSS-36B 45.32；+16.72 指这个比较，不是相对 GPT-5 的提升，更不是任务成功率百分点。
+
+<a id="benchmark-personalwab"></a>
+### B44. PersonalWAB · 购物历史条件化函数任务
+
+与 M31 同篇，不另计。[原文](https://arxiv.org/html/2410.17236v2)阅读范围及资源限制同 M31。
+
+- **数据与环境**：抽样1,000名 Amazon 用户的真实历史/评论；画像、请求和交互用户由模型合成。任务为搜索、推荐、评论生成，环境是简化函数，不是浏览器 GUI 或真实交易；成功调用后即假定评论已发布。
+- **解释**：function accuracy 检查工具与参数格式，result accuracy 对商品使用排名、对评论使用嵌入相似度，不能合成通用成功率。
+- **边界**：作者称历史按80/10/10划分，又写画像使用全部历史；复现需审计预处理，当前不能断言已证实泄漏。模拟器、推断画像与未验证隐私保护均限制真实助理结论。
 
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
@@ -912,6 +930,64 @@
 - **机制**：VLM 评价执行轨迹，提炼自然语言经验用于提示词；分层记忆按应用检索流程和内容偏好。方法称无参数更新，不应写成对基础模型进行个性化微调。
 - **证据／边界**：User FingerTip 与通用移动任务评测；UI 更新会使位置与流程经验失效，当前地点等情境因素未充分纳入。推断“常用选择”不等于获得新操作授权。
 - **资源**：[作者实现](https://github.com/Gianthaha/personal-mobile-agent)；数据规模、资源完整性与许可范围的限制同 B42。
+
+<a id="method-ppp"></a>
+### M30. PPP · 学习主动澄清与个性化交互
+
+[Training Proactive and Personalized LLM Agents](https://arxiv.org/html/2511.02208v2) — COLM 2026；v2，2026-08-23。评测环境 UserVille 见 B43，同一篇论文。
+
+**实际阅读范围**：v2 §4–8、表1、附录A；版本记录、会议目录及作者 README / 目录 / LICENSE；非全文逐项通读，未运行。
+
+- **机制**：在偏好条件化模拟用户环境中，以 GRPO 联合优化任务表现、澄清负担和偏好遵循；不等于持久个人记忆或终身用户建模。
+- **证据与边界**：自动评测与真人研究须分开，见 B43。提问增加可能提高交互负担，模拟器中的低负担不能直接代表真人体验。
+- **资源**：[作者代码](https://github.com/sunnweiwei/PPP-Agent)为 Apache-2.0；README 链接权重及数据，但本次相应网页不可访问，下载与资产许可未确认，不能推断未发布。运行说明另要求 vLLM bias patch；仓库许可不自动覆盖模型、数据或上游 benchmark。
+
+<a id="method-puma"></a>
+### M31. PUMA · 从行为历史学习工具参数
+
+[Large Language Models Empowered Personalized Web Agents](https://arxiv.org/html/2410.17236v2) — WWW 2025；v2，2025-03-24。PersonalWAB 见 B44，同一篇论文。
+
+**实际阅读范围**：§3、§5–6、表5、附录A.3 / B；版本记录、项目页、README、数据目录及 LICENSE；非全文逐项通读，未运行。
+
+- **机制**：检索行为历史并保留任务相关字段，结合启发式 SFT 与结果排序 DPO 学习函数参数。
+- **证据与边界**：表5整体 function/result accuracy 为 .994/.406；去除任务特定记忆为 .994/.373，但推荐 result accuracy 仍仅 .054。不同指标不能统称真实任务成功率；购物领域与模拟用户限制见 B44。
+- **资源**：[作者仓库](https://github.com/HongruCai/PersonalWAB)及数据目录可读；根许可 **CC BY-NC 4.0**，tau-bench 继承部分另保留 MIT。未确认发布的 PUMA 检查点，未验证完整数据；论文许可、代码/数据许可及 Amazon/模型条款不可互相替代。
+
+<a id="method-premem"></a>
+### M32. PREMem · 存储前推理跨会话关系
+
+[Pre-Storage Reasoning for Episodic Memory](https://aclanthology.org/2025.findings-emnlp.1204/) — Findings EMNLP 2025；[arXiv v1](https://arxiv.org/html/2509.10852v1)，2025-09-13。
+
+**实际阅读范围**：v1 §3–5、表1/5、Limitations；出版记录、作者 README 与根目录；未逐项比较出版版本，未运行。
+
+- **机制**：提取事实、经历与主观信息，再聚类、关联时序并生成跨会话推断，供回答时检索。
+- **证据**：离线 LoCoMo 1,986 题与 LongMemEval-S 500题；LoCoMo 对话经模型生成及人工编辑，LongMemEval 会话为模拟及人工编辑，不是真人纵向使用记录。使用文本相似度、LLM judge 和不可回答题拒答准确率。
+- **边界**：作者承认单跳较弱、原始语言细节损失及缺乏遗忘机制。推断内容不等于用户确认事实，也不代表操作授权。
+- **资源**：[代码及运行说明](https://github.com/sangyeop-kim/PREMem)公开；根目录未见 LICENSE，代码复用许可未确认。README 标上游 LoCoMo 为 CC BY-NC 4.0、LongMemEval 为 MIT；不能据此推定 PREMem 代码许可。链接的数据压缩包未验证访问或完整性。
+
+<a id="method-nemori"></a>
+### M33. NEMORI · 依据预测误差蒸馏记忆
+
+[What Deserves Memory: Adaptive Memory Distillation for LLM Agents](https://arxiv.org/html/2508.03341v4) — v4，2026-04-16；本次未确认会议归属。早期 *Nemori: Self-Organizing Agent Memory Inspired by Cognitive Science* 为同一 arXiv ID，不另计。
+
+**实际阅读范围**：v4 §3–4.7、表2/7/8、Limitations；版本、作者 README、评测说明与 MIT LICENSE；未逐项比较历史版本，未运行。
+
+- **机制**：将对话组织为叙事片段，再从实际内容与已有知识预测的差异蒸馏语义信息；不更新底座参数。
+- **证据**：离线 LoCoMo 1,540题与 LongMemEval-S 500题；LoCoMo 对话经模型生成及人工编辑，LongMemEval 会话为模拟及人工编辑，不是真人纵向使用记录。LoCoMo 以 GPT-4.1-mini 为方法底座及回答模型、GPT-4o-mini 为 judge 时，平均分80.8，对全上下文80.6；以 GPT-4o-mini 为底座时，LongMemEval 知识更新子集反而61.5，对全上下文78.2。不能写成全面领先。
+- **边界**：作者限制包括简单管理/检索、集成接口需逐项实现；不证明安全删除或真实长期用户效用。与 PREMem 的 LoCoMo 子集不同，不能横排分数。
+- **资源**：[实现](https://github.com/nemori-ai/nemori)为 MIT；当前重写版不兼容旧 MVP，依赖 PostgreSQL、Qdrant 与模型 API。评测数据需另取并遵守原条款；README 的 V5 成绩不是 v4 论文成绩。
+
+<a id="method-dpl"></a>
+### M34. DPL · 用用户之间的差异构造个人表示
+
+[Measuring What Makes You Unique](https://aclanthology.org/2025.findings-acl.1095/) — Findings ACL 2025；[arXiv v3](https://arxiv.org/html/2503.02450v3)，2025-06-11。
+
+**实际阅读范围**：v3 §2–4、表1、附录A–F相关内容；出版 PDF 限制/伦理与附录A、作者预处理脚本、README、根目录及数据卡；非逐行通读，未运行。
+
+- **机制**：比较目标用户与其他用户的评论风格、情感和语义差异，再与个人历史汇总形成生成条件；属于用户表示方法。
+- **证据与边界**：Amazon/Yelp 真实评论记录上的离线生成，输入还包括目标评分和标题；不是多轮对话、无条件偏好预测或工具执行。主表跨五个温度取均值，不是相同配置的五个随机种子。跨用户信息使用还需隐私/同意约束。
+- **一致性问题**：论文附录说测试用倒数第三条评论，当前代码用最后一条；不能把文字冲突直接断言为已证实泄漏，复现前应核对数据。
+- **资源**：[作者代码](https://github.com/SnowCharmQ/DPL)根目录未见许可；[DPL-main](https://huggingface.co/datasets/SnowCharmQ/DPL-main)与[DPL-meta](https://huggingface.co/datasets/SnowCharmQ/DPL-meta)标 **CC BY-NC 4.0**，不能沿用论文伦理段的宽泛 MIT 说法。上游条款另查。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
