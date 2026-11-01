@@ -255,5 +255,34 @@ class PaperCatalogTests(unittest.TestCase):
         self.assertTrue(any('B1 bilingual section mismatch' in e for e in self.errors()))
 
 
+    def test_thematic_method_sections_and_legacy_aliases(self):
+        for section in ('user-understanding-methods', 'memory-methods',
+                        'planning-action-methods', 'proactive-clarification-methods',
+                        'privacy-safety-methods'):
+            with self.subTest(section=section):
+                text = self.CATALOG.replace('<a id="memory-methods"></a>',
+                    '<a id="legacy-methods-heading"></a>\n'
+                    f'<a id="{section}"></a>')
+                self.write(text, text)
+                self.assertEqual(self.errors(), [])
+
+    def test_method_theme_bilingual_mismatch(self):
+        zh = self.CATALOG.replace('id="memory-methods"', 'id="planning-action-methods"')
+        en = self.CATALOG.replace('id="memory-methods"', 'id="privacy-safety-methods"')
+        self.write(zh, en)
+        self.assertTrue(any('M1 bilingual section mismatch' in e for e in self.errors()))
+
+    def test_human_entry_rejected_in_new_method_theme(self):
+        text = self.CATALOG.replace('id="human-studies"', 'id="privacy-safety-methods"')
+        self.write(text, text)
+        self.assertTrue(any('H1 outside its H section' in e for e in self.errors()))
+
+    def test_method_themes_do_not_require_numerical_order(self):
+        text = self.CATALOG.replace('### M1. Method',
+            '### M2. Later ID\n<a id="proactive-clarification-methods"></a>\n'
+            '## Clarification\n### M1. Method')
+        self.write(text, text)
+        self.assertEqual(self.errors(), [])
+
 if __name__ == '__main__':
     unittest.main()
