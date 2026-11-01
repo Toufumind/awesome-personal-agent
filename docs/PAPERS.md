@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **45 篇不同论文**：31 个评测条目、18 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU 与 Ask-before-Plan/CEP 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **51 篇不同论文**：35 个评测条目、22 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent 与 PEToolLLM/PEToolLLaMA 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B31、M16–M18 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B35、M16–M22 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -255,6 +255,54 @@
 - **测量**：比较给定真实偏好与从行为推断偏好后的规划表现；具体指标和评分协议尚待全文核验，不录入分数。
 - **边界**：具身场景，不代表办公工具规划或长期真人使用。PDF 抓取超出工具大小限制，HTML 不可用。
 - **资源**：本次未定位可核验官方代码 / 数据入口；不推定公开或可复现。
+
+<a id="benchmark-androidintent"></a>
+### B32. AndroidIntent · 从长期记录理解 GUI 隐含意图
+
+[PersonalAlign: Hierarchical Implicit Intent Alignment for Personalized GUI Agent with Long-Term User-Centric Records](https://aclanthology.org/2026.acl-long.1669/) — ACL 2026；查阅 [arXiv v2](https://arxiv.org/html/2601.09636v2)，2026-05-13。方法见 M21。
+
+**核验日期 / 阅读范围**：2026-11-01；任务与数据构建相关段落、§6.1 指标、附录 A.3；官方 README 和根目录，非全文通读。
+
+- **输入 → 输出**：长期手机操作记录、模糊指令或当前状态 → GUI 动作或主动建议；标注 775 个偏好案例与 215 个例行行为案例。
+- **测量**：离线动作类型准确率、逐步成功率及加权 CSR；主动建议另测语义 / judge 对齐、precision、recall、false alarm 和 F1。
+- **边界**：主评测是离线轨迹对照；CSR 不等于真实手机任务完成率。建议合适也不等于获准执行。
+- **资源**：[官方代码与数据目录](https://github.com/iLearn-Lab/ACL26-PersonalAlign)。需另取 FingerTip-20k；README 说明曾因磁盘故障恢复资源，未验证完整性。所查根目录未见独立许可文件，上游数据条款另核对。
+
+<a id="benchmark-petoolbench"></a>
+### B33. PEToolBench · 从历史调用推断工具偏好
+
+[PEToolLLM: Towards Personalized Tool Learning in Large Language Models](https://aclanthology.org/2025.findings-acl.1107/) — Findings of ACL 2025；查阅 [arXiv v1](https://arxiv.org/html/2502.18980v1)，2025-02-26。方法见 M22。
+
+**核验日期 / 阅读范围**：2026-11-01；§3 任务、构建与指标、§4 方法概述；官方 README、LICENSE 与数据文件列表，非全文通读。
+
+- **输入 → 输出**：指令、候选工具与用户历史调用 → 工具及参数；合成历史包括仅偏好、带评分、按时间变化三种设置。论文有 12,000 条样本，9,000 训练、3,000 测试。
+- **测量**：分别报告工具选择准确率与参数准确率。
+- **边界**：生成正确调用不等于服务已执行；合成偏好不能代替真实长期用户行为。
+- **资源**：[官方代码](https://github.com/travis-xu/PEToolBench)、[数据文件](https://huggingface.co/datasets/travisxu/PEToolBench/tree/main)。[仓库许可](https://github.com/travis-xu/PEToolBench/blob/main/LICENSE)为 Apache-2.0；不能据此推定所有上游工具资料适用同一许可。
+
+<a id="benchmark-etapp"></a>
+### B34. ETAPP · 个性化工具交互与额外帮助
+
+[Evaluating Personalized Tool-Augmented LLMs from the Perspectives of Personalization and Proactivity](https://aclanthology.org/2025.acl-long.1064/) — ACL 2025；查阅 [arXiv v1](https://arxiv.org/html/2503.00771v1)，2025-03-02。
+
+**核验日期 / 阅读范围**：2026-11-01；§2 环境、记忆与样本构建、§3 评测；官方 README 与根目录，非全文通读。
+
+- **输入 → 输出**：画像、工具偏好、当前状态、历史及请求 → 沙箱工具交互与回答；800 个案例由 50 条指令与 16 个合成人物组合，不是 800 位用户。
+- **测量**：人工关键点辅助 LLM judge，分别按 0–5 分评价流程、个性化与主动性；区分给定工具和检索工具两种设置。
+- **边界**：这里的主动性是请求之后提供额外有用帮助，不等于后台自主发起任务；judge 分数不证明真实世界的服务执行、安全或授权。
+- **资源**：[官方代码、数据与工具](https://github.com/hypasd-art/ETAPP)，含推理和评测说明；所查根目录未见独立许可文件，未验证依赖或 API 可用性。
+
+<a id="benchmark-toolspectrum"></a>
+### B35. ToolSpectrum · 同时考虑画像与环境的工具选择
+
+[ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](https://aclanthology.org/2025.findings-acl.1063/) — Findings of ACL 2025；查阅 [arXiv v1](https://arxiv.org/html/2505.13176v1)，2025-05-19。
+
+**核验日期 / 阅读范围**：2026-11-01；§3 任务、构建与统计、§4.1 指标；官方 README 与根目录，非全文通读。
+
+- **输入 → 输出**：请求、显式画像、环境与功能重叠的工具集 → 应用、API、必需及个性化可选参数，或按应用规则返回 `None`。
+- **测量**：四个层级分别算 F1。共 1,000 个案例：画像 450、环境 220、二者结合 330。
+- **边界**：测给定画像后的选择与参数，不测从历史学习画像或真实交易；仅环境子集也不等于个体偏好学习。
+- **资源**：[官方仓库](https://github.com/BUAA-IRIP-LLM/ToolSpectrum)含 `api`、`data`、`prompts`。README 未给出完整评测运行流程；所查根目录未见独立许可文件。
 
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
@@ -659,6 +707,54 @@
 - **核心**：联合学习轻量用户模型与 LLM；把用户文本中的显式偏好、个人比较反馈中的隐式偏好编码为用户嵌入。用户嵌入通过软提示参与生成，P-DPO 将偏好优化条件化到用户。
 - **关联与边界**：个性化方法，不是 benchmark 或长期记忆系统。实验包含合成、半合成及 PRISM 真人反馈；回答比较依赖模型 judge，不证明长期真人满意度、动态偏好更新或工具执行。没有用户文本且用户 ID 未知时退回非个性化回答。
 - **资源**：[官方实现](https://github.com/HumainLab/Personalized_RLHF)提供用户模型、数据处理、训练与评测入口；代码公开不代表训练已复现，上游数据和底座模型须另查条款。
+
+<a id="method-personaagent"></a>
+### M19. PersonaAgent · 用可更新的个人提示词连接记忆与行动
+
+[PersonaAgent: Bridging Memory and Action for Personalized LLM Agents](https://aclanthology.org/2026.findings-acl.1315/) — Findings of ACL 2026；[arXiv v2](https://arxiv.org/html/2506.06254v2)，2026-05-27。早期标题 *When Large Language Model Agents Meet Personalization at Test Time* 是同一论文，不另计。
+
+**核验日期 / 阅读范围**：2026-11-01；v1 方法相关段落、v2 §3.1 与附录 E–G、出版记录，非全文通读。
+
+- **机制**：检索个人经历、概括稳定偏好；用用户专属系统提示词引导动作，再依据近期历史例子的文本反馈在测试时优化提示词。
+- **证据**：LaMP 分类、评分与生成任务；对应 accuracy / F1、MAE / RMSE 和 ROUGE，不合成单一行动分数。
+- **边界**：实际工具限于 Wikipedia 搜索和个人记忆检索；主要评测选择 100 位活跃用户，单次运行。不能推广为多应用交易或长期真人部署验证。
+- **资源**：已核验论文；本次未确认作者发布的实现入口，勿用同名非作者仓库代替。
+
+<a id="method-rlpa"></a>
+### M20. RLPA · 在多轮对话中学习推断与使用画像
+
+[Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment](https://proceedings.neurips.cc/paper_files/paper/2025/hash/2fbc1ea60e215275e823c86338417162-Abstract-Conference.html) — NeurIPS 2025；查阅 [arXiv v2](https://arxiv.org/html/2505.15456v2)，2025-12-11。
+
+**核验日期 / 阅读范围**：2026-11-01；§2–3 方法相关段落、§4.1 与表 1；官方 README、根目录与 LICENSE，非全文通读。
+
+- **机制**：Qwen2.5-3B 与模拟用户交互，以画像匹配和回答个性化两类奖励进行 PPO 训练；训练模型称 Qwen-RLPA。
+- **证据**：ALOE 同画像格式与跨格式设置，报告平均对齐分数、归一化改进与归一化决定系数。
+- **边界**：是对话方法，不是工具执行或部署后的持续在线学习。表 1 的 Extended 原始对齐分数 GPT-4o 仍高于 RLPA，不能笼统写“超过 GPT-4o”。
+- **资源**：[官方训练代码](https://github.com/XingYuSSS/RLPA)，[Apache-2.0](https://github.com/XingYuSSS/RLPA/blob/main/LICENSE)。未确认完整检查点、数据及评测复现包。
+
+<a id="method-him-agent"></a>
+### M21. HIM-Agent · 分开记住个人偏好与例行行为
+
+[PersonalAlign](https://aclanthology.org/2026.acl-long.1669/) — ACL 2026；与 B32 为同一论文。
+
+**核验日期 / 阅读范围**：2026-11-01；[v2](https://arxiv.org/html/2601.09636v2) 方法概述、§6.1 及附录 A.3；官方 README 和根目录，非全文通读。
+
+- **机制**：流式聚合记录，再通过基于执行的偏好过滤和基于状态的例行行为过滤，形成两类意图记忆。
+- **证据**：AndroidIntent 上的离线 GUI 指标及主动建议对齐；评测范围见 B32。
+- **边界**：记住日常规律不等于应当自动执行；未证明真实设备端到端完成、安全授权或长期真人效用。
+- **资源**：[官方 HIM-Agent 与脚本](https://github.com/iLearn-Lab/ACL26-PersonalAlign)。数据依赖、恢复完整性与未见根许可的限制同 B32；README 的后续 skills-beta 不等于论文已验证的跨平台能力。
+
+<a id="method-petoolllama"></a>
+### M22. PEToolLLaMA · 训练偏好感知的工具调用
+
+[PEToolLLM: Towards Personalized Tool Learning in Large Language Models](https://aclanthology.org/2025.findings-acl.1107/) — Findings of ACL 2025；与 B33 为同一论文。PEToolLLM 是论文名，PEToolBench 是评测集，PEToolLLaMA 是方法。
+
+**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2502.18980v1) §3 指标与 §4 方法概述；官方 README、LICENSE 与数据文件列表，非全文通读。
+
+- **机制**：先用历史、指令与候选工具做个性化 SFT，再用 DPO 改善偏好一致的调用选择。
+- **证据**：PEToolBench 三类合成历史设置下的工具与参数准确率。
+- **边界**：模型训练与持久记忆管理不是一回事；没有证明真实服务完成、偏好在线变化或安全副作用控制。
+- **资源**：[官方训练 / 测试脚本](https://github.com/travis-xu/PEToolBench)、[数据](https://huggingface.co/datasets/travisxu/PEToolBench/tree/main)。仓库 Apache-2.0，上游条款仍需核对；未确认完整权重发布或运行复现。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
