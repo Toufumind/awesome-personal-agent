@@ -33,22 +33,24 @@
 
 按用途分类，含开源与源码可见项目，不作排名。
 
+Stars 由 Shields.io 展示，可能有缓存延迟；仅反映关注度，不代表质量评价。
+
 <a id="常驻个人助理--persistent-personal-assistants"></a>
 <a id="personal-assistants"></a>
 ### 常驻个人助理
 
-- [AstrBot](https://github.com/AstrBotDevs/AstrBot) — 聊天入口、知识库与工具集成。
-- [Hermes Agent](https://github.com/NousResearch/hermes-agent) — 持久记忆、技能与定时任务。
-- [IronClaw](https://github.com/nearai/ironclaw) — Rust 助理运行时，支持 WASM / MCP 扩展。
-- [Khoj](https://github.com/khoj-ai/khoj) — 围绕个人文档与网页的研究助理。
-- [Letta Code](https://github.com/letta-ai/letta-code) — 持续身份、可编辑记忆与工具执行。
-- [Moltis](https://github.com/moltis-org/moltis) — 支持语音、聊天与定时任务的助理服务器。
-- [nanobot](https://github.com/HKUDS/nanobot) — 轻量 Python Agent，提供记忆、工具与多渠道入口。
-- [NanoClaw](https://github.com/nanocoai/nanoclaw) — 以可定制代码和容器执行为核心的聊天助理。
-- [OpenClaw](https://github.com/openclaw/openclaw) — 连接消息渠道、会话与工具的本地 Gateway。
-- [PicoClaw](https://github.com/sipeed/picoclaw) — 轻量常驻助理，支持工具与提醒。**Pre-1.0，勿用于生产。**
-- [QwenPaw](https://github.com/agentscope-ai/QwenPaw) — 原 CoPaw；聊天、办公文件与浏览器任务。**桌面版 Beta。**
-- [ZeroClaw](https://github.com/zeroclaw-labs/zeroclaw) — 支持消息、webhook 与硬件事件的 Rust 运行时。
+- [AstrBot](https://github.com/AstrBotDevs/AstrBot) [![AstrBot GitHub stars](https://img.shields.io/github/stars/AstrBotDevs/AstrBot?style=flat&label=Stars)](https://github.com/AstrBotDevs/AstrBot) — 聊天入口、知识库与工具集成。
+- [Hermes Agent](https://github.com/NousResearch/hermes-agent) [![Hermes Agent GitHub stars](https://img.shields.io/github/stars/NousResearch/hermes-agent?style=flat&label=Stars)](https://github.com/NousResearch/hermes-agent) — 持久记忆、技能与定时任务。
+- [IronClaw](https://github.com/nearai/ironclaw) [![IronClaw GitHub stars](https://img.shields.io/github/stars/nearai/ironclaw?style=flat&label=Stars)](https://github.com/nearai/ironclaw) — Rust 助理运行时，支持 WASM / MCP 扩展。
+- [Khoj](https://github.com/khoj-ai/khoj) [![Khoj GitHub stars](https://img.shields.io/github/stars/khoj-ai/khoj?style=flat&label=Stars)](https://github.com/khoj-ai/khoj) — 围绕个人文档与网页的研究助理。
+- [Letta Code](https://github.com/letta-ai/letta-code) [![Letta Code GitHub stars](https://img.shields.io/github/stars/letta-ai/letta-code?style=flat&label=Stars)](https://github.com/letta-ai/letta-code) — 持续身份、可编辑记忆与工具执行。
+- [Moltis](https://github.com/moltis-org/moltis) [![Moltis GitHub stars](https://img.shields.io/github/stars/moltis-org/moltis?style=flat&label=Stars)](https://github.com/moltis-org/moltis) — 支持语音、聊天与定时任务的助理服务器。
+- [nanobot](https://github.com/HKUDS/nanobot) [![nanobot GitHub stars](https://img.shields.io/github/stars/HKUDS/nanobot?style=flat&label=Stars)](https://github.com/HKUDS/nanobot) — 轻量 Python Agent，提供记忆、工具与多渠道入口。
+- [NanoClaw](https://github.com/nanocoai/nanoclaw) [![NanoClaw GitHub stars](https://img.shields.io/github/stars/nanocoai/nanoclaw?style=flat&label=Stars)](https://github.com/nanocoai/nanoclaw) — 以可定制代码和容器执行为核心的聊天助理。
+- [OpenClaw](https://github.com/openclaw/openclaw) [![OpenClaw GitHub stars](https://img.shields.io/github/stars/openclaw/openclaw?style=flat&label=Stars)](https://github.com/openclaw/openclaw) — 连接消息渠道、会话与工具的本地 Gateway。
+- [PicoClaw](https://github.com/sipeed/picoclaw) [![PicoClaw GitHub stars](https://img.shields.io/github/stars/sipeed/picoclaw?style=flat&label=Stars)](https://github.com/sipeed/picoclaw) — 轻量常驻助理，支持工具与提醒。**Pre-1.0，勿用于生产。**
+- [QwenPaw](https://github.com/agentscope-ai/QwenPaw) [![QwenPaw GitHub stars](https://img.shields.io/github/stars/agentscope-ai/QwenPaw?style=flat&label=Stars)](https://github.com/agentscope-ai/QwenPaw) — 原 CoPaw；聊天、办公文件与浏览器任务。**桌面版 Beta。**
+- [ZeroClaw](https://github.com/zeroclaw-labs/zeroclaw) [![ZeroClaw GitHub stars](https://img.shields.io/github/stars/zeroclaw-labs/zeroclaw?style=flat&label=Stars)](https://github.com/zeroclaw-labs/zeroclaw) — 支持消息、webhook 与硬件事件的 Rust 运行时。
 
 [ 部署与选型提醒 → ](docs/GUIDE.md#personal-assistants)
 
@@ -56,11 +58,11 @@
 <a id="mobile-agents"></a>
 ### 手机 Agent
 
-- [Mika](https://github.com/wangzan101/Mika) — Android App 操控、浏览器与定时任务。**早期公测。**
-- [Mobile-Agent](https://github.com/X-PLUG/MobileAgent) — 手机与跨平台 GUI Agent 的研究框架。
-- [Mobilerun](https://github.com/droidrun/mobilerun) — 原 DroidRun；CLI / Python 手机自动化框架，非独立 APK。
-- [Open-AutoGLM](https://github.com/zai-org/Open-AutoGLM) — 基于截图的手机执行研究框架，需独立模型端点。
-- [Operit](https://github.com/AAswordman/Operit) — Android 助理：界面、文件、终端与工作流。**仅 ARM64。**
+- [Mika](https://github.com/wangzan101/Mika) [![Mika GitHub stars](https://img.shields.io/github/stars/wangzan101/Mika?style=flat&label=Stars)](https://github.com/wangzan101/Mika) — Android App 操控、浏览器与定时任务。**早期公测。**
+- [Mobile-Agent](https://github.com/X-PLUG/MobileAgent) [![Mobile-Agent GitHub stars](https://img.shields.io/github/stars/X-PLUG/MobileAgent?style=flat&label=Stars)](https://github.com/X-PLUG/MobileAgent) — 手机与跨平台 GUI Agent 的研究框架。
+- [Mobilerun](https://github.com/droidrun/mobilerun) [![Mobilerun GitHub stars](https://img.shields.io/github/stars/droidrun/mobilerun?style=flat&label=Stars)](https://github.com/droidrun/mobilerun) — 原 DroidRun；CLI / Python 手机自动化框架，非独立 APK。
+- [Open-AutoGLM](https://github.com/zai-org/Open-AutoGLM) [![Open-AutoGLM GitHub stars](https://img.shields.io/github/stars/zai-org/Open-AutoGLM?style=flat&label=Stars)](https://github.com/zai-org/Open-AutoGLM) — 基于截图的手机执行研究框架，需独立模型端点。
+- [Operit](https://github.com/AAswordman/Operit) [![Operit GitHub stars](https://img.shields.io/github/stars/AAswordman/Operit?style=flat&label=Stars)](https://github.com/AAswordman/Operit) — Android 助理：界面、文件、终端与工作流。**仅 ARM64。**
 
 [ 部署与选型提醒 → ](docs/GUIDE.md#mobile-agents)
 
@@ -68,11 +70,11 @@
 <a id="desktop-assistants"></a>
 ### 桌面知识与办公
 
-- [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) — 文档知识库、网页研究与工具驱动的文件交付。
-- [Eigent](https://github.com/eigent-ai/eigent) — 单 / 多 Agent 协作研究、写作与文件整理。
-- [LobsterAI](https://github.com/netease-youdao/LobsterAI) — 有道龙虾；基于 OpenClaw 运行时的桌面办公助理。
-- [OpenWorker](https://github.com/andrewyng/openworker) — 会议准备、报告与待审操作。**Open beta；Windows 未签名。**
-- [Rowboat](https://github.com/rowboatlabs/rowboat) — 将邮件、会议与对话连接到个人知识图谱和后台工作。
+- [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) [![AnythingLLM GitHub stars](https://img.shields.io/github/stars/Mintplex-Labs/anything-llm?style=flat&label=Stars)](https://github.com/Mintplex-Labs/anything-llm) — 文档知识库、网页研究与工具驱动的文件交付。
+- [Eigent](https://github.com/eigent-ai/eigent) [![Eigent GitHub stars](https://img.shields.io/github/stars/eigent-ai/eigent?style=flat&label=Stars)](https://github.com/eigent-ai/eigent) — 单 / 多 Agent 协作研究、写作与文件整理。
+- [LobsterAI](https://github.com/netease-youdao/LobsterAI) [![LobsterAI GitHub stars](https://img.shields.io/github/stars/netease-youdao/LobsterAI?style=flat&label=Stars)](https://github.com/netease-youdao/LobsterAI) — 有道龙虾；基于 OpenClaw 运行时的桌面办公助理。
+- [OpenWorker](https://github.com/andrewyng/openworker) [![OpenWorker GitHub stars](https://img.shields.io/github/stars/andrewyng/openworker?style=flat&label=Stars)](https://github.com/andrewyng/openworker) — 会议准备、报告与待审操作。**Open beta；Windows 未签名。**
+- [Rowboat](https://github.com/rowboatlabs/rowboat) [![Rowboat GitHub stars](https://img.shields.io/github/stars/rowboatlabs/rowboat?style=flat&label=Stars)](https://github.com/rowboatlabs/rowboat) — 将邮件、会议与对话连接到个人知识图谱和后台工作。
 
 [ 部署与选型提醒 → ](docs/GUIDE.md#desktop-assistants)
 
@@ -80,10 +82,10 @@
 <a id="computer-and-browser"></a>
 ### 电脑与浏览器执行
 
-- [Agent Zero](https://github.com/agent0ai/agent-zero) — Docker 化桌面、浏览器、记忆与多步任务。
-- [Browser Use](https://github.com/browser-use/browser-use) — 模型驱动的浏览器自动化库与 CLI。
-- [goose](https://github.com/aaif-goose/goose) — 通过扩展与 MCP 完成研究、写作和文件任务的运行时。
-- [UI-TARS Desktop / Agent TARS](https://github.com/bytedance/UI-TARS-desktop) — GUI 桌面应用与视觉 / 工具 Agent 栈。
+- [Agent Zero](https://github.com/agent0ai/agent-zero) [![Agent Zero GitHub stars](https://img.shields.io/github/stars/agent0ai/agent-zero?style=flat&label=Stars)](https://github.com/agent0ai/agent-zero) — Docker 化桌面、浏览器、记忆与多步任务。
+- [Browser Use](https://github.com/browser-use/browser-use) [![Browser Use GitHub stars](https://img.shields.io/github/stars/browser-use/browser-use?style=flat&label=Stars)](https://github.com/browser-use/browser-use) — 模型驱动的浏览器自动化库与 CLI。
+- [goose](https://github.com/aaif-goose/goose) [![goose GitHub stars](https://img.shields.io/github/stars/aaif-goose/goose?style=flat&label=Stars)](https://github.com/aaif-goose/goose) — 通过扩展与 MCP 完成研究、写作和文件任务的运行时。
+- [UI-TARS Desktop / Agent TARS](https://github.com/bytedance/UI-TARS-desktop) [![UI-TARS Desktop / Agent TARS GitHub stars](https://img.shields.io/github/stars/bytedance/UI-TARS-desktop?style=flat&label=Stars)](https://github.com/bytedance/UI-TARS-desktop) — GUI 桌面应用与视觉 / 工具 Agent 栈。
 
 [ 部署与选型提醒 → ](docs/GUIDE.md#computer-and-browser)
 
@@ -91,8 +93,8 @@
 <a id="building-blocks"></a>
 ### 开发框架与记忆层
 
-- [LangGraph](https://github.com/langchain-ai/langgraph) — 有状态 Agent 编排、持久执行与人工介入。
-- [Mem0](https://github.com/mem0ai/mem0) — 用户、会话与 Agent 记忆层；不是完整助理。
+- [LangGraph](https://github.com/langchain-ai/langgraph) [![LangGraph GitHub stars](https://img.shields.io/github/stars/langchain-ai/langgraph?style=flat&label=Stars)](https://github.com/langchain-ai/langgraph) — 有状态 Agent 编排、持久执行与人工介入。
+- [Mem0](https://github.com/mem0ai/mem0) [![Mem0 GitHub stars](https://img.shields.io/github/stars/mem0ai/mem0?style=flat&label=Stars)](https://github.com/mem0ai/mem0) — 用户、会话与 Agent 记忆层；不是完整助理。
 
 [ 部署与选型提醒 → ](docs/GUIDE.md#building-blocks)
 
@@ -100,9 +102,9 @@
 <a id="previews"></a>
 ### 开发者预览
 
-- [Leon](https://github.com/leon-ai/leon) — **2.0 Developer Preview**：记忆、技能与主动轮询；需源码部署。
-- [OpenMuse](https://github.com/CopilotKit/openmuse) — **Alpha 模板**：移动 / 网页任务与人工接管；支付、预约仍属路线图。
-- [Operit2](https://github.com/AAswordman/Operit2) — **跨设备预览**：在持久化工具结果处续接任务，不迁移活动会话。
+- [Leon](https://github.com/leon-ai/leon) [![Leon GitHub stars](https://img.shields.io/github/stars/leon-ai/leon?style=flat&label=Stars)](https://github.com/leon-ai/leon) — **2.0 Developer Preview**：记忆、技能与主动轮询；需源码部署。
+- [OpenMuse](https://github.com/CopilotKit/openmuse) [![OpenMuse GitHub stars](https://img.shields.io/github/stars/CopilotKit/openmuse?style=flat&label=Stars)](https://github.com/CopilotKit/openmuse) — **Alpha 模板**：移动 / 网页任务与人工接管；支付、预约仍属路线图。
+- [Operit2](https://github.com/AAswordman/Operit2) [![Operit2 GitHub stars](https://img.shields.io/github/stars/AAswordman/Operit2?style=flat&label=Stars)](https://github.com/AAswordman/Operit2) — **跨设备预览**：在持久化工具结果处续接任务，不迁移活动会话。
 
 [ 部署与选型提醒 → ](docs/GUIDE.md#previews)
 
