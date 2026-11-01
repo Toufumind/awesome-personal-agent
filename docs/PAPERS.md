@@ -537,7 +537,7 @@
 
 [PersonaFeedback: A Large-scale Human-annotated Benchmark For Personalization](https://arxiv.org/html/2506.12915v1) — arXiv v1, 2025-06-15，work in progress.
 
-**待审：** 给定画像、问题和候选回答，选择更个性化且有帮助的回答；8,298个人工标注二选一测试例，以selection accuracy衡量判断是否符合标签。20个真实种子画像扩展为构造画像，基准使用其中200个；问题/回答含模型生成，九位评者多数选择作为标签。不是8,298名真实用户、长期画像推断或部署满意度研究；主观标签及构造画像偏差限制结论，“RAG不足”仅限所测设置。[公开数据](https://huggingface.co/datasets/PersonalAILab/PersonaFeedback)标注Apache-2.0，区别于论文CC BY 4.0；当前在线预览有字段不一致报错，不代表文件不可获取。未发现形式隐私保证。
+给定画像、问题和候选回答，选择更个性化且有帮助的回答；8,298个人工标注二选一测试例，以selection accuracy衡量判断是否符合标签。20个真实种子画像扩展为构造画像，基准使用其中200个；问题/回答含模型生成，九位评者多数选择作为标签。不是8,298名真实用户、长期画像推断或部署满意度研究；主观标签及构造画像偏差限制结论，“RAG不足”仅限所测设置。[公开数据](https://huggingface.co/datasets/PersonalAILab/PersonaFeedback)标注Apache-2.0，区别于论文CC BY 4.0；当前在线预览有字段不一致报错，不代表文件不可获取。未发现形式隐私保证。
 
 **实读范围：** §3构造和标注、§4评测设置、limitations；官方数据卡和预览状态。定向阅读，未复核全量样例
 
@@ -546,7 +546,7 @@
 
 [According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/html/2603.01990v1) — arXiv v1, 2026-03-02，preprint.
 
-**待审：** 约四年的人类来源邮件、图像和视频，配1,038个人工问题—答案—证据标注；考察指代、多证据和更新记忆。Schema-Guided Memory统一结构；答案指标QS按答案类型选择：数值类用EM，列表召回类用Jaccard，开放回答用LLM裁判。检索另报Recall@k及Recall@k_GT（k取真实证据数）；Joint@k=QS×Recall@k。同意、视觉模糊/脱敏、邮件改写和合成标识替换不构成可证明匿名性。论文Hard低于20%的结论仅适用于原实验。[代码库](https://github.com/JingbiaoMei/ATM-Bench)已发布代码与后续代理评测，注明发布集可能不同于预印本；[数据](https://huggingface.co/datasets/Jingbiao/ATM-Bench)现已公开，CC BY-NC 4.0，代码MIT。勿沿用论文“待发布”脚注或混合新旧榜单。
+约四年的人类来源邮件、图像和视频，配1,038个人工问题—答案—证据标注；考察指代、多证据和更新记忆。Schema-Guided Memory统一结构；答案指标QS按答案类型选择：数值类用EM，列表召回类用Jaccard，开放回答用LLM裁判。检索另报Recall@k及Recall@k_GT（k取真实证据数）；Joint@k=QS×Recall@k。同意、视觉模糊/脱敏、邮件改写和合成标识替换不构成可证明匿名性。论文Hard低于20%的结论仅适用于原实验。[代码库](https://github.com/JingbiaoMei/ATM-Bench)已发布代码与后续代理评测，注明发布集可能不同于预印本；[数据](https://huggingface.co/datasets/Jingbiao/ATM-Bench)现已公开，CC BY-NC 4.0，代码MIT。勿沿用论文“待发布”脚注或混合新旧榜单。
 
 **实读范围：** §3–5、Appendix A隐私/许可、B标注；官方仓库时间线、结果版本说明与数据卡。定向阅读，未检查原始个人数据
 
@@ -846,7 +846,7 @@
 
 [AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](https://arxiv.org/html/2503.09780v3) — arXiv v3, 2025-10-01；[NeurIPS 2025 Datasets & Benchmarks](https://arxiv.org/abs/2503.09780).
 
-**待审：** 246个任务在自托管Reddit、GitLab与购物站副本中实际运行代理；人工种子扩展合成用户资料。最终站点状态衡量效用，动作文本由GPT-4o判断不必要披露；泄漏率为发生泄漏的实例比例，隐私率为1−泄漏率。98%人工一致率仅验证GPT-4o/axtree的一次运行。威胁模型明确无恶意参与者/外部攻击；不能代表提示注入防御。隐私感知提示减少泄漏但不保证零泄漏。[官方资源](https://github.com/facebookresearch/ai-agent-privacy)主体CC BY-NC 4.0、VisualWebArena部分MIT，数据另受Llama 3.1相关条款约束；不能整体标为MIT。
+246个任务在自托管Reddit、GitLab与购物站副本中实际运行代理；人工种子扩展合成用户资料。最终站点状态衡量效用，动作文本由GPT-4o判断不必要披露；泄漏率为发生泄漏的实例比例，隐私率为1−泄漏率。98%人工一致率仅验证GPT-4o/axtree的一次运行。威胁模型明确无恶意参与者/外部攻击；不能代表提示注入防御。隐私感知提示减少泄漏但不保证零泄漏。[官方资源](https://github.com/facebookresearch/ai-agent-privacy)主体CC BY-NC 4.0、VisualWebArena部分MIT，数据另受Llama 3.1相关条款约束；不能整体标为MIT。
 
 **实读范围：** v3 §3威胁模型、数据、指标、缓解方法，§4–5评测/讨论；arXiv会场记录及官方README许可段。定向阅读，未部署Web环境
 
@@ -1498,7 +1498,7 @@
 
 [Extended Inductive Reasoning for Personalized Preference Inference from Behavioral Signals](https://arxiv.org/html/2505.18071v2) — arXiv v2, 2025-07-07；未核实正式会场。
 
-**待审：** 将行为样例转换为自然语言偏好，以合成冷启动数据和GRPO训练推断模型；流式设置复用已有偏好摘要。AlignX/P-Soups实验主要使用偏好比较对；指标区分Acc_jud（偏好判断）、Acc_gen（偏好引导生成）与GPT-4 win rate；所谓“online evaluation”是GPT-4裁判比较生成回答，不是真实用户在线实验。主设置为两轮、每轮四条信号；§4.4另有八对信号的模拟反转测试，§4.5效率实验延至第四轮、累计16条信号。论文明确缺少真实LLM—用户交互验证，不能据此宣称长期偏好漂移已解决。隐私/同意陈述不是形式保证。[官方代码](https://github.com/AntResearchNLP/AlignXplore)可访问，未确认项目根目录许可证；论文CC BY-NC-ND不等于代码许可。
+将行为样例转换为自然语言偏好，以合成冷启动数据和GRPO训练推断模型；流式设置复用已有偏好摘要。AlignX/P-Soups实验主要使用偏好比较对；指标区分Acc_jud（偏好判断）、Acc_gen（偏好引导生成）与GPT-4 win rate；所谓“online evaluation”是GPT-4裁判比较生成回答，不是真实用户在线实验。主设置为两轮、每轮四条信号；§4.4另有八对信号的模拟反转测试，§4.5效率实验延至第四轮、累计16条信号。论文明确缺少真实LLM—用户交互验证，不能据此宣称长期偏好漂移已解决。隐私/同意陈述不是形式保证。[官方代码](https://github.com/AntResearchNLP/AlignXplore)可访问，未确认项目根目录许可证；论文CC BY-NC-ND不等于代码许可。
 
 **实读范围：** v2 §3、§4评测设置与流式实验、Appendices C–D；官方README与根目录。定向阅读，非全文逐页审读
 
@@ -1507,7 +1507,7 @@
 
 [PSG-Agent: Personality-Aware Safety Guardrail for LLM-based Agents](https://arxiv.org/html/2509.23614v1) — arXiv v1, 2025-09-28；未核实正式会场。
 
-**待审：** 从历史和当前请求构造用户安全条件，再以计划、工具、回答及记忆写入检查落实。132个人工种子经GPT-4o扩展，约2,900例且历史为模型生成；200例质量检查由四位专家各评50例。ALLOW/REFUSE分类以准确率、精确率、召回率和F1评价；另行采用三模型多数裁决评估安全/帮助性，配100例人工一致性检查。评测支持合成场景下的用户差异化安全判断，不证明真实医疗/金融安全或长期风险控制；运行时门控也不是形式安全/隐私保证。[论文所链匿名代码](https://anonymous.4open.science/r/psg-agent-code-7724/)本次无可读正文，完整性与许可未核实。
+从历史和当前请求构造用户安全条件，再以计划、工具、回答及记忆写入检查落实。132个人工种子经GPT-4o扩展，约2,900例且历史为模型生成；200例质量检查由四位专家各评50例。ALLOW/REFUSE分类以准确率、精确率、召回率和F1评价；另行采用三模型多数裁决评估安全/帮助性，配100例人工一致性检查。评测支持合成场景下的用户差异化安全判断，不证明真实医疗/金融安全或长期风险控制；运行时门控也不是形式安全/隐私保证。[论文所链匿名代码](https://anonymous.4open.science/r/psg-agent-code-7724/)本次无可读正文，完整性与许可未核实。
 
 **实读范围：** §3–5、威胁建模、组件与人工/模型裁判设置；匿名仓库入口。定向阅读，未审代码
 
@@ -1702,6 +1702,3 @@
 - **公开可读不等于任意再利用**：LaMP、LoCoMo、PersonaBench、PrefEval 与 MemoPro 代码的非商业条款，GAIA 的门控 / 防污染要求，以及 AppWorld / Ego4D 的额外资源规则已在对应条目提示。未列许可不代表没有限制；代码、数据、模型和第三方素材可能适用不同条款。
 - 本次未进行逐资产法律审查、下载完整权重验证或全依赖复现。根目录缺许可、文件访问失败或外部服务变化均不能被“有 GitHub 链接”消除。
 - 维护时先修正文献版本、任务范围与失效资源，再补新论文；欢迎提供具体一手证据，不以榜单名次、引用量或 Star 作为可靠性结论。
-
-
-
