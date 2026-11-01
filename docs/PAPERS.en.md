@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **98 distinct papers**: 57 evaluation entries, 53 method entries, and 3 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, and PENGUIN/RAISE each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **108 distinct papers**: 61 evaluation entries, 55 method entries, and 7 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, and PENGUIN/RAISE each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B57, M16–M53, and H1–H3 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B61, M16–M55, and H1–H7 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -517,6 +517,31 @@ Evaluates evolving state, temporal reasoning and goal alignment using over 2,000
 
 Contains **2,020 simulated episodes in HM3D/Habitat** with explicit ownership descriptions, testing active navigation and grounding after exploration. Five humans provide a navigation reference; a separate three-room LoCoBot pilot succeeds on **5/15** grounding queries. Neither establishes household deployment or lifelong adaptation. Human grounding uses interactive GLB scenes rather than the models’ map representation. The POG narrative’s 25% conflicts with Table V’s 16.8% aggregate. [Repository](https://github.com/ZiliottoFilippoDev/PersONAL) data/generation code and a populated [baselines branch](https://github.com/ZiliottoFilippoDev/PersONAL/tree/baselines) are available under **CC-BY-4.0**; HM3D has separate access/terms. **Read:** arXiv v1 §§III–VII, result tables, repository and baseline documentation/tree, and University of Padova publication metadata; final conference full text not checked; no execution.
 
+<a id="benchmark-pin"></a>
+### B58. PIN / PInNED — User-specific object navigation
+- **Paper:** *Personalized Instance-based Navigation Toward User-Specific Objects in Realistic Environments*, NeurIPS 2024 Datasets and Benchmarks; reviewed arXiv v2 (2025-02-19). PIN is the task and PInNED its dataset: count one paper.
+- **Setting/evidence:** Habitat simulations test locating a referenced instance among same-category distractors, using images/manual descriptions; 338 objects across 18 categories support modular and end-to-end baseline comparisons. No household-user or physical-robot trial.
+- **Boundary:** Controlled simulated recognition/navigation is not deployed personal-assistant reliability. Small objects, distant details and rendering degradation remain challenges.
+- **Licensing/reading scope:** [Paper](https://arxiv.org/html/2410.18195v2) §§3–5, Appendices B/G/I, [project](https://aimagelab.github.io/pin/) and [repository](https://github.com/aimagelab/pin) reviewed. Code: MIT; episodes/descriptions: CC BY; HM3D: noncommercial academic conditions; objects: mixed CC licenses. No blanket commercial-use claim.
+
+<a id="benchmark-personafeedback"></a>
+### B59. PersonaFeedback · Response selection with explicit personas
+
+[PersonaFeedback: A Large-scale Human-annotated Benchmark For Personalization](https://arxiv.org/html/2506.12915v1) — arXiv v1, 2025-06-15, work in progress.
+
+**English review:** Evaluates binary response selection given explicit personas using selection accuracy against labels, with 8,298 human-labelled cases—not 8,298 real participants. Twenty real seed profiles underpin constructed personas; 200 are used for benchmarking. Model-generated material is human-filtered, with majority labels from nine evaluators. This is not a longitudinal user study or evidence that RAG generally fails. Subjective labels and persona simplification constrain conclusions. The public dataset declares Apache-2.0; its viewer currently reports incompatible schemas. No formal privacy guarantee was established.
+
+**Reading scope:** §3 construction/annotation, §4 evaluation setup, limitations; official dataset card and viewer status. Targeted construction, evaluation and limitations; dataset card/viewer, not a full dataset audit.
+
+<a id="benchmark-atm-bench"></a>
+### B60. ATM-Bench · Multi-source personal referential memory QA
+
+[According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/html/2603.01990v1) — arXiv v1, 2026-03-02, preprint.
+
+**English review:** Uses roughly four years of human-origin multimodal memories and 1,038 human-annotated QA/evidence pairs. Structured memory supports retrieval and grounded answering. QS selects its scorer by answer type: EM for numbers, Jaccard for list recall, and an LLM judge for open-ended answers. Retrieval separately reports Recall@k and Recall@k_GT (k equals the ground-truth evidence count); Joint@k = QS × Recall@k. Consent, visual redaction, email paraphrasing and synthetic identifier replacement are not formal anonymity guarantees. The paper’s below-20% Hard finding belongs to its original evaluation. Code and data are now released: MIT code and CC BY-NC 4.0 data. Later repository benchmarks can use different release sets and must not be merged with preprint results.
+
+**Reading scope:** §3–5, Appendix A privacy/licensing and Appendix B annotation; official repository timeline, result-version notes and dataset card. Targeted methods/evaluation/ethics/annotation plus release records; no raw personal-data inspection.
+
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
@@ -748,6 +773,15 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 - **Measures:** risk sensitivity, empathy and user-specific alignment; 14,000 scenarios, equally Reddit-derived/synthetic, seven domains. GPT-4o judging checked against three annotators on 350 cases.
 - **Limits:** proxy response scores, not measured harm reduction. Rich-context Reddit selection, manually defined attributes and equal acquisition costs constrain generalization.
 - **Resources:** [official implementation](https://github.com/yuchenlwu/PersonalizedSafety), [project](https://personalized-safety.github.io/); README contains stale clone/runner references. Availability checked, reproduction not attempted; README’s MIT claim was not independently checked against a license file.
+
+<a id="benchmark-agentdam"></a>
+### B61. AgentDAM · Unnecessary disclosure during web execution
+
+[AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](https://arxiv.org/html/2503.09780v3) — arXiv v3, 2025-10-01; [NeurIPS 2025 Datasets & Benchmarks](https://arxiv.org/abs/2503.09780).
+
+**English review:** Executes 246 tasks on self-hosted web replicas with synthetic user data derived from human seeds. Final-state checks measure utility; GPT-4o judges action-text disclosure. Leakage rate is the fraction of instances with leakage; privacy performance equals 1 minus leakage rate. The 98% human agreement validates only one GPT-4o/axtree run. Its threat model excludes malicious actors and external attacks: this is inadvertent data minimization, not prompt-injection defense. Prompting reduces leakage without guaranteeing privacy. Official resources combine CC BY-NC 4.0, MIT components and additional Llama 3.1-derived data terms.
+
+**Reading scope:** v3 §3 threat model, data, metrics and mitigation; §4–5 evaluation/discussion; arXiv venue metadata and official README licensing section. Targeted methods, evaluation and discussion plus venue/resource records; environments not deployed.
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -1345,6 +1379,24 @@ Combines a Decompose–Derive–Refine pipeline, hierarchical task memory and en
 
 A restricted-plan interpreter and IFC combine persistent private-data, permission and disclosure stores. Confidentiality applies against malicious models/providers and services, subject to correct enforcement, user permissions and verified annotations. **Secrets placed directly in prompts, prompt timing metadata and integrity are excluded.** The custom 20-task/seven-attack suite reports no successful disclosures; AgentDojo/AgentDyn runs approve every disclosure and therefore assess utility, not privacy. These are not human usability studies; cost and latency overheads are substantial. [Public repository](https://github.com/rssta/gaap), but no LICENSE found and GitHub reports no license. **Read:** v3 threat model/design/evaluation/discussion and repository documentation/metadata; no security audit.
 
+<a id="method-alignxplore"></a>
+### M54. AlignXplore · Updating explicit preferences from behavioral signals
+
+[Extended Inductive Reasoning for Personalized Preference Inference from Behavioral Signals](https://arxiv.org/html/2505.18071v2) — arXiv v2, 2025-07-07; venue unverified.
+
+**English review:** Converts behavioral examples into explicit preferences using synthetic cold-start training and GRPO; streaming inference reuses the previous summary. AlignX/P-Soups tests mainly use preference pairs. Metrics distinguish Acc_jud (preference judging), Acc_gen (preference-guided generation), and GPT-4 win rate; “online evaluation” uses GPT-4 judgments, not live users. The main setting uses two four-example rounds; §4.4 also tests simulated reversals among eight pairs, and §4.5 extends efficiency testing to round four, totaling 16 signals. These do not establish lifelong adaptation; real-user validation is missing. Privacy statements provide no formal guarantee. Official code is accessible, but a project root license was not confirmed; the paper’s CC BY-NC-ND license does not establish code licensing.
+
+**Reading scope:** v2 §3, §4 evaluation setup and streaming experiments, Appendices C–D; official README and root listing. Targeted methods, evaluation and limitations reading; official README/root, not an exhaustive full-paper review.
+
+<a id="method-psg-agent"></a>
+### M55. PSG-Agent · Staged guardrails for user-dependent risks
+
+[PSG-Agent: Personality-Aware Safety Guardrail for LLM-based Agents](https://arxiv.org/html/2509.23614v1) — arXiv v1, 2025-09-28; venue unverified.
+
+**English review:** Mines profiles and compiles contextual safety criteria for plan, tool, response and memory-write checks. Its approximately 2,900 cases and histories are largely GPT-4o-generated from 132 manual seeds. Four experts checked 200 cases, each rating 50 distinct examples—not all four rating every case. ALLOW/REFUSE classification uses accuracy, precision, recall and F1; a separate three-model majority vote scores safety/helpfulness, with a 100-case human comparison. Evidence concerns synthetic profile-sensitive judgments, not real clinical/financial outcomes or proven long-term protection. Runtime gates offer no formal safety/privacy guarantee. The linked anonymous repository returned no readable content; completeness and licensing remain unverified.
+
+**Reading scope:** §3–5, threat model, components, human review and LLM-judge setup; anonymous repository entry point. Targeted benchmark, framework and evaluation reading; repository landing-page check, no code audit.
+
 <a id="human-studies"></a>
 ## Human studies: real use and interaction
 
@@ -1375,6 +1427,34 @@ These studies document human experience; they are not benchmark scores or proof 
 [LOOM: Personalized Learning Informed by Daily LLM Conversations Toward Long-Term Mastery via a Dynamic Learner Memory Graph](https://arxiv.org/abs/2511.21037) · **AAAI 2026 PerFM Workshop**, not the AAAI main conference; arXiv v1, November 26, 2025.
 
 A chat-to-course pipeline maintains a dynamic learner graph using inferred needs, completions and self-reported knowledge. The formative study includes **10 convenience-sampled participants over roughly two days**, each producing 10–15 realistic-workflow chats. Findings concern perceived relevance, coherence and gap discovery. Without controls, pre/post assessments or delayed recall, **durable learning gains are unestablished**. Content inconsistency, repetition and premature mastery inference remain concerns. The [PDF](https://arxiv.org/pdf/2511.21037)’s [anonymous code/demo link](https://anonymous.4open.science/r/LoomDemo) returned **HTTP 403**; artifact contents/license unverified. **Read:** system, study methods/results/limitations and PDF venue/resource notes; no execution.
+
+<a id="human-compeer"></a>
+### H4. ComPeer — Proactive peer support
+- **Paper:** *ComPeer: A Generative Conversational Agent for Proactive Peer Support*, UIST 2024, DOI `10.1145/3654777.3676430`; reviewed arXiv v2 (2024-08-06).
+- **Method/evidence:** Event detection, reflection and scheduling personalize proactive messages. Twenty-four Chinese university students were randomized to ComPeer or a reactive baseline sharing its memory/generation modules for one week; everyone used ComPeer in week two.
+- **Boundary:** Self-reported stress declined in both groups without a significant between-group difference—not evidence of superior stress reduction or clinical efficacy. Short duration, sample composition and novelty limit generalization; interruption, misinformation, peer pressure and dependence remain concerns.
+- **Resources/reading scope:** [Paper](https://arxiv.org/html/2407.18064v2) §§4–7 and [author repository](https://github.com/liutj9/ComPeer) reviewed. Code license unconfirmed; arXiv distribution permission is not a software license.
+
+<a id="human-planfitting"></a>
+### H5. PlanFitting — Constraint-aware exercise planning
+- **Paper:** *PlanFitting: Personalized Exercise Planning with Large Language Model-driven Conversational Agent*, published CUI 2025 version, 19 pages; DOI `10.1145/3719160.3736607`.
+- **Method/evidence:** Dynamic prompting and retrieval elicit goals, availability and obstacles to create revisable IF–THEN weekly plans. Eighteen people completed an approximately one-hour study; revision used imagined next-week scenarios. Two researchers checked guideline adherence; three physical therapists each assessed six initial plans. This was not a randomized health intervention.
+- **Boundary:** Evidence concerns plan quality and perceptions, not sustained adherence, exercise benefits or clinical safety. Rest-day and exercise-combination problems remained.
+- **Resources/reading scope:** [Published PDF](https://faculty.washington.edu/garyhs/docs/shin-cui2025-planfitting-paper.pdf) §§4–6 and §7.5 reviewed. Paper: CC BY 4.0; implementation/data licenses unconfirmed.
+
+<a id="human-teachtune"></a>
+### H6. TeachTune — Teacher review through student simulation
+- **Paper:** *TeachTune: Reviewing Pedagogical Agents Against Diverse Student Profiles with Simulated Students*, CHI 2025; DOI `10.1145/3706598.3714054`.
+- **Method/evidence:** Teachers author agent state diagrams and student profiles, then inspect simulated conversations. Thirty science teachers compared direct-chat/single-turn testing, full Autochat and knowledge-only simulation; six additional observational participants were excluded from comparative statistics. Autochat participants submitted more distinct student profiles; self-rated perceived coverage did not differ significantly. Expert-rated agent quality also did not differ significantly.
+- **Boundary:** Teachers were real; students were simulated. No student learning gains were tested. One phase-transition topic, limited static traits and uncertain simulation fidelity constrain generalization.
+- **Resources/reading scope:** [Paper](https://jeongeonpark.com/assets/pdf/papers/chi25-teachtune.pdf) §4, §§5.3–5.4, Table 5 and §7; [project page](https://teachtune.kixlab.org/) reviewed. Paper: CC BY-NC-SA 4.0; trial requires contacting authors, code license unconfirmed.
+
+<a id="human-memolet"></a>
+### H7. Memolet — Manipulable conversational memories
+- **Paper:** *Memolet: Reifying the Reuse of User-AI Conversational Memories*, UIST 2024; DOI `10.1145/3654777.3676388`.
+- **Method/evidence:** Interactive memory objects support extraction, organization, inclusion/exclusion, weighting and combination through prompts and RAG. Twelve people completed a within-subject comparison, reusing writing, programming or trip-planning conversations one day later; conditions shared underlying generation/retrieval capabilities.
+- **Boundary:** Findings concern interaction control and user experience, not longitudinal memory accuracy or autonomous memory management. Convenience sampling, controlled tasks and a one-day gap limit deployment claims.
+- **Resources/reading scope:** [Author PDF](https://www.jeffjianzhao.com/papers/memolet.pdf#page=1) §4.6, §§5–6 and §8 reviewed. The author copy specifies personal use and no redistribution; open code/data licenses unconfirmed.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
