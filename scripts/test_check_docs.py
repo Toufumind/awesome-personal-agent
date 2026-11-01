@@ -284,5 +284,40 @@ class PaperCatalogTests(unittest.TestCase):
         self.write(text, text)
         self.assertEqual(self.errors(), [])
 
+    def test_thematic_benchmark_sections_and_legacy_aliases(self):
+        for section in ('user-profile-evaluation', 'personal-memory-evaluation',
+                        'planning-action-evaluation', 'proactive-clarification-evaluation',
+                        'safety-evaluation', 'transferable-memory-evaluation',
+                        'execution-evaluation'):
+            with self.subTest(section=section):
+                text = self.CATALOG.replace('<a id="personal-evaluation"></a>',
+                    '<a id="legacy-evaluation-heading"></a>\n'
+                    f'<a id="{section}"></a>')
+                self.write(text, text)
+                self.assertEqual(self.errors(), [])
+
+    def test_benchmark_theme_bilingual_mismatch(self):
+        zh = self.CATALOG.replace('id="personal-evaluation"', 'id="user-profile-evaluation"')
+        en = self.CATALOG.replace('id="personal-evaluation"', 'id="personal-memory-evaluation"')
+        self.write(zh, en)
+        self.assertTrue(any('B1 bilingual section mismatch' in e for e in self.errors()))
+
+    def test_other_evidence_rejected_in_benchmark_themes(self):
+        for prefix, old in [('M', 'memory-methods'), ('H', 'human-studies')]:
+            for section in ('user-profile-evaluation', 'personal-memory-evaluation',
+                            'planning-action-evaluation', 'proactive-clarification-evaluation'):
+                with self.subTest(prefix=prefix, section=section):
+                    text = self.CATALOG.replace(f'id="{old}"', f'id="{section}"')
+                    self.write(text, text)
+                    self.assertTrue(any(f'{prefix}1 outside its {prefix} section' in e
+                                        for e in self.errors()))
+
+    def test_benchmark_theme_does_not_require_numerical_order(self):
+        text = self.CATALOG.replace('### B1. Benchmark',
+            '### B2. Later ID\n<a id="proactive-clarification-evaluation"></a>\n'
+            '## Clarification\n### B1. Benchmark')
+        self.write(text, text)
+        self.assertEqual(self.errors(), [])
+
 if __name__ == '__main__':
     unittest.main()
