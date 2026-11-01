@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **51 distinct papers**: 35 evaluation entries and 22 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, and PEToolLLM/PEToolLLaMA each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **57 distinct papers**: 37 evaluation entries and 27 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, and MemGuide/MS-TOD each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B35 and M16–M22 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B37 and M16–M27 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -303,6 +303,30 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Measures:** separate F1 at four levels. Its 1,000 cases comprise 450 profile, 220 environment and 330 combined cases.
 - **Limits:** evaluates selection/arguments given profiles, not learning profiles from history or executing transactions. The environment-only subset is not itself individual preference learning.
 - **Resources:** [official repository](https://github.com/BUAA-IRIP-LLM/ToolSpectrum) contains `api`, `data` and `prompts`. README does not document a complete evaluation workflow; no standalone root license found.
+
+<a id="benchmark-memsim"></a>
+### B36. MemSim / MemDaily · Synthetic personal-memory evaluation
+
+[MemSim: A Bayesian Simulator for Evaluating Memory of LLM-based Personal Assistants](https://arxiv.org/abs/2409.20163) — 2024 preprint; v1, 2024-09-30.
+
+**Verification / reading scope**: 2026-11-01; relevant passages in [v1](https://arxiv.org/html/2409.20163v1) §3 methods, §4 data quality, and §5 benchmark; official README and root listing.
+
+- **Input → output**: Synthetic user-message streams and personal questions → text or multiple-choice answers; supporting-message annotations also enable retrieval evaluation.
+- **Measures**: Answering and retrieval are separate; question types cover single-/multi-hop, comparison, aggregation, post-processing, and noise. Full, recent, retrieved, absent, and oracle memory are compared, primarily with GLM-4-9B. Do not pool MemDaily settings with different irrelevant-post ratios.
+- **Limits**: Bayesian profiles and structured hints improve consistency, but sampled human checks do not guarantee error-free data. Synthetic factual QA does not establish real-user preference understanding or tool execution.
+- **Resources**: [Official code/data](https://github.com/nuster1128/MemSim) includes generation, benchmarking, and `data_generation/final_dataset/memdaily.json`; README reports 2,954 trajectories/questions and 26,003 messages. Code/data licensing was not verified; the paper's CC BY 4.0 does not automatically cover them.
+
+<a id="benchmark-ms-tod"></a>
+### B37. MS-TOD · Cross-session intent and slot tracking
+
+[MemGuide: Intent-Driven Memory Selection for Goal-Oriented Multi-Session LLM Agents](https://ojs.aaai.org/index.php/AAAI/article/view/40313) — AAAI 2026; published 2026-03-14. Same paper as M25.
+
+**Verification / reading scope**: 2026-11-01; relevant Dataset, MemGuide, and Experiments passages in [arXiv v2](https://arxiv.org/html/2505.20231v2); proceedings metadata/PDF resource link; official README and root listing.
+
+- **Input → output**: User history, current dialogue, and QA memories → a response advancing or confirming the current task.
+- **Measures**: GPT-4 judging, Joint Goal Accuracy, completion turns, success rate, and human quality ratings. The paper reports 132 personas and 956 task goals; the official README reports 2,860 sessions.
+- **Limits**: SGD-seeded, GPT-4-generated dialogues use three temporally ordered sessions per task with human validation; each session is simplified to one service/intent. Slot-based confirmation success is not a completed real booking, payment, or longitudinal user benefit.
+- **Versions/resources**: 2505.20231v1 (2025-05-26), *Bridging the Long-Term Gap: A Memory-Active Policy for Multi-Session Task-Oriented Dialogue*, was renamed MemGuide in v2 (2025-08-13); count once. [Official code/data](https://github.com/Elvin-Yiming-Du/MS_TOD_Memory); no root license observed, and reuse terms remain unverified.
 
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
@@ -755,6 +779,62 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Evidence:** tool and parameter accuracies under PEToolBench's three synthetic-history settings.
 - **Limits:** training is not persistent-memory management. Results do not establish real service completion, online preference shifts or safe side-effect control.
 - **Resources:** [official training/test scripts](https://github.com/travis-xu/PEToolBench), [data](https://huggingface.co/datasets/travisxu/PEToolBench/tree/main). Repository: Apache-2.0; upstream terms still require checking. Complete weight release and executable reproduction were not confirmed.
+
+<a id="method-secom"></a>
+### M23. SeCom · Topic segmentation and compression-based denoising
+
+[On Memory Construction and Retrieval for Personalized Conversational Agents](https://arxiv.org/abs/2502.05589) — ICLR 2025; the conference title adds SeCom, but this is the same paper. First submitted 2025-02-08; current v3 dated 2025-03-03.
+
+**Verification / reading scope**: 2026-11-01; relevant [v1](https://arxiv.org/html/2502.05589v1) §2–3 method/experiment passages and appendix evaluation notes; official project page, README, and LICENSE. No exhaustive v1–v3 comparison.
+
+- **Mechanism**: Segment historical conversations into coherent topics, then use LLMLingua-2 compression to denoise retrieval units.
+- **Evidence/limits**: Offline answering on LOCOMO and Long-MT-Bench+, plus separate segmentation experiments. The main LOCOMO table uses author-generated QA; official QA appears separately in the appendix. These are not interchangeable with other papers' standard benchmark scores and do not establish real-user longitudinal utility or execution.
+- **Resources**: [Official implementation](https://github.com/microsoft/SeCom); [MIT LICENSE](https://github.com/microsoft/SeCom/blob/main/LICENSE) verified. Upstream models and datasets require separate checks.
+
+<a id="method-rmm"></a>
+### M24. RMM · Prospective organization and retrospective retrieval adaptation
+
+[In Prospect and Retrospect: Reflective Memory Management for Long-term Personalized Dialogue Agents](https://aclanthology.org/2025.acl-long.413/) — ACL 2025; 2503.08026 first submitted 2025-03-11, v2 dated 2025-07-28.
+
+**Verification / reading scope**: 2026-11-01; relevant [v1](https://arxiv.org/html/2503.08026v1) §4–8 method, setup, and results passages; arXiv history and ACL metadata. Description is grounded in v1, not an exhaustive comparison with v2.
+
+- **Mechanism**: Extract/merge topic memories after sessions; adapt a lightweight reranker through online RL using the generator's memory citations as feedback.
+- **Evidence**: MSC response similarity and LongMemEval retrieval/answer metrics; main generator Gemini-1.5-Flash. In v1 Table 1, GTE-based answer accuracy is 63.6% for RAG and 70.4% for RMM: +6.8 percentage points, not an unconditional “+10 points.”
+- **Limits/resources**: Self-generated citation rewards are neither human feedback nor a guarantee of faithful attribution. Real deployment and permission safety are not established. An official implementation and its license were not verified; this is not a claim that no code exists.
+
+<a id="method-memguide"></a>
+### M25. MemGuide · Select memories by intent and missing slots
+
+[MemGuide](https://arxiv.org/html/2505.20231v2) — AAAI 2026; same paper as B37, counted once.
+
+**Verification / reading scope**: 2026-11-01; v2 MemGuide and Experiments passages and Table 3; version, dataset, and resource checks are recorded under B37.
+
+- **Mechanism**: Retrieve intent-aligned QA memories, then rerank with missing-slot reasoning and a fine-tuned LLaMA-8B filter to reduce redundant questions.
+- **Evidence/limits**: On MS-TOD, GPT-4o-mini improves from 88% to 99% success (+11 percentage points) and from 6.03 to 3.19 turns versus full-context prompting. This is one setup, not a universal model or real-transaction improvement. Historical candidate values do not authorize new actions.
+- **Resources**: [Author code/data](https://github.com/Elvin-Yiming-Du/MS_TOD_Memory). The unrelated embodied MemAdapter dataset also called MemGuide is not this paper's asset; licensing limits are recorded under B37.
+
+<a id="method-airgapagent"></a>
+### M26. AirGapAgent · Separate third-party context from personal-data selection
+
+[AirGapAgent: Protecting Privacy-Conscious Conversational Agents](https://arxiv.org/abs/2405.05175) — CCS 2024; v1 (2024-05-08) used *Air Gap*, while v2 (2024-09-18) uses *AirGapAgent*. Same paper.
+
+**Verification / reading scope**: 2026-11-01; relevant [v1](https://arxiv.org/html/2405.05175v1) §2–6 threat, design, and experiment passages; v2 metadata/abstract. No exhaustive cross-version experimental comparison.
+
+- **Mechanism**: A separate minimizer selects necessary data using trusted user tasks and records; the conversational agent subsequently interacts with the untrusted third party, reducing context-hijacking leakage.
+- **Evidence/limits**: Synthetic privacy/utility tests use 20 users, 26 fields, and eight tasks. Trusted tasks/records are assumptions; this is not physical isolation, universal injection defense, or system-wide non-leakage. The abstract's 97% protection is setup-specific, not an overall safety rate.
+- **Resources**: Original official code/data and licensing were not verified. The later AirGapAgent-R is a third-party reconstructed evaluation, not a verified original release.
+
+<a id="method-collaborative-memory"></a>
+### M27. Collaborative Memory · Cross-user memory permissions
+
+[Collaborative Memory: Multi-User Memory Sharing in LLM Agents with Dynamic Access Control](https://arxiv.org/abs/2505.18279) — 2025 preprint; v1, 2025-05-23.
+
+**Verification / reading scope**: 2026-11-01; relevant [v1](https://arxiv.org/html/2505.18279v1) §3–5 method/evaluation passages and Appendix D synthetic-task setup.
+
+- **Mechanism**: Private/shared memory tiers preserve provenance and filter access against current user–agent–resource permissions, including permission changes.
+- **Evidence**: MultiHop-RAG, 200 synthetic business tasks, and a SciQAG dynamic-permission setting. Business tasks lack gold answers and primarily report resource usage, not verified answer accuracy.
+- **Relevance/limits**: Useful for personal-agent multi-user boundaries, but primarily collaborative permission management rather than individual preference learning. Formal policy properties and controlled tests are not implementation audits or protection against all inferential leakage.
+- **Resources**: Official code/data releases and licenses were not verified. Duplicate survey citations do not create another paper.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
