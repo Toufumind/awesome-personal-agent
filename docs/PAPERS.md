@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **78 篇不同论文**：48 个评测条目、42 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem 与 PrivacyLens-Live/PrivacyChecker 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **88 篇不同论文**：55 个评测条目、48 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory 与 PENGUIN/RAISE 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B48、M16–M42 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B55、M16–M48 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -237,7 +237,7 @@
 
 [Personal Large Language Model Agents: A Case Study on Tailored Travel Planning](https://aclanthology.org/2024.emnlp-industry.37/) — EMNLP 2024 Industry Track。标题按 ACL 元数据；PDF 标题末词为 Tailored Travel Planners。
 
-**核验日期 / 阅读范围**：2026-11-01；摘要、§1、§4.2 及结果表；待审，未复现。
+**核验日期 / 阅读范围**：2026-11-01；摘要、§1、§4.2 及结果表；未复现。
 
 - **输入 → 输出**：用户模型、含个人概念的请求及旅行参考信息 → 个性化行程。
 - **测量**：计划交付、常识 / 硬约束与最终通过率；另用 LLM judge 比较个性化与通用计划的偏好率。
@@ -249,7 +249,7 @@
 
 [Inferring the Unspoken: Aligning Embodied Agents with Implicit Preferences](https://arxiv.org/abs/2502.00858v4) — 2025 首发；此处为 2026-09-08 v4，arXiv 标注 EMNLP 2026。旧题为 Learning to Plan with Personalized Preferences；方法见 M17。
 
-**核验日期 / 阅读范围**：2026-11-01；仅 v4 摘要与版本记录，待审初读。
+**核验日期 / 阅读范围**：2026-11-01；仅 v4 摘要与版本记录，初读。
 
 - **输入 → 输出**：少量行为演示与新情境 → 符合隐含偏好的具身动作计划；摘要报告 5,000 个评测组、290 种偏好。
 - **测量**：比较给定真实偏好与从行为推断偏好后的规划表现；具体指标和评分协议尚待全文核验，不录入分数。
@@ -437,6 +437,67 @@
 - **边界**：家庭、偏好和请求由合成与人工检查构建，主要测试静态调用生成，不是实际完成预订、长期家庭部署或开放多轮执行。最长跳数样例较少；正确参数不等于已获授权或执行成功。
 - **资源**：[官方代码 / 数据](https://github.com/yxzwang/FamilyTool)含基础 / 扩展 JSONL、KG 与流水线。根目录 `LICENSE` 查询返回 404，仓库许可字段为空；**复用许可未确认**，不能由公开可读推定为 MIT 等开放许可。MTU-Bench / UnifiedToolHub 上游资源另核对条款。
 
+<a id="benchmark-compass"></a>
+### B49. 区分可行规划与偏好最优规划
+
+[COMPASS: Benchmarking Constrained Optimization in LLM Agents](https://arxiv.org/html/2510.07043v2) — 查阅 v2，2026-04-16；会议归属未确认。
+
+**阅读范围：**§§3–6、附录 H；版本记录、仓库 README、目录与 LICENSE；未运行。
+
+- **评测：**281 个旅行任务、工具化检索及模拟用户交互；分别以 FR 检查硬约束可行性，以 OR-A% 检查方案是否位于可行解效用排名前 A%。
+- **边界：**真实来源商品数据不等于真人使用；人工研究主要核对模拟器。最优率采用前 A% 排名口径，不必然是精确最优解，也不证明完成真实预订。
+- **资源：**[仓库](https://github.com/sunnytqin/compass)根许可 MIT；数据库完整性及第三方数据权利未审计。
+- **去重：**仓库长名称与论文标题属于同一研究；无需新增独立方法条目。
+
+<a id="benchmark-aware-us"></a>
+### B50. 偏好约束冲突与查询修复
+
+[AWARE-US: Preference-Aware Infeasibility Resolution in Tool-Calling Agents](https://arxiv.org/html/2601.02643v2) — 查阅 v2，2026-03-01；会议录用未确认。
+
+**阅读范围：**§§3–7、表1–5；版本记录、官方 README、目录及数据卡；未运行。
+
+- **评测：**122 个合成画像汽车查询，测试澄清、恢复可行性及与 oracle 偏好的匹配。
+- **边界：**表5中，SFT+DPO 后的 Qwen3-8B 局部权重方法取得 48% Car match；该指标以正确放松约束为门控，不应据此断言以正确放松样本数为分母，更不是满意度。表1与结果表/讨论的 S2/S3 标签不一致，分组成绩暂不转录；仅测试结构化汽车领域和静态偏好，不覆盖偏好漂移。推断偏好不等于获得放松真实硬约束的授权。
+- **资源：**[代码](https://github.com/mhtkrmz/Infeasible-task)及[数据入口](https://huggingface.co/datasets/MehmetKurmaz/AWARE-US)可读；代码根目录无 LICENSE，数据复用许可未确认。
+- **去重：**局部/全局权重及成对排序方法可交叉引用本条，不另计论文。
+
+
+<a id="benchmark-ptbench"></a>
+### B51. PTBench · 工具选择与参数填充中的个人偏好
+
+[Advancing and Benchmarking Personalized Tool Invocation for LLMs](https://arxiv.org/html/2505.04072v1) — 预印本；v1，2025-05-07。与 M46 为同一论文，仅计一次。
+
+**实际阅读范围：** §3–4、§5.1–5.3，重点为表1–2；官方仓库目录与 README。其余附录未全面精读。
+
+- **输入 → 输出：** 用户画像/行为、请求及候选 API → 偏好平台与带参数的工具调用。
+- **评测证据：** 1,083 条经人工核验的合成测试样本，80 个画像、360 个 API、五类场景；其中六个画像未进入训练。分别测量平台选择、请求/画像相关参数及完整输出准确率。
+- **边界：** 人工核验不等于真实用户交互。静态生成调用不能证明交易完成、调用获授权或长期偏好适应。表1内部亦有算术冲突：训练7,096加测试1,083应为8,179，而印刷总数为8,197；数据总量正文也不一致。应保留明确标注的划分计数并提示总数未调和，不能把整张表当作无矛盾真值。
+- **资源：** [官方代码与测试数据](https://github.com/hyfshadow/PTBench)；训练数据/模型发布情况和再利用许可未核实。
+
+<a id="benchmark-pal-bench"></a>
+### B52. PAL-Bench · 从长期个人历史理解需求与偏好
+
+[Mem-PAL: Towards Memory-based Personalized Dialogue Assistants for Long-term User-Agent Interaction](https://arxiv.org/html/2511.13410v2) — v2，2025-11-26；AAAI 2026 Oral。与 M47 为同一论文。
+
+**实际阅读范围：** PAL-Bench 构建/任务、H²Memory 框架与实验（包括外部验证）；官方仓库 README 与目录。附录仅抽查，未全面精读。
+
+- **输入 → 输出：** 行为日志与对话历史 → 需求重述、方案生成/选择及多轮回答。
+- **指标：** BLEU、GPT-4 隐含需求评分、方案选择分数及对话成对比较。
+- **边界：** PAL-Set 包含100名合成用户，每人约29次会话、9.4个月模拟历史；人工检查不会使其变成长期真人研究。多轮用户由 LLM 模拟。外部验证仅覆盖 LongMemEval 的 single-session-preference 子集，且仅使用对话组件（Topic Outline + Principle），并非完整四组件系统。
+- **资源/语言：** [官方代码/数据](https://github.com/hzp3517/Mem-PAL)。README 明确英文版本由 DeepSeek-V3 翻译，未逐项人工核验。附录B以未来发布措辞声明 PAL-Set 将采用 CC BY-NC 4.0；这是作者的许可声明，应与实际分发数据条款及实现许可的核验分开。仓库再利用许可核验仍未完成。
+
+<a id="benchmark-memento"></a>
+### B53. MEMENTO · 将个人记忆用于具身任务
+
+[Embodied Agents Meet Personalization: Investigating Challenges and Solutions Through the Lens of Memory Utilization](https://arxiv.org/html/2505.16348v4) — v4，2026-02-13；ICLR 2026。
+
+**实际阅读范围：** §3–4、记忆设计贡献概述、附录 A.1–A.2；作者项目页及仓库 README。§6 的详细算法/消融与扩展附录 E 未全面精读，因此方法交叉索引暂定。
+
+- **输入 → 输出：** 物品的个人含义/行为惯例与情景记忆 → 物品重排动作。
+- **评测：** 获得记忆/使用记忆阶段保持目标相同；区分单记忆/联合记忆，统计目标完成比例、成功率和规划成本。438个回合、12个 Habitat 场景，个人知识由模型生成。
+- **边界：** 主设置确保检索候选含正确记忆，并采用理想感知与运动技能，隔离的是记忆利用，而非无约束检索或现实机器人可靠性。使用合成个人信息，缺少对话澄清。GPT-4o 联合记忆任务相对对应获得记忆阶段成功率下降30.5个百分点。
+- **资源/身份：** [官方仓库](https://github.com/Connoriginal/MEMENTO)，MIT 仓库，依赖 Habitat/PARTNR。README 旧副标题 “Exploring Memory Utilization for Personalized Assistance” 指同一论文。
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -560,7 +621,7 @@
 
 [Ask-before-Plan: Proactive Language Agents for Real-World Planning](https://aclanthology.org/2024.findings-emnlp.636/) — Findings of EMNLP 2024；方法见 M18。
 
-**核验日期 / 阅读范围**：2026-11-01；摘要、§5.1–5.2 评测及附录 B.2–B.3；官方 README；待审。
+**核验日期 / 阅读范围**：2026-11-01；摘要、§5.1–5.2 评测及附录 B.2–B.3；官方 README。
 
 - **输入 → 输出**：对话与环境反馈 → 澄清问题、工具调用及旅行计划。
 - **测量**：澄清判断 / 问题质量、调用正确性、约束与最终通过率分别报告。
@@ -625,7 +686,7 @@
 
 [Act on Your Behalf, Beyond Your Authorization: Benchmarking LLM Agent Authorization Alignment](https://arxiv.org/html/2610.27548v2) — 2026 预印本；v2，2026-10-21。
 
-**核验日期 / 阅读范围**：2026-11-01；摘要、§4.1 指标、官方 README 的资源与许可说明；待审。
+**核验日期 / 阅读范围**：2026-11-01；摘要、§4.1 指标、官方 README 的资源与许可说明。
 
 - **输入 → 输出**：带授权边界的委托及沙箱状态 → 工具行动轨迹；286 个任务。
 - **测量**：结合完整轨迹与状态证据，分别判断任务完成和越权。
@@ -643,6 +704,31 @@
 - **测量**：论文先用 493 个静态 PrivacyLens 样例评估缓解；Live 初始使用 150 个 Gmail / Notion 样例，另加 36 个三工具流程。泄露率、helpfulness 与按 helpfulness 调整的泄露率分开；静态与 live、模型及部署位置必须注明。
 - **边界**：Gmail / Notion 测试账号有实际工具交互，但内容来自重建样例；A2A 是关键组件的复现，不能视为所有协议实现的互操作或安全测试。更复杂流程仍有残余泄露；不证明完整隐私合规或抵抗提示注入。
 - **资源**：作者给出[代码 / 数据短链接](https://aka.ms/privacy_in_action)，但本次抓取被 robots.txt 拒绝，**发布内容及代码 / 数据许可未确认**；不要写成已验证可复现。它扩展已有 PrivacyLens，不是原始 PrivacyLens 的同名版本更新。
+
+<a id="benchmark-privacybench"></a>
+### B54. PrivacyBench · 个人对话中的泄露与过度保密
+
+[PrivacyBench: A Conversational Benchmark for Evaluating Privacy in Personalized AI](https://arxiv.org/html/2512.24848v1) — 预印本；v1，2025-12-31。
+
+**实际阅读范围：** §3–8、表2、附录 C.3；另核对 [PDF 第8页](https://arxiv.org/pdf/2512.24848) 表2；官方代码/数据仓库目录和 README。
+
+- **输入 → 输出：** 合成社交画像、文档及秘密 → 在直接/间接探测下的多轮 RAG 回答。
+- **指标与规模：** 泄露、过度保密、不当检索及人格一致性；48名合成用户、31,972份文档、五种助手，最多十轮。
+- **数值警示：** 表中直接探测平均数16.31%→5.43%，与所列五模型行的简单平均17.064%→7.38%不一致。整体15.80%→5.12%仅为作者报告，聚合尚未调和。26.56%是最差模型的直接探测结果，并非整体基线。提示词并非一致有效：Kimi-K2 的直接探测泄露率反而由14.58%升至18.13%。
+- **边界：** 严格的完整/明确秘密泄露定义不涵盖暗示及部分泄露；仅测试标准 RAG，不能推为所有智能体隐私/合规结论。人工评审校验不是真人部署。不同于 PrivacyLens、PrivacyLens-Live 与 PrivacyChecker。
+- **资源：** [代码](https://github.com/sri-ja/privacy-bench)、[数据](https://github.com/sri-ja/privacy-bench-dataset)；再利用许可未核实。提示词缓解不另列为一篇方法论文。
+
+<a id="benchmark-penguin"></a>
+### B55. PENGUIN · 以个人背景为条件的安全评测
+
+[Personalized Safety in LLMs: A Benchmark and A Planning-Based Agent Approach](https://arxiv.org/html/2505.18882v5) — v5，2026-01-13；[NeurIPS 2025](https://papers.nips.cc/paper_files/paper/2025/hash/8c2bb821410066459be64d03a4dc5719-Abstract-Conference.html)。与 M48 为同一论文。
+
+**实际阅读范围：** §3–4、§5 方法概述/结果、Limitations 与 Ethical Statement；官方项目页/仓库 README。MCTS 数学附录及全部扩展实验未全面精读。
+
+- **输入 → 输出：** 带/不带结构化个人背景的请求 → 考虑个人处境的回答。
+- **指标：** 风险敏感性、情感共情与用户特定对齐。14,000个场景，Reddit 衍生与合成各半，覆盖七个领域；以350例、三位标注者校验 GPT-4o 评审。
+- **边界：** 测量回答的代理评分，而非实际伤害下降。Reddit 富背景筛选、人工定义属性及等成本获取假设限制推广。
+- **资源：** [官方实现](https://github.com/yuchenlwu/PersonalizedSafety)、[项目页](https://personalized-safety.github.io/)；README 含过时克隆地址/运行文件引用。已核验可访问，未尝试复现；README 的 MIT 声明未另以许可文件核对。
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -824,7 +910,7 @@
 
 [Inferring the Unspoken](https://arxiv.org/abs/2502.00858v4) — 与 B29 同一篇，勿重复计数。
 
-**核验日期 / 阅读范围**：2026-11-01；仅 v4 摘要，待审初读。
+**核验日期 / 阅读范围**：2026-11-01；仅 v4 摘要，初读。
 
 - **机制**：先将多模态演示中的隐含偏好表述为语言，再以其为条件生成动作计划。
 - **边界**：显式中间表示有助于解释与迁移，不意味着偏好推断已可靠；评测、资源和全文核验限制见 [B29](#benchmark-pbp)。
@@ -834,7 +920,7 @@
 
 [Ask-before-Plan](https://aclanthology.org/2024.findings-emnlp.636/) — 与 B30 同一篇，勿重复计数。
 
-**核验日期 / 阅读范围**：2026-11-01；摘要、评测设置及附录 B.3、官方 README 的训练和推理入口；待审。
+**核验日期 / 阅读范围**：2026-11-01；摘要、评测设置及附录 B.3、官方 README 的训练和推理入口。
 
 - **机制**：澄清、执行、规划三个角色；对澄清和静态执行做轨迹微调，动态执行使用记忆回想。
 - **边界**：角色分工不等于长期用户建模或执行授权；模块与整体成绩均须按各自协议解读，整体最终规划仍使用真实标注对话（附录 B.3）。资源及许可见 [B30](#benchmark-ask-before-plan)。
@@ -1132,6 +1218,66 @@
 - **证据**：6,675 是爬取工具的生态调查规模；实际实验为四类场景选定工具集，在 AgentDojo 中实现功能，并使用生成的 PII / 业务资产与 GPT-5.1 Agent。57.07% 指所测 608 条潜在调用链中的 347 条，不是全部商业 Agent 的泄露率。
 - **边界**：依赖内部执行轨迹，未直接审计封闭商业 Agent 或终端用户真实部署。图边准确性、请求有效性、泄露检测与成本指标不能混报；LLM 判断错误和动态工具变化仍有限制。法规文本参与投票不构成法律认证；提示注入检测与运行时防御的扩展讨论不等于已证实安全能力。
 - **资源**：原文未找到作者实现 / 数据发布链接，定向检索亦未确认；**发布状态与实现许可未确认**。AgentDojo 是实验底座，其开放许可不能替代 AgentRaft 实现许可。
+
+<a id="method-rlpf"></a>
+### M43. 用预测反馈压缩用户画像
+
+[RLPF: Reinforcement Learning from Prediction Feedback for User Summarization with LLMs](https://arxiv.org/html/2409.04421v2) — AAAI 2025；查阅 v2，2025-01-17。
+
+**阅读范围：**§§2–5，重点训练奖励、数据构造、评测指标、迁移结果与部署讨论，及附录 I 任务定义；版本记录及定向资源检索；未运行。
+
+- **方法：**以未来行为预测正确性及长度奖励训练摘要器，将个人历史压缩成后续模型可用的自然语言画像；预测在真实下一项与三个随机负选项中选择，不是开放目录搜索。
+- **证据与边界：**MovieLens 2015/2003、Amazon 评论与 Google Local 评论历史上的离线预测，不是真人长期助理实验；部分迁移任务退步。不能推导持续更新、执行能力或隐私保证。
+- **资源：**未核实官方实现或新增数据发布；论文许可不覆盖上游数据与模型。
+- **去重：**AAAI 与 arXiv 为同一研究；归入画像压缩，不另列画像更新成果。
+
+<a id="method-ld-agent"></a>
+### M44. 长期对话的事件与双向画像管理
+
+[Hello Again! LLM-powered Personalized Agent for Long-term Dialogue](https://aclanthology.org/2025.naacl-long.272/) — NAACL 2025；出版 PDF；arXiv 别名 `2406.05925`。
+
+**阅读范围：**§§3–4、Limitations、附录 A；官方 README、根目录和 LICENSE；未运行。
+
+- **方法：**结合长短期事件记忆、主题检索、用户及助理画像，生成后续回复。
+- **证据与边界：**MSC 众包角色扮演及 CC 模型生成对话上的离线评测；文本指标、画像分类和人工回复质量评分不等于真实长期效用或执行成功。
+- **资源：**[官方实现](https://github.com/leolee99/LD-Agent)为 MIT；Drive 数据/权重未验证，README 仍将 CC 代码与数据列为待办。
+- **去重：**出版版与 arXiv 只计一次。
+
+<a id="method-aloe"></a>
+### M45. 通过交互学习个人偏好对齐
+
+[Aligning LLMs with Individual Preferences via Interaction](https://aclanthology.org/2025.coling-main.511/) — COLING 2025；方法查阅 [arXiv v2，2024-12-15](https://arxiv.org/html/2410.03642v2)。
+
+**阅读范围：**§§2–5，含数据构造、训练、基准及人工评分核对；出版元数据、官方 README 和根目录；未逐项比较出版版，未运行。
+
+- **方法：**生成树状偏好对话，进行 SFT 与 DPO；ALOE 是同篇研究的评测名称。
+- **证据与边界：**100 个画像、十轮模拟交互；GPT-4o 扮演用户并评分。人工核对不等于真人纵向试用；不是持续在线学习或工具执行验证。
+- **资源：**[代码与数据目录](https://github.com/ShujinWu-0814/ALOE)可读，根目录未见 LICENSE；检查点及资产许可未确认。
+- **去重：**可设基准交叉链接，但不另增论文数；已有 RLPA 条目中的 ALOE 提及不构成独立收录。
+
+<a id="method-ptool"></a>
+### M46. PTool · 个性化工具调用的合成训练数据
+
+与 B51 为[同一论文](https://arxiv.org/html/2505.04072v1)，实读范围相同。
+
+- **机制：** 结构化 API/画像合成、角色扮演式请求与答案生成、规则/模型核验，再进行 LoRA SFT。
+- **证据与边界：** Qwen2.5-7B 完整准确率由 7.38% 升至 26.78%；测量生成调用，非真实工具执行。
+
+<a id="method-h2memory"></a>
+### M47. H²Memory · 具体与抽象两层个人记忆
+
+与 B52 为[同一论文](https://arxiv.org/html/2511.13410v2)，实读范围相同；PAL-Set 别名亦不另计。
+
+- **机制：** 四组件准确为 Log Graph（日志图）、Background（背景）、Topic Outline（话题提纲）、Principle（原则），配合更新和关联检索。
+- **证据与边界：** 优于列出的 PAL-Bench 基线；模拟交互与模型评分不能证明真实用户满意度或自主行动成功。
+
+<a id="method-raise"></a>
+### M48. RAISE · 选择性获取个人安全背景
+
+与 B55 为[同一论文](https://arxiv.org/html/2505.18882v5)，实读范围相同，仅计一次。
+
+- **机制：** 离线 LLM 引导 MCTS 缓存属性获取路径；在线检索指导提问，并判断信息是否足够/是否暂缓回答。
+- **边界：** 使用基准中的用户背景进行评估；不证明现实咨询安全，也不构成收集敏感属性的授权依据。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
