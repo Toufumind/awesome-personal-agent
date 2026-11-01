@@ -130,5 +130,130 @@ class DocumentationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
 
 
+class PaperCatalogTests(unittest.TestCase):
+    CATALOG = '''<a id="personal-evaluation"></a>
+## Evaluation
+<a id="benchmark-one"></a>
+### B1. Benchmark
+[paper](https://example.org/paper(v1)) [data](https://example.org/data)
+<a id="memory-methods"></a>
+## Methods
+### M1. Method
+[paper](https://example.org/method)
+<a id="human-studies"></a>
+## Human studies
+### H1. Human study
+[paper](https://example.org/human)
+<a id="sources-and-rights"></a>
+## Sources
+[not part of H1](https://example.org/rights)
+'''
+
+    def setUp(self):
+        temp = tempfile.TemporaryDirectory(prefix='paper-checker-selftest-')
+        self.addCleanup(temp.cleanup)
+        self.root = Path(temp.name)
+        (self.root / 'docs').mkdir()
+        self.write(self.CATALOG, self.CATALOG)
+
+    def write(self, zh, en):
+        for filename, text in [('PAPERS.md', zh), ('PAPERS.en.md', en)]:
+            (self.root / 'docs' / filename).write_text(text, encoding='utf-8')
+
+    def errors(self):
+        return check_docs.check_papers(self.root)
+
+    def test_valid_pair_and_general_checker_integration(self):
+        self.assertEqual(self.errors(), [])
+        self.assertEqual(check_docs.check(self.root)[0], [])
+
+    def test_reading_guide_subheading_is_not_a_paper_entry(self):
+        text = '<a id="reading-paths"></a>\n## Guide\n### User profiles: four questions\n' + self.CATALOG
+        self.write(text, text)
+        self.assertEqual(self.errors(), [])
+
+    def test_missing_resource_link(self):
+        self.write(self.CATALOG, self.CATALOG.replace('[data](https://example.org/data)', 'data above'))
+        self.assertTrue(any('B1 bilingual external URL mismatch' in e for e in self.errors()))
+        self.assertTrue(any('external URL mismatch' in e for e in check_docs.check(self.root)[0]))
+
+    def test_entry_heading_url_is_included(self):
+        text = self.CATALOG.replace('### B1. Benchmark', '### B1. [Benchmark](https://example.org/heading)')
+        self.write(text, self.CATALOG)
+        self.assertTrue(any('B1 bilingual external URL mismatch' in e for e in self.errors()))
+
+    def test_duplicate_id(self):
+        self.write(self.CATALOG, self.CATALOG.replace('### B1. Benchmark', '### B1. First\n### B1. Benchmark'))
+        self.assertTrue(any('duplicate paper ID B1' in e for e in self.errors()))
+
+    def test_missing_interior_id(self):
+        text = self.CATALOG.replace('### B1. Benchmark', '### B3. Benchmark')
+        self.write(text, text)
+        self.assertTrue(any('non-contiguous B IDs' in e for e in self.errors()))
+
+    def test_huge_sparse_id_does_not_allocate_a_range(self):
+        text = self.CATALOG.replace('### B1. Benchmark', '### B1000000000. Benchmark')
+        self.write(text, text)
+        self.assertTrue(any('non-contiguous B IDs' in e for e in self.errors()))
+
+    def test_ids_can_be_out_of_numerical_order(self):
+        text = self.CATALOG.replace('### B1. Benchmark', '### B2. Later ID\n### B1. Benchmark')
+        self.write(text, text)
+        self.assertEqual(self.errors(), [])
+
+    def test_bilingual_order_mismatch(self):
+        zh = self.CATALOG.replace('### B1. Benchmark', '### B1. First\n### B2. Second')
+        en = self.CATALOG.replace('### B1. Benchmark', '### B2. Second\n### B1. First')
+        self.write(zh, en)
+        self.assertTrue(any('ID/order mismatch' in e for e in self.errors()))
+
+    def test_stray_human_heading_breaks_method_interval(self):
+        text = self.CATALOG.replace('### M1. Method', '## New group: Human studies, not benchmarks\n### M1. Method')
+        self.write(self.CATALOG, text)
+        self.assertTrue(any('M1 outside its M section' in e for e in self.errors()))
+
+    def test_real_human_section_rejects_method(self):
+        text = self.CATALOG.replace('### H1. Human study', '### M2. Method\n### H1. Human study')
+        self.write(text, text)
+        self.assertTrue(any('M2 outside its M section' in e for e in self.errors()))
+
+    def test_review_labels_both_languages(self):
+        for label in ('**待审：** ', '**English review:** '):
+            with self.subTest(label=label):
+                self.write(self.CATALOG, self.CATALOG.replace('[paper]', label+'[paper]', 1))
+                self.assertTrue(any('forbidden review label' in e for e in self.errors()))
+
+    def test_examples_comments_and_prose_do_not_trigger_review_label(self):
+        text = self.CATALOG + '\n<!-- **待审：** -->\n```md\n**English review:**\n### B999. Example\n```\nA discussion of English review is fine.\n'
+        self.write(text, text)
+        self.assertEqual(self.errors(), [])
+
+    def test_resource_order_labels_and_repetition_do_not_matter(self):
+        text = self.CATALOG.replace('[paper](https://example.org/paper(v1)) [data](https://example.org/data)',
+                                    '[数据](https://example.org/data) [论文](https://example.org/paper(v1)) [again](https://example.org/data)')
+        self.write(self.CATALOG, text)
+        self.assertEqual(self.errors(), [])
+
+    def test_following_section_links_not_assigned_to_last_entry(self):
+        self.write(self.CATALOG, self.CATALOG.replace('https://example.org/rights', 'https://example.org/en-rights'))
+        self.assertEqual(self.errors(), [])
+
+    def test_missing_pair_and_empty_catalog_fail(self):
+        (self.root / 'docs/PAPERS.en.md').unlink()
+        self.assertTrue(self.errors())
+        self.write('', '')
+        self.assertTrue(any('missing B entries' in e for e in self.errors()))
+
+    def test_malformed_heading(self):
+        text = self.CATALOG.replace('### B1. Benchmark', '### B0. Benchmark')
+        self.write(text, text)
+        self.assertTrue(any('malformed paper entry heading' in e for e in self.errors()))
+
+    def test_bilingual_section_difference(self):
+        text = self.CATALOG.replace('id="personal-evaluation"', 'id="safety-evaluation"')
+        self.write(self.CATALOG, text)
+        self.assertTrue(any('B1 bilingual section mismatch' in e for e in self.errors()))
+
+
 if __name__ == '__main__':
     unittest.main()
