@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **51 篇不同论文**：35 个评测条目、22 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent 与 PEToolLLM/PEToolLLaMA 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **57 篇不同论文**：37 个评测条目、27 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA 与 MemGuide/MS-TOD 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B35、M16–M22 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B37、M16–M27 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -303,6 +303,30 @@
 - **测量**：四个层级分别算 F1。共 1,000 个案例：画像 450、环境 220、二者结合 330。
 - **边界**：测给定画像后的选择与参数，不测从历史学习画像或真实交易；仅环境子集也不等于个体偏好学习。
 - **资源**：[官方仓库](https://github.com/BUAA-IRIP-LLM/ToolSpectrum)含 `api`、`data`、`prompts`。README 未给出完整评测运行流程；所查根目录未见独立许可文件。
+
+<a id="benchmark-memsim"></a>
+### B36. MemSim / MemDaily · 合成个人记忆评测
+
+[MemSim: A Bayesian Simulator for Evaluating Memory of LLM-based Personal Assistants](https://arxiv.org/abs/2409.20163) — 2024 预印本；v1，2024-09-30。
+
+**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2409.20163v1) §3 方法、§4 数据质量与 §5 benchmark 相关段落；官方 README 与根目录。
+
+- **输入 → 输出**：合成用户消息流及个人问题 → 文本答案或单选答案；另提供所需消息的检索标注。
+- **测量**：区分回答与检索能力，涵盖单跳、多跳、比较、聚合、后处理及噪声；比较全文、近期、检索、无记忆与 oracle 等设置，主 backbone 为 GLM-4-9B。无关帖子比例不同的 MemDaily 设置不可混报。
+- **边界**：贝叶斯关系网络与结构化 hints 提高生成一致性，但人工抽查不是全量无误保证。合成事实 QA 不证明真人长期偏好理解或工具执行。
+- **资源**：[官方代码 / 数据](https://github.com/nuster1128/MemSim)包含生成器、benchmark 与 `data_generation/final_dataset/memdaily.json`；README 记录 2,954 条轨迹 / 问题、26,003 条消息。代码 / 数据许可未核实；论文 CC BY 4.0 不自动覆盖它们。
+
+<a id="benchmark-ms-tod"></a>
+### B37. MS-TOD · 跨会话任务意图与槽位
+
+[MemGuide: Intent-Driven Memory Selection for Goal-Oriented Multi-Session LLM Agents](https://ojs.aaai.org/index.php/AAAI/article/view/40313) — AAAI 2026；2026-03-14 出版。与 M25 同一论文。
+
+**核验日期 / 阅读范围**：2026-11-01；[arXiv v2](https://arxiv.org/html/2505.20231v2) Dataset、MemGuide、Experiments 相关段落，正式出版记录 / PDF 的资源链接；官方 README 与根目录。
+
+- **输入 → 输出**：用户历史会话、当前对话与 QA 记忆 → 推进或确认当前任务的回复。
+- **测量**：GPT-4 judge、Joint Goal Accuracy、完成轮数、成功率与人工质量评分。论文报告 132 personas、956 task goals；官方 README 记录 2,860 sessions。
+- **边界**：基于 SGD 种子与 GPT-4 生成，每任务构造三个时间有序会话，人工验证；每 session 简化为单 service / intent。槽位与确认式对话的成功不等于真实预订、支付或长周期真人效用。
+- **版本 / 资源**：2505.20231v1（2025-05-26）题为 *Bridging the Long-Term Gap: A Memory-Active Policy for Multi-Session Task-Oriented Dialogue*，v2（2025-08-13）改为 MemGuide，不能重复计数。[官方代码 / 数据](https://github.com/Elvin-Yiming-Du/MS_TOD_Memory)；未见根目录许可，代码与数据的再利用条款未核实。
 
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
@@ -755,6 +779,62 @@
 - **证据**：PEToolBench 三类合成历史设置下的工具与参数准确率。
 - **边界**：模型训练与持久记忆管理不是一回事；没有证明真实服务完成、偏好在线变化或安全副作用控制。
 - **资源**：[官方训练 / 测试脚本](https://github.com/travis-xu/PEToolBench)、[数据](https://huggingface.co/datasets/travisxu/PEToolBench/tree/main)。仓库 Apache-2.0，上游条款仍需核对；未确认完整权重发布或运行复现。
+
+<a id="method-secom"></a>
+### M23. SeCom · 主题分段与压缩去噪
+
+[On Memory Construction and Retrieval for Personalized Conversational Agents](https://arxiv.org/abs/2502.05589) — ICLR 2025；会议题名添加 SeCom 前缀，与 arXiv 为同一论文。首发 2025-02-08，当前 v3 为 2025-03-03。
+
+**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2502.05589v1) §2–3 方法 / 实验相关段落、附录评测说明；官方项目页、README 与 LICENSE。未逐项比较 v1–v3。
+
+- **机制**：将历史对话切成主题一致的片段，用 LLMLingua-2 压缩去噪后检索，改善记忆粒度与相关性。
+- **证据 / 边界**：LOCOMO、Long-MT-Bench+ 的离线回答评测及独立分段实验；主 LOCOMO 表使用作者生成 QA，官方 QA 另列附录，不能直接混作其他论文的标准分数。不证明真实用户长期效用或工具执行。
+- **资源**：[官方实现](https://github.com/microsoft/SeCom)，[MIT LICENSE](https://github.com/microsoft/SeCom/blob/main/LICENSE)已核实；上游模型与数据另查条款。
+
+<a id="method-rmm"></a>
+### M24. RMM · 前瞻整理与回顾式检索适配
+
+[In Prospect and Retrospect: Reflective Memory Management for Long-term Personalized Dialogue Agents](https://aclanthology.org/2025.acl-long.413/) — ACL 2025；2503.08026 首发 2025-03-11，v2 为 2025-07-28。
+
+**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2503.08026v1) §4–8 方法、设置与结果相关段落；arXiv 版本和 ACL 出版记录。方法描述依据 v1，未逐项比较 v2。
+
+- **机制**：会话结束后抽取 / 合并主题记忆；生成时依据 LLM 对记忆的引用反馈，以在线强化学习适配轻量 reranker。
+- **证据**：MSC 的回复相似度与 LongMemEval 检索 / 答案指标；主生成器 Gemini-1.5-Flash。v1 表1中 GTE 设置的答案准确率 RAG 63.6%、RMM 70.4%，即 +6.8 个百分点，不是无条件“+10 个百分点”。
+- **边界 / 资源**：模型引用奖励不是人工反馈，也非忠实归因保证；未证明真实长期部署或权限安全。本次未核实官方实现及许可，不据此断言“没有代码”。
+
+<a id="method-memguide"></a>
+### M25. MemGuide · 按当前意图与缺失槽位选记忆
+
+[MemGuide](https://arxiv.org/html/2505.20231v2) — AAAI 2026；与 B37 同一篇，勿重复计数。
+
+**核验日期 / 阅读范围**：2026-11-01；v2 的 MemGuide、Experiments 相关段落及表3；版本、数据和资源核验见 B37。
+
+- **机制**：先按任务意图检索 QA 记忆，再用缺失槽位推理与微调的 LLaMA-8B filter 重排，引导回复减少重复询问。
+- **证据 / 边界**：MS-TOD 上 GPT-4o-mini 相对 full-context 的成功率 88%→99%（+11 个百分点）、轮数 6.03→3.19；仅指这一设置，非所有模型或实际交易提升。记忆提供历史候选值不代表已获新操作授权。
+- **资源**：[作者代码 / 数据](https://github.com/Elvin-Yiming-Du/MS_TOD_Memory)。同名 embodied MemAdapter 的 MemGuide 数据集不是本论文资产；许可限制见 B37。
+
+<a id="method-airgapagent"></a>
+### M26. AirGapAgent · 隔离第三方语境与个人数据筛选
+
+[AirGapAgent: Protecting Privacy-Conscious Conversational Agents](https://arxiv.org/abs/2405.05175) — CCS 2024；v1（2024-05-08）题名为 *Air Gap*，v2（2024-09-18）为 *AirGapAgent*，同一论文。
+
+**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2405.05175v1) §2–6 威胁、设计与实验相关段落；v2 元数据 / 摘要。未逐项比较两版实验。
+
+- **机制**：独立 minimizer 仅依据可信用户任务和资料选出必要数据，交互代理再与不可信第三方对话，降低 context hijacking 泄漏。
+- **证据 / 边界**：合成 20 用户、26 字段、8 任务的隐私 / 效用测试；依赖任务与资料可信假设，非物理隔离、通用防注入或全系统无泄漏证明。摘要的97%保护率是特定设置，不能当总体安全率。
+- **资源**：本次未核实原始官方代码 / 数据发布及许可。后续 AirGapAgent-R 是他人重建评测，不是已验证的原始资产。
+
+<a id="method-collaborative-memory"></a>
+### M27. Collaborative Memory · 跨用户记忆权限
+
+[Collaborative Memory: Multi-User Memory Sharing in LLM Agents with Dynamic Access Control](https://arxiv.org/abs/2505.18279) — 2025 预印本；v1，2025-05-23。
+
+**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2505.18279v1) §3–5 方法与实验相关段落、附录 D 合成任务设置。
+
+- **机制**：私有 / 共享双层记忆保留来源记录，按当前 user–agent–resource 权限过滤，支持授权变化。
+- **证据**：MultiHop-RAG、200 条合成企业任务及 SciQAG 动态权限场景。企业任务没有 gold answers，主要报告资源调用，不能宣传为准确率验证。
+- **关联与边界**：适用于个人代理的多用户数据边界，但主要是协作权限管理，不是个人偏好学习。形式化策略与受控实验不等于实现安全审计或防所有推断泄漏。
+- **资源**：本次未核实官方代码 / 数据发布与许可；survey 中重复引文不另算论文。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
