@@ -104,6 +104,13 @@ Stars are displayed via Shields.io and may be cached; they indicate interest, no
 
 [ Setup & caveats → ](docs/GUIDE.en.md#previews)
 
+<a id="experimental-related"></a>
+## Experimental related projects
+
+This coding research prototype is included as an architecture reference, outside the 31 personal-agent source projects above.
+
+- [dsh-superagent](https://github.com/deepseek-ai/dsh-superagent-prototype) [![dsh-superagent GitHub stars](https://img.shields.io/github/stars/deepseek-ai/dsh-superagent-prototype?style=flat&label=Stars)](https://github.com/deepseek-ai/dsh-superagent-prototype) — A DeepSeek-team proactive coding agent for one GitHub repository, built on DeepSeek Harness with optional Feishu integration. **Research prototype, not an official product; not tested here.** [Evidence](docs/SOURCES.en.md#deepseek-superagent)
+
 <a id="publicly-available-products"></a>
 <a id="products"></a>
 ## Products
