@@ -8,7 +8,7 @@
 
 <div align="center">
 
-Personal AI agents: projects, products, and research.
+Research, evaluation, and practice for personal agents.
 
 [简体中文](README.md) · **English**
 
