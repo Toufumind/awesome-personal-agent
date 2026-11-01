@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **88 distinct papers**: 55 evaluation entries and 48 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, and PENGUIN/RAISE each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **98 distinct papers**: 57 evaluation entries, 53 method entries, and 3 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, and PENGUIN/RAISE each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B55 and M16–M48 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B57, M16–M53, and H1–H3 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -22,6 +22,7 @@ Years and versions identify the listed paper, not the current project. Original 
 - [Methods: memory and persistent state](#memory-methods)
 - [Methods: planning, tools, reflection, proactivity, and coordination](#agent-methods)
 - [Methods: personalization and preference learning](#personalization-methods)
+- [Human studies](#human-studies)
 - [Comparison and reproducibility](#reproducibility)
 - [Sources and rights](#sources-and-rights)
 
@@ -497,6 +498,24 @@ Same paper as M31; do not count twice. [Original paper](https://arxiv.org/html/2
 - **Measures:** matched acquisition/utilization goals, single/joint memories, percent complete, success rate and planning cost; 438 episodes across 12 Habitat scenes with generated personal knowledge.
 - **Boundary:** main setting guarantees gold memories among retrieved candidates and oracle perception/motor skills. It isolates memory utilization, not unconstrained retrieval or real-world robot reliability. Synthetic users, no conversational clarification. GPT-4o joint-memory success drops 30.5 percentage points relative to its matched acquisition baseline.
 - **Resources/identity:** [official repository](https://github.com/Connoriginal/MEMENTO), MIT repository with Habitat/PARTNR dependencies. README’s older subtitle “Exploring Memory Utilization for Personalized Assistance” denotes the same paper.
+
+<a id="benchmark-realmem"></a>
+### B56. RealMem
+
+**Benchmark: long-term project state and cross-session memory**
+
+[RealMem: Benchmarking LLMs in Real-World Memory-Driven Interaction](https://aclanthology.org/2026.findings-acl.703/) · **Findings of ACL 2026**, with arXiv:2601.06966v1 as the earlier version.
+
+Evaluates evolving state, temporal reasoning and goal alignment using over 2,000 **synthetic** cross-session dialogues across 11 scenarios—not longitudinal deployment logs. Final Table 2 reports memory-only GPT-4o QA of 0.567 for MemoryOS versus 0.804 for the oracle. Human validation covers 30 instances and two NLP-background annotators, not user outcomes. Prefer the final paper, which adds LightMem, full-context baselines and evaluation details. Synthetic data and model-based judging limit generalization. [Official code/data](https://github.com/AvatarMemory/RealMemBench) are available; **LICENSE states Apache-2.0; README badge says MIT**. **Read:** arXiv methods/results, final PDF results/limitations/human protocol, repository README/LICENSE; no reproduction.
+
+<a id="benchmark-personal"></a>
+### B57. PersONAL
+
+**Benchmark: ownership-conditioned navigation and grounding**
+
+[PersONAL: Towards a Comprehensive Benchmark for Personalized Embodied Agents](https://arxiv.org/abs/2509.19843) · **ICRA 2026**, verified by the [University of Padova institutional record](https://unifind.unipd.it/resource/item/894811?language=en-US), matching title and authors. The version read here is **arXiv v1, September 24, 2025**; its results are not automatically attributed to the final conference version.
+
+Contains **2,020 simulated episodes in HM3D/Habitat** with explicit ownership descriptions, testing active navigation and grounding after exploration. Five humans provide a navigation reference; a separate three-room LoCoBot pilot succeeds on **5/15** grounding queries. Neither establishes household deployment or lifelong adaptation. Human grounding uses interactive GLB scenes rather than the models’ map representation. The POG narrative’s 25% conflicts with Table V’s 16.8% aggregate. [Repository](https://github.com/ZiliottoFilippoDev/PersONAL) data/generation code and a populated [baselines branch](https://github.com/ZiliottoFilippoDev/PersONAL/tree/baselines) are available under **CC-BY-4.0**; HM3D has separate access/terms. **Read:** arXiv v1 §§III–VII, result tables, repository and baseline documentation/tree, and University of Padova publication metadata; final conference full text not checked; no execution.
 
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
@@ -1278,6 +1297,84 @@ Same [paper](https://arxiv.org/html/2505.18882v5) and reading scope as B55; coun
 
 - **Mechanism:** offline LLM-guided MCTS caches acquisition paths; online retrieval guides questions and sufficiency/abstention decisions.
 - **Boundary:** evaluated with benchmark contexts; not evidence of safe real-world counseling or validated permission to collect sensitive attributes.
+
+<a id="method-prelude"></a>
+### M49. PRELUDE / CIPHER · Learning context-dependent preferences from edits
+
+- **Paper/version:** [Aligning LLM Agents by Learning Latent Preference from User Edits](https://arxiv.org/html/2404.15269v3), NeurIPS 2024; arXiv v3, 2024-11-23. PRELUDE is the framework and CIPHER its algorithm: one paper.
+- **Mechanism:** Infer textual preferences from output edits, retrieve and aggregate preferences associated with similar contexts, and condition future generation without fine-tuning.
+- **Evidence:** Summarization and email tasks use 200 rounds with GPT-4 simulated editing users and three seeds. Best configurations reduce cumulative token edit distance by approximately 31%/73% against no learning. On summarization only, seven human judges assess 15 pairs per comparison; three human editors follow assigned preferences.
+- **Limits:** These human assessments are not natural longitudinal online personalization. Preferences are prescribed by source category; edit distance is not measured time saved or satisfaction. An oracle gap remains.
+- **Resources/read scope:** [Official repository](https://github.com/gao-g/prelude), MIT; underlying dataset rights remain separate. Read v3 §§4.1–4.4, mechanism/metric passages, proceedings metadata and repository resource page. No reproduction.
+
+<a id="method-curio"></a>
+### M50. CURIO · Rewarding improvements in the user model
+
+- **Paper/version:** [Enhancing Personalized Multi-Turn Dialogue with Curiosity Reward](https://arxiv.org/html/2504.03206v3), [NeurIPS 2025](https://proceedings.nips.cc/paper_files/paper/2025/hash/e48d5af30c95be08762489c5141f7fbc-Abstract-Conference.html); arXiv v3, 2025-10-02.
+- **Mechanism:** Add turn-level intrinsic rewards for better user-type beliefs to multi-turn RLHF, comparing accuracy, entropy and potential-difference rewards.
+- **Evidence:** Exercise attributes map deterministically to eight strategies. Over 200 simulated conversations, best DiffAcc reaches 87.5%, versus 68.5% MTRLHF and 54% SFT. Education uses two prescribed preferences. Ten student judges evaluate generated dialogues, not live tutoring experiences.
+- **Limits:** Static predefined types and LLM simulators constrain generalization; some entropy rewards favor one type. Human personalization preference for DiffLogAcc over MTRLHF is approximately 76%, with a discrepancy between appendix 152/200 and table 75.75%. Quality preference is 90/200, p=.179—not evidence of equivalence. No demonstrated learning or health outcomes.
+- **Resources/read scope:** [Author project page](https://sites.google.com/cs.washington.edu/curio) verified; official code, weights, dataset release and artifact licenses not verified. Read methods, §§4–5, limitations, Appendix B.1–B.3 and proceedings metadata. No reproduction.
+
+<a id="method-grounded-memory"></a>
+### M51. A Grounded Memory System · Visual observations into entity memory
+
+- **Paper/version:** [A Grounded Memory System For Smart Personal Assistants](https://arxiv.org/html/2505.06328v1), arXiv v1, 2025-05-09; ESWC 2025 TEXT2KG workshop, not the ESWC main conference.
+- **Mechanism:** GPT-4o captions overlapping video windows and labels entities; Neo4j stores embedded memory notes and temporal/entity relationships. A retrieval agent selects semantic search, PageRank expansion or text-to-Cypher.
+- **Evidence:** An iPhone home-video prototype with illustrative question/answer outputs—not a controlled comparison, participant study or benchmark. Author-labeled correct examples do not establish 100% evaluated accuracy.
+- **Limits:** Does not demonstrate superiority over standard RAG, reliable long-term entity consistency or validated dementia care. Scaling, long-term disambiguation and additional modalities remain future work.
+- **Resources/read scope:** Official code/data release and artifact licenses not verified. Read §§3–5 and arXiv version/workshop metadata. No reproduction.
+
+## New group: Human studies, not benchmarks
+
+<a id="method-iotgpt"></a>
+### M52. IoTGPT
+
+**Method: personalized device execution with reusable task memory**
+
+[Leveraging LLMs for Efficient and Personalized Smart Home Automation](https://arxiv.org/abs/2601.04680) · **arXiv v1, January 8, 2026**; archival venue unconfirmed.
+
+Combines a Decompose–Derive–Refine pipeline, hierarchical task memory and environmental-property preferences for SmartThings control. Evaluation uses **97 tasks and 26 simulated devices**; warm-start testing paraphrases already learned tasks. Fifteen real participants join short studies, but preferences originate from **100 GPT-4o-generated logs**, not their personal histories. This is not evidence of longitudinal household personalization. Conflicting preferences and device side effects remain limitations; **users must screen unsafe or hallucinated commands**, with automated safeguards left to future work. No official implementation/license verified. **Read:** system, implementation, comparative evaluation, both user studies and limitations; no reproduction.
+
+<a id="method-gaap"></a>
+### M53. GAAP
+
+**Method: runtime information-flow and disclosure permissions**
+
+[An AI Agent Execution Environment to Safeguard User Data](https://arxiv.org/abs/2604.19657) · **arXiv v3, September 24, 2026**; archival venue unconfirmed.
+
+A restricted-plan interpreter and IFC combine persistent private-data, permission and disclosure stores. Confidentiality applies against malicious models/providers and services, subject to correct enforcement, user permissions and verified annotations. **Secrets placed directly in prompts, prompt timing metadata and integrity are excluded.** The custom 20-task/seven-attack suite reports no successful disclosures; AgentDojo/AgentDyn runs approve every disclosure and therefore assess utility, not privacy. These are not human usability studies; cost and latency overheads are substantial. [Public repository](https://github.com/rssta/gaap), but no LICENSE found and GitHub reports no license. **Read:** v3 threat model/design/evaluation/discussion and repository documentation/metadata; no security audit.
+
+<a id="human-studies"></a>
+## Human studies: real use and interaction
+
+These studies document human experience; they are not benchmark scores or proof of long-term outcomes.
+
+<a id="human-agent-memory-expectations"></a>
+### H1. Users’ Expectations and Practices with Agent Memory
+
+- **Paper/version:** [Author paper](https://younghokim.net/files/papers/jones-agent-memory-chi25lbw.pdf), CHI EA 2025 late-breaking work, eight pages; [DOI](https://doi.org/10.1145/3706599.3720158). Not a main-track full paper, benchmark or agent algorithm.
+- **Design:** Six real users aged 24–35 completed 30–45-minute interviews; all self-rated tool proficiency 4/5. An additional 54 Reddit discussion threads underwent inductive thematic analysis.
+- **Findings:** Incomplete memory mental models and demand for task/project/domain organization and separation; five interviewees wanted unrelated task memories kept disjoint. Workarounds included separate chats, personas/instructions and accounts.
+- **Limits:** Small exploratory qualitative study; 54 threads are not 54 experimental participants. No population prevalence estimate, causal demonstration of hierarchical-memory benefits or implemented access-control guarantee.
+- **Resources/read scope:** Read methods, findings and interview/survey/subreddit appendices. Raw study data/code release not verified. The author PDF retains copyright with specified personal/classroom copying permission, not a blanket open-data or open-source license.
+
+<a id="human-memoro"></a>
+### H2. Memoro · A concise interface for real-time memory assistance
+
+- **Paper/version:** [Memoro: Using Large Language Models to Realize a Concise Interface for Real-Time Memory Augmentation](https://arxiv.org/html/2403.02135), CHI 2024; arXiv v1, 2024-03-04; [DOI](https://doi.org/10.1145/3613904.3642450). System plus human experiment, not a benchmark.
+- **Mechanism/design:** Audio transcription and vector retrieval supply concise bone-conduction feedback through explicit Query or user-triggered Queryless interaction. Twenty participants aged 18–32 completed an approximately one-hour counterbalanced four-condition laboratory study, discussing fictional-person information with a researcher. External memories stayed fixed during conversation.
+- **Evidence:** Average response length drops from 115.4 characters for Baseline to 16.6 for Query; correctness is 84% Query versus 70.7% Queryless. Recall confidence/difficulty are self-reported, not objective long-term memory gains. Several conversation measures show no significant differences, but naturalness is significantly below no-system: do not claim disruption-free interaction.
+- **Limits/resources:** Queryless is not autonomous intervention. Consent is assumed and bystander controls remain unresolved. The [official MIT-licensed reference implementation](https://github.com/wazeerzulfikar/memoro/) is not a maintained product. Its later V2 older-adult field study is separate and V2 code is excluded. Read system, §§4–5, §7 and repository version/license descriptions. No reproduction.
+
+<a id="human-loom"></a>
+### H3. LOOM
+
+**Human–AI study: proactive learning from daily conversations—not a benchmark**
+
+[LOOM: Personalized Learning Informed by Daily LLM Conversations Toward Long-Term Mastery via a Dynamic Learner Memory Graph](https://arxiv.org/abs/2511.21037) · **AAAI 2026 PerFM Workshop**, not the AAAI main conference; arXiv v1, November 26, 2025.
+
+A chat-to-course pipeline maintains a dynamic learner graph using inferred needs, completions and self-reported knowledge. The formative study includes **10 convenience-sampled participants over roughly two days**, each producing 10–15 realistic-workflow chats. Findings concern perceived relevance, coherence and gap discovery. Without controls, pre/post assessments or delayed recall, **durable learning gains are unestablished**. Content inconsistency, repetition and premature mastery inference remain concerns. The [PDF](https://arxiv.org/pdf/2511.21037)’s [anonymous code/demo link](https://anonymous.4open.science/r/LoomDemo) returned **HTTP 403**; artifact contents/license unverified. **Read:** system, study methods/results/limitations and PDF venue/resource notes; no execution.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
