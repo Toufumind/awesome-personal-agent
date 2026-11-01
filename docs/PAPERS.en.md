@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **40 distinct papers**: 27 evaluation entries and 15 method entries. Proactive Agent and MemoProAgent each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **41 distinct papers**: 27 evaluation entries and 16 method entries. Proactive Agent and MemoProAgent each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Draft additions:** B25–B27 checked on 2026-11-01; earlier entries retain their original check dates. Not published.
+**Entry checks:** B25–B27 and M16 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -21,6 +21,7 @@ Years and versions identify the listed paper, not the current project. Original 
 - [Evaluation: privacy norms and adversarial safety](#safety-evaluation)
 - [Methods: memory and persistent state](#memory-methods)
 - [Methods: planning, tools, reflection, proactivity, and coordination](#agent-methods)
+- [Methods: personalization and preference learning](#personalization-methods)
 - [Comparison and reproducibility](#reproducibility)
 - [Sources and rights](#sources-and-rights)
 
@@ -39,9 +40,22 @@ Years and versions identify the listed paper, not the current project. Original 
 | Can it complete multi-app tasks? | [AppWorld](#benchmark-appworld), [WebArena](#benchmark-webarena), [OSWorld](#benchmark-osworld), [AndroidWorld](#benchmark-androidworld) | Real accounts, environment changes, irreversible actions |
 | Does it reliably follow workflows across repeated runs? | [τ-bench](#benchmark-tau-bench) | Simulated versus real users and process-level safety |
 | Should accessible information be shared outward? | [PrivacyLens](#benchmark-privacylens), [AgentCIBench](#benchmark-agentcibench); [AgentDojo](#benchmark-agentdojo) separately tests indirect prompt injection | Full privacy compliance, cross-user / multi-agent isolation, all attack surfaces |
+| How can individual feedback teach preferences? | [P-RLHF](#method-p-rlhf) | Cold start, preference changes, longitudinal human utility; not memory storage |
 | How should persistent memory and its lifecycle be managed? | [MemGPT](#method-memgpt), [MemoryBank](#method-memorybank), [A-MEM](#method-a-mem), [Mem0](#method-mem0), [Zep](#method-zep), [MemOS](#method-memos) | Invalidation or non-use is not physical erasure; permissions, scheduling, observability |
 | How can experience, skills, and agent coordination be reused? | [ReAct](#method-react), [Reflexion](#method-reflexion), [Voyager](#method-voyager), [ExpeL](#method-expel), [AutoGen](#method-autogen) (historical) | Longitudinal human utility, single-agent controls, stale experience, operating cost |
 
+
+<a id="user-profile-reading-path"></a>
+### User profiles: four questions to read by
+
+This cross-cutting route **preserves the benchmark / method distinction; a paper can appear in several rows**. “Profile” includes user histories, preference summaries and learned user representations—not necessarily a fixed profile card. This is the list's synthesis, not the papers' own taxonomy.
+
+| Question | Start here; what to look for | What this does not establish |
+| --- | --- | --- |
+| **1. How do we understand the user?** | [MemoryBank](#method-memorybank): summarize user information from past interactions. [P-RLHF](#method-p-rlhf): learn user representations from explicit preference text and individual comparison feedback. [PrefEval](#benchmark-prefeval): test recognition and following of explicit / implicit preferences. | A user representation is not a complete, accurate personality model. PrefEval tests capability; it is not a profiling system. |
+| **2. How do we store and update it?** | [MemoryBank](#method-memorybank): store, retrieve, reinforce and fade memories. [Zep](#method-zep): handle conflicting relations with timestamps while retaining history. Then use [LongMemEval](#benchmark-longmemeval) to test answers after updates. | Fading or invalidation is not physical deletion. P-RLHF training is not a continual memory-update mechanism either. |
+| **3. How do we apply it?** | [LaMP](#benchmark-lamp): use user history for personalized classification / generation. [P-RLHF](#method-p-rlhf): condition generation on learned user preferences. For actions, continue to [Mem2ActBench](#benchmark-mem2actbench): memory-to-tool arguments. | Retrieving history and learning user representations are different approaches. Preference-aligned answers or correct tool arguments do not establish real task completion. |
+| **4. How do we evaluate it?** | [LaMP](#benchmark-lamp): personalized task quality. [PrefEval](#benchmark-prefeval): following known preferences. [PersonaMem (v1)](#benchmark-personamem-v1): recognizing changing preferences and transferring them to new situations. | These are not interchangeable metrics. PersonaMem's synthetic histories and four-choice protocol cannot substitute for open-ended response quality or long-term satisfaction of real users. |
 
 <a id="personal-evaluation"></a>
 ## Evaluation A: personal context, memory, and proactivity
@@ -562,6 +576,20 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Relevance and limits:** General multi-agent orchestration research, not a personalization benchmark. MATH, retrieval QA, ALFWorld, and OptiGuide use application-specific metrics. More agents or human involvement do not automatically provide permission isolation, reliable authorization, or lower cost; single-agent controls and safety tests remain necessary.
 - **Resources:** [Official repository](https://github.com/microsoft/autogen): MIT code; CC BY 4.0 documentation / other content. The current README reports archival and no Microsoft maintenance. Retain as historical research, not a maintained production recommendation. Current packages differ from the 2023 API; a paper-era commit was not identified.
 
+<a id="personalization-methods"></a>
+## Methods C: personalization and preference learning
+
+<a id="method-p-rlhf"></a>
+### M16. P-RLHF · Learning preferences from individual feedback
+
+[Personalized Language Modeling from Personalized Human Feedback](https://arxiv.org/html/2402.05133v3) — 2024 preprint; first submitted 2024-02-06; consulted v3, 2024-12-09.
+
+**Checked / reading scope:** 2026-11-01; abstract, §4.1–4.4 user models / P-DPO, relevant §5 experiment passages; official README data, training, and evaluation instructions. No installation or training.
+
+- **Core:** Jointly learns a lightweight user model and LLM. User embeddings combine explicit textual preferences with implicit preferences learned from individual comparison feedback. User embeddings enter generation through soft prompting, and P-DPO conditions preference optimization on the user.
+- **Relevance and limits:** A personalization method, not a benchmark or long-term memory system. Experiments include synthetic, semi-synthetic, and PRISM human feedback; model-judged response comparisons do not establish longitudinal human satisfaction, changing-preference tracking, or tool execution. An unknown user without textual information receives a non-personalized response.
+- **Resources:** [Official implementation](https://github.com/HumainLab/Personalized_RLHF) includes user models and data-processing, training, and evaluation entry points. Public code does not establish reproduced training; upstream data and base-model terms require separate checks.
+
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
 
@@ -585,5 +613,6 @@ These are this guide's evaluation recommendations, not claims that every listed 
 - **Public access is not unrestricted reuse.** Entries flag noncommercial terms for LaMP, LoCoMo, PersonaBench, PrefEval, and MemoPro code; GAIA gating / contamination controls; and additional AppWorld / Ego4D resource rules. An omitted license does not imply unrestricted use; code, data, weights, and third-party assets may have different terms.
 - This check did not include asset-by-asset legal review, downloading and validating full weights, or reproducing all dependencies. A GitHub link does not resolve missing licenses, inaccessible files, or changing external services.
 - Prioritize correcting versions, scope, and broken resources before adding papers. Contributions should provide specific primary evidence; rankings, citation counts, and stars are not reliability findings.
+
 
 
