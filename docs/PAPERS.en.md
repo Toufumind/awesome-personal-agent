@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **63 distinct papers**: 42 evaluation entries and 29 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, and Me-Agent/User FingerTip each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **68 distinct papers**: 44 evaluation entries and 34 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, and PUMA/PersonalWAB each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B42 and M16–M29 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B44 and M16–M34 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -382,6 +382,24 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Evaluation:** Extends FingerTip by removing app names or obscuring requested content. Reports 60 users, 33 apps, 300 Type-I and 267 Type-II instructions.
 - **Limits:** Counts versus “15 training/5 test instructions per user” need clarification; this is not established held-out-user evaluation. Table 3’s perfect app selection accompanies task-success rates of 80%/50%, not universal success. Long-term human deployment is unproven.
 - **Resources:** [Author repository](https://github.com/Gianthaha/personal-mobile-agent) is MIT-labeled and contains implementation directories, but README still promises updates; complete benchmark packaging remains unverified.
+
+<a id="benchmark-userville"></a>
+### B43. UserVille · Hidden tasks and interaction preferences
+
+Same paper as M30; do not count twice. [Original paper](https://arxiv.org/html/2511.02208v2); reading scope and resource limitations as above.
+
+- **Automated component:** Obscures task descriptions and uses preference-conditioned LLM users; 20 interaction preferences include eight held out. Code localization uses F1, BrowseComp-Plus uses EM; personalization covers only sessions containing a question.
+- **Human component:** v2 includes 33 programmers and 300 evaluations on SWE-Bench tasks. Participants could see descriptions and gold patches; this is not natural longitudinal deployment. Satisfaction is PPP 3.75 versus GPT-5 3.79, but reported resolution is 71% versus 85%. Do not report satisfaction alone.
+- **Interpretation:** Table 1 composite means are 62.04 versus Seed-OSS-36B 45.32. The +16.72 comparison is against Seed, not GPT-5, and is not task-success percentage points.
+
+<a id="benchmark-personalwab"></a>
+### B44. PersonalWAB · Shopping-history-conditioned function tasks
+
+Same paper as M31; do not count twice. [Original paper](https://arxiv.org/html/2410.17236v2); reading scope and resource limitations as above.
+
+- **Data/environment:** Real histories/reviews from 1,000 sampled Amazon users; model-synthesized profiles, requests and interactive users. Search, recommendation and review-generation tasks expose simplified functions, not browser GUI or live transactions. Successful calls assume review posting.
+- **Interpretation:** Function accuracy assesses tools/parameter formatting; result accuracy uses product rank or review-embedding similarity. These are not a universal success measure.
+- **Boundary:** Histories are described as split 80/10/10, while profiles use “entire history.” Inspect preprocessing before replication; leakage is not established here. Simulator dependence, inferred profiles and unverified privacy protection constrain real-assistant claims.
 
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
@@ -912,6 +930,64 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Mechanism:** VLM-scored trajectories yield natural-language experiences for prompts; app-specific memory supplies workflows and content preferences. The method describes parameter-free adaptation, not personalized backbone fine-tuning.
 - **Evidence/limits:** Evaluated on User FingerTip and general mobile tasks. UI changes can invalidate stored positions/workflows; situational factors such as current location remain limited. Inferring a habitual choice does not establish authorization for a new action.
 - **Resources:** [Author implementation](https://github.com/Gianthaha/personal-mobile-agent); benchmark-count, packaging and licensing-scope caveats are shared with B42.
+
+<a id="method-ppp"></a>
+### M30. PPP · Learning proactive clarification and personalized interaction
+
+[Training Proactive and Personalized LLM Agents](https://arxiv.org/html/2511.02208v2) — COLM 2026; v2, 2026-08-23. UserVille is cross-listed as B43, the same paper.
+
+**Actual reading scope:** v2 §§4–8, Table 1, Appendix A; version record, conference listings, author README/tree/LICENSE. Targeted reading, not a complete line-by-line review; no execution.
+
+- **Mechanism:** GRPO jointly optimizes task outcomes, clarification burden and preference adherence with preference-conditioned simulated users. This is not persistent individual memory or lifelong profiling.
+- **Evidence/boundary:** Separate automated evaluation from the human study described in B43. Additional questions can increase human effort; simulator-based burden does not directly establish human experience.
+- **Resources:** [Author code](https://github.com/sunnweiwei/PPP-Agent) is Apache-2.0. Linked weights/data pages were inaccessible through the inspection tool; download availability and asset licenses remain unverified, not proven absent. README additionally requires a vLLM bias patch. Repository licensing does not automatically cover models, data or upstream benchmarks.
+
+<a id="method-puma"></a>
+### M31. PUMA · Learning tool parameters from behavioral histories
+
+[Large Language Models Empowered Personalized Web Agents](https://arxiv.org/html/2410.17236v2) — WWW 2025; v2, 2025-03-24. PersonalWAB is cross-listed as B44, the same paper.
+
+**Actual reading scope:** §§3, 5–6, Table 5, Appendices A.3/B; version record, project page, README, data directory and LICENSE. Targeted reading; no execution.
+
+- **Mechanism:** Retrieves behavioral histories, retains task-specific fields, and learns function parameters through heuristic SFT and result-ranked DPO.
+- **Evidence/boundary:** Table 5 overall function/result accuracy is .994/.406, versus .994/.373 without task-specific memory; recommendation result accuracy remains .054. These metrics are not real-world task-success rates. Shopping and simulator boundaries appear in B44.
+- **Resources:** [Author repository](https://github.com/HongruCai/PersonalWAB) and data directory are readable. Root license is **CC BY-NC 4.0**, with separate MIT terms for inherited tau-bench portions. Released PUMA checkpoints and full-data integrity were not verified. Paper, code/data, Amazon and model terms must remain distinct.
+
+<a id="method-premem"></a>
+### M32. PREMem · Reasoning across sessions before storage
+
+[Pre-Storage Reasoning for Episodic Memory](https://aclanthology.org/2025.findings-emnlp.1204/) — Findings EMNLP 2025; [arXiv v1](https://arxiv.org/html/2509.10852v1), 2025-09-13.
+
+**Actual reading scope:** v1 §§3–5, Tables 1/5, Limitations; publication record, author README/root listing. No complete publication-version comparison or execution.
+
+- **Mechanism:** Extracts factual, experiential and subjective fragments, then clusters, temporally links and derives cross-session inferences for retrieval.
+- **Evidence:** Offline LoCoMo, 1,986 questions, and LongMemEval-S, 500 questions. LoCoMo conversations are model-generated and human-edited; LongMemEval sessions are simulated and human-edited, not longitudinal records of real-user use. Metrics include text similarity, LLM judging and abstention accuracy for unanswerable questions.
+- **Boundary:** Authors acknowledge weaker single-hop performance, loss of original linguistic nuances and no forgetting mechanism. Inferred information is neither user-confirmed fact nor action authorization.
+- **Resources:** [Code/instructions](https://github.com/sangyeop-kim/PREMem) are public, but no root LICENSE was found; code reuse rights remain unconfirmed. README identifies upstream LoCoMo as CC BY-NC 4.0 and LongMemEval as MIT, not PREMem code licensing. Linked dataset-zip access/integrity was not verified.
+
+<a id="method-nemori"></a>
+### M33. NEMORI · Distilling memory through prediction error
+
+[What Deserves Memory: Adaptive Memory Distillation for LLM Agents](https://arxiv.org/html/2508.03341v4) — v4, 2026-04-16; venue not confirmed in this inspection. Earlier *Nemori: Self-Organizing Agent Memory Inspired by Cognitive Science* has the same arXiv ID and is not another paper.
+
+**Actual reading scope:** v4 §§3–4.7, Tables 2/7/8, Limitations; version record, author README, evaluation instructions and MIT LICENSE. No complete revision comparison or execution.
+
+- **Mechanism:** Organizes interactions into narrative episodes and distills differences between observed content and predictions from existing knowledge, without updating backbone parameters.
+- **Evidence:** Offline LoCoMo, 1,540 questions, and LongMemEval-S, 500. LoCoMo conversations are model-generated and human-edited; LongMemEval sessions are simulated and human-edited, not longitudinal records of real-user use. With GPT-4.1-mini as method backbone/answer generator and GPT-4o-mini as judge, LoCoMo averages 80.8 versus full-context 80.6. With a GPT-4o-mini backbone, LongMemEval knowledge-update scores are worse, 61.5 versus 78.2. Avoid claims of uniform superiority.
+- **Boundary:** Simple management/retrieval and bespoke integration are acknowledged limitations; safe deletion and longitudinal human utility are not demonstrated. Its LoCoMo subset differs from PREMem, preventing direct score ranking.
+- **Resources:** [Implementation](https://github.com/nemori-ai/nemori) is MIT. The rewrite is incompatible with the legacy MVP and depends on PostgreSQL, Qdrant and model APIs. Download evaluation data separately under upstream terms; README V5 scores are not v4 paper scores.
+
+<a id="method-dpl"></a>
+### M34. DPL · Representing users through inter-user differences
+
+[Measuring What Makes You Unique](https://aclanthology.org/2025.findings-acl.1095/) — Findings ACL 2025; [arXiv v3](https://arxiv.org/html/2503.02450v3), 2025-06-11.
+
+**Actual reading scope:** relevant v3 §§2–4, Table 1 and Appendices A–F; published PDF limitations/ethics/Appendix A, author preprocessing, README/root listing and data cards. Not a line-by-line review; no execution.
+
+- **Mechanism:** Compares writing, emotional and semantic differences between the target and other reviewers, then combines these with personal history to condition generation: a user-representation method.
+- **Evidence/boundary:** Offline generation from real Amazon/Yelp reviews also receives target rating/title; not multi-turn dialogue, unconstrained preference prediction or tool execution. Main results average five temperatures, not five same-configuration seeds. Cross-user information requires privacy/consent safeguards.
+- **Consistency issue:** Paper Appendix A says third-most-recent review for testing; current code uses the latest. This discrepancy is not proof of demonstrated leakage; audit data before replication.
+- **Resources:** [Author code](https://github.com/SnowCharmQ/DPL) has no observed root license. [DPL-main](https://huggingface.co/datasets/SnowCharmQ/DPL-main) and [DPL-meta](https://huggingface.co/datasets/SnowCharmQ/DPL-meta) specify **CC BY-NC 4.0**; do not propagate the paper ethics paragraph’s broad MIT claim. Check upstream terms separately.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
