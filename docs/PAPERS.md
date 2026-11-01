@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **162 篇不同论文**：83 个评测条目、92 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **170 篇不同论文**：86 个评测条目、99 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B83、M16–M92、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B86、M16–M99、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -712,6 +712,37 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 
 融合画像、公共交通及地点信息，评测行程的时间、空间、顺序与偏好一致性。阅读范围：§3 数据构建与指标、§4 实验、局限及官方 README。1,000 条查询采用现实地点数据，但查询/画像经过构造，航班日期经调整；人工修订参考计划不等于真人出行验证。画像分数使用文本嵌入相似度，不能直接解释为用户满意度；没有订票执行或行动授权验证。数据须申请，允许内部研究/商业使用及修改；修改须保留论文引用与 README，禁止跨组织再分发；代码根许可证未确认。
 
+<a id="benchmark-dulemon"></a>
+### B84. 评测
+
+**DuLeMon**，出自 **Long Time No See! Open-Domain Conversation with Long-Term Persona Memory**｜[Findings of ACL 2022](https://aclanthology.org/2022.findings-acl.207/)；[2203.05797v2](https://arxiv.org/html/2203.05797v2)，2022-03-14（v1 03-11）。同篇方法见 **M95**。
+
+中文双方 persona 对话，给定角色信息并标注 persona grounding；27,501 条众包角色扮演对话，不是自然用户纵向历史。论文人工评估为模型自聊评分：PLATO-LTM 充当用户模拟器，每模型 10 episodes × 4 sessions × 16 rounds；人工评分不等于真人长期使用。
+
+**资源/许可**：[官方目录](https://github.com/PaddlePaddle/Research/tree/master/NLP/ACL2022-DuLeMon)提供数据下载脚本；父仓库 [Apache 2.0](https://github.com/PaddlePaddle/Research/blob/master/LICENSE)，外部下载数据独立条款未核实。**实读范围**：§3 数据构建、§5 评测、伦理、附录 A/B、版本记录、官方 README/目录和父 LICENSE；未下载/解压数据。
+
+<a id="benchmark-actmemeval"></a>
+### B85.  评测：ActMemEval
+
+[ActMem: Bridging the Gap Between Memory Retrieval and Reasoning in LLM Agents](https://arxiv.org/html/2603.00026v2) — 2603.00026v2，修订于2026-06-17；预印本，未核验正式venue。
+
+- **任务**：历史隐含约束与当前意图的推理；安全健康、可行性、时空程序、可用性、偏好、复用机会六类，非实际执行动作。
+- **样本**：327合成问题，平均67.25会话、120k tokens；Gemini生成、Claude验证、三名研究者检查，没有真人纵向用户样本。
+- **测量**：证据召回及QA；DeepSeek-V3裁判，并抽样核对人类一致性。分数不证明执行安全、权限控制或真实因果关系。
+- **资源与权利**：[官方仓库](https://github.com/nju-websoft/ActMem)有 `dataset/ActMemEval.json`（96,837,216 bytes），仅核目录元数据，未逐条审计。根MIT与论文附录G数据CC BY 4.0、仅学术研究的措辞不同，保留许可歧义，勿泛称无限制复用。
+- **实际阅读范围**：arXiv元数据、§§3–5相关文本、表1–2、附录F/G；未完整视觉检查图或运行实验。同篇方法见下。
+
+<a id="benchmark-engramabench"></a>
+### B86.  评测：EngramaBench
+
+[EngramaBench: Evaluating Long-Term Conversational Memory with Structured Graph Retrieval](https://arxiv.org/html/2604.21229v1) — 2604.21229v1，2026-04-23；预印本，venue未核。
+
+- **样本与任务**：5个完全合成人设、100对话、150查询；事实、跨空间、时间、拒答、综合推断，无真实用户数据。
+- **证据**：统一GPT-4o回答；总分full-context 0.6186、Engrama 0.5367、Mem0 0.4809。仅跨空间切片Engrama 0.6532高于0.6291，n=30、统计能力有限，不是总体优越。
+- **边界**：综合推断用token F1；运行时证据来源未完全审计；成本仅查询阶段、不含记忆构建；非生产验证。
+- **资源与权利**：[仓库](https://github.com/julianacunadc/engramabench/blob/main/README.md)提供数据、scorer、公开基线和结果；[MIT正文](https://github.com/julianacunadc/engramabench/blob/main/LICENSE)已核。**Engrama专有系统不包含在发布物内。** Zenodo DOI `10.5281/zenodo.19697774` 来自论文/仓库，记录页未成功读取。
+- **实际阅读范围**：元数据、§§3–8、限制/伦理及成本附录相关文本，仓库README/LICENSE；未运行scorer、逐条检查数据或复现专有系统。
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -1289,6 +1320,29 @@ AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐�
 实际阅读范围：版本页面；原文方法、数据集、指标、训练与评估器选择、主结果及人工评估段落；针对官方实现与 venue 的定向检索。未发现可核实的专用官方实现，不能据此断言实现不存在；未独立重训评估器或复现分数。
 
 <a id="方法-a记忆与长期状态"></a>
+<a id="method-persistent-user-profiles"></a>
+### M93. 方法
+
+**Enabling Personalized Long-term Interactions in LLM-based Agents through Persistent Memory and User Profiles**｜[2510.07925v1](https://arxiv.org/html/2510.07925v1)，2025-10-09，所查历史仅 v1；正式 venue 未核实。
+
+协调、检索、验证与回答代理结合短期上下文、摘要、长期记忆和增量 JSON 用户画像。GVD、LoCoMo、LongMemEval 为离线评测；另有五天手机真人 pilot：7 人开始、4 人完成、3 人首日后退出，每日约 10 分钟。完成者认可回忆；3 人批评冗长/泛化回复，另有 3 人报告模糊追问问题，未明确是否同组。
+
+结果并非全面优于 RAG：GPT-4o/LongMemEval correctness 为 72.8%，RAG 为 77.7%；Gemini 2 的部分移除协调器消融反而更好。短周期、脱落及主观反馈不能证明长期效果，主动性仍属未来工作。
+
+**资源/许可**：论文 CC BY 4.0；未核实专用官方代码、数据或软件许可。**实读范围**：§§3–5、表1、pilot setup/results、结论/未来工作及 arXiv 版本史；未运行实现。
+
+<a id="method-ai-persona"></a>
+### M99.  方法：AI PERSONA — WIP
+
+[AI PERSONA: Towards Life-long Personalization of LLMs](https://arxiv.org/html/2412.13103v1) — 2412.13103v1，2024-12-17；arXiv仍标**Work in progress**，venue未核。
+
+- **机制**：历史会话管理、工具模拟/接口及周期画像更新，无需重训。
+- **样本**：PersonaBench为200画像、超过6,000合成点；真人志愿者画像仅作种子，不是真人长期交互队列。
+- **评测**：LLM判断帮助度/个性化、画像相似及满足模拟用户所需轮数；GPT-4o全集，其余模型十人设子集。
+- **边界**：中文母语种子/标注偏向；“life-long”是任务设定，不是终身效果证据。
+- **资源与权利**：[官方仓库](https://github.com/tml1026/Lifelong-Personalized-Agent)已公开代码、生成脚本和data文件；root/README未见LICENSE；复用权利、完整benchmark一致性和复现未核，不应仅复述摘要的未来发布承诺。
+- **实际阅读范围**：元数据、§§3–4相关段落、表1–2、§6、仓库README/root/data目录；未运行代码、逐条审计数据或核实真人种子同意流程。
+
 <a id="memory-methods"></a>
 ## 方法：记忆与长期状态
 
@@ -1682,6 +1736,56 @@ AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐�
 
 实际阅读范围：版本页面；原文方法、训练指令、实验设置、评估与挑战相关段落；仓库目录、README 的流程、权重及许可声明。未下载或验证权重、未执行脚本、未逐条审查全部训练数据。
 
+<a id="method-plato-ltm"></a>
+### M95. 方法
+
+**PLATO-LTM**｜同篇 [Findings of ACL 2022](https://aclanthology.org/2022.findings-acl.207/) / [2203.05797v2](https://arxiv.org/html/2203.05797v2)，2022-03-14；交叉引用 **B84**，不重复计论文。
+
+persona 分类过滤、用户/机器人分库、相似度去重替换、上下文检索及条件回复生成，无需长会话训练数据。自聊人工评估中一致性 0.87，PLATO-FT 为 0.40；但 coherence（0–2）为 1.67，低于 PLATO-2 的 1.70；PLATO-FT 为 1.59，论文讨论小数据微调损害连贯性。不能概括成所有质量维度均改善。
+
+这是较早直接个人记忆基础，非工具执行代理；相似度替换不证明完整矛盾/时态更新治理。**资源/许可**：论文声称代码/数据已公开，但[官方 README](https://github.com/PaddlePaddle/Research/tree/master/NLP/ACL2022-DuLeMon)仍将 PLATO-LTM framework 标为 **Coming soon**；不能称完整实现已开源。父仓库 Apache 2.0，不据此推定外部数据条款。**实读范围**：§4 提取/读写/生成、§5.3.3、表5、附录 B 和官方资源；未运行模型。
+
+<a id="method-xmemory"></a>
+### M96. 方法
+
+**Beyond RAG for Agent Memory: Retrieval by Decoupling and Aggregation (xMemory)**｜[2602.02007v4](https://arxiv.org/html/2602.02007v4)，2026-05-12；v1 02-02、v2 02-25、v3 04-11。[官方 README](https://raw.githubusercontent.com/HU-xiaobai/xMemory/main/README.md) 2026-09-24 公告称 NeurIPS 2026 接收；仅核实作者仓库声明，未独立核实正式会议记录。
+
+消息分段后拆分事实/更新组件，再聚合为可修订层级；增量 split/merge，自顶向下选互补证据，按不确定性展开原始文本。LoCoMo、PerLTQA 离线 QA、三种 reader；Qwen3-8B/LoCoMo F1 43.98 vs naive RAG 36.48，推理 tokens/query 4,711 vs 8,633，**此比较不含构建成本**。
+
+无新真人试验或广泛任务执行验证；局限包括构建开销、抽取错误及少量未来查询时可能不划算。隐私/删除/纠错是部署建议，不是已验证保障。
+
+**资源/许可**：[官方实现](https://github.com/HU-xiaobai/xMemory)及 [MIT LICENSE](https://github.com/HU-xiaobai/xMemory/blob/main/LICENSE)已核实，论文 CC BY 4.0；Quick Start 称发布 Llama 实现，未验证精确对应 v4。代码 MIT 不覆盖 PerLTQA 非商业条款。**实读范围**：v4 §§3–5、主结果/消融、附录 B 资产许可、C 部分结果、E/F 局限/影响、版本史、官方 README/目录/LICENSE；未运行复现。
+
+<a id="method-actmem"></a>
+### M97.  方法：ActMem
+
+[ActMem: Bridging the Gap Between Memory Retrieval and Reasoning in LLM Agents](https://arxiv.org/html/2603.00026v2) — 2603.00026v2，修订于2026-06-17；预印本，venue未核。与上条交叉列示，不另计论文。
+
+- **机制**：原子事实→聚类→语义/推断因果图；PMI过滤、反事实常识补充驱动二次检索。
+- **证据**：DeepSeek-V3下QA 76.52%，NaiveRAG 61.79%；但召回71.66%低于85.57%。QA改善不是召回全面领先，来自上述合成ActMemEval而非真人任务执行。
+- **边界**：模型生成的关系与常识可能出错；合成QA不等于可靠代理执行。
+- **资源与权利**：[仓库](https://github.com/nju-websoft/ActMem)README仅标题，根见dataset/LICENSE/.gitignore/README，未见实现目录；数据已出现，不等于完整方法代码已发布。根MIT与论文数据CC BY 4.0/仅学术研究措辞须分开。
+- **实际阅读范围**：元数据、§§3–5相关文本、表1–2、附录F/G、仓库目录/README；未运行代码、完整审计数据或逐图视觉验证。
+
+<a id="method-caim"></a>
+### M98.  方法：CAIM
+
+[CAIM: Development and Evaluation of a Cognitive AI Memory Framework for Long-Term Interaction with Intelligent Agents](https://arxiv.org/html/2505.13044v1) — 2505.13044v1，2025-05-19；本次实读版本。
+
+- **机制**：Memory Controller、ontology/tag retrieval、Post-Thinking维护。
+- **证据**：GVD含15个模拟用户、十天合成历史、100英文问题、三名人类标注员，**不是十天真人部署研究**。GPT-3.5检索83.3%对MemoryBank 76.3%；GLM反而落后部分基线，不是全面领先。
+- **边界**：细节列表/食谱、相对时间、分散事实连接失败；该版本中从查询学习及真人验证仍属未来工作。
+- **资源**：[官方代码仓库](https://github.com/rebeccawesthaeusser/CAIM)有实现/评测入口并声明MIT；未运行或验证复现结果。
+- **实际阅读范围**：v1元数据、§§3–6相关方法/实验/局限段落及结果表文本、官方README；未实读IUI 2026全文。
+
+#### 版本与后续关系
+
+[官方IJCAI-26博士论坛论文](https://ijcai.org/proceedings/2026/953)区分IUI Companion 2025短CAIM（22–25页）、IUI 2026同完整标题论文（134–143页），及[2510.07925v1](https://arxiv.org/html/2510.07925v1)个性化扩展；后者不是arXiv修订或重复论文。
+
+2510.07925v1报告**五天pilot**；IJCAI-26后续概述另述**三周探索研究**。不得移植时长/显著性结论或未经核验合并报告。**参与者是否重叠未知。** 本次仅读2510元数据、摘要/§2.2及IJCAI网页相关段落，未独立复核三周样本或统计。
+
+IUI 2026 DOI线索 `10.1145/3742413.3789222`；ACM fetch返回403。venue以官方IJCAI引用支持，不声称读过出版全文或已建立版本内容等价。
+
 <a id="agent-methods"></a>
 <a id="方法-b规划工具反思主动性与协作"></a>
 <a id="planning-action-methods"></a>
@@ -1896,6 +2000,19 @@ AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐�
 - [评估目录：存在性已核实](https://github.com/Binwen6/Vaiage/tree/main/evaluation)
 
 实际阅读范围：版本页面；原文架构、用户流程、评估及结论相关段落；仓库目录、README、license 元数据及 evaluation score.txt。该样例请求四天，输出只有两个行程 day 对象仍获 9 分，是裁判可靠性的具体警示，不是总体错误率。evaluation/eval.json 因连接器 HTTP 400（文件过大或不支持）、网页回退 cache miss 而未读；不能声称已审完全部人工评估数据。未安装、执行或独立复现系统。
+
+<a id="method-valuepilot"></a>
+### M94. 方法
+
+**ValuePilot: A Two-Phase Framework for Value-Driven Decision-Making**｜两个独立 ID 并列、一个方法家族：
+- [2503.04569v1](https://arxiv.org/html/2503.04569v1)，2025-03-06，五位作者。
+- [2512.13716v1](https://arxiv.org/html/2512.13716v1)，2025-12-09，七位作者；[元数据](https://arxiv.org/abs/2512.13716)注明 LAW Workshop at NeurIPS 2025 接收，非主会接收声明。
+
+生成价值标注情境，结合 T5 价值评估、情境/可行性评分与 PROMETHEE，在给定六维个人价值权重下排序行动。数据为 11,938 情境、100,255 行动；真人问卷排序不等于部署试验。
+
+**样本报告矛盾**：早版 §4.3 写 40 人，附录 D 明确筛选后 10 人；后版写 40 人且删除筛选句，DMM 分数仍为 OS-Sim 73.16%、First-Acc 46.14%。保留 10 vs 40 不一致，不能推定已解决。早版最强比较为 GPT-4o-mini，后版换成 GPT-5；不混用基线。差值应称百分点，非论文误写的相对百分比。
+
+合成情境、显式自报权重与简化价值表示；非长期偏好学习、实际执行或授权机制。**资源/许可**：早版 arXiv 非独占许可，后版论文 CC BY 4.0；未核实官方代码/数据发布及其许可。**实读范围**：两版方法、实验/结果、附录 D 问卷/样本、局限和元数据；未查看原始问卷或运行复现。
 
 <a id="proactive-clarification-methods"></a>
 ## 方法：主动性与澄清
