@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **68 distinct papers**: 44 evaluation entries and 34 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, and PUMA/PersonalWAB each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **78 distinct papers**: 48 evaluation entries and 42 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, and PrivacyLens-Live/PrivacyChecker each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B44 and M16–M34 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B48 and M16–M42 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -401,6 +401,42 @@ Same paper as M31; do not count twice. [Original paper](https://arxiv.org/html/2
 - **Interpretation:** Function accuracy assesses tools/parameter formatting; result accuracy uses product rank or review-embedding similarity. These are not a universal success measure.
 - **Boundary:** Histories are described as split 80/10/10, while profiles use “entire history.” Inspect preprocessing before replication; leakage is not established here. Simulator dependence, inferred profiles and unverified privacy protection constrain real-assistant claims.
 
+<a id="benchmark-triptailor"></a>
+### B45. TripTailor · Personalized travel planning
+
+[TripTailor: A Real-World Benchmark for Personalized Travel Planning](https://aclanthology.org/2025.findings-acl.503/) — Findings of ACL 2025, July.
+
+**Verification date / reading scope:** 2026-11-01; Paper §3, §4, Appendix B.1 and limitations; official repository README, complete file tree and release metadata.
+
+- **Input→output:** Single-turn preferences and a Chinese travel sandbox → itinerary. Most experiments receive pre-searched information, including reference-plan POIs; these scores are not end-to-end open-search-and-planning results.
+- **Data/metrics:** Real POIs/itineraries are supplemented and LLM-rewritten; queries are generated. An LLM first extracts key entities and activities from natural-language plans; scripts then check feasibility/rationality against the sandbox. This is not purely deterministic evaluation of raw plans. LLM and reward-model judges separately compare personalization with reference plans.
+- **Boundary:** Not thousands of participant requests; China-only, single-turn and model biases limit generalization. No booking/execution validation.
+- **Resources:** Public code/data.7z; main last pushed 2025-10-22, no releases. No declared repository license or license file; reuse permission remains unverified.
+
+<a id="benchmark-mpr"></a>
+### B46. MPR · Multi-hop personalized factual reasoning
+
+[Explicit v.s. Implicit Memory: Exploring Multi-hop Complex Reasoning Over Personalized Information](https://arxiv.org/html/2508.13250v1) — arXiv v1, 2025-08-18; method in M38. Count the paper once.
+
+**Verification date / reading scope:** 2026-11-01; §3–6; official README, complete file tree and release metadata.
+
+- **Input → output:** Synthetic user graphs, generated single-hop statements and questions → 2–10-hop personalized factual answers; not observed human histories.
+- **Measurement:** Normalized answer exact match; experiments use a balanced 2,700-question subset. Report oracle and ordinary retrieval separately.
+- **Boundary:** Not tool execution, online preference changes or longitudinal satisfaction. Table 2 says 108,000 QA but §3.3.3 says 10,800; retain the discrepancy rather than silently correcting it.
+- **Resources:** [official repository](https://github.com/nuster1128/MPR), master, last pushed 2025-08-24; no releases or declared repository license. README links a Drive dataset, but its archive was inaccessible during verification. Paper CC BY 4.0 does not establish code/data reuse rights.
+
+<a id="benchmark-familytool"></a>
+### B47. FamilyTool · Multi-hop personal knowledge to tool arguments
+
+[FamilyTool](https://arxiv.org/html/2504.06766v2) — 2025 preprint; inspected v2, May 26, 2025.
+
+**Checked / reading scope:** November 1, 2026; §§4–6, §9, Appendix C.2; official README, repository license metadata and root LICENSE lookup.
+
+- **Input → output:** synthetic family/preference graph, speaker-specific request and candidate tools → tool call and arguments. KGETool retrieves a relevant subgraph first.
+- **Measures:** 483 base / 455 extended examples; 102 tools; 1–4 / 2–6 relational hops. Separate graph extraction metrics, call exact match, tool selection and argument accuracy; distinguish oracle from retrieved subgraphs.
+- **Limits:** synthetic data undergo model-based and human checks; evaluation focuses on static generated calls, not completed transactions, longitudinal household deployment or open-ended multi-turn execution. Longest-hop cases are sparse; argument correctness proves neither authorization nor execution.
+- **Resources:** [official code/data](https://github.com/yxzwang/FamilyTool). Root LICENSE returned 404 and repository license metadata was null: **reuse license unconfirmed**. Check upstream MTU-Bench / UnifiedToolHub terms separately.
+
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
@@ -595,6 +631,18 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 - **Measures:** Completion and authorization violations, using trajectories and state evidence.
 - **Limits:** Delegation benchmark, not a personalized planning method; simulated services and judges do not establish deployment risk.
 - **Resources:** [Official repository](https://github.com/PEACH-Research-Lab/AuthorizationBench). README declares MIT for original artifacts, excluding third-party sources. Released verdicts cover 6,864 runs, but only 4,981 original trajectories remain. Not run.
+
+<a id="benchmark-privacylens-live"></a>
+### B48. PrivacyLens-Live · Disclosure in dynamic tool and multi-agent workflows
+
+[Privacy in Action](https://aclanthology.org/2025.findings-emnlp.925/) — Findings of EMNLP 2025; inspected [arXiv v1, September 22, 2025](https://arxiv.org/html/2509.17488v1). Same paper as M41; count once.
+
+**Checked / reading scope:** November 1, 2026; §§3–4.5 and Limitations; ACL metadata and author resource link.
+
+- **Input → output:** reconstructed benchmark private content and requests → final actions through MCP tools / two-agent interactions.
+- **Measures:** 493 static cases; initially 150 Gmail/Notion live cases, plus 36 three-tool cases. Distinguish leakage, helpfulness and helpfulness-adjusted leakage; label model, deployment strategy and static/live setting.
+- **Limits:** test-account API execution is real, but content is benchmark-derived—not naturalistic user deployment. A2A reproduces selected components. Residual complex-workflow leakage remains; this is neither comprehensive compliance nor injection resistance testing.
+- **Resources:** [author release shortlink](https://aka.ms/privacy_in_action) fetch was denied by robots.txt. **Released contents and implementation/data licenses remain unverified.** This is a distinct paper extending PrivacyLens, not a duplicate entry for the original benchmark.
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -988,6 +1036,102 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Evidence/boundary:** Offline generation from real Amazon/Yelp reviews also receives target rating/title; not multi-turn dialogue, unconstrained preference prediction or tool execution. Main results average five temperatures, not five same-configuration seeds. Cross-user information requires privacy/consent safeguards.
 - **Consistency issue:** Paper Appendix A says third-most-recent review for testing; current code uses the latest. This discrepancy is not proof of demonstrated leakage; audit data before replication.
 - **Resources:** [Author code](https://github.com/SnowCharmQ/DPL) has no observed root license. [DPL-main](https://huggingface.co/datasets/SnowCharmQ/DPL-main) and [DPL-meta](https://huggingface.co/datasets/SnowCharmQ/DPL-meta) specify **CC BY-NC 4.0**; do not propagate the paper ethics paragraph’s broad MIT claim. Check upstream terms separately.
+
+<a id="method-guided-profile-generation"></a>
+### M35. Guided Profile Generation · Guided user profiling
+
+[Guided Profile Generation Improves Personalization with LLMs](https://arxiv.org/html/2409.13093v1) — arXiv v1, 2024-09-19.
+
+**Verification date / reading scope:** 2026-11-01; §3–6: methods, task definitions, metrics, results and limitations.
+
+- **Method:** Task-specific context digestion produces a readable profile for downstream responses; raw history remains in the main experiments.
+- **Evaluation:** Amazon four-option purchase prediction, LaMP-7 tweet rewriting and PER-CHAT Reddit response generation use different accuracy, overlap and semantic metrics.
+- **Boundary:** Offline tasks derived from human histories, not longitudinal participants; single-source text and mainly one GPT-3.5 snapshot. No validated profile truth, continual updating or action execution; fewer abstentions partly explain purchase gains. PER-CHAT generation gains are weak/inconsistent.
+- **Resources:** No verified official code/new-data release. Paper CC BY 4.0 does not license upstream data.
+
+<a id="method-knowledge-graph-tuning"></a>
+### M36. Knowledge Graph Tuning · Feedback-driven factual updates
+
+[Knowledge Graph Tuning: Real-time Large Language Model Personalization based on Human Feedback](https://arxiv.org/html/2405.19686v1) — arXiv v1, 2024-05-30.
+
+**Verification date / reading scope:** 2026-11-01; §4, §5.1–5.4 and §6: method, experimental setup, metrics, ablations and limitations.
+
+- **Method:** Extract query/feedback triples and add/remove external KG facts while freezing LLM weights.
+- **Evaluation:** Sequential counterfactual QA on CounterFact and GPT-4-assisted CounterFactExtension; efficacy/paraphrase scores, latency and GPU memory.
+- **Boundary:** A factual-personalization proxy, not real-user preference evolution. GPT-4 simulates relation feedback. Instruction following and extraction matter; answer-probability comparisons are not unrestricted task success.
+- **Resources:** No verified official available release or software/data license; paper CC BY 4.0. A direct GitHub connector GET of https://api.github.com/repos/W-R-Liu/KGT returned explicit NOT_FOUND / HTTP 404 during this audit. This secondary-source link is not a verified official implementation; the response does not establish permanent nonexistence.
+
+<a id="method-emg-rag"></a>
+### M37. EMG-RAG · Editable personal memory graphs
+
+[Crafting Personalized Agents through Retrieval-Augmented Generation on Editable Memory Graphs](https://aclanthology.org/2024.emnlp-main.281/) — EMNLP 2024; methods checked in [arXiv v1, 2024-09-28](https://arxiv.org/html/2409.19401v1).
+
+**Verification date / reading scope:** 2026-11-01; arXiv §4–5.2 and §7; ACL publication metadata and PDF method overview.
+
+- **Method:** Editable hierarchical memory graphs and RL-based memory selection feed a frozen LLM.
+- **Evaluation:** Real assistant conversations/screenshots with GPT-4-derived memories/QA labels; QA overlap metrics, entity exact match, and four-week edits.
+- **Human evidence:** A separate month-long online A/B adaptation uses real questions and manual answers; not wholly synthetic/offline. Metrics still do not establish satisfaction or executed services.
+- **Boundary/resources:** Repeated LLM calls make training costly; graph deletion is not backup/log erasure. No verified public business dataset or official implementation; arXiv CC0 concerns the paper, not private data.
+
+<a id="method-hybridmem"></a>
+### M38. HybridMem · Retrieval and clustered parametric memory
+
+[Explicit v.s. Implicit Memory: Exploring Multi-hop Complex Reasoning Over Personalized Information](https://arxiv.org/html/2508.13250v1) — arXiv v1, 2025-08-18; benchmark in B46. Count the paper once.
+
+**Verification date / reading scope:** 2026-11-01; §3 experimental settings, §4–5 comparisons and §6 hybrid memory; official README, complete file tree and release metadata.
+
+- **Method:** Cluster user statements and train separate LoRA adapters; retrieve statements at inference time and select the relevant adapter by voting.
+- **Evaluation:** Multi-hop QA over synthetic personalized facts in MPR, using normalized exact match to compare explicit, implicit and hybrid memory across reasoning structures; do not conflate settings.
+- **Boundary:** Does not establish sustained real-user benefit, online memory updating, privacy deletion or action execution. Dataset counts conflict between prose and table; see B46.
+- **Resources:** [official repository](https://github.com/nuster1128/MPR), master, last pushed 2025-08-24; no releases or declared repository license. The linked Drive archive was inaccessible. Paper CC BY 4.0 does not license code/data automatically; no installation or reproduction performed.
+
+<a id="method-coloragent"></a>
+### M39. ColorAgent · Personalized mobile GUI execution and clarification
+
+[ColorAgent](https://arxiv.org/html/2510.19386v2) — technical report; inspected v2, October 24, 2025.
+
+**Checked / reading scope:** November 1, 2026; §§2–6; official README, LICENSE and ColorGUI-32B model card.
+
+- **Mechanism:** step-wise RL, self-evolving training, retrieval, task orchestration and hierarchical reflection; user-history-derived SOPs/profile information personalize requests, with a separately trained clarification agent. Primarily **Android/mobile, not desktop**.
+- **Evidence:** distinguish AndroidWorld/AndroidLab task success from MobileIAR intention-aligned action matching and VeriOS-Bench step-level matching.
+- **Limits:** no established longitudinal user benefit. Benchmark realism, sandboxing and fine-grained permissions remain open; asking questions is not comprehensive security validation.
+- **Resources:** [official repository](https://github.com/MadeAgents/mobile-use), verified [MIT code license](https://github.com/MadeAgents/mobile-use/blob/main/LICENSE). Later [ColorGUI-32B](https://huggingface.co/MadeAgents/ColorGUI-32B), released July 10, 2026 and marked Apache-2.0, uses Qwen3-VL; it is **not the paper’s GUI-Owl/Qwen2.5 checkpoint**. Pin code, model and evaluation revisions separately.
+
+<a id="method-warpp"></a>
+### M40. Agent WARPP · Attribute-conditioned runtime workflow pruning
+
+[Agent WARPP](https://arxiv.org/html/2507.19543v1) — ICML 2025 Multi-Agent Systems Workshop, not the main conference; inspected v1, July 23, 2025.
+
+**Checked / reading scope:** November 1, 2026; §§3–6, §§8–9; official README and LICENSE.
+
+- **Mechanism:** a training-free Personalizer prunes workflows/tools using user attributes alongside simulated authentication, then hands off to fulfillment. Pruning retains success, failure and user-answer branches for retained tools. This is conditional execution, not persistent preference learning.
+- **Evidence:** five intents, three domains, 50 examples each; synthetic customer records and GPT-4o client simulation. Separate trajectory matching, tool F1, argument fidelity, latency and judge-rated workflow quality.
+- **Limits:** most calls and MFA are simulated; some complex workflows integrate APIs. This does not demonstrate production deployment or secure identity verification. Security, privacy, human-in-the-loop and conversation quality are explicitly outside scope. High-load behavior and evolving APIs remain untested.
+- **Resources:** [official implementation/data](https://github.com/emiliamazzo/WARPP), verified [MIT LICENSE](https://github.com/emiliamazzo/WARPP/blob/main/LICENSE).
+
+<a id="method-privacychecker"></a>
+### M41. PrivacyChecker · Decision-time information-flow privacy judgments
+
+[Privacy in Action](https://aclanthology.org/2025.findings-emnlp.925/) — Findings of EMNLP 2025; inspected [arXiv v1](https://arxiv.org/html/2509.17488v1). Benchmark: B48; count the paper once.
+
+**Checked / reading scope:** November 1, 2026; §§3–4.5 and Limitations; ACL metadata and author resource link.
+
+- **Mechanism:** prompts explicit contextual-integrity flow extraction and per-flow sharing judgments before action. Optional guidelines are excluded from main results; deployment uses system prompts, tool descriptions or a standalone MCP checker.
+- **Evidence:** assess leakage together with helpfulness; keep static, live MCP, MCP+A2A and more complex workflows separate.
+- **Limits:** flow extraction, judgment errors and judgment–action mismatch leave residual leakage. Adversarial memory poisoning is not the principal evaluation. Prompt-based mitigation is not mandatory access control, cryptographic protection or regulatory certification; a checker tool name does not establish non-bypassability.
+- **Resources:** [author shortlink](https://aka.ms/privacy_in_action) was blocked by robots.txt; package availability and licenses are unverified. Public paper access does not establish an open implementation license.
+
+<a id="method-agentraft"></a>
+### M42. AgentRaft · Execution-time data over-exposure detection
+
+[AgentRaft](https://arxiv.org/html/2603.07557v1) — 2026 preprint; inspected v1, March 8, 2026.
+
+**Checked / reading scope:** November 1, 2026; §§3–6, including setup, component evaluation and limitations; paper links and targeted resource search.
+
+- **Mechanism:** type compatibility and semantic validation construct a cross-tool dependency graph; targeted prompt synthesis, runtime taint tracking and multi-LLM judgments identify unnecessary transmitted fields.
+- **Evidence:** 6,675 describes crawled ecosystem tools. Experiments use selected toolsets in four AgentDojo scenarios, generated PII/business assets and GPT-5.1 agents. The 57.07% figure denotes 347/608 tested potential call chains—not commercial-agent prevalence.
+- **Limits:** requires internal traces; closed commercial agents and actual end-user deployments were not directly audited. Separate graph quality, prompt validity, detection and cost metrics. LLM errors and changing tools remain limitations; regulation-informed voting is not compliance certification, and proposed injection/runtime defenses are not validated guarantees.
+- **Resources:** no author implementation/data release established from the paper or targeted search; **release status and implementation license unverified**. AgentDojo’s license does not license AgentRaft itself.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
