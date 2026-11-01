@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **170 distinct papers**: 86 evaluation entries, 99 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, DAM/DABench, DuLeMon/PLATO-LTM, and ActMem/ActMemEval each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **176 distinct papers**: 86 evaluation entries, 105 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, DAM/DABench, DuLeMon/PLATO-LTM, and ActMem/ActMemEval each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B86, M16–M99, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B86, M16–M105, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -1335,6 +1335,39 @@ Results do not uniformly beat RAG: GPT-4o/LongMemEval correctness is 72.8% versu
 - **Resources/rights:** [Official repository](https://github.com/tml1026/Lifelong-Personalized-Agent) contains public code, generation scripts and data files. No LICENSE observed in root/README; reuse rights, full-benchmark completeness and reproduction remain unverified. Do not repeat the abstract's future-release promise as the current state.
 - **Reading scope:** Metadata, relevant §§3–4, Tables 1–2, §6, repository README/root/data listings; no code execution, record-by-record audit or volunteer seed-consent verification.
 
+<a id="method-finpersona"></a>
+### M101. FinPersona: financial preference-dialogue demo
+
+**Type: method/system; financial research prototype with limited human-evaluation evidence.** Elicits investment preferences, builds a profile and contextualizes discussion of one target stock. Big Five settings control the advisor’s personality, not inferred user personality. A preliminary evaluation with 20 external users lacks detailed protocol and quantitative reporting. It does not establish investment returns, emotional-health benefits or deployment safety. Historical financial context requires updating; RAG is an extension. Authors advise verification and professional consultation. Code, data licensing and detailed privacy governance remain unverified.
+
+**Version/resources:** ECIR 2025 conference demonstration, Volume V, pp.13–18, DOI [10.1007/978-3-031-88720-8_3](https://doi.org/10.1007/978-3-031-88720-8_3). The [author publication record](https://javiersanzcruza.github.io/pubs) provides manuscript, video and poster. Publisher DOI access failed through this tool; author manuscript and venue record were verified. Do not merge unrelated projects sharing the FinPersona name.
+
+**Actual reading:** [Six-page author manuscript](https://javiersanzcruza.github.io/assets/papers/ecir2025_demo.pdf), especially §§2–3 and footnotes 4–5; author publication record. Not treated as investment-return or clinical-efficacy evidence.
+
+<a id="method-cue-cot"></a>
+### M103. Cue-CoT: user-status inference
+
+[Cue-CoT: Chain-of-thought Prompting for Responding to In-depth Dialogue Questions with LLMs](https://arxiv.org/html/2305.11792v2) — inspected arXiv v2, 2023-10-15; published in [Findings of EMNLP 2023](https://aclanthology.org/2023.findings-emnlp.806/).
+
+**Inspected:** Abstract, relevant §§3–5 and limitations passages; official README/root listing.
+
+- **Method:** Infer personality, emotional and psychological cues before responding; joint O-Cue or staged M-Cue with demonstration selection.
+- **Evidence:** Six Chinese/English datasets and five models. Personality dialogues were synthesized by ChatGPT from Quora/Zhihu question–answer seeds, including inferred personality and generated continuations; the other four datasets reuse existing corpora. Evaluation mainly uses ChatGPT pairwise win rates for helpfulness and acceptability. Three master's-student raters assessed 100 response pairs per dataset to check agreement with automated evaluation.
+- **Limits:** Intermediate inference correctness was not directly validated; prompt/order sensitivity remains. This does not establish persistent-profile accuracy, personality diagnosis or clinical efficacy.
+- **Resources/rights:** The [official repository](https://github.com/hrwise-nlp/Cue-CoT) provides benchmark/demo material. Its 3k-public-data description also excludes PsyQA; generation/evaluation code remains advertised as forthcoming. Research-only and upstream restrictions apply; forum-user consent is not established.
+
+<a id="method-pag"></a>
+### M104. Summary-augmented personalization (survey shorthand: PAG)
+
+[Integrating Summarization and Retrieval for Enhanced Personalization via Large Language Models](https://arxiv.org/html/2310.20081v1) — v1, 2023-10-30. The [official publication page](https://www.amazon.science/publications/integrating-summarization-and-retrieval-for-enhanced-personalization-via-large-language-models) lists the CIKM 2023 Personalized Generative AI workshop. PAG is not an explicit method name in the inspected paper.
+
+**Inspected:** Abstract, §§2–4, Tables 1–3 and official publication page.
+
+- **Method:** Offline task-aware summaries plus runtime BM25 retrieval and fine-tuned FlanT5-base.
+- **Evidence:** Six public LaMP tasks, user-separated split, private LaMP-6 excluded; three-run means. The 75% reduction means retrieved items decrease from four to one—not total tokens or cost. Five tasks are comparable/better; LaMP-4 underperforms.
+- **Limits:** Narrow benchmark; voice-assistant motivation is not deployment or real-user benefit evidence. Cross-application profiling consent and clinical validation are not established.
+- **Resources/rights:** No paper-specific official code verified. Reuses LaMP rather than introducing a benchmark. Paper CC BY-SA 4.0 does not establish data/model rights.
+
 <a id="memory-methods"></a>
 ## Methods: Memory and persistent state
 
@@ -1778,6 +1811,38 @@ The [official IJCAI-26 doctoral-consortium paper](https://ijcai.org/proceedings/
 2510.07925v1 reports a **five-day pilot**; the later IJCAI account describes a **three-week exploratory study**. Do not transfer durations/significance claims or merge the reports without verification. **Participant overlap is unverified.** Here, only 2510 metadata, abstract/§2.2 and relevant IJCAI webpage passages were read; the later cohort/statistics were not independently established.
 
 IUI 2026 DOI lead: `10.1145/3742413.3789222`. Publisher fetch returned 403; the official IJCAI reference supports venue, not a claim of having inspected the published full text or established version equivalence.
+
+<a id="method-hltm"></a>
+### M100. HLTM: enterprise-adjacent personalized semantic memory
+
+**Type: method/system; enterprise recruiting, not a general personal-life assistant.** Combines business-scoped memory trees, multi-view retrieval, provenance and incremental updates. Evidence includes expert-labelled production-log data and LongMemEval-s; online feedback comparisons are not established randomized evidence. Tenant-isolation findings apply to the reported test, not a general privacy guarantee. Distinguish query latency from complete incremental-index refresh time; architectural minute-scale update windows are not measured whole-index refresh times.
+
+**Version/resources:** [arXiv 2604.26197v3](https://arxiv.org/abs/2604.26197v3), 2026-05-30; KDD 2026 Applied Data Science track. The paper’s CC BY-NC-ND 4.0 license is not a software license. Public implementation/internal hiring dataset availability was not verified in inspected material.
+
+**Actual reading:** [Original](https://arxiv.org/html/2604.26197v3) §§3–6, Tables 1–3/6–8, Appendices C–D; version/venue metadata. No claim of page-by-page full-text audit.
+
+<a id="method-comedy"></a>
+### M102. COMEDY / Dolphin: long-term dialogue compression
+
+**Type: method/system; memory compression and personalized dialogue.** One model performs memory extraction, compression and response generation through mixed-task training and DPO. Dolphin originates from real X Eva user–character interactions, but annotations/responses are generated with GPT-4-Turbo and human-refined—not wholly natural human data. Offline memory metrics and dialogue ratings do not demonstrate production efficiency or health benefits. De-identification is author-reported; explicit consent procedures remain unestablished, and author statements are not independent privacy validation.
+
+**Version:** [COLING 2025 record](https://aclanthology.org/2025.coling-main.51/), pp.755–773, is titled “Compress to Impress: Unleashing the Potential of Compressive Memory in Real-World Long-Term Conversations”; its [linked PDF](https://aclanthology.org/2025.coling-main.51.pdf) starts with “Beyond Retrieval: Embracing Compressive Memory in Real-World Long-Term Conversations.” [arXiv 2402.11975v2](https://arxiv.org/abs/2402.11975v2), 2024-07-01, has five authors versus six in COLING. Preserve these version differences.
+
+**Resources:** [Official code](https://github.com/nuochenpku/COMEDY) is accessible, but full training/test release remains unverified: the train link targets an author profile; test is an unlinked placeholder. No root project-license file was visible. The [DPO data card](https://huggingface.co/datasets/Nuo97/Dolphin-DPO) is empty and its viewer unavailable. [7B](https://huggingface.co/Nuo97/COMEDY_7B), [13B-DPO](https://huggingface.co/Nuo97/COMEDY_13B_DPO) and DPO cards declare Apache-2.0; this is not project-wide or base-model license clearance.
+
+**Actual reading:** COLING PDF §§2–3, limitations/ethics, Appendices B–F; Anthology/arXiv metadata; official README, dataset/model cards. Full corpus and weights were not downloaded or audited.
+
+<a id="method-malp"></a>
+### M105. MaLP / DPeM: medical personalization memory
+
+[LLM-based Medical Assistant Personalization with Short- and Long-Term Memory Coordination](https://arxiv.org/html/2309.11696v3) — inspected arXiv v3, 2024-04-04; published at [NAACL 2024](https://aclanthology.org/2024.naacl-long.132/). The [v1 title](https://arxiv.org/abs/2309.11696v1), *Memory-Augmented LLM Personalization with Short- and Long-Term Memory Coordination*, belongs to the same paper; count once.
+
+**Inspected:** Abstract, §§2–4, Appendices A/B, version history and official README/root listing.
+
+- **Method:** Coordinated working/short-/long-term memory, frequency-based promotion, domain adaptation and user LoRA.
+- **Evidence:** Profiles derive from Medical-Dialogue-System, followed by model self-chat; medical adaptation uses HealthCareMagic-100k/iCliniq. Sixty simulated users and 10,920 self-chat dialogues; QA, preference classification and response judging. Two master's-student raters with medical backgrounds screened 100 dataset samples, reporting 94% without identified safety issues. Separately, two master's students rated 100 response pairs to check agreement with automated scoring.
+- **Limits:** The 94% is a small dataset-sample safety screen—not clinical safety, patient outcomes or efficacy. No longitudinal patient trial; persistent-memory deletion/correction/consent controls are not established.
+- **Resources/rights:** The [official repository](https://github.com/MatthewKKai/MaLP) exposes data and generation/memory/training code and has an MIT LICENSE, while its README License section describes research purposes. These differing signals do not justify unrestricted commercial use and do not establish upstream medical-data/model rights, patient consent or commercial authorization.
 
 <a id="agent-methods"></a>
 <a id="methods-b-planning-tools-reflection-proactivity-and-coordination"></a>
