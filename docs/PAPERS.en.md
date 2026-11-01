@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **41 distinct papers**: 27 evaluation entries and 16 method entries. Proactive Agent and MemoProAgent each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **45 distinct papers**: 31 evaluation entries and 18 method entries. Proactive Agent, MemoProAgent, PbP/InTU, and Ask-before-Plan/CEP each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B27 and M16 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B31 and M16–M18 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -44,6 +44,8 @@ Years and versions identify the listed paper, not the current project. Original 
 | How should persistent memory and its lifecycle be managed? | [MemGPT](#method-memgpt), [MemoryBank](#method-memorybank), [A-MEM](#method-a-mem), [Mem0](#method-mem0), [Zep](#method-zep), [MemOS](#method-memos) | Invalidation or non-use is not physical erasure; permissions, scheduling, observability |
 | How can experience, skills, and agent coordination be reused? | [ReAct](#method-react), [Reflexion](#method-reflexion), [Voyager](#method-voyager), [ExpeL](#method-expel), [AutoGen](#method-autogen) (historical) | Longitudinal human utility, single-agent controls, stale experience, operating cost |
 
+
+**Personal-planning reading route:** Start with [TravelPlanner+](#benchmark-travelplanner-plus) for turning profiles and personal concepts into plan conditions; [PbP](#benchmark-pbp) / [InTU](#method-intu) for inferring unstated preferences from behavior; [Ask-before-Plan](#benchmark-ask-before-plan) / [CEP](#method-cep) for clarification; [PDEU-Bench](#benchmark-pdeu-bench) for retaining preferences through plan updates; and [AuthorizationBench](#benchmark-authorizationbench) for distinguishing completion from authorized action. This question-based sequence is not evidence of one complete system. Cross-session state, longitudinal utility, and changes in authorization need separate testing.
 
 <a id="user-profile-reading-path"></a>
 ### User profiles: four questions to read by
@@ -230,6 +232,30 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Twenty synthetic personas, fixed rules, and model routing do not establish changing real preferences or interruption costs. More questions need not help.
 - **Resources:** [Official code/data](https://github.com/BUPT-GAMMA/ATRBench). Code: Apache-2.0; NOTICE separately attributes source personas under CC BY 4.0. Do not assume one license covers every asset. Not run.
 
+<a id="benchmark-travelplanner-plus"></a>
+### B28. TravelPlanner+ · How profiles change plans
+
+[Personal Large Language Model Agents: A Case Study on Tailored Travel Planning](https://aclanthology.org/2024.emnlp-industry.37/) — EMNLP 2024 Industry Track. Title follows ACL metadata; the PDF ends with Tailored Travel Planners.
+
+**Checked / reading scope:** 2026-11-01; abstract, §1, §4.2 and result tables; draft, not reproduced.
+
+- **Input → output:** User models, personal queries and travel information → personalized itineraries.
+- **Measures:** Delivery, constraint and final pass rates; separately, judge preference between personal and generic plans.
+- **Limits:** Judge preference is neither human satisfaction nor constraint satisfaction; some personalized settings reduce constraint scores. Not longitudinal planning.
+- **Resources:** [Paper](https://aclanthology.org/2024.emnlp-industry.37.pdf). No verified official TravelPlanner+ release located; the original TravelPlanner repository is not a substitute.
+
+<a id="benchmark-pbp"></a>
+### B29. PbP · Inferring planning preferences from demonstrations
+
+[Inferring the Unspoken: Aligning Embodied Agents with Implicit Preferences](https://arxiv.org/abs/2502.00858v4) — First submitted 2025; v4, 2026-09-08, marked EMNLP 2026 on arXiv. Earlier title: Learning to Plan with Personalized Preferences. Method: M17.
+
+**Checked / reading scope:** 2026-11-01; v4 abstract and version history only; preliminary draft.
+
+- **Input → output:** Demonstrations and new situations → preference-aligned embodied plans; 5,000 evaluation groups, 290 preferences.
+- **Measures:** Compares given versus inferred preferences; exact metrics remain unverified.
+- **Limits:** Embodied setting, not office-agent deployment. PDF exceeded retrieval size; HTML unavailable.
+- **Resources:** No verified official release located; availability and reproducibility unconfirmed.
+
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
@@ -348,6 +374,18 @@ These can test a personal assistant's ability to act, but most are **general-age
 - **Limits:** 116 is not the total number of randomized instances. Primarily open-source / system apps; generalization to commercial apps, other devices, or Chinese interfaces is unproven.
 - **Resources:** [Project](https://google-research.github.io/android_world/), [environment / task code](https://github.com/google-research/android_world).
 
+<a id="benchmark-ask-before-plan"></a>
+### B30. Ask-before-Plan · Clarification before commitment
+
+[Ask-before-Plan: Proactive Language Agents for Real-World Planning](https://aclanthology.org/2024.findings-emnlp.636/) — Findings of EMNLP 2024; method: M18.
+
+**Checked / reading scope:** 2026-11-01; abstract, evaluation in §5.1–5.2 and Appendix B.2–B.3; official README; draft.
+
+- **Input → output:** Dialogue and environment feedback → questions, calls and travel plans.
+- **Measures:** Clarification, call correctness and plan constraint / final pass rates, separately.
+- **Limits:** Component tests supply correct upstream outputs; integral-framework final planning also receives ground-truth conversation (Appendix B.3). Neither establishes fully free-running end-to-end performance or longitudinal profiling.
+- **Resources:** [Code](https://github.com/magicgh/Ask-before-Plan), [data](https://huggingface.co/datasets/magicgh/Ask-before-Plan). README declares MIT code and CC BY 4.0 data / environment. Separate environment download; not installed.
+
 <a id="safety-evaluation"></a>
 ## Evaluation D: privacy norms and adversarial safety
 
@@ -400,6 +438,18 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 - **Measures:** Commit% tracks whether the tested claim was saved in persistent state available to the follow-up. Judge-based Max-FR@3 flags any failing answer; downstream failure averages Max-FR@3 across the four per-answer dimensions, not all six metrics.
 - **Limits:** Controlled stress tests are not population risk estimates. Low failure can reflect weak tool use. Reported 88% human agreement allows ±1 Likert point, not exact matching.
 - **Resources:** [Official code/data entry](https://github.com/henrymao2004/agent-sycophancy). Code: MIT. The paper labels PASB CC BY 4.0; README requires upstream PersistBench/ELEPHANT terms. Data licensing needs reconciliation. Not run.
+
+<a id="benchmark-authorizationbench"></a>
+### B31. AuthorizationBench · Completion is not authorization
+
+[Act on Your Behalf, Beyond Your Authorization: Benchmarking LLM Agent Authorization Alignment](https://arxiv.org/html/2610.27548v2) — 2026 preprint; v2, 2026-10-21.
+
+**Checked / reading scope:** 2026-11-01; abstract, §4.1 metrics and official README; draft.
+
+- **Input → output:** Scoped delegation and sandbox state → action trajectories; 286 tasks.
+- **Measures:** Completion and authorization violations, using trajectories and state evidence.
+- **Limits:** Delegation benchmark, not a personalized planning method; simulated services and judges do not establish deployment risk.
+- **Resources:** [Official repository](https://github.com/PEACH-Research-Lab/AuthorizationBench). README declares MIT for original artifacts, excluding third-party sources. Released verdicts cover 6,864 runs, but only 4,981 original trajectories remain. Not run.
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -575,6 +625,26 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Idea:** Encapsulate LLMs, tool execution, and human input as conversable agents; a math request, for example, leads to code, execution-result, and feedback exchanges before an answer.
 - **Relevance and limits:** General multi-agent orchestration research, not a personalization benchmark. MATH, retrieval QA, ALFWorld, and OptiGuide use application-specific metrics. More agents or human involvement do not automatically provide permission isolation, reliable authorization, or lower cost; single-agent controls and safety tests remain necessary.
 - **Resources:** [Official repository](https://github.com/microsoft/autogen): MIT code; CC BY 4.0 documentation / other content. The current README reports archival and no Microsoft maintenance. Retain as historical research, not a maintained production recommendation. Current packages differ from the 2023 API; a paper-era commit was not identified.
+
+<a id="method-intu"></a>
+### M17. InTU · Verbalize preferences before planning
+
+[Inferring the Unspoken](https://arxiv.org/abs/2502.00858v4) — Same paper as B29; count once.
+
+**Checked / reading scope:** 2026-11-01; v4 abstract only; preliminary draft.
+
+- **Mechanism:** Express preferences inferred from multimodal demonstrations in language, then condition action plans on them.
+- **Limits:** An interpretable intermediate representation does not guarantee correct inference. Evaluation, resources and reading limitations: [B29](#benchmark-pbp).
+
+<a id="method-cep"></a>
+### M18. CEP · Separate clarification, execution and planning
+
+[Ask-before-Plan](https://aclanthology.org/2024.findings-emnlp.636/) — Same paper as B30; count once.
+
+**Checked / reading scope:** 2026-11-01; abstract, evaluation setup, Appendix B.3 and official README training / inference entries; draft.
+
+- **Mechanism:** Three specialized roles; trajectory tuning for clarification and static execution, memory recollection for dynamic execution.
+- **Limits:** Role separation is not persistent profiling or authorization. Integrated final planning still uses ground-truth conversation (Appendix B.3); do not label it fully free-running. Resources and licenses: [B30](#benchmark-ask-before-plan).
 
 <a id="personalization-methods"></a>
 ## Methods C: personalization and preference learning
