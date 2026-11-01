@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **154 篇不同论文**：81 个评测条目、86 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **162 篇不同论文**：83 个评测条目、92 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B81、M16–M86、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B83、M16–M92、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -701,6 +701,13 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **测量与边界**：GPT-4 对准确、连贯、记忆引用、情感共鸣、个性化、流畅性评分；自动分数不证明真实情绪改善或临床收益，不能把裁判写成无偏。
 - **资源**：附录提供提示/参数；未找到官方代码、数据发布或资产许可；同篇方法与评测只计一次。
 
+<a id="benchmark-tripcraft"></a>
+### B82. 画像条件旅行规划
+
+**TripCraft: A Benchmark for Spatio-Temporally Fine Grained Travel Planning** — ACL 2025 Long Papers；版本：2025.acl-long.834（arXiv 别名 2502.20508）。[正式论文](https://aclanthology.org/2025.acl-long.834/)｜[代码与访问说明](https://github.com/Soumyabrata2003/TripCraft)
+
+融合画像、公共交通及地点信息，评测行程的时间、空间、顺序与偏好一致性。阅读范围：§3 数据构建与指标、§4 实验、局限及官方 README。1,000 条查询采用现实地点数据，但查询/画像经过构造，航班日期经调整；人工修订参考计划不等于真人出行验证。画像分数使用文本嵌入相似度，不能直接解释为用户满意度；没有订票执行或行动授权验证。数据须申请，允许内部研究/商业使用及修改；修改须保留论文引用与 README，禁止跨组织再分发；代码根许可证未确认。
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -1029,6 +1036,13 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 **资源与复现：** 未核实官方代码／数据下载及其许可；论文 CC BY-NC-SA 4.0 不等于资源授权。
 
 **核验日期／实际阅读范围：** 2026-11-01；版本页、Benchmark、Dataset、Experiments、Limitations，以及生成评测相关附录段落；未运行复现。
+
+<a id="benchmark-confaide"></a>
+### B83. 情境隐私
+
+**Can LLMs Keep a Secret? Testing Privacy Implications of Language Models via Contextual Integrity Theory** — ICLR 2024 Spotlight；阅读版本：arXiv 2310.17884v2（2024-06-28）。[原文 v2](https://arxiv.org/html/2310.17884v2)｜[代码与数据](https://github.com/skywalker023/confaide)｜[MIT 许可证](https://github.com/skywalker023/confaide/blob/main/LICENSE)
+
+四层任务评测信息敏感性、情境信息流、秘密共享及会议输出披露。阅读范围：§3–5、附录人类标注与指标分解、仓库许可证。主要是模板与模型合成场景；前三层有人类标注，第四层不是私人会议实录。GPT-4/ChatGPT 的 39%/57% 指在隐私保护指令下、10 次运行的第四层**摘要平均泄漏率**，不能与最坏情形指标混用。适合作为个人助手隐私能力评测，而非个性化方法；识别接收者/用途边界不等于执行访问控制或获得披露同意。官方仓库提供 MIT 许可证。
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -1978,6 +1992,70 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 **证据与边界：** 评测来自 AEP 真实客户查询的100个困难样本，已按历史改写和歧义检测筛选，并非随机生产流量。需澄清类 precision 从 .732 升至 .904，但 recall 从 .833 降至 .635、F1 从 .779 降至 .746；宏平均 F1 为 .657，基线 .520。用户画像检索被列为未来工作，98% precision 是部署目标而非结果。没有长期个性化收益证明。
 
 **资源 / 实际阅读范围：** 本次未找到官方代码或客户数据公开发布；arXiv 分发许可不构成代码 / 数据许可。已读架构、实验、经验与部署章节、正式出版记录，并检索作者资源；未复现。
+
+<a id="method-alignx"></a>
+### M87. 用户级偏好对齐
+
+**From 1,000,000 Users to Every User: Scaling Up Personalized Preference for User-level Alignment** — ACL 2026 Long Papers，2026.acl-long.1391；同时核读 arXiv 2503.15463v3（2025-05-22）。[正式论文](https://aclanthology.org/2026.acl-long.1391/)｜[arXiv v3](https://arxiv.org/html/2503.15463v3)｜[新版代码](https://github.com/AntResearchNLP/AlignX-Family)｜[独立仓库](https://github.com/JinaLeejnl/AlignX)｜[数据卡](https://huggingface.co/datasets/JinaLeejnl/AlignX)
+
+AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐。阅读范围：arXiv v3 §3–7、局限/伦理附录；正式版结果、局限与伦理；官方仓库和数据卡。131 万余条是构造的偏好样例，不是同等数量真人；源数据含论坛/既有对齐数据，画像信号经组合或生成。离线偏好准确率与模型裁判结果不证明长期真人适应或外部行动授权。正式版说明标识符移除与 PII 过滤，但不是同意或隐私保证。HF 数据卡标注 MIT；代码根许可证未确认；论文数量与当前数据查看器数量须分开记录。
+
+<a id="method-caffeine"></a>
+### M88. 情境感知画像精炼
+
+**Commonsense-augmented Memory Construction and Management in Long-term Conversations via Context-aware Persona Refinement** — EACL 2024 Short Papers，2024.eacl-short.11；阅读 arXiv 2401.14215v3（2024-02-12）。[正式论文](https://aclanthology.org/2024.eacl-short.11/)｜[原文 v3](https://arxiv.org/html/2401.14215v3)｜[代码](https://github.com/ktio89/Caffeine-Persona-Refinement)
+
+通过 COMET 扩展、NLI 矛盾图及 LLM 的合并/消歧/保留策略管理画像记忆。阅读范围：§2–3 方法实验、§6–7 局限伦理、附录人评及官方仓库。MSC/Persona-Chat 是人工编写的对话基准，不应称为经核验的个人经历。人类回答评估仅抽取 50 条回答；画像评估筛选后保留 89 对。常识扩展与 NLI 错误可能形成错误画像，此为需控制的应用风险；论文未验证用户确认、记忆披露权限或外部行动。代码可访问但根许可证未确认，论文许可证不能替代代码授权。
+
+<a id="method-memochat"></a>
+### M89. MemoChat
+
+**MemoChat: Tuning LLMs to Use Memos for Consistent Long-Range Open-Domain Conversation**｜2023，arXiv 2308.08239v2（2023-08-23；未核实正式发表 venue）。**定位：可迁移的对话记忆方法，非外部行动 Agent。** 将历史组织成主题、摘要及原始对话的结构化 memo，通过“记忆—检索—回答”循环提升长程一致性。MT-Bench+ 的 54 个检查问题由专家基于扩展、组合的 MT-Bench 对话构造；下游一致性使用 GPT-4 评分，不能视作真实用户的长期偏好学习或任务完成证据。实验采用 2k 上下文设置，作者报告提示复制、灾难性遗忘及提示顺序敏感性。代码、数据、训练/测试/裁判脚本及模型链接可见；**代码为 MIT，模型权重声明 CC-BY-NC-SA-4.0**，不可统一称为宽松商用许可。未运行复现。
+
+来源：
+- [准确版本与元数据](https://arxiv.org/abs/2308.08239v2)
+- [原文：§§3–4 与 Appendix C](https://arxiv.org/html/2308.08239v2)
+- [作者仓库：实现、数据与代码/模型许可](https://github.com/LuJunru/MemoChat)
+
+实际阅读范围：版本页面；原文方法、训练指令、实验设置、评估与挑战相关段落；仓库目录、README 的流程、权重及许可声明。未下载或验证权重、未执行脚本、未逐条审查全部训练数据。
+
+<a id="method-safari"></a>
+### M90. SAFARI / KBP
+
+**Large Language Models as Source Planner for Personalized Knowledge-grounded Dialogues（SAFARI）**｜Findings of EMNLP 2023，9556–9569；核读 arXiv 2310.08840v1（2023-10-13）。**定位：画像与知识依赖下的知识源规划方法；KBP 是随论文提出的评测数据，不另计论文。** 将知识源选择、检索和回答组装分开，依据预先给定的依赖关系决定调用哪些来源及顺序。KBP 包含 2,477 段中文对话、24,554 条话语，由标注员按指定系统画像与知识同时编写两方角色；不是自然个人用户的真实使用记录。人工评估为每模型 100 条回答、3 位标注员，且该比较不计入规划效果。**自动指标另有测试集选择风险：Appendix C 明确每 500 次训练迭代在 KBP 测试集评估 NLI 模型，并保存测试集表现最高的 checkpoint，用其计算 P.C/K.C；这可能使自动一致性指标偏乐观，不能视作未触碰测试集的独立评估器。此风险针对 NLI 自动指标，不应混同于上述独立报告的人工打分。**限制包括级联错误、检索噪声、知识过期及未覆盖其他来源。**知识源调用不等于外部行动，更不验证授权。** 官方仓库提供数据及实现目录，但未见根目录许可证，GitHub license 元数据为空；复用许可待确认，未运行复现。
+
+来源：
+- [正式 venue、复数标题及 DOI 10.18653/v1/2023.findings-emnlp.641](https://aclanthology.org/2023.findings-emnlp.641/)
+- [准确 arXiv 版本；摘要页标题使用单数 Dialogue](https://arxiv.org/abs/2310.08840v1)
+- [原文：§§3–6、Limitations、Ethics Statement、Appendix C/E](https://arxiv.org/html/2310.08840v1)
+- [作者仓库，默认分支 master](https://github.com/hrwise-nlp/SAFARI)
+
+实际阅读范围：正式出版元数据；arXiv 原文数据采集、方法、评估和限制章节，补读 Appendix C 的 NLI checkpoint 选择及 Appendix E 的人工评估差异；仓库根目录、README 及 GitHub license 元数据。确认 kbp.zip、lora、tools、unsupervised 存在；未解压数据、未执行实现。
+
+<a id="method-unims-rag"></a>
+### M91. UniMS-RAG
+
+**UniMS-RAG: A Unified Multi-source Retrieval-Augmented Generation for Personalized Dialogue Systems**｜2024，arXiv 2401.13256v3（2024-11-26；正式 venue 未核实）。**定位：统一知识源选择、相关性评估与回答生成的个性化对话方法。** 通过 acting/evaluation tokens 联合训练，并结合相关性与 NLI 一致性分数迭代修订证据和回答。实验使用 DuLeMon Both 与 KBP，涉及用户画像、系统画像及外部知识；不能全部解释为个人用户记忆。“acting”仅表示检索来源选择，**不是有授权的外部执行**。人工评估为每数据集/模型 100 条回答、3 位标注员，约 82% 一致率。**重要评估限制：§V-D 明确以 KBP 测试集上的最高表现选择 NLI 评估器 checkpoint，可能使自动一致性指标偏乐观；不能称为独立、未触碰测试集的评估器。** 未核实专用官方实现或其许可证；论文提供训练细节及上游代码链接，未运行复现。
+
+来源：
+- [准确版本与元数据](https://arxiv.org/abs/2401.13256v3)
+- [原文：方法 §§IV–V；评估器选择 §V-D；人工评估 §VII-D](https://arxiv.org/html/2401.13256v3)
+
+实际阅读范围：版本页面；原文方法、数据集、指标、训练与评估器选择、主结果及人工评估段落；针对官方实现与 venue 的定向检索。未发现可核实的专用官方实现，不能据此断言实现不存在；未独立重训评估器或复现分数。
+
+<a id="method-vaiage"></a>
+### M92. Vaiage
+
+**Vaiage: A Multi-Agent Solution to Personalized Travel Planning**｜2025，arXiv 2505.10922v1（2025-05-16；正式 venue 未核实）。**定位：用户约束与地图/天气等外部数据驱动的多 Agent 旅行规划原型。** 根据用户陈述的偏好、预算、同行人员等条件生成景点、路线及预算，并支持交互调整。主要量化结果来自 **GPT-4/GPT-3.5 代理裁判**；8.5/10 不是实测用户满意度。论文的 human-in-the-loop/定性表述不足以确立有清晰参与者样本和协议的真人研究。无外部 API 版本的 6.8 在摘要与正文中的指标表述不一致，宜避免直接列为统一总体评分。预订集成及长期个性化属于未来工作，**不构成真实预订完成或授权安全证据**。公开代码含应用与评估文件，但未见根目录许可证、GitHub license 为空；需自备多项 API 凭证，复用许可及完整复现仍待确认。
+
+来源：
+- [准确版本与元数据](https://arxiv.org/abs/2505.10922v1)
+- [原文：架构/交互 §§3–4；评估 §5；未来预订集成 §6](https://arxiv.org/html/2505.10922v1)
+- [作者仓库与依赖/运行说明](https://github.com/Binwen6/Vaiage)
+- [已读样例：四天请求、两个行程 day 对象，评分 9](https://github.com/Binwen6/Vaiage/blob/main/evaluation%20score.txt)
+- [评估目录：存在性已核实](https://github.com/Binwen6/Vaiage/tree/main/evaluation)
+
+实际阅读范围：版本页面；原文架构、用户流程、评估及结论相关段落；仓库目录、README、license 元数据及 evaluation score.txt。该样例请求四天，输出只有两个行程 day 对象仍获 9 分，是裁判可靠性的具体警示，不是总体错误率。evaluation/eval.json 因连接器 HTTP 400（文件过大或不支持）、网页回退 cache miss 而未读；不能声称已审完全部人工评估数据。未安装、执行或独立复现系统。
 
 <a id="human-studies"></a>
 ## 人机研究：真实使用与互动
