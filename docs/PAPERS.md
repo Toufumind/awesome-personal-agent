@@ -4,7 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **37 篇不同论文**：24 个评测条目、15 个方法条目；Proactive Agent 与 MemoProAgent 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **40 篇不同论文**：27 个评测条目、15 个方法条目；Proactive Agent 与 MemoProAgent 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+
+**待审增量**：B25–B27 核验于 2026-11-01；旧条目保留原核验日期。尚未发布。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -27,6 +29,9 @@
 
 | 你想研究什么 | 阅读入口 | 仍需另外验证 |
 | --- | --- | --- |
+| 计划修订后是否仍符合偏好 | [PDEU-Bench](#benchmark-pdeu-bench) | 真实服务、完整执行与授权 |
+| 是否为未来主动获取偏好 | [ATRBench](#benchmark-atrbench) | 真实变化的偏好、提问成本 |
+| 不可靠主张是否写入并影响以后 | [PASB](#benchmark-pasb) | 产品总体风险、真实长期使用 |
 | 记得用户说过什么、是否更新过 | [LongMemEval](#benchmark-longmemeval)、[LoCoMo](#benchmark-locomo)；[MemoryAgentBench](#benchmark-memoryagentbench) 测通用增量记忆 | 删除、纠错、跨用户隔离、真实长期使用 |
 | 回答是否符合这个人的偏好 | [LaMP](#benchmark-lamp)、[PersonaMem](#benchmark-personamem-v1) / [PersonaMem-v2](#benchmark-personamem-v2)、[PersonaBench](#benchmark-personabench)、[PrefEval](#benchmark-prefeval) | 真人满意度、私人文档部署安全；不同 QA / 生成 / MCQ 协议分别比较 |
 | 记忆是否影响工具参数与后续行动 | [Mem2ActBench](#benchmark-mem2actbench)、[MemoryArena](#benchmark-memoryarena) | 真实执行、副作用授权、任务中断后的恢复 |
@@ -187,6 +192,30 @@
 - **边界**：这里的主动性是在交互中减少用户补充需求的负担，不是后台自主发起任务，也不授予执行权限。模拟用户与模型评分不证明长期真人满意度。
 - **资源**：[官方代码 / 数据](https://github.com/Simplified-Reasoning/Pi-Bench)、[项目与指标说明](https://simplified-reasoning.github.io/Pi-Bench/)。仓库 Apache-2.0；AppWorld、NanoBot 及其他依赖另按各自条款。固定论文版本、代码、模型与 judge 配置后再比较。
 
+<a id="benchmark-pdeu-bench"></a>
+### B25. PDEU-Bench · 偏好能否贯穿计划修订
+
+[PDEU-Bench: Benchmarking the Personalized Planning Lifecycle of Tool-Calling LLM Agents](https://arxiv.org/html/2609.34930v1) — 2026 预印本；v1，2026-09-28。
+
+**核验日期 / 阅读范围**：2026-11-01；摘要、Environment Construction、Preference and Task Construction、Task Evaluation、Error Analysis 相关段落。
+
+- **输入 → 输出**：合成用户历史与任务 → 初始计划、工具调用及每次尝试后的计划更新；214 个任务、12 个领域、94 个工具。
+- **测量**：固定 judge 按二元 rubric 分别评偏好与计划质量；严格成功要求各相关阶段全部通过。执行阶段只评工具参数中的偏好落实。
+- **边界**：离线沙箱与合成偏好，不证明真实交易成功或长期真人效用。
+- **资源**：摘要称附录提供代码和数据，但本次所读 HTML 与检索未定位可核验官方入口；许可及可运行性未确认。
+
+<a id="benchmark-atrbench"></a>
+### B26. ATRBench · 现在问，留待以后用
+
+[Ask Now, Use Later: Benchmarking the Proactivity Gap in Long-Lived LLM Agents](https://arxiv.org/html/2605.28108v3) — v3，2026-09-15；作者元数据标 EMNLP 2026 Main。
+
+**核验日期 / 阅读范围**：2026-11-01；摘要、§3.1–3.2、Limitations、Ethical Considerations；官方 README 与 NOTICE。
+
+- **输入 → 输出**：日常任务中的模拟用户互动 → 主动获取当前不需要、未来会用的偏好；学习后冻结历史，测试时用户离线。
+- **测量**：TSAcc 确定性检查首个相关工具决策，按用户宏平均；另报提问、获取与应用指标。
+- **边界**：20 个合成人物、固定规则与模型路由，不代表真实偏好变化或打扰成本；多问不等于更好。
+- **资源**：[官方代码 / 数据](https://github.com/BUPT-GAMMA/ATRBench)。代码 Apache-2.0；NOTICE 单列源人物数据 CC BY 4.0，勿推定全部资产同一许可。未运行。
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -345,6 +374,18 @@
 - **测量**：效用 U、泄漏 L、拒绝 R 及参与条件下泄漏 L/(1−R)。§3 明确使用确定性匹配与 LLM 改写检测的混合评分，不能因摘要称“deterministically scored”就把全流程写成纯确定性。
 - **边界**：没有攻击者也可能发生上下文隐私违规；这是精选披露压力测试，不代表总体真实发生率或全面法律合规。最终披露与端到端 UI 执行设置须分开，不能靠拒绝全部任务换取低泄漏。
 - **资源**：[官方代码](https://github.com/UKPLab/emnlp2026-agentcibench)、[官方数据](https://huggingface.co/datasets/UKPLab/agentcibench)。代码 Apache-2.0；数据 / 场景池 CC BY 4.0。旧 arxiv2026-agentcibench 路径与现行仓库名称不同，复现应固定版本；未运行环境或生成攻击。
+
+<a id="benchmark-pasb"></a>
+### B27. PASB · 迎合如何写入长期状态
+
+[Agents Don't Just Agree, They Remember: Benchmarking Persistent Sycophancy in Self-Improving Personal Agents](https://arxiv.org/html/2607.10526v5) — 2026 预印本；v5，2026-10-10。
+
+**核验日期 / 阅读范围**：2026-11-01；摘要、§3.3、§4、§5.1 及附录 A.8、A.10；官方 README、LICENSE。
+
+- **输入 → 输出**：含用户主张的五轮对话 → 清除会话后，仅凭留下的状态回答三个新问题；1,600 个任务，Hermes-Agent / OpenClaw 两套框架。
+- **测量**：Commit% 记录目标论断是否写入可供后续读取的持久状态；judge 另评后续迎合等风险。Max-FR@3 指三答中任一达到失败阈值；downstream failure 是四个逐回答维度的 Max-FR@3 均值，不是六项总平均。
+- **边界**：受控压力测试，不是产品总体风险率；低失败可能来自不会调用记忆工具。人工校验的 88% 是 ±1 Likert 一致，不是精确匹配。
+- **资源**：[官方代码 / 数据入口](https://github.com/henrymao2004/agent-sycophancy)。代码 MIT；论文称 PASB 为 CC BY 4.0，README 要求保留 PersistBench / ELEPHANT 上游条款，数据许可链仍需确认。未运行。
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -544,4 +585,5 @@
 - **公开可读不等于任意再利用**：LaMP、LoCoMo、PersonaBench、PrefEval 与 MemoPro 代码的非商业条款，GAIA 的门控 / 防污染要求，以及 AppWorld / Ego4D 的额外资源规则已在对应条目提示。未列许可不代表没有限制；代码、数据、模型和第三方素材可能适用不同条款。
 - 本次未进行逐资产法律审查、下载完整权重验证或全依赖复现。根目录缺许可、文件访问失败或外部服务变化均不能被“有 GitHub 链接”消除。
 - 维护时先修正文献版本、任务范围与失效资源，再补新论文；欢迎提供具体一手证据，不以榜单名次、引用量或 Star 作为可靠性结论。
+
 
