@@ -19,12 +19,16 @@
 - [评测：可迁移记忆与连续任务](#transferable-memory-evaluation)
 - [评测：任务执行与交互能力](#execution-evaluation)
 - [评测：隐私规范与对抗安全](#safety-evaluation)
+- [方法：用户理解、画像与偏好学习](#user-understanding-methods)
 - [方法：记忆与长期状态](#memory-methods)
-- [方法：规划、工具、反思、主动性与协作](#agent-methods)
-- [方法：个性化与偏好学习](#personalization-methods)
+- [方法：规划、工具与行动](#planning-action-methods)
+- [方法：主动性与澄清](#proactive-clarification-methods)
+- [方法：隐私、授权与安全](#privacy-safety-methods)
 - [人机研究](#human-studies)
 - [怎样比较与复现](#reproducibility)
 - [来源与许可边界](#sources-and-rights)
+
+**方法导航：** 下列五类是本清单为阅读整理的主题，不是论文自带分类，也不代表一个已实现的架构。每个 M 条目只保留一个主位置，交叉能力仍见条目说明。编号与条目链接保持稳定，专门的人类研究条目仍单列；方法条目也可能包含人类研究证据。这些是研究机制，不是获认证的个人助理产品。
 
 <a id="reading-paths"></a>
 ## 从研究问题开始
@@ -1044,10 +1048,251 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 
 四层任务评测信息敏感性、情境信息流、秘密共享及会议输出披露。阅读范围：§3–5、附录人类标注与指标分解、仓库许可证。主要是模板与模型合成场景；前三层有人类标注，第四层不是私人会议实录。GPT-4/ChatGPT 的 39%/57% 指在隐私保护指令下、10 次运行的第四层**摘要平均泄漏率**，不能与最坏情形指标混用。适合作为个人助手隐私能力评测，而非个性化方法；识别接收者/用途边界不等于执行访问控制或获得披露同意。官方仓库提供 MIT 许可证。
 
-<a id="memory-methods"></a>
-## 方法 A：记忆与长期状态
+<a id="personalization-methods"></a>
+<a id="方法-c个性化与偏好学习"></a>
+<a id="user-understanding-methods"></a>
+## 方法：用户理解、画像与偏好学习
 
-这些条目解释可借鉴的系统机制，不把研究原型写成已验证的个人助理产品。
+如何推断或学习用户表示与偏好？若核心贡献不是持久记忆或外部行动，个性化检索与回答生成也归在此处。
+
+<a id="method-p-rlhf"></a>
+### M16. P-RLHF · 从个人反馈学习偏好
+
+[Personalized Language Modeling from Personalized Human Feedback](https://arxiv.org/html/2402.05133v3) — 2024 预印本；首发 2024-02-06，查阅 v3，2024-12-09。
+
+**核验日期 / 阅读范围**：2026-11-01；摘要、§4.1–4.4 用户模型与 P-DPO、§5 实验相关段落；官方 README 的数据、训练与评测说明。未安装或训练。
+
+- **核心**：联合学习轻量用户模型与 LLM；把用户文本中的显式偏好、个人比较反馈中的隐式偏好编码为用户嵌入。用户嵌入通过软提示参与生成，P-DPO 将偏好优化条件化到用户。
+- **关联与边界**：个性化方法，不是 benchmark 或长期记忆系统。实验包含合成、半合成及 PRISM 真人反馈；回答比较依赖模型 judge，不证明长期真人满意度、动态偏好更新或工具执行。没有用户文本且用户 ID 未知时退回非个性化回答。
+- **资源**：[官方实现](https://github.com/HumainLab/Personalized_RLHF)提供用户模型、数据处理、训练与评测入口；代码公开不代表训练已复现，上游数据和底座模型须另查条款。
+
+<a id="method-intu"></a>
+### M17. InTU · 先说清偏好，再生成计划
+
+[Inferring the Unspoken](https://arxiv.org/abs/2502.00858v4) — 与 B29 同一篇，勿重复计数。
+
+**核验日期 / 阅读范围**：2026-11-01；仅 v4 摘要，初读。
+
+- **机制**：先将多模态演示中的隐含偏好表述为语言，再以其为条件生成动作计划。
+- **边界**：显式中间表示有助于解释与迁移，不意味着偏好推断已可靠；评测、资源和全文核验限制见 [B29](#benchmark-pbp)。
+
+<a id="method-personaagent"></a>
+### M19. PersonaAgent · 用可更新的个人提示词连接记忆与行动
+
+[PersonaAgent: Bridging Memory and Action for Personalized LLM Agents](https://aclanthology.org/2026.findings-acl.1315/) — Findings of ACL 2026；[arXiv v2](https://arxiv.org/html/2506.06254v2)，2026-05-27。早期标题 *When Large Language Model Agents Meet Personalization at Test Time* 是同一论文，不另计。
+
+**核验日期 / 阅读范围**：2026-11-01；v1 方法相关段落、v2 §3.1 与附录 E–G、出版记录，非全文通读。
+
+- **机制**：检索个人经历、概括稳定偏好；用用户专属系统提示词引导动作，再依据近期历史例子的文本反馈在测试时优化提示词。
+- **证据**：LaMP 分类、评分与生成任务；对应 accuracy / F1、MAE / RMSE 和 ROUGE，不合成单一行动分数。
+- **边界**：实际工具限于 Wikipedia 搜索和个人记忆检索；主要评测选择 100 位活跃用户，单次运行。不能推广为多应用交易或长期真人部署验证。
+- **资源**：已核验论文；本次未确认作者发布的实现入口，勿用同名非作者仓库代替。
+
+<a id="method-rlpa"></a>
+### M20. RLPA · 在多轮对话中学习推断与使用画像
+
+[Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment](https://proceedings.neurips.cc/paper_files/paper/2025/hash/2fbc1ea60e215275e823c86338417162-Abstract-Conference.html) — NeurIPS 2025；查阅 [arXiv v2](https://arxiv.org/html/2505.15456v2)，2025-12-11。
+
+**核验日期 / 阅读范围**：2026-11-01；§2–3 方法相关段落、§4.1 与表 1；官方 README、根目录与 LICENSE，非全文通读。
+
+- **机制**：Qwen2.5-3B 与模拟用户交互，以画像匹配和回答个性化两类奖励进行 PPO 训练；训练模型称 Qwen-RLPA。
+- **证据**：ALOE 同画像格式与跨格式设置，报告平均对齐分数、归一化改进与归一化决定系数。
+- **边界**：是对话方法，不是工具执行或部署后的持续在线学习。表 1 的 Extended 原始对齐分数 GPT-4o 仍高于 RLPA，不能笼统写“超过 GPT-4o”。
+- **资源**：[官方训练代码](https://github.com/XingYuSSS/RLPA)，[Apache-2.0](https://github.com/XingYuSSS/RLPA/blob/main/LICENSE)。未确认完整检查点、数据及评测复现包。
+
+<a id="method-him-agent"></a>
+### M21. HIM-Agent · 分开记住个人偏好与例行行为
+
+[PersonalAlign](https://aclanthology.org/2026.acl-long.1669/) — ACL 2026；与 B32 为同一论文。
+
+**核验日期 / 阅读范围**：2026-11-01；[v2](https://arxiv.org/html/2601.09636v2) 方法概述、§6.1 及附录 A.3；官方 README 和根目录，非全文通读。
+
+- **机制**：流式聚合记录，再通过基于执行的偏好过滤和基于状态的例行行为过滤，形成两类意图记忆。
+- **证据**：AndroidIntent 上的离线 GUI 指标及主动建议对齐；评测范围见 B32。
+- **边界**：记住日常规律不等于应当自动执行；未证明真实设备端到端完成、安全授权或长期真人效用。
+- **资源**：[官方 HIM-Agent 与脚本](https://github.com/iLearn-Lab/ACL26-PersonalAlign)。数据依赖、恢复完整性与未见根许可的限制同 B32；README 的后续 skills-beta 不等于论文已验证的跨平台能力。
+
+<a id="method-dpl"></a>
+### M34. DPL · 用用户之间的差异构造个人表示
+
+[Measuring What Makes You Unique](https://aclanthology.org/2025.findings-acl.1095/) — Findings ACL 2025；[arXiv v3](https://arxiv.org/html/2503.02450v3)，2025-06-11。
+
+**实际阅读范围**：v3 §2–4、表1、附录A–F相关内容；出版 PDF 限制/伦理与附录A、作者预处理脚本、README、根目录及数据卡；非逐行通读，未运行。
+
+- **机制**：比较目标用户与其他用户的评论风格、情感和语义差异，再与个人历史汇总形成生成条件；属于用户表示方法。
+- **证据与边界**：Amazon/Yelp 真实评论记录上的离线生成，输入还包括目标评分和标题；不是多轮对话、无条件偏好预测或工具执行。主表跨五个温度取均值，不是相同配置的五个随机种子。跨用户信息使用还需隐私/同意约束。
+- **一致性问题**：论文附录说测试用倒数第三条评论，当前代码用最后一条；不能把文字冲突直接断言为已证实泄漏，复现前应核对数据。
+- **资源**：[作者代码](https://github.com/SnowCharmQ/DPL)根目录未见许可；[DPL-main](https://huggingface.co/datasets/SnowCharmQ/DPL-main)与[DPL-meta](https://huggingface.co/datasets/SnowCharmQ/DPL-meta)标 **CC BY-NC 4.0**，不能沿用论文伦理段的宽泛 MIT 说法。上游条款另查。
+
+<a id="method-guided-profile-generation"></a>
+### M35. Guided Profile Generation · 引导式画像生成
+
+[Guided Profile Generation Improves Personalization with LLMs](https://arxiv.org/html/2409.13093v1) — arXiv v1，2024-09-19。
+
+**核验日期 / 阅读范围：**2026-11-01；§3–6、任务定义、指标和结果表。
+
+- **方法：**按任务提问帮助消化个人历史，再生成自然语言画像，供后续回答使用；主实验仍保留原始历史。
+- **评测：**Amazon 历史构成四选一购买预测、LaMP-7 文风重写、PER-CHAT 回复生成；分别看准确率、词面指标、语义相似度，不是同一“画像质量分”。
+- **边界：**真人来源历史上的离线构造任务，不是持续用户实验；单来源文本、主要一个 GPT-3.5 版本。不能证明画像准确性、持续更新或执行能力；购买预测收益部分来自减少拒答；PER-CHAT 回复生成收益弱且不一致。
+- **资源：**未核实官方代码或新增数据发布。论文 CC BY 4.0 不覆盖上游数据。
+
+<a id="method-rlpf"></a>
+### M43. 用预测反馈压缩用户画像
+
+[RLPF: Reinforcement Learning from Prediction Feedback for User Summarization with LLMs](https://arxiv.org/html/2409.04421v2) — AAAI 2025；查阅 v2，2025-01-17。
+
+**阅读范围：**§§2–5，重点训练奖励、数据构造、评测指标、迁移结果与部署讨论，及附录 I 任务定义；版本记录及定向资源检索；未运行。
+
+- **方法：**以未来行为预测正确性及长度奖励训练摘要器，将个人历史压缩成后续模型可用的自然语言画像；预测在真实下一项与三个随机负选项中选择，不是开放目录搜索。
+- **证据与边界：**MovieLens 2015/2003、Amazon 评论与 Google Local 评论历史上的离线预测，不是真人长期助理实验；部分迁移任务退步。不能推导持续更新、执行能力或隐私保证。
+- **资源：**未核实官方实现或新增数据发布；论文许可不覆盖上游数据与模型。
+- **去重：**AAAI 与 arXiv 为同一研究；归入画像压缩，不另列画像更新成果。
+
+<a id="method-aloe"></a>
+### M45. 通过交互学习个人偏好对齐
+
+[Aligning LLMs with Individual Preferences via Interaction](https://aclanthology.org/2025.coling-main.511/) — COLING 2025；方法查阅 [arXiv v2，2024-12-15](https://arxiv.org/html/2410.03642v2)。
+
+**阅读范围：**§§2–5，含数据构造、训练、基准及人工评分核对；出版元数据、官方 README 和根目录；未逐项比较出版版，未运行。
+
+- **方法：**生成树状偏好对话，进行 SFT 与 DPO；ALOE 是同篇研究的评测名称。
+- **证据与边界：**100 个画像、十轮模拟交互；GPT-4o 扮演用户并评分。人工核对不等于真人纵向试用；不是持续在线学习或工具执行验证。
+- **资源：**[代码与数据目录](https://github.com/ShujinWu-0814/ALOE)可读，根目录未见 LICENSE；检查点及资产许可未确认。
+- **去重：**可设基准交叉链接，但不另增论文数；已有 RLPA 条目中的 ALOE 提及不构成独立收录。
+
+<a id="method-prelude"></a>
+### M49. PRELUDE / CIPHER · 从用户修改推断上下文相关偏好
+
+- **论文与版本：** [Aligning LLM Agents by Learning Latent Preference from User Edits](https://arxiv.org/html/2404.15269v3)，NeurIPS 2024；arXiv v3，2024-11-23。PRELUDE 是框架、CIPHER 是算法，同一篇论文只计一次。
+- **机制：** 从输出及其修改推断文字化偏好，检索相近上下文的偏好并聚合进生成提示；不微调基础模型。
+- **证据：** 摘要写作与邮件写作各进行 200 轮 GPT-4 模拟用户交互，报告三个随机种子；最佳配置相对不学习基线的累计 token 编辑距离分别下降约 31% / 73%。另在 summarization 任务上有七名人工评审，每组比较 15 对输出；三名人工编辑按指定偏好修改输出。
+- **边界：** 人工评审不是自然长期用户在线学习；主实验偏好由文档来源预设，编辑距离不等于真实时间节省或满意度，仍与已知真实偏好的 oracle 有差距。
+- **资源与实读：** [官方代码与数据入口](https://github.com/gao-g/prelude)，仓库 MIT 许可，不替代来源数据自身许可。实读 v3 §§4.1–4.4、机制与指标段落，以及 NeurIPS 元数据和仓库资源页；未复现。
+
+<a id="method-alignxplore"></a>
+### M54. AlignXplore · 从行为信号推断可更新偏好
+
+[Extended Inductive Reasoning for Personalized Preference Inference from Behavioral Signals](https://arxiv.org/html/2505.18071v2) — arXiv v2, 2025-07-07；未核实正式会场。
+
+将行为样例转换为自然语言偏好，以合成冷启动数据和GRPO训练推断模型；流式设置复用已有偏好摘要。AlignX/P-Soups实验主要使用偏好比较对；指标区分Acc_jud（偏好判断）、Acc_gen（偏好引导生成）与GPT-4 win rate；所谓“online evaluation”是GPT-4裁判比较生成回答，不是真实用户在线实验。主设置为两轮、每轮四条信号；§4.4另有八对信号的模拟反转测试，§4.5效率实验延至第四轮、累计16条信号。论文明确缺少真实LLM—用户交互验证，不能据此宣称长期偏好漂移已解决。隐私/同意陈述不是形式保证。[官方代码](https://github.com/AntResearchNLP/AlignXplore)可访问，未确认项目根目录许可证；论文CC BY-NC-ND不等于代码许可。
+
+**实读范围：** v2 §3、§4评测设置与流式实验、Appendices C–D；官方README与根目录。定向阅读，非全文逐页审读
+
+<a id="method-plus"></a>
+### M61. PLUS — 共训练用户文字摘要与个性化奖励模型
+- **论文**：*Learning to summarize user information for personalized reinforcement learning from human feedback*，ICLR 2026；arXiv v4（2026-08-26）。
+- **方法与证据**：PPO 优化用户摘要，交替训练摘要条件奖励模型；Pets/UltraFeedback 为构造偏好任务，PRISM 为既有真人对话数据。PRISM 使用1,000位用户训练，已知用户奖励预测准确率62.9%（BTL 59.8%），未见用户预测仍困难。
+- **边界**：GPT-4o 的72%胜率由依据用户自述偏好训练的 oracle 奖励模型判定，非人类投票或部署满意度；正文“308用户×2提示”与附录“906提示”不一致，不合并样本口径。online co-adaptation 指训练循环，非真实用户持续在线学习；摘要编辑是未来方向。训练对超参敏感，文字摘要不自动提供隐私保护。
+- **资源与实读范围**：[v4](https://arxiv.org/html/2507.13579v4) §§4–7、伦理/复现说明、附录F；[官方项目页](https://sites.google.com/stanford.edu/plus/home)及其[代码](https://github.com/nam630/pluralistic_user_summary_public)。代码 Apache-2.0；论文 CC BY-NC-SA 4.0。未核实完整训练权重/数据发布。
+
+<a id="method-user-profile-ablation"></a>
+### M62. Understanding the Role of User Profile — 历史响应与上下文顺序消融
+- **论文**：*Understanding the Role of User Profile in the Personalization of Large Language Models*，arXiv v1（2024-06-22）；未确认正式发表场所。
+- **方法与证据**：在LaMP六任务（排除LaMP-6）比较用户历史输入、响应、映射关系及顺序；主要使用微调 Flan-T5-base，另测冻结 Llama2-7B-chat。报告验证集结果，非不可用的隐藏测试集；没有新招募用户试验。历史响应通常贡献较大，仅保留历史响应的上下文可容纳更多记录，靠前画像在该设置影响较大。
+- **边界**：这是现有画像条件化机制分析，不是新通用执行Agent。结果限定于所测模型、任务、提示及输入长度；不能推出所有模型都应丢弃历史输入、忽略映射，或普遍存在相同位置效应。自动任务指标不等于真实用户满意度或长期适配效果。
+- **资源与实读范围**：[原文](https://arxiv.org/html/2406.17803v1) §§3–5、附录A/B；[官方代码](https://github.com/Bingo-W/Personalisation-in-LLM)。代码 MIT；论文 CC BY 4.0。既有LaMP资源不是该论文新发布的数据集。
+
+<a id="method-ariel"></a>
+### M66. 脑电辅助情绪适配 / EEG-assisted emotional adaptation
+
+[ARIEL: Brain-Computer Interfaces meet Large Language Models for Emotional Support Conversation](https://iris.uniroma1.it/handle/11573/1727073) — UMAP **Adjunct** ’24, pp.601–609；DOI 10.1145/3631700.3665193。
+
+
+- **阅读范围**：机构记录及所附出版 PDF §§3–5。
+- **机制**：脑电分类得到的情绪标签与文本消息，经硬提示模板输入 LLaMA 2 Chat。
+- **证据**：组件研究采集 30 人、每人 40 个音乐视频试次的 Muse 2 EEG；论文报告知情同意及匿名化。LOSO 与五折调参下，SVM 分情绪（per-emotion）准确率分别为 Happy .77、Angry .78、Sad .76、Relaxed .80；端到端对话仅提供受控真实会话示例。
+- **边界**：分类准确率不是心理支持疗效；in-vivo 系统评估仍列为未来工作。不得将推断标签写成对真实心理状态的可靠读取或临床有效性。
+- **资源**：上述机构 PDF 为 all rights reserved；所查来源未找到官方代码 / 数据发布。作者所述隐私处理不等于独立安全审计。
+
+<a id="tmp-b-exfil"></a>
+
+<a id="method-pearl"></a>
+### M71. Pearl
+
+**相邻方法：写作检索校准** · 唯一论文键: `PEARL`
+
+[论文](https://arxiv.org/html/2311.09180v2) · v2, 2024-11-05; CustomNLP4U 2024
+
+以个人历史文档对生成的帮助训练检索器，支持低质量检索检测和修订。WorkSm 私有企业帖子与 AITA 评论离线评估；WorkSm 评测请求由作者编写，训练请求由 GPT-4 合成；AITA 缺少时间信息。参考文本/立场指标和 LLM 判断不是真人满意度；不验证对外发送、收件人授权或隐私控制。
+
+**资源与复现：** [正式出版](https://aclanthology.org/2024.customnlp4u-1.16/) 为 CustomNLP4U workshop，非 ACL main。WorkSm 私有、依赖闭源 API，未核实官方代码/权重。所读 arXiv 文章 CC BY-NC-ND 4.0，不外推为数据许可。
+
+**实际阅读范围：** §§4–5、Appendix E、版本及正式出版页。
+
+<a id="tmp-m-personax"></a>
+
+<a id="method-personax"></a>
+### M72. PersonaX
+
+**相邻方法：推荐画像缓存** · 唯一论文键: `PERSONAX`
+
+[论文](https://aclanthology.org/2025.findings-acl.300.pdf) · Findings ACL 2025, pp. 5764–5787
+
+将长行为历史聚类选样，离线生成多画像片段并检索。Amazon CDs/Vinyl 与 Books 排序：最后交互正例加 9 个采样负例。离线排序不是真人满意度或通用助理执行；流式行为与画像过期未验证。延迟分析含每 10 次调用刷新一次画像的摊销假设。
+
+**资源与复现：** [作者仓库](https://github.com/Ancientshi/PersonaX) 含 MIT 代码与数据子集，但 README 明示 EasyRec 客户端不完整复现 AgentCF/Agent4Rec。[许可范围](https://github.com/Ancientshi/PersonaX/blob/master/LICENSE)明确排除 Amazon 数据、notebook 输出、EasyRec，以及第三方代码、依赖和权重；这些资产不随项目 MIT 许可获得授权。此范围由独立审查补充，本条原始 NOTICE 抓取曾遇 cache miss。
+
+**实际阅读范围：** PDF §§4–5、Limitations/Ethics、官方仓库 README/文件树。
+
+<a id="method-prime"></a>
+### M76. PRIME：个人语义记忆与个性化思考
+
+研究情景与语义记忆配置，再以自蒸馏生成个性化思考；**主要报告配置不包含 episodic memory**。CMV 使用真实 Reddit 历史，涉及 41 位作者、133 个测试查询、7,514 段历史互动，但属于离线回复排序，不是用户与 agent 的现场实验。Llama-3.1-8B Hit@3 为 45.79，非个性化基线为 36.77；不能外推为行动成功或在线适应证据。
+
+- 原文与版本：[PRIME: Large Language Model Personalization with Cognitive Dual-Memory and Personalized Thought Process，2507.04607v3](https://arxiv.org/html/2507.04607v3)，2025-09-26。仓库短标题为同篇别名。
+- 资产：[官方仓库](https://github.com/launchnlp/LM_Personalization) 有 README 和数据；框架代码仍标为整理中，许可未核实。论文 arXiv 非独占分发许可不构成代码许可。
+- 阅读范围：§§3–7、limitations、README、仓库根目录。
+
+核验边界：仅检查上述原文章节与资源页；未安装复现、训练、独立跑分或安全审计。资产状态核验于 2026-11-01。
+
+<a id="method-lc-rag-copa"></a>
+### M81. 方法与人机证据 — LC-RAG / Copa
+
+[Personalizing Student-Agent Interactions Using Log-Contextualized Retrieval-Augmented Generation (RAG)](https://arxiv.org/html/2505.17238v3) — AIED25 Workshop on Epistemics and Decision-Making in AI-Supported Education；v3 2026-04-18，非主会论文。
+
+**核验日期 / 阅读范围**：2026-11-01；§§3–5 相关段落、arXiv 元数据、官方补充仓库 README / 根目录。
+
+- **机制**：RQ1 用 GPT-3.5-Turbo 将学生对话与操作日志形成检索摘要；Copa 结合当前模型与专家模型。
+- **证据**：RQ1：18 名同意参与的学生、216 片段、五种嵌入配置，GPT-4o 裁判进行检索比较；RQ2：18 名唯一学生的课堂/焦点组质性研究，其中 2 名也参加了 RQ1，不能将两组人数相加。
+- **边界**：相邻教育个性化，非持续个人记忆；五种嵌入有一种明显退步，存在错误建议及过度依赖，未证明因果学习收益。
+- **资源与许可**：报告 IRB、学生 assent / 家长 consent；[官方补充仓库](https://github.com/claytoncohn/AIED25_Supplementary_Materials)仅见六个提示文件及 README，未见根许可或原始学生数据。
+
+<a id="method-alignx"></a>
+### M87. 用户级偏好对齐
+
+**From 1,000,000 Users to Every User: Scaling Up Personalized Preference for User-level Alignment** — ACL 2026 Long Papers，2026.acl-long.1391；同时核读 arXiv 2503.15463v3（2025-05-22）。[正式论文](https://aclanthology.org/2026.acl-long.1391/)｜[arXiv v3](https://arxiv.org/html/2503.15463v3)｜[新版代码](https://github.com/AntResearchNLP/AlignX-Family)｜[独立仓库](https://github.com/JinaLeejnl/AlignX)｜[数据卡](https://huggingface.co/datasets/JinaLeejnl/AlignX)
+
+AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐。阅读范围：arXiv v3 §3–7、局限/伦理附录；正式版结果、局限与伦理；官方仓库和数据卡。131 万余条是构造的偏好样例，不是同等数量真人；源数据含论坛/既有对齐数据，画像信号经组合或生成。离线偏好准确率与模型裁判结果不证明长期真人适应或外部行动授权。正式版说明标识符移除与 PII 过滤，但不是同意或隐私保证。HF 数据卡标注 MIT；代码根许可证未确认；论文数量与当前数据查看器数量须分开记录。
+
+<a id="method-safari"></a>
+### M90. SAFARI / KBP
+
+**Large Language Models as Source Planner for Personalized Knowledge-grounded Dialogues（SAFARI）**｜Findings of EMNLP 2023，9556–9569；核读 arXiv 2310.08840v1（2023-10-13）。**定位：画像与知识依赖下的知识源规划方法；KBP 是随论文提出的评测数据，不另计论文。** 将知识源选择、检索和回答组装分开，依据预先给定的依赖关系决定调用哪些来源及顺序。KBP 包含 2,477 段中文对话、24,554 条话语，由标注员按指定系统画像与知识同时编写两方角色；不是自然个人用户的真实使用记录。人工评估为每模型 100 条回答、3 位标注员，且该比较不计入规划效果。**自动指标另有测试集选择风险：Appendix C 明确每 500 次训练迭代在 KBP 测试集评估 NLI 模型，并保存测试集表现最高的 checkpoint，用其计算 P.C/K.C；这可能使自动一致性指标偏乐观，不能视作未触碰测试集的独立评估器。此风险针对 NLI 自动指标，不应混同于上述独立报告的人工打分。**限制包括级联错误、检索噪声、知识过期及未覆盖其他来源。**知识源调用不等于外部行动，更不验证授权。** 官方仓库提供数据及实现目录，但未见根目录许可证，GitHub license 元数据为空；复用许可待确认，未运行复现。
+
+来源：
+- [正式 venue、复数标题及 DOI 10.18653/v1/2023.findings-emnlp.641](https://aclanthology.org/2023.findings-emnlp.641/)
+- [准确 arXiv 版本；摘要页标题使用单数 Dialogue](https://arxiv.org/abs/2310.08840v1)
+- [原文：§§3–6、Limitations、Ethics Statement、Appendix C/E](https://arxiv.org/html/2310.08840v1)
+- [作者仓库，默认分支 master](https://github.com/hrwise-nlp/SAFARI)
+
+实际阅读范围：正式出版元数据；arXiv 原文数据采集、方法、评估和限制章节，补读 Appendix C 的 NLI checkpoint 选择及 Appendix E 的人工评估差异；仓库根目录、README 及 GitHub license 元数据。确认 kbp.zip、lora、tools、unsupervised 存在；未解压数据、未执行实现。
+
+<a id="method-unims-rag"></a>
+### M91. UniMS-RAG
+
+**UniMS-RAG: A Unified Multi-source Retrieval-Augmented Generation for Personalized Dialogue Systems**｜2024，arXiv 2401.13256v3（2024-11-26；正式 venue 未核实）。**定位：统一知识源选择、相关性评估与回答生成的个性化对话方法。** 通过 acting/evaluation tokens 联合训练，并结合相关性与 NLI 一致性分数迭代修订证据和回答。实验使用 DuLeMon Both 与 KBP，涉及用户画像、系统画像及外部知识；不能全部解释为个人用户记忆。“acting”仅表示检索来源选择，**不是有授权的外部执行**。人工评估为每数据集/模型 100 条回答、3 位标注员，约 82% 一致率。**重要评估限制：§V-D 明确以 KBP 测试集上的最高表现选择 NLI 评估器 checkpoint，可能使自动一致性指标偏乐观；不能称为独立、未触碰测试集的评估器。** 未核实专用官方实现或其许可证；论文提供训练细节及上游代码链接，未运行复现。
+
+来源：
+- [准确版本与元数据](https://arxiv.org/abs/2401.13256v3)
+- [原文：方法 §§IV–V；评估器选择 §V-D；人工评估 §VII-D](https://arxiv.org/html/2401.13256v3)
+
+实际阅读范围：版本页面；原文方法、数据集、指标、训练与评估器选择、主结果及人工评估段落；针对官方实现与 venue 的定向检索。未发现可核实的专用官方实现，不能据此断言实现不存在；未独立重训评估器或复现分数。
+
+<a id="方法-a记忆与长期状态"></a>
+<a id="memory-methods"></a>
+## 方法：记忆与长期状态
+
+如何存储、更新、检索或遗忘个人上下文？包括对话与多模态记忆；检索准确率不等于行动获授权，也不等于安全擦除。
 
 <a id="method-memorybank"></a>
 ### M1. MemoryBank · 更新、强化与遗忘
@@ -1115,192 +1360,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **关联与边界**：为长期助理的记忆治理提供架构；v1 有 LoCoMo QA、检索与 KV 加速实验。治理设计不等于经验证的删除、权限或跨租户隔离保证，不能把愿景全部当成已实现功能。
 - **资源**：[官方仓库](https://github.com/MemTensor/MemOS)，Apache-2.0。当前 README 为 MemOS 2.0 Stardust，不是论文冻结代码；复现应另定位 MemOS-0630 配置，不沿用当前宣传分数。LoCoMo 等数据各有上游条款。
 
-<a id="agent-methods"></a>
-## 方法 B：规划、工具、反思、主动性与协作
-
-其中既有直接研究主动助理的工作，也有可借鉴的通用技能学习与编排方法。外部经验积累不等于已解决参数级持续学习，多代理也不自动更可靠。
-
-<a id="method-generative-agents"></a>
-### M7. Generative Agents · 记忆—反思—规划
-
-[Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) — 2023。
-
-**核验日期 / 阅读范围**：2026-10-31；论文摘要；官方 README 的模拟环境、代码范围与模型调用说明。
-
-- **核心**：记录经历、检索相关记忆，形成高层反思并据此规划行为；在 25 个虚拟角色的小镇中研究互动。
-- **关联与边界**：为长期状态与计划提供结构思路；目标是可信的人类行为模拟，不是替真实用户办事或履行授权的证据。
-- **资源**：[官方模拟器、环境与回放说明](https://github.com/joonspk-research/generative_agents)。依赖外部模型调用，不应当作独立模型权重发布。
-
-<a id="method-react"></a>
-### M8. ReAct · 交替推理与行动
-
-[ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — 2022 预印本；ICLR 2023。
-
-**核验日期 / 阅读范围**：2026-10-31；论文摘要及 arXiv 版本说明；官方 README 与代码/提示目录。
-
-- **核心**：交替生成任务推理、工具动作，并使用返回观察修正后续步骤。
-- **关联与边界**：通用工具执行循环的基础；原实验为问答、事实核验与交互环境，不自带长期记忆、权限治理或全天候调度。
-- **资源**：[官方代码、提示样例与实验 notebook](https://github.com/ysymyth/ReAct)。主要为 prompting 实现，不是完整个人助理。
-
-<a id="method-reflexion"></a>
-### M9. Reflexion · 把失败反馈留给下一次
-
-[Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) — NeurIPS 2023。
-
-**核验日期 / 阅读范围**：2026-10-31；论文摘要；官方 README 的实验、日志与运行说明。
-
-- **核心**：把任务反馈变为语言反思，保存在 episodic memory 中供后续尝试使用，而非直接更新模型权重。
-- **关联与边界**：可借鉴任务重试与经验记忆；效果依赖反馈质量与重试预算，不保证“想一想”就能纠错或持续自我提升。
-- **资源**：[官方代码、实验日志与示例](https://github.com/noahshinn/reflexion)。原评测含决策、推理与编码，不是长期私人助理研究。
-
-<a id="method-toolformer"></a>
-### M10. Toolformer · 学会何时调用工具
-
-[Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) — 2023 预印本。
-
-**核验日期 / 阅读范围**：2026-10-31；论文摘要与 §7 局限；Meta 官方论文页及其提供的资源入口。
-
-- **核心**：少量 API 示范引导模型生成候选调用，按对后续语言预测的帮助筛选，再用增强语料训练。
-- **关联与边界**：说明工具调用可被学习；原方法不支持链式或交互式工具使用，不能当成完整多步 Agent。
-- **资源**：[官方研究页](https://ai.meta.com/research/publications/toolformer-language-models-can-teach-themselves-to-use-tools/)。所查论文 / 官方页未给出对应完整代码、训练数据和模型权重入口；不将第三方复现标作官方发布。
-
-<a id="method-proactive-agent"></a>
-### M11. Proactive Agent · 从活动预测可接受的帮助
-
-[Proactive Agent: Shifting LLM Agents from Reactive Responses to Active Assistance](https://arxiv.org/abs/2410.12361) — 2024 预印本；ICLR 2025，与 B6 同一论文。
-
-**核验日期 / 阅读范围**：2026-10-31；与 B6 同次核验：论文摘要、官方 README 的流程/发布说明及权重文件列表。
-
-- **核心**：以活动轨迹和人类接受 / 拒绝标注训练 reward model，结合环境生成数据，再训练主动提出帮助的 Agent。
-- **关联与边界**：直接研究主动助理；预测用户需要不等于被授权替用户行动，部署还需处理活动采集隐私与误打扰。
-- **资源**：[代码 / 数据 / 评测](https://github.com/thunlp/ProactiveAgent)、[官方链接的 Agent 与 Reward Model 权重](https://huggingface.co/YancyLee/ProactiveAgent/tree/main)。权重、底座与代码许可分别确认。
-
-<a id="method-memoproagent"></a>
-### M12. MemoProAgent · 用记忆决定是否值得打扰
-
-[MemoProAgent: Toward Memory-Driven Proactive Assistance](https://arxiv.org/html/2610.22671v2) — 2026 预印本 v2，2026-10-21；与 B11 同一论文。
-
-**核验日期 / 阅读范围**：2026-10-31；与 B11 同次核验：v2 摘要、§3.3 指标、方法概述；官方 README 及 LICENSE。
-
-- **核心**：用图记忆组织个人历史，结合当前视频活动检索相关经历，再以打扰价值门控决定何时向生成器提供记忆、何时提醒；论文另有 RL 后训练阶段。
-- **关联与边界**：直接研究无需显式提问的主动助理。MemoProBench 测提醒内容、时机和重复干扰；论文构造历史不是长期真人部署，推断需要也不是执行授权。
-- **资源**：[官方推理 harness](https://github.com/facebookresearch/Memo-Pro-Agent)为 CC BY-NC 4.0；[历史数据（受限）](https://huggingface.co/datasets/facebook/MemProBench)据官方 [README 数据说明](https://github.com/facebookresearch/Memo-Pro-Agent#data-and-reproducibility)当前为 private，须有获授权的 Hugging Face 访问权限。本次未取得下载访问，独立数据许可仍未确认；[Ego4D 视频](https://ego4d-data.org/)须另行申请并遵循其条款。公开推理代码不等于完整 RL 训练代码或权重复现包。
-
-<a id="method-voyager"></a>
-### M13. Voyager · 可复用的可执行技能
-
-[Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/html/2305.16291v2) — 查阅 2023 预印本 v2，2023-10-19。
-
-**核验日期 / 阅读范围**：2026-10-31；论文摘要、代码迭代描述、§3.1 与实验任务概述；官方 README 及许可。
-
-- **核心**：Minecraft 世界状态、自动课程目标及已有技能 → 可执行代码；借环境反馈、错误和自验证迭代，成功技能存入库供后续任务复用。
-- **关联与边界**：通用具身 / 游戏方法，可借鉴技能积累；评测探索物品、里程碑、移动范围和新任务迁移。lifelong learning 主要累积外部技能，不是持续更新底座权重；不能从 Minecraft 外推邮件、日历或真实电脑效果。
-- **资源**：[官方代码、prompt 与技能库](https://github.com/MineDojo/Voyager)，MIT；Minecraft 与模型 / API 分别授权。原实验使用当时的 GPT-4 / GPT-3.5 API，更换模型不属于严格复现。
-
-<a id="method-expel"></a>
-### M14. ExpeL · 从多任务经历提炼经验
-
-[ExpeL: LLM Agents Are Experiential Learners](https://arxiv.org/html/2308.10144v3) — AAAI 2024；查阅 v3，2024-12-20。
-
-**核验日期 / 阅读范围**：2026-10-31；论文摘要、§5.1 任务 / 指标 / 四折设置；官方 README 与许可。
-
-- **核心**：从训练任务中的成功 / 失败经历提炼自然语言经验，新任务检索经验和示例来行动，不更新底座权重；重点是跨任务汇总与复用，而非只反思一次失败。
-- **关联与边界**：可借鉴助理的经验记忆；评测含 Wikipedia QA / 事实核验、ALFWorld 家务和 WebShop 购物，分别用 EM、成功率、购物奖励等。四折经验增长不是长期真人持续学习，过时经验与隐私需另测。
-- **资源**：[官方代码、数据目录和 prompt](https://github.com/LeapLabTHU/ExpeL)，Apache-2.0；各环境和数据集许可分别检查。无参数微调不代表无成本，轨迹采集与经验提取仍需模型调用。
-
-<a id="method-autogen"></a>
-### M15. AutoGen · 多代理对话与人类介入（历史）
-
-[AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/html/2308.08155v2) — 查阅 2023 预印本 v2，2023-10-03。
-
-**核验日期 / 阅读范围**：2026-10-31；论文摘要、§3 的 A1–A4 应用 / 评测及 human-in-the-loop 讨论；当前官方 README 与 legal notices。
-
-- **核心**：将 LLM、工具执行和人类输入封装成可对话 Agent；例如数学请求经过代码、执行结果与反馈交换后产生答案。
-- **关联与边界**：通用多代理编排研究，不是个人化 benchmark。MATH、检索 QA、ALFWorld、OptiGuide 使用各自指标；多 Agent 或人类在环不自动带来权限隔离、可靠授权或更低成本，仍需单代理基线与安全测试。
-- **资源**：[官方仓库](https://github.com/microsoft/autogen)：代码 MIT，文档 / 其他内容 CC BY 4.0。当前 README 明确标“已归档、不再由 Microsoft 维护”；保留为研究沿革，不推荐为仍维护的生产选型。现行包结构不同于 2023 论文 API，未定位论文对应提交。
-
-<a id="method-intu"></a>
-### M17. InTU · 先说清偏好，再生成计划
-
-[Inferring the Unspoken](https://arxiv.org/abs/2502.00858v4) — 与 B29 同一篇，勿重复计数。
-
-**核验日期 / 阅读范围**：2026-11-01；仅 v4 摘要，初读。
-
-- **机制**：先将多模态演示中的隐含偏好表述为语言，再以其为条件生成动作计划。
-- **边界**：显式中间表示有助于解释与迁移，不意味着偏好推断已可靠；评测、资源和全文核验限制见 [B29](#benchmark-pbp)。
-
-<a id="method-cep"></a>
-### M18. CEP · 澄清、执行与规划分工
-
-[Ask-before-Plan](https://aclanthology.org/2024.findings-emnlp.636/) — 与 B30 同一篇，勿重复计数。
-
-**核验日期 / 阅读范围**：2026-11-01；摘要、评测设置及附录 B.3、官方 README 的训练和推理入口。
-
-- **机制**：澄清、执行、规划三个角色；对澄清和静态执行做轨迹微调，动态执行使用记忆回想。
-- **边界**：角色分工不等于长期用户建模或执行授权；模块与整体成绩均须按各自协议解读，整体最终规划仍使用真实标注对话（附录 B.3）。资源及许可见 [B30](#benchmark-ask-before-plan)。
-
-<a id="personalization-methods"></a>
-## 方法 C：个性化与偏好学习
-
-<a id="method-p-rlhf"></a>
-### M16. P-RLHF · 从个人反馈学习偏好
-
-[Personalized Language Modeling from Personalized Human Feedback](https://arxiv.org/html/2402.05133v3) — 2024 预印本；首发 2024-02-06，查阅 v3，2024-12-09。
-
-**核验日期 / 阅读范围**：2026-11-01；摘要、§4.1–4.4 用户模型与 P-DPO、§5 实验相关段落；官方 README 的数据、训练与评测说明。未安装或训练。
-
-- **核心**：联合学习轻量用户模型与 LLM；把用户文本中的显式偏好、个人比较反馈中的隐式偏好编码为用户嵌入。用户嵌入通过软提示参与生成，P-DPO 将偏好优化条件化到用户。
-- **关联与边界**：个性化方法，不是 benchmark 或长期记忆系统。实验包含合成、半合成及 PRISM 真人反馈；回答比较依赖模型 judge，不证明长期真人满意度、动态偏好更新或工具执行。没有用户文本且用户 ID 未知时退回非个性化回答。
-- **资源**：[官方实现](https://github.com/HumainLab/Personalized_RLHF)提供用户模型、数据处理、训练与评测入口；代码公开不代表训练已复现，上游数据和底座模型须另查条款。
-
-<a id="method-personaagent"></a>
-### M19. PersonaAgent · 用可更新的个人提示词连接记忆与行动
-
-[PersonaAgent: Bridging Memory and Action for Personalized LLM Agents](https://aclanthology.org/2026.findings-acl.1315/) — Findings of ACL 2026；[arXiv v2](https://arxiv.org/html/2506.06254v2)，2026-05-27。早期标题 *When Large Language Model Agents Meet Personalization at Test Time* 是同一论文，不另计。
-
-**核验日期 / 阅读范围**：2026-11-01；v1 方法相关段落、v2 §3.1 与附录 E–G、出版记录，非全文通读。
-
-- **机制**：检索个人经历、概括稳定偏好；用用户专属系统提示词引导动作，再依据近期历史例子的文本反馈在测试时优化提示词。
-- **证据**：LaMP 分类、评分与生成任务；对应 accuracy / F1、MAE / RMSE 和 ROUGE，不合成单一行动分数。
-- **边界**：实际工具限于 Wikipedia 搜索和个人记忆检索；主要评测选择 100 位活跃用户，单次运行。不能推广为多应用交易或长期真人部署验证。
-- **资源**：已核验论文；本次未确认作者发布的实现入口，勿用同名非作者仓库代替。
-
-<a id="method-rlpa"></a>
-### M20. RLPA · 在多轮对话中学习推断与使用画像
-
-[Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment](https://proceedings.neurips.cc/paper_files/paper/2025/hash/2fbc1ea60e215275e823c86338417162-Abstract-Conference.html) — NeurIPS 2025；查阅 [arXiv v2](https://arxiv.org/html/2505.15456v2)，2025-12-11。
-
-**核验日期 / 阅读范围**：2026-11-01；§2–3 方法相关段落、§4.1 与表 1；官方 README、根目录与 LICENSE，非全文通读。
-
-- **机制**：Qwen2.5-3B 与模拟用户交互，以画像匹配和回答个性化两类奖励进行 PPO 训练；训练模型称 Qwen-RLPA。
-- **证据**：ALOE 同画像格式与跨格式设置，报告平均对齐分数、归一化改进与归一化决定系数。
-- **边界**：是对话方法，不是工具执行或部署后的持续在线学习。表 1 的 Extended 原始对齐分数 GPT-4o 仍高于 RLPA，不能笼统写“超过 GPT-4o”。
-- **资源**：[官方训练代码](https://github.com/XingYuSSS/RLPA)，[Apache-2.0](https://github.com/XingYuSSS/RLPA/blob/main/LICENSE)。未确认完整检查点、数据及评测复现包。
-
-<a id="method-him-agent"></a>
-### M21. HIM-Agent · 分开记住个人偏好与例行行为
-
-[PersonalAlign](https://aclanthology.org/2026.acl-long.1669/) — ACL 2026；与 B32 为同一论文。
-
-**核验日期 / 阅读范围**：2026-11-01；[v2](https://arxiv.org/html/2601.09636v2) 方法概述、§6.1 及附录 A.3；官方 README 和根目录，非全文通读。
-
-- **机制**：流式聚合记录，再通过基于执行的偏好过滤和基于状态的例行行为过滤，形成两类意图记忆。
-- **证据**：AndroidIntent 上的离线 GUI 指标及主动建议对齐；评测范围见 B32。
-- **边界**：记住日常规律不等于应当自动执行；未证明真实设备端到端完成、安全授权或长期真人效用。
-- **资源**：[官方 HIM-Agent 与脚本](https://github.com/iLearn-Lab/ACL26-PersonalAlign)。数据依赖、恢复完整性与未见根许可的限制同 B32；README 的后续 skills-beta 不等于论文已验证的跨平台能力。
-
-<a id="method-petoolllama"></a>
-### M22. PEToolLLaMA · 训练偏好感知的工具调用
-
-[PEToolLLM: Towards Personalized Tool Learning in Large Language Models](https://aclanthology.org/2025.findings-acl.1107/) — Findings of ACL 2025；与 B33 为同一论文。PEToolLLM 是论文名，PEToolBench 是评测集，PEToolLLaMA 是方法。
-
-**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2502.18980v1) §3 指标与 §4 方法概述；官方 README、LICENSE 与数据文件列表，非全文通读。
-
-- **机制**：先用历史、指令与候选工具做个性化 SFT，再用 DPO 改善偏好一致的调用选择。
-- **证据**：PEToolBench 三类合成历史设置下的工具与参数准确率。
-- **边界**：模型训练与持久记忆管理不是一回事；没有证明真实服务完成、偏好在线变化或安全副作用控制。
-- **资源**：[官方训练 / 测试脚本](https://github.com/travis-xu/PEToolBench)、[数据](https://huggingface.co/datasets/travisxu/PEToolBench/tree/main)。仓库 Apache-2.0，上游条款仍需核对；未确认完整权重发布或运行复现。
-
 <a id="method-secom"></a>
 ### M23. SeCom · 主题分段与压缩去噪
 
@@ -1334,29 +1393,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **证据 / 边界**：MS-TOD 上 GPT-4o-mini 相对 full-context 的成功率 88%→99%（+11 个百分点）、轮数 6.03→3.19；仅指这一设置，非所有模型或实际交易提升。记忆提供历史候选值不代表已获新操作授权。
 - **资源**：[作者代码 / 数据](https://github.com/Elvin-Yiming-Du/MS_TOD_Memory)。同名 embodied MemAdapter 的 MemGuide 数据集不是本论文资产；许可限制见 B37。
 
-<a id="method-airgapagent"></a>
-### M26. AirGapAgent · 隔离第三方语境与个人数据筛选
-
-[AirGapAgent: Protecting Privacy-Conscious Conversational Agents](https://arxiv.org/abs/2405.05175) — CCS 2024；v1（2024-05-08）题名为 *Air Gap*，v2（2024-09-18）为 *AirGapAgent*，同一论文。
-
-**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2405.05175v1) §2–6 威胁、设计与实验相关段落；v2 元数据 / 摘要。未逐项比较两版实验。
-
-- **机制**：独立 minimizer 仅依据可信用户任务和资料选出必要数据，交互代理再与不可信第三方对话，降低 context hijacking 泄漏。
-- **证据 / 边界**：合成 20 用户、26 字段、8 任务的隐私 / 效用测试；依赖任务与资料可信假设，非物理隔离、通用防注入或全系统无泄漏证明。摘要的97%保护率是特定设置，不能当总体安全率。
-- **资源**：本次未核实原始官方代码 / 数据发布及许可。后续 AirGapAgent-R 是他人重建评测，不是已验证的原始资产。
-
-<a id="method-collaborative-memory"></a>
-### M27. Collaborative Memory · 跨用户记忆权限
-
-[Collaborative Memory: Multi-User Memory Sharing in LLM Agents with Dynamic Access Control](https://arxiv.org/abs/2505.18279) — 2025 预印本；v1，2025-05-23。
-
-**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2505.18279v1) §3–5 方法与实验相关段落、附录 D 合成任务设置。
-
-- **机制**：私有 / 共享双层记忆保留来源记录，按当前 user–agent–resource 权限过滤，支持授权变化。
-- **证据**：MultiHop-RAG、200 条合成企业任务及 SciQAG 动态权限场景。企业任务没有 gold answers，主要报告资源调用，不能宣传为准确率验证。
-- **关联与边界**：适用于个人代理的多用户数据边界，但主要是协作权限管理，不是个人偏好学习。形式化策略与受控实验不等于实现安全审计或防所有推断泄漏。
-- **资源**：本次未核实官方代码 / 数据发布与许可；survey 中重复引文不另算论文。
-
 <a id="method-rgmem"></a>
 ### M28. RGMem · 分层演化用户画像
 
@@ -1367,39 +1403,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **机制**：将对话事实与用户推断逐层聚合进知识图谱，以阈值更新区分快变证据与较稳定特征，再结合多尺度检索回答；是外部记忆演化，不是底座持续训练。
 - **证据／边界**：LOCOMO 使用 LLM judge，PersonaMem-128k 使用选择题准确率，三次运行取均值；不能混成通用分数，也不证明长期真人效用、画像真实性或隐私安全。
 - **资源**：[作者实现](https://github.com/fenhg297/RGMem)标 MIT；依赖 Elasticsearch、Neo4j、Redis 等组件，未运行验证。
-
-<a id="method-me-agent"></a>
-### M29. Me-Agent · 用经验与分层记忆解释模糊指令
-
-[Me-Agent](https://arxiv.org/html/2601.20162v1) — 与 B42 同一论文，不另计。
-
-**核验日期／实际阅读范围**：2026-11-01；v1 §4.2–4.4 方法、§5.1–5.2 设置与结果相关段落及 Limitations；作者仓库根目录与 README。 非全文逐项通读；未安装、运行或复现实验。
-
-- **机制**：VLM 评价执行轨迹，提炼自然语言经验用于提示词；分层记忆按应用检索流程和内容偏好。方法称无参数更新，不应写成对基础模型进行个性化微调。
-- **证据／边界**：User FingerTip 与通用移动任务评测；UI 更新会使位置与流程经验失效，当前地点等情境因素未充分纳入。推断“常用选择”不等于获得新操作授权。
-- **资源**：[作者实现](https://github.com/Gianthaha/personal-mobile-agent)；数据规模、资源完整性与许可范围的限制同 B42。
-
-<a id="method-ppp"></a>
-### M30. PPP · 学习主动澄清与个性化交互
-
-[Training Proactive and Personalized LLM Agents](https://arxiv.org/html/2511.02208v2) — COLM 2026；v2，2026-08-23。评测环境 UserVille 见 B43，同一篇论文。
-
-**实际阅读范围**：v2 §4–8、表1、附录A；版本记录、会议目录及作者 README / 目录 / LICENSE；非全文逐项通读，未运行。
-
-- **机制**：在偏好条件化模拟用户环境中，以 GRPO 联合优化任务表现、澄清负担和偏好遵循；不等于持久个人记忆或终身用户建模。
-- **证据与边界**：自动评测与真人研究须分开，见 B43。提问增加可能提高交互负担，模拟器中的低负担不能直接代表真人体验。
-- **资源**：[作者代码](https://github.com/sunnweiwei/PPP-Agent)为 Apache-2.0；README 链接权重及数据，但本次相应网页不可访问，下载与资产许可未确认，不能推断未发布。运行说明另要求 vLLM bias patch；仓库许可不自动覆盖模型、数据或上游 benchmark。
-
-<a id="method-puma"></a>
-### M31. PUMA · 从行为历史学习工具参数
-
-[Large Language Models Empowered Personalized Web Agents](https://arxiv.org/html/2410.17236v2) — WWW 2025；v2，2025-03-24。PersonalWAB 见 B44，同一篇论文。
-
-**实际阅读范围**：§3、§5–6、表5、附录A.3 / B；版本记录、项目页、README、数据目录及 LICENSE；非全文逐项通读，未运行。
-
-- **机制**：检索行为历史并保留任务相关字段，结合启发式 SFT 与结果排序 DPO 学习函数参数。
-- **证据与边界**：表5整体 function/result accuracy 为 .994/.406；去除任务特定记忆为 .994/.373，但推荐 result accuracy 仍仅 .054。不同指标不能统称真实任务成功率；购物领域与模拟用户限制见 B44。
-- **资源**：[作者仓库](https://github.com/HongruCai/PersonalWAB)及数据目录可读；根许可 **CC BY-NC 4.0**，tau-bench 继承部分另保留 MIT。未确认发布的 PUMA 检查点，未验证完整数据；论文许可、代码/数据许可及 Amazon/模型条款不可互相替代。
 
 <a id="method-premem"></a>
 ### M32. PREMem · 存储前推理跨会话关系
@@ -1424,30 +1427,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **证据**：离线 LoCoMo 1,540题与 LongMemEval-S 500题；LoCoMo 对话经模型生成及人工编辑，LongMemEval 会话为模拟及人工编辑，不是真人纵向使用记录。LoCoMo 以 GPT-4.1-mini 为方法底座及回答模型、GPT-4o-mini 为 judge 时，平均分80.8，对全上下文80.6；以 GPT-4o-mini 为底座时，LongMemEval 知识更新子集反而61.5，对全上下文78.2。不能写成全面领先。
 - **边界**：作者限制包括简单管理/检索、集成接口需逐项实现；不证明安全删除或真实长期用户效用。与 PREMem 的 LoCoMo 子集不同，不能横排分数。
 - **资源**：[实现](https://github.com/nemori-ai/nemori)为 MIT；当前重写版不兼容旧 MVP，依赖 PostgreSQL、Qdrant 与模型 API。评测数据需另取并遵守原条款；README 的 V5 成绩不是 v4 论文成绩。
-
-<a id="method-dpl"></a>
-### M34. DPL · 用用户之间的差异构造个人表示
-
-[Measuring What Makes You Unique](https://aclanthology.org/2025.findings-acl.1095/) — Findings ACL 2025；[arXiv v3](https://arxiv.org/html/2503.02450v3)，2025-06-11。
-
-**实际阅读范围**：v3 §2–4、表1、附录A–F相关内容；出版 PDF 限制/伦理与附录A、作者预处理脚本、README、根目录及数据卡；非逐行通读，未运行。
-
-- **机制**：比较目标用户与其他用户的评论风格、情感和语义差异，再与个人历史汇总形成生成条件；属于用户表示方法。
-- **证据与边界**：Amazon/Yelp 真实评论记录上的离线生成，输入还包括目标评分和标题；不是多轮对话、无条件偏好预测或工具执行。主表跨五个温度取均值，不是相同配置的五个随机种子。跨用户信息使用还需隐私/同意约束。
-- **一致性问题**：论文附录说测试用倒数第三条评论，当前代码用最后一条；不能把文字冲突直接断言为已证实泄漏，复现前应核对数据。
-- **资源**：[作者代码](https://github.com/SnowCharmQ/DPL)根目录未见许可；[DPL-main](https://huggingface.co/datasets/SnowCharmQ/DPL-main)与[DPL-meta](https://huggingface.co/datasets/SnowCharmQ/DPL-meta)标 **CC BY-NC 4.0**，不能沿用论文伦理段的宽泛 MIT 说法。上游条款另查。
-
-<a id="method-guided-profile-generation"></a>
-### M35. Guided Profile Generation · 引导式画像生成
-
-[Guided Profile Generation Improves Personalization with LLMs](https://arxiv.org/html/2409.13093v1) — arXiv v1，2024-09-19。
-
-**核验日期 / 阅读范围：**2026-11-01；§3–6、任务定义、指标和结果表。
-
-- **方法：**按任务提问帮助消化个人历史，再生成自然语言画像，供后续回答使用；主实验仍保留原始历史。
-- **评测：**Amazon 历史构成四选一购买预测、LaMP-7 文风重写、PER-CHAT 回复生成；分别看准确率、词面指标、语义相似度，不是同一“画像质量分”。
-- **边界：**真人来源历史上的离线构造任务，不是持续用户实验；单来源文本、主要一个 GPT-3.5 版本。不能证明画像准确性、持续更新或执行能力；购买预测收益部分来自减少拒答；PER-CHAT 回复生成收益弱且不一致。
-- **资源：**未核实官方代码或新增数据发布。论文 CC BY 4.0 不覆盖上游数据。
 
 <a id="method-knowledge-graph-tuning"></a>
 ### M36. Knowledge Graph Tuning · 反馈驱动事实更新
@@ -1485,66 +1464,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **边界：**不证明真实用户持续受益、在线记忆更新、隐私删除或行动执行。基准规模存在正文/表格矛盾，见 B46。
 - **资源：**[官方仓库](https://github.com/nuster1128/MPR)，master，最后推送 2025-08-24，无 release 或声明的仓库许可；Drive 数据归档本次未能读取。论文 CC BY 4.0 不自动授权代码/数据；未安装或复现。
 
-<a id="method-coloragent"></a>
-### M39. ColorAgent · 个性化移动 GUI 执行与澄清
-
-[ColorAgent: Building A Robust, Personalized, and Interactive OS Agent](https://arxiv.org/html/2510.19386v2) — 2025 技术报告；查阅 v2，2025-10-24。
-
-**核验日期 / 阅读范围**：2026-11-01；§§2–6，重点 §4 实验、§5 个性化 / 交互及 §6 后续工作；官方 README、LICENSE 与 ColorGUI-32B 模型卡。
-
-- **机制**：step-wise RL、自演进训练及检索、任务编排、分层反思；从历史轨迹提炼 SOP 与用户画像，重写当前请求 / SOP；另训练 ask-agent 进行澄清。这里主要是 **Android 移动端，不是桌面执行**。
-- **证据**：AndroidWorld / AndroidLab 测动态环境任务成功；MobileIAR 测与用户意图标注一致的动作，VeriOS-Bench 测逐步动作匹配。不能把整体任务成功率直接称为个性化分数，也不能把逐步正确率视为完整任务完成率。
-- **边界**：未证明真人长期满意度；作者指出现有任务与真实复杂使用存在差距，沙箱及细粒度权限仍待完善。遇到不确定情境询问用户不是全面安全保障。
-- **资源**：[官方 MobileUse 仓库](https://github.com/MadeAgents/mobile-use)支持该报告，代码 [MIT](https://github.com/MadeAgents/mobile-use/blob/main/LICENSE)。2026-07-10 后续发布的 [ColorGUI-32B](https://huggingface.co/MadeAgents/ColorGUI-32B)模型卡标 Apache-2.0，基于 Qwen3-VL；**不等同于论文中的 GUI-Owl / Qwen2.5 实验检查点**。固定所用代码、模型与评测版本。
-
-<a id="method-warpp"></a>
-### M40. Agent WARPP · 用户属性驱动的运行时流程裁剪
-
-[Agent WARPP: Workflow Adherence via Runtime Parallel Personalization](https://arxiv.org/html/2507.19543v1) — 2025 预印本；ICML 2025 Multi-Agent Systems Workshop；查阅 v1，2025-07-23。
-
-**核验日期 / 阅读范围**：2026-11-01；§§3–6、§§8–9；官方仓库 README 与 LICENSE。
-
-- **机制**：无需额外训练；Personalizer 根据用户属性裁剪条件流程及工具集合，并与模拟身份验证并行，再交给 Fulfillment 执行。保留相关工具的成功、失败与用户回答分支；这是属性条件化执行，不是持续学习个人偏好。
-- **证据**：银行、航班、医院付款共五种意图，各 50 个样例；使用合成客户数据与 GPT-4o 模拟用户。分别报告轨迹匹配 / LCS、工具 F1、参数匹配、延迟及 judge 评价的裁剪相关性 / 完整性。
-- **边界**：多数工具调用与 MFA 为模拟，部分复杂流程连接真实 API；不能因此称为生产部署或已验证身份安全。作者明确将安全、隐私、人参与及会话质量排除在本研究范围外；高负载、变化 API 与更复杂流程仍待检验。
-- **资源**：[官方代码 / 数据](https://github.com/emiliamazzo/WARPP)，[MIT LICENSE](https://github.com/emiliamazzo/WARPP/blob/main/LICENSE)已核对；工作坊论文不要标作 ICML 主会论文。
-
-<a id="method-privacychecker"></a>
-### M41. PrivacyChecker · 决策时的信息流隐私判断
-
-[Privacy in Action](https://aclanthology.org/2025.findings-emnlp.925/) — Findings of EMNLP 2025；查阅 [arXiv v1](https://arxiv.org/html/2509.17488v1)。评测见 B48；同一论文只计一次。
-
-**核验日期 / 阅读范围**：2026-11-01；§3 方法 / 实验、§4 MCP 部署与扩展实验、Limitations；ACL 元数据与作者资源链接。
-
-- **机制**：在行动决策时用提示明确提取 contextual-integrity 信息流，逐流判断可否披露；可选择加入隐私指南，主实验未使用可选指南。可放入系统提示、特定工具说明或独立 MCP 工具。
-- **证据**：同时检查隐私泄露与任务帮助程度；静态 PrivacyLens、live MCP、MCP + A2A 和更复杂流程分别报告，不能把一个设置的降幅泛化至全部部署。
-- **边界**：仍会因流提取、判断和行动不一致而泄露；记忆投毒等对抗场景不是主要验证范围。它是提示驱动缓解，不是强制访问控制、密码学保证或法规合规证明；独立检查工具也不能仅凭名称推断不可绕过。
-- **资源**：同上[作者短链接](https://aka.ms/privacy_in_action)；抓取被 robots.txt 拒绝，当前发布包与许可未确认。论文公开不代表实现已获开放许可。
-
-<a id="method-agentraft"></a>
-### M42. AgentRaft · 执行过程中数据过度暴露检测
-
-[AgentRaft: Automated Detection of Data Over-Exposure in LLM Agents](https://arxiv.org/html/2603.07557v1) — 2026 预印本；查阅 v1，2026-03-08。
-
-**核验日期 / 阅读范围**：2026-11-01；§§3–6，包括实验设置、组件评测与局限；原文资源链接与定向资源检索。
-
-- **机制**：由类型兼容性与语义判断构建跨工具调用图，合成触发指定路径的请求，结合运行时污点轨迹与多模型投票判断非必要数据是否传至外部。
-- **证据**：6,675 是爬取工具的生态调查规模；实际实验为四类场景选定工具集，在 AgentDojo 中实现功能，并使用生成的 PII / 业务资产与 GPT-5.1 Agent。57.07% 指所测 608 条潜在调用链中的 347 条，不是全部商业 Agent 的泄露率。
-- **边界**：依赖内部执行轨迹，未直接审计封闭商业 Agent 或终端用户真实部署。图边准确性、请求有效性、泄露检测与成本指标不能混报；LLM 判断错误和动态工具变化仍有限制。法规文本参与投票不构成法律认证；提示注入检测与运行时防御的扩展讨论不等于已证实安全能力。
-- **资源**：原文未找到作者实现 / 数据发布链接，定向检索亦未确认；**发布状态与实现许可未确认**。AgentDojo 是实验底座，其开放许可不能替代 AgentRaft 实现许可。
-
-<a id="method-rlpf"></a>
-### M43. 用预测反馈压缩用户画像
-
-[RLPF: Reinforcement Learning from Prediction Feedback for User Summarization with LLMs](https://arxiv.org/html/2409.04421v2) — AAAI 2025；查阅 v2，2025-01-17。
-
-**阅读范围：**§§2–5，重点训练奖励、数据构造、评测指标、迁移结果与部署讨论，及附录 I 任务定义；版本记录及定向资源检索；未运行。
-
-- **方法：**以未来行为预测正确性及长度奖励训练摘要器，将个人历史压缩成后续模型可用的自然语言画像；预测在真实下一项与三个随机负选项中选择，不是开放目录搜索。
-- **证据与边界：**MovieLens 2015/2003、Amazon 评论与 Google Local 评论历史上的离线预测，不是真人长期助理实验；部分迁移任务退步。不能推导持续更新、执行能力或隐私保证。
-- **资源：**未核实官方实现或新增数据发布；论文许可不覆盖上游数据与模型。
-- **去重：**AAAI 与 arXiv 为同一研究；归入画像压缩，不另列画像更新成果。
-
 <a id="method-ld-agent"></a>
 ### M44. 长期对话的事件与双向画像管理
 
@@ -1557,26 +1476,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **资源：**[官方实现](https://github.com/leolee99/LD-Agent)为 MIT；Drive 数据/权重未验证，README 仍将 CC 代码与数据列为待办。
 - **去重：**出版版与 arXiv 只计一次。
 
-<a id="method-aloe"></a>
-### M45. 通过交互学习个人偏好对齐
-
-[Aligning LLMs with Individual Preferences via Interaction](https://aclanthology.org/2025.coling-main.511/) — COLING 2025；方法查阅 [arXiv v2，2024-12-15](https://arxiv.org/html/2410.03642v2)。
-
-**阅读范围：**§§2–5，含数据构造、训练、基准及人工评分核对；出版元数据、官方 README 和根目录；未逐项比较出版版，未运行。
-
-- **方法：**生成树状偏好对话，进行 SFT 与 DPO；ALOE 是同篇研究的评测名称。
-- **证据与边界：**100 个画像、十轮模拟交互；GPT-4o 扮演用户并评分。人工核对不等于真人纵向试用；不是持续在线学习或工具执行验证。
-- **资源：**[代码与数据目录](https://github.com/ShujinWu-0814/ALOE)可读，根目录未见 LICENSE；检查点及资产许可未确认。
-- **去重：**可设基准交叉链接，但不另增论文数；已有 RLPA 条目中的 ALOE 提及不构成独立收录。
-
-<a id="method-ptool"></a>
-### M46. PTool · 个性化工具调用的合成训练数据
-
-与 B51 为[同一论文](https://arxiv.org/html/2505.04072v1)，实读范围相同。
-
-- **机制：** 结构化 API/画像合成、角色扮演式请求与答案生成、规则/模型核验，再进行 LoRA SFT。
-- **证据与边界：** Qwen2.5-7B 完整准确率由 7.38% 升至 26.78%；测量生成调用，非真实工具执行。
-
 <a id="method-h2memory"></a>
 ### M47. H²Memory · 具体与抽象两层个人记忆
 
@@ -1584,32 +1483,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 
 - **机制：** 四组件准确为 Log Graph（日志图）、Background（背景）、Topic Outline（话题提纲）、Principle（原则），配合更新和关联检索。
 - **证据与边界：** 优于列出的 PAL-Bench 基线；模拟交互与模型评分不能证明真实用户满意度或自主行动成功。
-
-<a id="method-raise"></a>
-### M48. RAISE · 选择性获取个人安全背景
-
-与 B55 为[同一论文](https://arxiv.org/html/2505.18882v5)，实读范围相同，仅计一次。
-
-- **机制：** 离线 LLM 引导 MCTS 缓存属性获取路径；在线检索指导提问，并判断信息是否足够/是否暂缓回答。
-- **边界：** 使用基准中的用户背景进行评估；不证明现实咨询安全，也不构成收集敏感属性的授权依据。
-
-<a id="method-prelude"></a>
-### M49. PRELUDE / CIPHER · 从用户修改推断上下文相关偏好
-
-- **论文与版本：** [Aligning LLM Agents by Learning Latent Preference from User Edits](https://arxiv.org/html/2404.15269v3)，NeurIPS 2024；arXiv v3，2024-11-23。PRELUDE 是框架、CIPHER 是算法，同一篇论文只计一次。
-- **机制：** 从输出及其修改推断文字化偏好，检索相近上下文的偏好并聚合进生成提示；不微调基础模型。
-- **证据：** 摘要写作与邮件写作各进行 200 轮 GPT-4 模拟用户交互，报告三个随机种子；最佳配置相对不学习基线的累计 token 编辑距离分别下降约 31% / 73%。另在 summarization 任务上有七名人工评审，每组比较 15 对输出；三名人工编辑按指定偏好修改输出。
-- **边界：** 人工评审不是自然长期用户在线学习；主实验偏好由文档来源预设，编辑距离不等于真实时间节省或满意度，仍与已知真实偏好的 oracle 有差距。
-- **资源与实读：** [官方代码与数据入口](https://github.com/gao-g/prelude)，仓库 MIT 许可，不替代来源数据自身许可。实读 v3 §§4.1–4.4、机制与指标段落，以及 NeurIPS 元数据和仓库资源页；未复现。
-
-<a id="method-curio"></a>
-### M50. CURIO · 用用户模型的改进奖励主动发现偏好
-
-- **论文与版本：** [Enhancing Personalized Multi-Turn Dialogue with Curiosity Reward](https://arxiv.org/html/2504.03206v3)，[NeurIPS 2025](https://proceedings.nips.cc/paper_files/paper/2025/hash/e48d5af30c95be08762489c5141f7fbc-Abstract-Conference.html)；arXiv v3，2025-10-02。
-- **机制：** 在多轮 RLHF 中加入逐轮用户类型信念改进的内在奖励；比较准确率、熵和势函数差分等奖励设计。
-- **证据：** 运动推荐任务将采样属性按规则映射到八类策略；200 段模拟对话中最佳 DiffAcc 成功率 87.5%，MTRLHF 为 68.5%，SFT 为 54%。教育对话采用两种预设学习偏好。十名学生评审生成对话，非作为实时学习者使用系统。
-- **边界：** 静态预设类型与 LLM 用户模拟限制外推；某些熵奖励出现偏向单一类型的行为。人工评审中 DiffLogAcc 相对 MTRLHF 的个性化偏好胜率约 76%，但附录的 152/200 与表格的 75.75% 不完全一致。质量偏好 90/200、p=.179，不能解释为证明等效；也未测量真实学习或健康效果。
-- **资源与实读：** [作者项目页](https://sites.google.com/cs.washington.edu/curio)已核验，未核实官方代码、权重、数据集或其许可证，不标为开源。实读 v3 方法、§§4–5、局限、附录 B.1–B.3 及官方会议信息；未复现。
 
 <a id="method-grounded-memory"></a>
 ### M51. A Grounded Memory System · 从视觉观察构建实体记忆
@@ -1619,50 +1492,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **证据：** iPhone 家庭场景视频原型与代表性问答；不是对照实验、用户研究或公开基准。展示问答被作者标为正确，不应改写成评测准确率 100%。
 - **边界：** 不能据此断言优于标准 RAG、具备可靠长期实体一致性或已在失智症照护中验证；扩展规模、长期实体消歧及更多模态均属于后续工作。
 - **资源与实读：** 未核实官方代码/数据发布及其许可。实读 §§3–5 与 arXiv 版本/工作坊元数据；未复现。
-
-<a id="method-iotgpt"></a>
-### M52. IoTGPT
-
-**方法：个性化设备执行与子任务记忆复用**
-
-[Leveraging LLMs for Efficient and Personalized Smart Home Automation](https://arxiv.org/abs/2601.04680) · **arXiv v1，2026-01-08**；未确认正式发表场所。
-
-- **机制：** Decompose–Derive–Refine 流程、层级任务记忆和环境属性偏好表，将指令转换为 SmartThings 操作并复用子任务。
-- **证据：** 97 个任务、26 个模拟设备；warm 条件重做已学习任务的改写版本。15 名真人参加短时研究，但偏好来自 **100 条 GPT-4o 合成日志**，不是参与者自身历史。
-- **边界：** 不证明真实家庭长期个性化；偏好冲突和设备副作用尚未完整处理。**不安全或幻觉指令仍需用户审核**，自动安全防护属于未来工作。
-- **资源：** 尚未找到并核实作者官方实现与许可证；不写成已开源。
-- **实际阅读：** 系统、实现、比较实验、两项用户研究及局限章节；未安装或复现。
-
-<a id="method-gaap"></a>
-### M53. GAAP
-
-**方法：运行时信息流控制与披露授权**
-
-[An AI Agent Execution Environment to Safeguard User Data](https://arxiv.org/abs/2604.19657) · **arXiv v3，2026-09-24**；未确认正式发表场所。
-
-- **机制：** 受限计划解释器与信息流控制，结合持久化私有数据、权限和披露日志，约束跨步骤、跨任务的数据披露。
-- **保证范围：** 针对恶意模型/提供方及外部服务；依赖正确执行、用户授权和经核验的工具语义标注。**提示词中直接输入的秘密、提示时序元数据及数据/系统完整性不在保证内**。
-- **证据：** 自建 20 任务、七类攻击测试未出现成功披露；AgentDojo/AgentDyn 在批准全部披露的条件下仅测效用。不是普遍安全证明或真人可用性研究；论文报告显著费用/延迟开销。
-- **资源：** [源码公开](https://github.com/rssta/gaap)，但未发现 LICENSE，GitHub 许可字段为空；不声称具备开源使用授权。
-- **实际阅读：** v3 威胁模型、设计、评估与讨论；官方 README、目录和许可元数据；未安全审计。
-
-<a id="method-alignxplore"></a>
-### M54. AlignXplore · 从行为信号推断可更新偏好
-
-[Extended Inductive Reasoning for Personalized Preference Inference from Behavioral Signals](https://arxiv.org/html/2505.18071v2) — arXiv v2, 2025-07-07；未核实正式会场。
-
-将行为样例转换为自然语言偏好，以合成冷启动数据和GRPO训练推断模型；流式设置复用已有偏好摘要。AlignX/P-Soups实验主要使用偏好比较对；指标区分Acc_jud（偏好判断）、Acc_gen（偏好引导生成）与GPT-4 win rate；所谓“online evaluation”是GPT-4裁判比较生成回答，不是真实用户在线实验。主设置为两轮、每轮四条信号；§4.4另有八对信号的模拟反转测试，§4.5效率实验延至第四轮、累计16条信号。论文明确缺少真实LLM—用户交互验证，不能据此宣称长期偏好漂移已解决。隐私/同意陈述不是形式保证。[官方代码](https://github.com/AntResearchNLP/AlignXplore)可访问，未确认项目根目录许可证；论文CC BY-NC-ND不等于代码许可。
-
-**实读范围：** v2 §3、§4评测设置与流式实验、Appendices C–D；官方README与根目录。定向阅读，非全文逐页审读
-
-<a id="method-psg-agent"></a>
-### M55. PSG-Agent · 用户相关风险的分阶段护栏
-
-[PSG-Agent: Personality-Aware Safety Guardrail for LLM-based Agents](https://arxiv.org/html/2509.23614v1) — arXiv v1, 2025-09-28；未核实正式会场。
-
-从历史和当前请求构造用户安全条件，再以计划、工具、回答及记忆写入检查落实。132个人工种子经GPT-4o扩展，约2,900例且历史为模型生成；200例质量检查由四位专家各评50例。ALLOW/REFUSE分类以准确率、精确率、召回率和F1评价；另行采用三模型多数裁决评估安全/帮助性，配100例人工一致性检查。评测支持合成场景下的用户差异化安全判断，不证明真实医疗/金融安全或长期风险控制；运行时门控也不是形式安全/隐私保证。[论文所链匿名代码](https://anonymous.4open.science/r/psg-agent-code-7724/)本次无可读正文，完整性与许可未核实。
-
-**实读范围：** §3–5、威胁建模、组件与人工/模型裁判设置；匿名仓库入口。定向阅读，未审代码
 
 <a id="method-encode-store-retrieve"></a>
 ### M56. Encode–Store–Retrieve — 语言编码的第一人称记忆
@@ -1677,52 +1506,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **方法与证据**：模块化情绪、对话、记忆和行为编排，TBC/DIMF 记忆压缩与 AR 呈现。§8 报告 50 名用户的 200 条片段、38 人四周使用、24 人访谈及 11,504 轮日志；这些样本口径不可相加或互换。
 - **边界**：年轻、北美、英语样本；比较分组描述有限。摘要宣称孤独感显著下降，但评测未给出对应量表、前后测统计或显著性检验，**不据此宣称临床/心理健康疗效**。实时面部表情分析属未来方向；加密、同意与安全存储是部署要求，非验证过的保证。
 - **资源与实读范围**：[作者稿](https://arxiv.org/pdf/2509.05298) §§3–10；[版本/会议信息](https://arxiv.org/abs/2509.05298)。稿件 CC BY-NC-ND 4.0；未确认官方代码/数据发布或软件许可。
-
-<a id="method-aipom"></a>
-### M58. AIPOM — 可检查、可修改的多 Agent 计划
-- **论文**：*AIPOM: Agent-aware Interactive Planning for Multi-Agent Systems*，EMNLP 2025 System Demonstrations，85–96。
-- **方法与证据**：聊天与可编辑图联合表达任务、Agent 分配、依赖和输出。实验使用 50 道 GSM8K、50 道 BBH 算术题及人工扰动的计划；真人先导研究为 9 名有 LLM 经验的研究机构成员、12 道数学题。参与者反馈离线后处理，未要求其确认/拒绝实际修订结果。
-- **边界**：支持计划检查与修改，不是执行权限、敏感操作授权或安全保证；不能推广为一般用户的长期信任。系统是集中编排的功能模块，不是自主主动 Agent 群。
-- **资源与实读范围**：[论文](https://aclanthology.org/2025.emnlp-demos.7.pdf) §§2–4、6、附录 C；[官方代码/演示](https://github.com/megagonlabs/aipom)。根 `LICENSE` 为 BSD-3-Clause；数据和依赖许可独立，README 另列第三方材料限制；web-search 默认禁用。未安装复现。
-
-<a id="method-privacy-risk-search"></a>
-### M59. Searching for Privacy Risks — 交替搜索攻击与防御提示
-- **论文与交叉索引**：*Searching for Privacy Risks in LLM Agents via Simulation*，ICLR 2026；arXiv v3（2026-05-08）。同篇评测见 **B62**，只计一篇。
-- **方法**：用 LLM 分析轨迹，平行搜索并跨线程传播，交替优化攻击者与防御者指令；从直接索取发展到身份冒充/伪造同意，对应防御发展为提示层身份核验状态机。
-- **边界**：这些是模型遵循的指令，不是形式化权限系统或加密身份认证；不得写成可保证防泄漏的安全机制。合法同意分享与真实部署可靠性仍需独立验证。
-- **资源与实读范围**：[v3](https://arxiv.org/html/2508.10880v3) §§3–4、伦理说明、附录 G；[官方代码](https://github.com/SALT-NLP/search_privacy_risk)与[轨迹数据](https://huggingface.co/datasets/SALT-NLP/search_privacy_risk)。数据卡标 MIT；代码根目录未观察到许可，不能用数据许可替代代码许可。数据 viewer 报错不等于源文件不可下载；未运行复现。
-
-<a id="method-topdial"></a>
-### M60. TopDial · 个性化目标对话的角色扮演数据生成
-
-[Target-oriented Proactive Dialogue Systems with Personalization: Problem Formulation and Dataset Curation](https://arxiv.org/html/2310.07397v2) — EMNLP 2023; arXiv v1 2023-10-11, read v2 2023-10-13.
-
-用户、系统和moderator三个gpt-3.5-turbo角色，以重构DuRecDial 2.0、随机画像slot和Big Five描述生成18,009个多轮对话；目标为系统侧〈对话行为、主题〉。100个目标的配对对话由模型/人工评价；等训练量微调DialoGPT/Alpaca-7B，以混合测试集的BLEU、知识F1、画像F1及target success检验训练资源效果。
-
-**边界：** 合成角色与离线指标，不是真实用户主动帮助接受度；存在幻觉和moderator误判终止。用户第二次明确拒绝目标行为时才触发拒绝终止规则；这不构成部署安全保证。作者提醒目标约束、用户隐私与bot身份透明。
-
-**实读范围：** v2 §3–4、Limitations、Ethical Considerations；代码/数据链接来自原文，未复现。不另列第二个benchmark条目。
-
-<a id="method-plus"></a>
-### M61. PLUS — 共训练用户文字摘要与个性化奖励模型
-- **论文**：*Learning to summarize user information for personalized reinforcement learning from human feedback*，ICLR 2026；arXiv v4（2026-08-26）。
-- **方法与证据**：PPO 优化用户摘要，交替训练摘要条件奖励模型；Pets/UltraFeedback 为构造偏好任务，PRISM 为既有真人对话数据。PRISM 使用1,000位用户训练，已知用户奖励预测准确率62.9%（BTL 59.8%），未见用户预测仍困难。
-- **边界**：GPT-4o 的72%胜率由依据用户自述偏好训练的 oracle 奖励模型判定，非人类投票或部署满意度；正文“308用户×2提示”与附录“906提示”不一致，不合并样本口径。online co-adaptation 指训练循环，非真实用户持续在线学习；摘要编辑是未来方向。训练对超参敏感，文字摘要不自动提供隐私保护。
-- **资源与实读范围**：[v4](https://arxiv.org/html/2507.13579v4) §§4–7、伦理/复现说明、附录F；[官方项目页](https://sites.google.com/stanford.edu/plus/home)及其[代码](https://github.com/nam630/pluralistic_user_summary_public)。代码 Apache-2.0；论文 CC BY-NC-SA 4.0。未核实完整训练权重/数据发布。
-
-<a id="method-user-profile-ablation"></a>
-### M62. Understanding the Role of User Profile — 历史响应与上下文顺序消融
-- **论文**：*Understanding the Role of User Profile in the Personalization of Large Language Models*，arXiv v1（2024-06-22）；未确认正式发表场所。
-- **方法与证据**：在LaMP六任务（排除LaMP-6）比较用户历史输入、响应、映射关系及顺序；主要使用微调 Flan-T5-base，另测冻结 Llama2-7B-chat。报告验证集结果，非不可用的隐藏测试集；没有新招募用户试验。历史响应通常贡献较大，仅保留历史响应的上下文可容纳更多记录，靠前画像在该设置影响较大。
-- **边界**：这是现有画像条件化机制分析，不是新通用执行Agent。结果限定于所测模型、任务、提示及输入长度；不能推出所有模型都应丢弃历史输入、忽略映射，或普遍存在相同位置效应。自动任务指标不等于真实用户满意度或长期适配效果。
-- **资源与实读范围**：[原文](https://arxiv.org/html/2406.17803v1) §§3–5、附录A/B；[官方代码](https://github.com/Bingo-W/Personalisation-in-LLM)。代码 MIT；论文 CC BY 4.0。既有LaMP资源不是该论文新发布的数据集。
-
-<a id="method-opencha"></a>
-### M63. openCHA — 健康范围内的个体数据与分析工具编排
-- **论文**：*Conversational health agents: a personalized large language model-powered agent framework*，JAMIA Open 8(4), ooaf067，2025-07-06；[DOI](https://doi.org/10.1093/jamiaopen/ooaf067)。早期 arXiv v5（2024-09-25）为两个演示、四用例；正式版为两个演示、五用例，不混用版本。
-- **方法与证据**：planner/executor、数据管道及外部分析工具组合个体健康记录、知识检索与多步操作。正式版总结100道糖尿病问题、500次情绪问题测试及45人既有居家监测数据的PPG心率估计；这些是不同用例，不能汇总为统一参与者试验。
-- **边界**：健康研究框架，不是治疗改善、诊断安全或长期临床部署证据。真实纵向健康数据不等于Agent进行了纵向干预。表现取决于外部来源及配置；论文明确HIPAA/GDPR合规取决于实施，框架本身不管理部署与扩展性。
-- **资源与实读范围**：[正式版](https://academic.oup.com/jamiaopen/article/8/4/ooaf067/8186991) 方法、演示/用例、Table 4与讨论；对照[v5](https://arxiv.org/html/2310.02374v5) §§3–5；[官方代码](https://github.com/Institute4FutureHealth/CHA) MIT，含文档/示例/测试。代码许可不是临床使用认证或数据再使用授权。
 
 <a id="method-scrapmem"></a>
 ### M64. ScrapMem — 多模态视觉压缩与事件图记忆
@@ -1743,42 +1526,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **边界**：“lifelong” 是系统目标，不是终身真人研究；保留旧记忆不解决撤回同意、删除及权限隔离。
 - **资源**：[官方代码](https://github.com/kimnamssya/Theanine)。所查根目录未见独立代码 LICENSE；论文附录的非商业数据条款不应自动解释为代码授权，项目网站模板许可也不等于研究资源许可。
 
-<a id="method-ariel"></a>
-### M66. 脑电辅助情绪适配 / EEG-assisted emotional adaptation
-
-[ARIEL: Brain-Computer Interfaces meet Large Language Models for Emotional Support Conversation](https://iris.uniroma1.it/handle/11573/1727073) — UMAP **Adjunct** ’24, pp.601–609；DOI 10.1145/3631700.3665193。
-
-
-- **阅读范围**：机构记录及所附出版 PDF §§3–5。
-- **机制**：脑电分类得到的情绪标签与文本消息，经硬提示模板输入 LLaMA 2 Chat。
-- **证据**：组件研究采集 30 人、每人 40 个音乐视频试次的 Muse 2 EEG；论文报告知情同意及匿名化。LOSO 与五折调参下，SVM 分情绪（per-emotion）准确率分别为 Happy .77、Angry .78、Sad .76、Relaxed .80；端到端对话仅提供受控真实会话示例。
-- **边界**：分类准确率不是心理支持疗效；in-vivo 系统评估仍列为未来工作。不得将推断标签写成对真实心理状态的可靠读取或临床有效性。
-- **资源**：上述机构 PDF 为 all rights reserved；所查来源未找到官方代码 / 数据发布。作者所述隐私处理不等于独立安全审计。
-
-<a id="method-llm-personalize"></a>
-### M67. LLM-Personalize · 偏好驱动具身规划
-
-[LLM-Personalize: Aligning LLM Planners with Human Preferences via Reinforced Self-Training for Housekeeping Robots](https://aclanthology.org/2025.coling-main.98/) — COLING 2025；arXiv `2404.14285v3` 为同一工作。
-
-**核验日期 / 阅读范围**：2026-11-01；原文 §3 方法、§4 实验设置及 Table 1、§6 局限；作者仓库 README、文件列表及许可标识。
-
-- **输入 → 输出**：局部场景观察、任务指令与偏好反馈 → 场景图驱动的高层行动及低层执行；以模仿学习启动，再筛选符合偏好的交互进行强化自训练。
-- **证据 / 测量**：Housekeep 仿真，使用其人类标注的物体—容器偏好；4 个场景，每场景 5 个测试任务、每任务 5 次运行。“成功率”是净纠正错放物体的比例，可为负，**不是整项任务完成率**。
-- **边界 / 反例**：Scene 4 测试集的 ST2 得分为 20.4，低于仅模仿学习（IL）的 25.7；但 ST2 相对 ST1 在四个测试场景均提升，不能混淆比较基线。没有真实家庭或实体机器人部署验证。
-- **资源**：[作者代码](https://github.com/gdg94/codellmpersonalize)，仓库标 MIT；含规划、仿真和微调流程，依赖旧版 OpenAI SDK、GPT-3.5 和 Habitat。公开不代表当前可直接复现。
-
-<a id="method-personal-travel-solver"></a>
-### M68. Personal Travel Solver · 隐式偏好与约束求解
-
-[Personal Travel Solver: A Preference-Driven LLM-Solver System for Travel Planning](https://aclanthology.org/2025.acl-long.1339/) — ACL 2025 Main。RealTravel 是同文数据集，不另计论文。
-
-**核验日期 / 阅读范围**：2026-11-01；原文 §§3.1、3.2–3.8 方法与数据构建、§4 结果、Appendix B 指标；作者仓库 README 与顶层文件列表。
-
-- **输入 → 输出**：旅行请求、评论历史及封闭旅行数据库 → 满足显式约束、兼顾推断偏好的行程；结合 LLM 与 SCIP 数值求解器。
-- **数据 / 测量**：Google Local 评论与 POI 元数据是真实来源，但旅行请求由约束采样、可解性验证和 LLM 改写构造。测试集 1,000 条；最终约束通过率 96.60%，个性化另由 DeepSeek-V3 成对裁判评价。
-- **边界 / 反例**：约束通过不等于真实旅客满意，也不证明能够预订或执行行程；真人评论不能将构造任务变成真实委托。
-- **资源**：[官方入口](https://github.com/cliftclift/PTS) 当前提供 RealTravel 数据及处理目录；未确认完整 PTS 求解实现公开，未见顶层明确许可证，勿标作“完整开源系统”。
-
 <a id="method-memory-r1"></a>
 ### M69. Memory-R1
 
@@ -1791,49 +1538,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 **资源与复现：** [作者仓库](https://github.com/yansikuan/memory-r1) 为 Apache-2.0，但只有 README/assets，仍称 code coming soon，不能声称已发布可运行实现。LoCoMo 派生数据保留 CC BY-NC 4.0；文章为 arXiv 非独占许可。
 
 **实际阅读范围：** §§3–4、Limitations、Appendix B/D、版本元数据和仓库 README/文件树。
-
-<a id="tmp-b-ci"></a>
-
-<a id="method-contextual-integrity-supervisor"></a>
-### M70. Information-flow-card supervisor
-
-**方法；唯一论文键 / Method; unique paper key: `CI`**
-
-[同篇原文](https://arxiv.org/html/2408.02373v2) · v2, 2024-09-13
-
-通过信息流卡明确语境、主体、接收方与披露信息，再由推理监督器控制填表。与自我审查、二分类及普通推理监督比较。提示与 few-shot 策略不构成硬授权机制；攻击鲁棒性及真实用户交互仍待验证。
-
-评测、来源、许可、阅读范围与复现限制均见 [B74](#benchmark-operationalizing-ci)。不是 H 类部署研究。
-
-<a id="tmp-b-exfil"></a>
-
-<a id="method-pearl"></a>
-### M71. Pearl
-
-**相邻方法：写作检索校准** · 唯一论文键: `PEARL`
-
-[论文](https://arxiv.org/html/2311.09180v2) · v2, 2024-11-05; CustomNLP4U 2024
-
-以个人历史文档对生成的帮助训练检索器，支持低质量检索检测和修订。WorkSm 私有企业帖子与 AITA 评论离线评估；WorkSm 评测请求由作者编写，训练请求由 GPT-4 合成；AITA 缺少时间信息。参考文本/立场指标和 LLM 判断不是真人满意度；不验证对外发送、收件人授权或隐私控制。
-
-**资源与复现：** [正式出版](https://aclanthology.org/2024.customnlp4u-1.16/) 为 CustomNLP4U workshop，非 ACL main。WorkSm 私有、依赖闭源 API，未核实官方代码/权重。所读 arXiv 文章 CC BY-NC-ND 4.0，不外推为数据许可。
-
-**实际阅读范围：** §§4–5、Appendix E、版本及正式出版页。
-
-<a id="tmp-m-personax"></a>
-
-<a id="method-personax"></a>
-### M72. PersonaX
-
-**相邻方法：推荐画像缓存** · 唯一论文键: `PERSONAX`
-
-[论文](https://aclanthology.org/2025.findings-acl.300.pdf) · Findings ACL 2025, pp. 5764–5787
-
-将长行为历史聚类选样，离线生成多画像片段并检索。Amazon CDs/Vinyl 与 Books 排序：最后交互正例加 9 个采样负例。离线排序不是真人满意度或通用助理执行；流式行为与画像过期未验证。延迟分析含每 10 次调用刷新一次画像的摊销假设。
-
-**资源与复现：** [作者仓库](https://github.com/Ancientshi/PersonaX) 含 MIT 代码与数据子集，但 README 明示 EasyRec 客户端不完整复现 AgentCF/Agent4Rec。[许可范围](https://github.com/Ancientshi/PersonaX/blob/master/LICENSE)明确排除 Amazon 数据、notebook 输出、EasyRec，以及第三方代码、依赖和权重；这些资产不随项目 MIT 许可获得授权。此范围由独立审查补充，本条原始 NOTICE 抓取曾遇 cache miss。
-
-**实际阅读范围：** PDF §§4–5、Limitations/Ethics、官方仓库 README/文件树。
 
 <a id="method-plum"></a>
 ### M73. PLUM：按序参数化对话记忆
@@ -1863,17 +1567,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - 交叉条目：B77；同篇仅计一次。
 - 资产：[TemporalMemoryDataset](https://github.com/Zyphra/TemporalMemoryDataset) 可见数据；方法代码与明确仓库许可未核实。论文的代码发布承诺不等于已发布代码；论文 CC BY 4.0 不外推至仓库。
 - 阅读范围：§§3–6、Appendix A.1–A.3、README、仓库根目录。
-
-<a id="method-prime"></a>
-### M76. PRIME：个人语义记忆与个性化思考
-
-研究情景与语义记忆配置，再以自蒸馏生成个性化思考；**主要报告配置不包含 episodic memory**。CMV 使用真实 Reddit 历史，涉及 41 位作者、133 个测试查询、7,514 段历史互动，但属于离线回复排序，不是用户与 agent 的现场实验。Llama-3.1-8B Hit@3 为 45.79，非个性化基线为 36.77；不能外推为行动成功或在线适应证据。
-
-- 原文与版本：[PRIME: Large Language Model Personalization with Cognitive Dual-Memory and Personalized Thought Process，2507.04607v3](https://arxiv.org/html/2507.04607v3)，2025-09-26。仓库短标题为同篇别名。
-- 资产：[官方仓库](https://github.com/launchnlp/LM_Personalization) 有 README 和数据；框架代码仍标为整理中，许可未核实。论文 arXiv 非独占分发许可不构成代码许可。
-- 阅读范围：§§3–7、limitations、README、仓库根目录。
-
-核验边界：仅检查上述原文章节与资源页；未安装复现、训练、独立跑分或安全审计。资产状态核验于 2026-11-01。
 
 <a id="method-memweaver"></a>
 ### M77. MemWeaver
@@ -1926,18 +1619,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **边界**：直接个人记忆研究；非真人长期部署，GPT-4 单模型，时间戳与遗忘未解决。
 - **资源**：原文有提示与构建说明；未找到官方代码/数据发布，不能推定资产许可。
 
-<a id="method-lc-rag-copa"></a>
-### M81. 方法与人机证据 — LC-RAG / Copa
-
-[Personalizing Student-Agent Interactions Using Log-Contextualized Retrieval-Augmented Generation (RAG)](https://arxiv.org/html/2505.17238v3) — AIED25 Workshop on Epistemics and Decision-Making in AI-Supported Education；v3 2026-04-18，非主会论文。
-
-**核验日期 / 阅读范围**：2026-11-01；§§3–5 相关段落、arXiv 元数据、官方补充仓库 README / 根目录。
-
-- **机制**：RQ1 用 GPT-3.5-Turbo 将学生对话与操作日志形成检索摘要；Copa 结合当前模型与专家模型。
-- **证据**：RQ1：18 名同意参与的学生、216 片段、五种嵌入配置，GPT-4o 裁判进行检索比较；RQ2：18 名唯一学生的课堂/焦点组质性研究，其中 2 名也参加了 RQ1，不能将两组人数相加。
-- **边界**：相邻教育个性化，非持续个人记忆；五种嵌入有一种明显退步，存在错误建议及过度依赖，未证明因果学习收益。
-- **资源与许可**：报告 IRB、学生 assent / 家长 consent；[官方补充仓库](https://github.com/claytoncohn/AIED25_Supplementary_Materials)仅见六个提示文件及 README，未见根许可或原始学生数据。
-
 <a id="method-dam-llm"></a>
 ### M82. 方法 — DAM-LLM
 
@@ -1982,24 +1663,6 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 
 **资源 / 实际阅读范围：** [O-Mem](https://github.com/OPPO-PersonalAI/O-Mem) 与 [PDR-Bench](https://github.com/OPPO-PersonalAI/PersonalizedDeepResearchBench) 仓库可访问，均有 Apache-2.0；不因此推定所有上游数据权利相同。论文 Hugging Face 链接是论文页。已读 §§3–5、评测限制、版本记录、仓库 README / 目录 / 许可，以及 PERSONAMEM 模拟数据说明；未复现。
 
-<a id="method-eclair"></a>
-### M86. ECLAIR：企业助手中的交互澄清〔相邻能力〕
-
-[ECLAIR: Enhanced Clarification for Interactive Responses](https://arxiv.org/html/2503.15739v1) — IAAI-25 Emerging Applications，AAAI proceedings 39(28):28864–28870；查阅 arXiv v1，2025-03-19。[正式出版记录](https://ojs.aaai.org/index.php/AAAI/article/view/35152)。本条是完整论文，非 `2503.20791` 演示论文。
-
-**类型 / 能力：** 可迁移的企业域澄清方法，不是长期个性化方法。汇总句子、产品和实体歧义检测结果与领域知识，在统一提示中决定是否澄清并生成问题。
-
-**证据与边界：** 评测来自 AEP 真实客户查询的100个困难样本，已按历史改写和歧义检测筛选，并非随机生产流量。需澄清类 precision 从 .732 升至 .904，但 recall 从 .833 降至 .635、F1 从 .779 降至 .746；宏平均 F1 为 .657，基线 .520。用户画像检索被列为未来工作，98% precision 是部署目标而非结果。没有长期个性化收益证明。
-
-**资源 / 实际阅读范围：** 本次未找到官方代码或客户数据公开发布；arXiv 分发许可不构成代码 / 数据许可。已读架构、实验、经验与部署章节、正式出版记录，并检索作者资源；未复现。
-
-<a id="method-alignx"></a>
-### M87. 用户级偏好对齐
-
-**From 1,000,000 Users to Every User: Scaling Up Personalized Preference for User-level Alignment** — ACL 2026 Long Papers，2026.acl-long.1391；同时核读 arXiv 2503.15463v3（2025-05-22）。[正式论文](https://aclanthology.org/2026.acl-long.1391/)｜[arXiv v3](https://arxiv.org/html/2503.15463v3)｜[新版代码](https://github.com/AntResearchNLP/AlignX-Family)｜[独立仓库](https://github.com/JinaLeejnl/AlignX)｜[数据卡](https://huggingface.co/datasets/JinaLeejnl/AlignX)
-
-AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐。阅读范围：arXiv v3 §3–7、局限/伦理附录；正式版结果、局限与伦理；官方仓库和数据卡。131 万余条是构造的偏好样例，不是同等数量真人；源数据含论坛/既有对齐数据，画像信号经组合或生成。离线偏好准确率与模型裁判结果不证明长期真人适应或外部行动授权。正式版说明标识符移除与 PII 过滤，但不是同意或隐私保证。HF 数据卡标注 MIT；代码根许可证未确认；论文数量与当前数据查看器数量须分开记录。
-
 <a id="method-caffeine"></a>
 ### M88. 情境感知画像精炼
 
@@ -2019,29 +1682,206 @@ AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐�
 
 实际阅读范围：版本页面；原文方法、训练指令、实验设置、评估与挑战相关段落；仓库目录、README 的流程、权重及许可声明。未下载或验证权重、未执行脚本、未逐条审查全部训练数据。
 
-<a id="method-safari"></a>
-### M90. SAFARI / KBP
+<a id="agent-methods"></a>
+<a id="方法-b规划工具反思主动性与协作"></a>
+<a id="planning-action-methods"></a>
+## 方法：规划、工具与行动
 
-**Large Language Models as Source Planner for Personalized Knowledge-grounded Dialogues（SAFARI）**｜Findings of EMNLP 2023，9556–9569；核读 arXiv 2310.08840v1（2023-10-13）。**定位：画像与知识依赖下的知识源规划方法；KBP 是随论文提出的评测数据，不另计论文。** 将知识源选择、检索和回答组装分开，依据预先给定的依赖关系决定调用哪些来源及顺序。KBP 包含 2,477 段中文对话、24,554 条话语，由标注员按指定系统画像与知识同时编写两方角色；不是自然个人用户的真实使用记录。人工评估为每模型 100 条回答、3 位标注员，且该比较不计入规划效果。**自动指标另有测试集选择风险：Appendix C 明确每 500 次训练迭代在 KBP 测试集评估 NLI 模型，并保存测试集表现最高的 checkpoint，用其计算 P.C/K.C；这可能使自动一致性指标偏乐观，不能视作未触碰测试集的独立评估器。此风险针对 NLI 自动指标，不应混同于上述独立报告的人工打分。**限制包括级联错误、检索噪声、知识过期及未覆盖其他来源。**知识源调用不等于外部行动，更不验证授权。** 官方仓库提供数据及实现目录，但未见根目录许可证，GitHub license 元数据为空；复用许可待确认，未运行复现。
+如何让偏好与经验影响规划、工具调用、技能或协作？计划与生成的调用不一定是已完成的真实行动。外部经验积累不等于参数级持续学习，多代理也不自动更可靠。
 
-来源：
-- [正式 venue、复数标题及 DOI 10.18653/v1/2023.findings-emnlp.641](https://aclanthology.org/2023.findings-emnlp.641/)
-- [准确 arXiv 版本；摘要页标题使用单数 Dialogue](https://arxiv.org/abs/2310.08840v1)
-- [原文：§§3–6、Limitations、Ethics Statement、Appendix C/E](https://arxiv.org/html/2310.08840v1)
-- [作者仓库，默认分支 master](https://github.com/hrwise-nlp/SAFARI)
+<a id="method-generative-agents"></a>
+### M7. Generative Agents · 记忆—反思—规划
 
-实际阅读范围：正式出版元数据；arXiv 原文数据采集、方法、评估和限制章节，补读 Appendix C 的 NLI checkpoint 选择及 Appendix E 的人工评估差异；仓库根目录、README 及 GitHub license 元数据。确认 kbp.zip、lora、tools、unsupervised 存在；未解压数据、未执行实现。
+[Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442) — 2023。
 
-<a id="method-unims-rag"></a>
-### M91. UniMS-RAG
+**核验日期 / 阅读范围**：2026-10-31；论文摘要；官方 README 的模拟环境、代码范围与模型调用说明。
 
-**UniMS-RAG: A Unified Multi-source Retrieval-Augmented Generation for Personalized Dialogue Systems**｜2024，arXiv 2401.13256v3（2024-11-26；正式 venue 未核实）。**定位：统一知识源选择、相关性评估与回答生成的个性化对话方法。** 通过 acting/evaluation tokens 联合训练，并结合相关性与 NLI 一致性分数迭代修订证据和回答。实验使用 DuLeMon Both 与 KBP，涉及用户画像、系统画像及外部知识；不能全部解释为个人用户记忆。“acting”仅表示检索来源选择，**不是有授权的外部执行**。人工评估为每数据集/模型 100 条回答、3 位标注员，约 82% 一致率。**重要评估限制：§V-D 明确以 KBP 测试集上的最高表现选择 NLI 评估器 checkpoint，可能使自动一致性指标偏乐观；不能称为独立、未触碰测试集的评估器。** 未核实专用官方实现或其许可证；论文提供训练细节及上游代码链接，未运行复现。
+- **核心**：记录经历、检索相关记忆，形成高层反思并据此规划行为；在 25 个虚拟角色的小镇中研究互动。
+- **关联与边界**：为长期状态与计划提供结构思路；目标是可信的人类行为模拟，不是替真实用户办事或履行授权的证据。
+- **资源**：[官方模拟器、环境与回放说明](https://github.com/joonspk-research/generative_agents)。依赖外部模型调用，不应当作独立模型权重发布。
 
-来源：
-- [准确版本与元数据](https://arxiv.org/abs/2401.13256v3)
-- [原文：方法 §§IV–V；评估器选择 §V-D；人工评估 §VII-D](https://arxiv.org/html/2401.13256v3)
+<a id="method-react"></a>
+### M8. ReAct · 交替推理与行动
 
-实际阅读范围：版本页面；原文方法、数据集、指标、训练与评估器选择、主结果及人工评估段落；针对官方实现与 venue 的定向检索。未发现可核实的专用官方实现，不能据此断言实现不存在；未独立重训评估器或复现分数。
+[ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — 2022 预印本；ICLR 2023。
+
+**核验日期 / 阅读范围**：2026-10-31；论文摘要及 arXiv 版本说明；官方 README 与代码/提示目录。
+
+- **核心**：交替生成任务推理、工具动作，并使用返回观察修正后续步骤。
+- **关联与边界**：通用工具执行循环的基础；原实验为问答、事实核验与交互环境，不自带长期记忆、权限治理或全天候调度。
+- **资源**：[官方代码、提示样例与实验 notebook](https://github.com/ysymyth/ReAct)。主要为 prompting 实现，不是完整个人助理。
+
+<a id="method-reflexion"></a>
+### M9. Reflexion · 把失败反馈留给下一次
+
+[Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) — NeurIPS 2023。
+
+**核验日期 / 阅读范围**：2026-10-31；论文摘要；官方 README 的实验、日志与运行说明。
+
+- **核心**：把任务反馈变为语言反思，保存在 episodic memory 中供后续尝试使用，而非直接更新模型权重。
+- **关联与边界**：可借鉴任务重试与经验记忆；效果依赖反馈质量与重试预算，不保证“想一想”就能纠错或持续自我提升。
+- **资源**：[官方代码、实验日志与示例](https://github.com/noahshinn/reflexion)。原评测含决策、推理与编码，不是长期私人助理研究。
+
+<a id="method-toolformer"></a>
+### M10. Toolformer · 学会何时调用工具
+
+[Toolformer: Language Models Can Teach Themselves to Use Tools](https://arxiv.org/abs/2302.04761) — 2023 预印本。
+
+**核验日期 / 阅读范围**：2026-10-31；论文摘要与 §7 局限；Meta 官方论文页及其提供的资源入口。
+
+- **核心**：少量 API 示范引导模型生成候选调用，按对后续语言预测的帮助筛选，再用增强语料训练。
+- **关联与边界**：说明工具调用可被学习；原方法不支持链式或交互式工具使用，不能当成完整多步 Agent。
+- **资源**：[官方研究页](https://ai.meta.com/research/publications/toolformer-language-models-can-teach-themselves-to-use-tools/)。所查论文 / 官方页未给出对应完整代码、训练数据和模型权重入口；不将第三方复现标作官方发布。
+
+<a id="method-voyager"></a>
+### M13. Voyager · 可复用的可执行技能
+
+[Voyager: An Open-Ended Embodied Agent with Large Language Models](https://arxiv.org/html/2305.16291v2) — 查阅 2023 预印本 v2，2023-10-19。
+
+**核验日期 / 阅读范围**：2026-10-31；论文摘要、代码迭代描述、§3.1 与实验任务概述；官方 README 及许可。
+
+- **核心**：Minecraft 世界状态、自动课程目标及已有技能 → 可执行代码；借环境反馈、错误和自验证迭代，成功技能存入库供后续任务复用。
+- **关联与边界**：通用具身 / 游戏方法，可借鉴技能积累；评测探索物品、里程碑、移动范围和新任务迁移。lifelong learning 主要累积外部技能，不是持续更新底座权重；不能从 Minecraft 外推邮件、日历或真实电脑效果。
+- **资源**：[官方代码、prompt 与技能库](https://github.com/MineDojo/Voyager)，MIT；Minecraft 与模型 / API 分别授权。原实验使用当时的 GPT-4 / GPT-3.5 API，更换模型不属于严格复现。
+
+<a id="method-expel"></a>
+### M14. ExpeL · 从多任务经历提炼经验
+
+[ExpeL: LLM Agents Are Experiential Learners](https://arxiv.org/html/2308.10144v3) — AAAI 2024；查阅 v3，2024-12-20。
+
+**核验日期 / 阅读范围**：2026-10-31；论文摘要、§5.1 任务 / 指标 / 四折设置；官方 README 与许可。
+
+- **核心**：从训练任务中的成功 / 失败经历提炼自然语言经验，新任务检索经验和示例来行动，不更新底座权重；重点是跨任务汇总与复用，而非只反思一次失败。
+- **关联与边界**：可借鉴助理的经验记忆；评测含 Wikipedia QA / 事实核验、ALFWorld 家务和 WebShop 购物，分别用 EM、成功率、购物奖励等。四折经验增长不是长期真人持续学习，过时经验与隐私需另测。
+- **资源**：[官方代码、数据目录和 prompt](https://github.com/LeapLabTHU/ExpeL)，Apache-2.0；各环境和数据集许可分别检查。无参数微调不代表无成本，轨迹采集与经验提取仍需模型调用。
+
+<a id="method-autogen"></a>
+### M15. AutoGen · 多代理对话与人类介入（历史）
+
+[AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation](https://arxiv.org/html/2308.08155v2) — 查阅 2023 预印本 v2，2023-10-03。
+
+**核验日期 / 阅读范围**：2026-10-31；论文摘要、§3 的 A1–A4 应用 / 评测及 human-in-the-loop 讨论；当前官方 README 与 legal notices。
+
+- **核心**：将 LLM、工具执行和人类输入封装成可对话 Agent；例如数学请求经过代码、执行结果与反馈交换后产生答案。
+- **关联与边界**：通用多代理编排研究，不是个人化 benchmark。MATH、检索 QA、ALFWorld、OptiGuide 使用各自指标；多 Agent 或人类在环不自动带来权限隔离、可靠授权或更低成本，仍需单代理基线与安全测试。
+- **资源**：[官方仓库](https://github.com/microsoft/autogen)：代码 MIT，文档 / 其他内容 CC BY 4.0。当前 README 明确标“已归档、不再由 Microsoft 维护”；保留为研究沿革，不推荐为仍维护的生产选型。现行包结构不同于 2023 论文 API，未定位论文对应提交。
+
+<a id="method-petoolllama"></a>
+### M22. PEToolLLaMA · 训练偏好感知的工具调用
+
+[PEToolLLM: Towards Personalized Tool Learning in Large Language Models](https://aclanthology.org/2025.findings-acl.1107/) — Findings of ACL 2025；与 B33 为同一论文。PEToolLLM 是论文名，PEToolBench 是评测集，PEToolLLaMA 是方法。
+
+**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2502.18980v1) §3 指标与 §4 方法概述；官方 README、LICENSE 与数据文件列表，非全文通读。
+
+- **机制**：先用历史、指令与候选工具做个性化 SFT，再用 DPO 改善偏好一致的调用选择。
+- **证据**：PEToolBench 三类合成历史设置下的工具与参数准确率。
+- **边界**：模型训练与持久记忆管理不是一回事；没有证明真实服务完成、偏好在线变化或安全副作用控制。
+- **资源**：[官方训练 / 测试脚本](https://github.com/travis-xu/PEToolBench)、[数据](https://huggingface.co/datasets/travisxu/PEToolBench/tree/main)。仓库 Apache-2.0，上游条款仍需核对；未确认完整权重发布或运行复现。
+
+<a id="method-me-agent"></a>
+### M29. Me-Agent · 用经验与分层记忆解释模糊指令
+
+[Me-Agent](https://arxiv.org/html/2601.20162v1) — 与 B42 同一论文，不另计。
+
+**核验日期／实际阅读范围**：2026-11-01；v1 §4.2–4.4 方法、§5.1–5.2 设置与结果相关段落及 Limitations；作者仓库根目录与 README。 非全文逐项通读；未安装、运行或复现实验。
+
+- **机制**：VLM 评价执行轨迹，提炼自然语言经验用于提示词；分层记忆按应用检索流程和内容偏好。方法称无参数更新，不应写成对基础模型进行个性化微调。
+- **证据／边界**：User FingerTip 与通用移动任务评测；UI 更新会使位置与流程经验失效，当前地点等情境因素未充分纳入。推断“常用选择”不等于获得新操作授权。
+- **资源**：[作者实现](https://github.com/Gianthaha/personal-mobile-agent)；数据规模、资源完整性与许可范围的限制同 B42。
+
+<a id="method-puma"></a>
+### M31. PUMA · 从行为历史学习工具参数
+
+[Large Language Models Empowered Personalized Web Agents](https://arxiv.org/html/2410.17236v2) — WWW 2025；v2，2025-03-24。PersonalWAB 见 B44，同一篇论文。
+
+**实际阅读范围**：§3、§5–6、表5、附录A.3 / B；版本记录、项目页、README、数据目录及 LICENSE；非全文逐项通读，未运行。
+
+- **机制**：检索行为历史并保留任务相关字段，结合启发式 SFT 与结果排序 DPO 学习函数参数。
+- **证据与边界**：表5整体 function/result accuracy 为 .994/.406；去除任务特定记忆为 .994/.373，但推荐 result accuracy 仍仅 .054。不同指标不能统称真实任务成功率；购物领域与模拟用户限制见 B44。
+- **资源**：[作者仓库](https://github.com/HongruCai/PersonalWAB)及数据目录可读；根许可 **CC BY-NC 4.0**，tau-bench 继承部分另保留 MIT。未确认发布的 PUMA 检查点，未验证完整数据；论文许可、代码/数据许可及 Amazon/模型条款不可互相替代。
+
+<a id="method-coloragent"></a>
+### M39. ColorAgent · 个性化移动 GUI 执行与澄清
+
+[ColorAgent: Building A Robust, Personalized, and Interactive OS Agent](https://arxiv.org/html/2510.19386v2) — 2025 技术报告；查阅 v2，2025-10-24。
+
+**核验日期 / 阅读范围**：2026-11-01；§§2–6，重点 §4 实验、§5 个性化 / 交互及 §6 后续工作；官方 README、LICENSE 与 ColorGUI-32B 模型卡。
+
+- **机制**：step-wise RL、自演进训练及检索、任务编排、分层反思；从历史轨迹提炼 SOP 与用户画像，重写当前请求 / SOP；另训练 ask-agent 进行澄清。这里主要是 **Android 移动端，不是桌面执行**。
+- **证据**：AndroidWorld / AndroidLab 测动态环境任务成功；MobileIAR 测与用户意图标注一致的动作，VeriOS-Bench 测逐步动作匹配。不能把整体任务成功率直接称为个性化分数，也不能把逐步正确率视为完整任务完成率。
+- **边界**：未证明真人长期满意度；作者指出现有任务与真实复杂使用存在差距，沙箱及细粒度权限仍待完善。遇到不确定情境询问用户不是全面安全保障。
+- **资源**：[官方 MobileUse 仓库](https://github.com/MadeAgents/mobile-use)支持该报告，代码 [MIT](https://github.com/MadeAgents/mobile-use/blob/main/LICENSE)。2026-07-10 后续发布的 [ColorGUI-32B](https://huggingface.co/MadeAgents/ColorGUI-32B)模型卡标 Apache-2.0，基于 Qwen3-VL；**不等同于论文中的 GUI-Owl / Qwen2.5 实验检查点**。固定所用代码、模型与评测版本。
+
+<a id="method-warpp"></a>
+### M40. Agent WARPP · 用户属性驱动的运行时流程裁剪
+
+[Agent WARPP: Workflow Adherence via Runtime Parallel Personalization](https://arxiv.org/html/2507.19543v1) — 2025 预印本；ICML 2025 Multi-Agent Systems Workshop；查阅 v1，2025-07-23。
+
+**核验日期 / 阅读范围**：2026-11-01；§§3–6、§§8–9；官方仓库 README 与 LICENSE。
+
+- **机制**：无需额外训练；Personalizer 根据用户属性裁剪条件流程及工具集合，并与模拟身份验证并行，再交给 Fulfillment 执行。保留相关工具的成功、失败与用户回答分支；这是属性条件化执行，不是持续学习个人偏好。
+- **证据**：银行、航班、医院付款共五种意图，各 50 个样例；使用合成客户数据与 GPT-4o 模拟用户。分别报告轨迹匹配 / LCS、工具 F1、参数匹配、延迟及 judge 评价的裁剪相关性 / 完整性。
+- **边界**：多数工具调用与 MFA 为模拟，部分复杂流程连接真实 API；不能因此称为生产部署或已验证身份安全。作者明确将安全、隐私、人参与及会话质量排除在本研究范围外；高负载、变化 API 与更复杂流程仍待检验。
+- **资源**：[官方代码 / 数据](https://github.com/emiliamazzo/WARPP)，[MIT LICENSE](https://github.com/emiliamazzo/WARPP/blob/main/LICENSE)已核对；工作坊论文不要标作 ICML 主会论文。
+
+<a id="method-ptool"></a>
+### M46. PTool · 个性化工具调用的合成训练数据
+
+与 B51 为[同一论文](https://arxiv.org/html/2505.04072v1)，实读范围相同。
+
+- **机制：** 结构化 API/画像合成、角色扮演式请求与答案生成、规则/模型核验，再进行 LoRA SFT。
+- **证据与边界：** Qwen2.5-7B 完整准确率由 7.38% 升至 26.78%；测量生成调用，非真实工具执行。
+
+<a id="method-iotgpt"></a>
+### M52. IoTGPT
+
+**方法：个性化设备执行与子任务记忆复用**
+
+[Leveraging LLMs for Efficient and Personalized Smart Home Automation](https://arxiv.org/abs/2601.04680) · **arXiv v1，2026-01-08**；未确认正式发表场所。
+
+- **机制：** Decompose–Derive–Refine 流程、层级任务记忆和环境属性偏好表，将指令转换为 SmartThings 操作并复用子任务。
+- **证据：** 97 个任务、26 个模拟设备；warm 条件重做已学习任务的改写版本。15 名真人参加短时研究，但偏好来自 **100 条 GPT-4o 合成日志**，不是参与者自身历史。
+- **边界：** 不证明真实家庭长期个性化；偏好冲突和设备副作用尚未完整处理。**不安全或幻觉指令仍需用户审核**，自动安全防护属于未来工作。
+- **资源：** 尚未找到并核实作者官方实现与许可证；不写成已开源。
+- **实际阅读：** 系统、实现、比较实验、两项用户研究及局限章节；未安装或复现。
+
+<a id="method-aipom"></a>
+### M58. AIPOM — 可检查、可修改的多 Agent 计划
+- **论文**：*AIPOM: Agent-aware Interactive Planning for Multi-Agent Systems*，EMNLP 2025 System Demonstrations，85–96。
+- **方法与证据**：聊天与可编辑图联合表达任务、Agent 分配、依赖和输出。实验使用 50 道 GSM8K、50 道 BBH 算术题及人工扰动的计划；真人先导研究为 9 名有 LLM 经验的研究机构成员、12 道数学题。参与者反馈离线后处理，未要求其确认/拒绝实际修订结果。
+- **边界**：支持计划检查与修改，不是执行权限、敏感操作授权或安全保证；不能推广为一般用户的长期信任。系统是集中编排的功能模块，不是自主主动 Agent 群。
+- **资源与实读范围**：[论文](https://aclanthology.org/2025.emnlp-demos.7.pdf) §§2–4、6、附录 C；[官方代码/演示](https://github.com/megagonlabs/aipom)。根 `LICENSE` 为 BSD-3-Clause；数据和依赖许可独立，README 另列第三方材料限制；web-search 默认禁用。未安装复现。
+
+<a id="method-opencha"></a>
+### M63. openCHA — 健康范围内的个体数据与分析工具编排
+- **论文**：*Conversational health agents: a personalized large language model-powered agent framework*，JAMIA Open 8(4), ooaf067，2025-07-06；[DOI](https://doi.org/10.1093/jamiaopen/ooaf067)。早期 arXiv v5（2024-09-25）为两个演示、四用例；正式版为两个演示、五用例，不混用版本。
+- **方法与证据**：planner/executor、数据管道及外部分析工具组合个体健康记录、知识检索与多步操作。正式版总结100道糖尿病问题、500次情绪问题测试及45人既有居家监测数据的PPG心率估计；这些是不同用例，不能汇总为统一参与者试验。
+- **边界**：健康研究框架，不是治疗改善、诊断安全或长期临床部署证据。真实纵向健康数据不等于Agent进行了纵向干预。表现取决于外部来源及配置；论文明确HIPAA/GDPR合规取决于实施，框架本身不管理部署与扩展性。
+- **资源与实读范围**：[正式版](https://academic.oup.com/jamiaopen/article/8/4/ooaf067/8186991) 方法、演示/用例、Table 4与讨论；对照[v5](https://arxiv.org/html/2310.02374v5) §§3–5；[官方代码](https://github.com/Institute4FutureHealth/CHA) MIT，含文档/示例/测试。代码许可不是临床使用认证或数据再使用授权。
+
+<a id="method-llm-personalize"></a>
+### M67. LLM-Personalize · 偏好驱动具身规划
+
+[LLM-Personalize: Aligning LLM Planners with Human Preferences via Reinforced Self-Training for Housekeeping Robots](https://aclanthology.org/2025.coling-main.98/) — COLING 2025；arXiv `2404.14285v3` 为同一工作。
+
+**核验日期 / 阅读范围**：2026-11-01；原文 §3 方法、§4 实验设置及 Table 1、§6 局限；作者仓库 README、文件列表及许可标识。
+
+- **输入 → 输出**：局部场景观察、任务指令与偏好反馈 → 场景图驱动的高层行动及低层执行；以模仿学习启动，再筛选符合偏好的交互进行强化自训练。
+- **证据 / 测量**：Housekeep 仿真，使用其人类标注的物体—容器偏好；4 个场景，每场景 5 个测试任务、每任务 5 次运行。“成功率”是净纠正错放物体的比例，可为负，**不是整项任务完成率**。
+- **边界 / 反例**：Scene 4 测试集的 ST2 得分为 20.4，低于仅模仿学习（IL）的 25.7；但 ST2 相对 ST1 在四个测试场景均提升，不能混淆比较基线。没有真实家庭或实体机器人部署验证。
+- **资源**：[作者代码](https://github.com/gdg94/codellmpersonalize)，仓库标 MIT；含规划、仿真和微调流程，依赖旧版 OpenAI SDK、GPT-3.5 和 Habitat。公开不代表当前可直接复现。
+
+<a id="method-personal-travel-solver"></a>
+### M68. Personal Travel Solver · 隐式偏好与约束求解
+
+[Personal Travel Solver: A Preference-Driven LLM-Solver System for Travel Planning](https://aclanthology.org/2025.acl-long.1339/) — ACL 2025 Main。RealTravel 是同文数据集，不另计论文。
+
+**核验日期 / 阅读范围**：2026-11-01；原文 §§3.1、3.2–3.8 方法与数据构建、§4 结果、Appendix B 指标；作者仓库 README 与顶层文件列表。
+
+- **输入 → 输出**：旅行请求、评论历史及封闭旅行数据库 → 满足显式约束、兼顾推断偏好的行程；结合 LLM 与 SCIP 数值求解器。
+- **数据 / 测量**：Google Local 评论与 POI 元数据是真实来源，但旅行请求由约束采样、可解性验证和 LLM 改写构造。测试集 1,000 条；最终约束通过率 96.60%，个性化另由 DeepSeek-V3 成对裁判评价。
+- **边界 / 反例**：约束通过不等于真实旅客满意，也不证明能够预订或执行行程；真人评论不能将构造任务变成真实委托。
+- **资源**：[官方入口](https://github.com/cliftclift/PTS) 当前提供 RealTravel 数据及处理目录；未确认完整 PTS 求解实现公开，未见顶层明确许可证，勿标作“完整开源系统”。
 
 <a id="method-vaiage"></a>
 ### M92. Vaiage
@@ -2056,6 +1896,187 @@ AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐�
 - [评估目录：存在性已核实](https://github.com/Binwen6/Vaiage/tree/main/evaluation)
 
 实际阅读范围：版本页面；原文架构、用户流程、评估及结论相关段落；仓库目录、README、license 元数据及 evaluation score.txt。该样例请求四天，输出只有两个行程 day 对象仍获 9 分，是裁判可靠性的具体警示，不是总体错误率。evaluation/eval.json 因连接器 HTTP 400（文件过大或不支持）、网页回退 cache miss 而未读；不能声称已审完全部人工评估数据。未安装、执行或独立复现系统。
+
+<a id="proactive-clarification-methods"></a>
+## 方法：主动性与澄清
+
+何时主动帮助、提问，或避免打扰？各条目仍区分目标导向对话、相邻的企业澄清能力与长期个人助理。
+
+<a id="method-proactive-agent"></a>
+### M11. Proactive Agent · 从活动预测可接受的帮助
+
+[Proactive Agent: Shifting LLM Agents from Reactive Responses to Active Assistance](https://arxiv.org/abs/2410.12361) — 2024 预印本；ICLR 2025，与 B6 同一论文。
+
+**核验日期 / 阅读范围**：2026-10-31；与 B6 同次核验：论文摘要、官方 README 的流程/发布说明及权重文件列表。
+
+- **核心**：以活动轨迹和人类接受 / 拒绝标注训练 reward model，结合环境生成数据，再训练主动提出帮助的 Agent。
+- **关联与边界**：直接研究主动助理；预测用户需要不等于被授权替用户行动，部署还需处理活动采集隐私与误打扰。
+- **资源**：[代码 / 数据 / 评测](https://github.com/thunlp/ProactiveAgent)、[官方链接的 Agent 与 Reward Model 权重](https://huggingface.co/YancyLee/ProactiveAgent/tree/main)。权重、底座与代码许可分别确认。
+
+<a id="method-memoproagent"></a>
+### M12. MemoProAgent · 用记忆决定是否值得打扰
+
+[MemoProAgent: Toward Memory-Driven Proactive Assistance](https://arxiv.org/html/2610.22671v2) — 2026 预印本 v2，2026-10-21；与 B11 同一论文。
+
+**核验日期 / 阅读范围**：2026-10-31；与 B11 同次核验：v2 摘要、§3.3 指标、方法概述；官方 README 及 LICENSE。
+
+- **核心**：用图记忆组织个人历史，结合当前视频活动检索相关经历，再以打扰价值门控决定何时向生成器提供记忆、何时提醒；论文另有 RL 后训练阶段。
+- **关联与边界**：直接研究无需显式提问的主动助理。MemoProBench 测提醒内容、时机和重复干扰；论文构造历史不是长期真人部署，推断需要也不是执行授权。
+- **资源**：[官方推理 harness](https://github.com/facebookresearch/Memo-Pro-Agent)为 CC BY-NC 4.0；[历史数据（受限）](https://huggingface.co/datasets/facebook/MemProBench)据官方 [README 数据说明](https://github.com/facebookresearch/Memo-Pro-Agent#data-and-reproducibility)当前为 private，须有获授权的 Hugging Face 访问权限。本次未取得下载访问，独立数据许可仍未确认；[Ego4D 视频](https://ego4d-data.org/)须另行申请并遵循其条款。公开推理代码不等于完整 RL 训练代码或权重复现包。
+
+<a id="method-cep"></a>
+### M18. CEP · 澄清、执行与规划分工
+
+[Ask-before-Plan](https://aclanthology.org/2024.findings-emnlp.636/) — 与 B30 同一篇，勿重复计数。
+
+**核验日期 / 阅读范围**：2026-11-01；摘要、评测设置及附录 B.3、官方 README 的训练和推理入口。
+
+- **机制**：澄清、执行、规划三个角色；对澄清和静态执行做轨迹微调，动态执行使用记忆回想。
+- **边界**：角色分工不等于长期用户建模或执行授权；模块与整体成绩均须按各自协议解读，整体最终规划仍使用真实标注对话（附录 B.3）。资源及许可见 [B30](#benchmark-ask-before-plan)。
+
+<a id="method-ppp"></a>
+### M30. PPP · 学习主动澄清与个性化交互
+
+[Training Proactive and Personalized LLM Agents](https://arxiv.org/html/2511.02208v2) — COLM 2026；v2，2026-08-23。评测环境 UserVille 见 B43，同一篇论文。
+
+**实际阅读范围**：v2 §4–8、表1、附录A；版本记录、会议目录及作者 README / 目录 / LICENSE；非全文逐项通读，未运行。
+
+- **机制**：在偏好条件化模拟用户环境中，以 GRPO 联合优化任务表现、澄清负担和偏好遵循；不等于持久个人记忆或终身用户建模。
+- **证据与边界**：自动评测与真人研究须分开，见 B43。提问增加可能提高交互负担，模拟器中的低负担不能直接代表真人体验。
+- **资源**：[作者代码](https://github.com/sunnweiwei/PPP-Agent)为 Apache-2.0；README 链接权重及数据，但本次相应网页不可访问，下载与资产许可未确认，不能推断未发布。运行说明另要求 vLLM bias patch；仓库许可不自动覆盖模型、数据或上游 benchmark。
+
+<a id="method-curio"></a>
+### M50. CURIO · 用用户模型的改进奖励主动发现偏好
+
+- **论文与版本：** [Enhancing Personalized Multi-Turn Dialogue with Curiosity Reward](https://arxiv.org/html/2504.03206v3)，[NeurIPS 2025](https://proceedings.nips.cc/paper_files/paper/2025/hash/e48d5af30c95be08762489c5141f7fbc-Abstract-Conference.html)；arXiv v3，2025-10-02。
+- **机制：** 在多轮 RLHF 中加入逐轮用户类型信念改进的内在奖励；比较准确率、熵和势函数差分等奖励设计。
+- **证据：** 运动推荐任务将采样属性按规则映射到八类策略；200 段模拟对话中最佳 DiffAcc 成功率 87.5%，MTRLHF 为 68.5%，SFT 为 54%。教育对话采用两种预设学习偏好。十名学生评审生成对话，非作为实时学习者使用系统。
+- **边界：** 静态预设类型与 LLM 用户模拟限制外推；某些熵奖励出现偏向单一类型的行为。人工评审中 DiffLogAcc 相对 MTRLHF 的个性化偏好胜率约 76%，但附录的 152/200 与表格的 75.75% 不完全一致。质量偏好 90/200、p=.179，不能解释为证明等效；也未测量真实学习或健康效果。
+- **资源与实读：** [作者项目页](https://sites.google.com/cs.washington.edu/curio)已核验，未核实官方代码、权重、数据集或其许可证，不标为开源。实读 v3 方法、§§4–5、局限、附录 B.1–B.3 及官方会议信息；未复现。
+
+<a id="method-topdial"></a>
+### M60. TopDial · 个性化目标对话的角色扮演数据生成
+
+[Target-oriented Proactive Dialogue Systems with Personalization: Problem Formulation and Dataset Curation](https://arxiv.org/html/2310.07397v2) — EMNLP 2023; arXiv v1 2023-10-11, read v2 2023-10-13.
+
+用户、系统和moderator三个gpt-3.5-turbo角色，以重构DuRecDial 2.0、随机画像slot和Big Five描述生成18,009个多轮对话；目标为系统侧〈对话行为、主题〉。100个目标的配对对话由模型/人工评价；等训练量微调DialoGPT/Alpaca-7B，以混合测试集的BLEU、知识F1、画像F1及target success检验训练资源效果。
+
+**边界：** 合成角色与离线指标，不是真实用户主动帮助接受度；存在幻觉和moderator误判终止。用户第二次明确拒绝目标行为时才触发拒绝终止规则；这不构成部署安全保证。作者提醒目标约束、用户隐私与bot身份透明。
+
+**实读范围：** v2 §3–4、Limitations、Ethical Considerations；代码/数据链接来自原文，未复现。不另列第二个benchmark条目。
+
+<a id="method-eclair"></a>
+### M86. ECLAIR：企业助手中的交互澄清〔相邻能力〕
+
+[ECLAIR: Enhanced Clarification for Interactive Responses](https://arxiv.org/html/2503.15739v1) — IAAI-25 Emerging Applications，AAAI proceedings 39(28):28864–28870；查阅 arXiv v1，2025-03-19。[正式出版记录](https://ojs.aaai.org/index.php/AAAI/article/view/35152)。本条是完整论文，非 `2503.20791` 演示论文。
+
+**类型 / 能力：** 可迁移的企业域澄清方法，不是长期个性化方法。汇总句子、产品和实体歧义检测结果与领域知识，在统一提示中决定是否澄清并生成问题。
+
+**证据与边界：** 评测来自 AEP 真实客户查询的100个困难样本，已按历史改写和歧义检测筛选，并非随机生产流量。需澄清类 precision 从 .732 升至 .904，但 recall 从 .833 降至 .635、F1 从 .779 降至 .746；宏平均 F1 为 .657，基线 .520。用户画像检索被列为未来工作，98% precision 是部署目标而非结果。没有长期个性化收益证明。
+
+**资源 / 实际阅读范围：** 本次未找到官方代码或客户数据公开发布；arXiv 分发许可不构成代码 / 数据许可。已读架构、实验、经验与部署章节、正式出版记录，并检索作者资源；未复现。
+
+<a id="privacy-safety-methods"></a>
+## 方法：隐私、授权与安全
+
+哪些信息可访问或披露，哪些行动安全或获授权？隐私判断、提示防御与权限机制的保证不同；各条目保留自己的威胁模型与限制。
+
+<a id="method-airgapagent"></a>
+### M26. AirGapAgent · 隔离第三方语境与个人数据筛选
+
+[AirGapAgent: Protecting Privacy-Conscious Conversational Agents](https://arxiv.org/abs/2405.05175) — CCS 2024；v1（2024-05-08）题名为 *Air Gap*，v2（2024-09-18）为 *AirGapAgent*，同一论文。
+
+**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2405.05175v1) §2–6 威胁、设计与实验相关段落；v2 元数据 / 摘要。未逐项比较两版实验。
+
+- **机制**：独立 minimizer 仅依据可信用户任务和资料选出必要数据，交互代理再与不可信第三方对话，降低 context hijacking 泄漏。
+- **证据 / 边界**：合成 20 用户、26 字段、8 任务的隐私 / 效用测试；依赖任务与资料可信假设，非物理隔离、通用防注入或全系统无泄漏证明。摘要的97%保护率是特定设置，不能当总体安全率。
+- **资源**：本次未核实原始官方代码 / 数据发布及许可。后续 AirGapAgent-R 是他人重建评测，不是已验证的原始资产。
+
+<a id="method-collaborative-memory"></a>
+### M27. Collaborative Memory · 跨用户记忆权限
+
+[Collaborative Memory: Multi-User Memory Sharing in LLM Agents with Dynamic Access Control](https://arxiv.org/abs/2505.18279) — 2025 预印本；v1，2025-05-23。
+
+**核验日期 / 阅读范围**：2026-11-01；[v1](https://arxiv.org/html/2505.18279v1) §3–5 方法与实验相关段落、附录 D 合成任务设置。
+
+- **机制**：私有 / 共享双层记忆保留来源记录，按当前 user–agent–resource 权限过滤，支持授权变化。
+- **证据**：MultiHop-RAG、200 条合成企业任务及 SciQAG 动态权限场景。企业任务没有 gold answers，主要报告资源调用，不能宣传为准确率验证。
+- **关联与边界**：适用于个人代理的多用户数据边界，但主要是协作权限管理，不是个人偏好学习。形式化策略与受控实验不等于实现安全审计或防所有推断泄漏。
+- **资源**：本次未核实官方代码 / 数据发布与许可；survey 中重复引文不另算论文。
+
+<a id="method-privacychecker"></a>
+### M41. PrivacyChecker · 决策时的信息流隐私判断
+
+[Privacy in Action](https://aclanthology.org/2025.findings-emnlp.925/) — Findings of EMNLP 2025；查阅 [arXiv v1](https://arxiv.org/html/2509.17488v1)。评测见 B48；同一论文只计一次。
+
+**核验日期 / 阅读范围**：2026-11-01；§3 方法 / 实验、§4 MCP 部署与扩展实验、Limitations；ACL 元数据与作者资源链接。
+
+- **机制**：在行动决策时用提示明确提取 contextual-integrity 信息流，逐流判断可否披露；可选择加入隐私指南，主实验未使用可选指南。可放入系统提示、特定工具说明或独立 MCP 工具。
+- **证据**：同时检查隐私泄露与任务帮助程度；静态 PrivacyLens、live MCP、MCP + A2A 和更复杂流程分别报告，不能把一个设置的降幅泛化至全部部署。
+- **边界**：仍会因流提取、判断和行动不一致而泄露；记忆投毒等对抗场景不是主要验证范围。它是提示驱动缓解，不是强制访问控制、密码学保证或法规合规证明；独立检查工具也不能仅凭名称推断不可绕过。
+- **资源**：同上[作者短链接](https://aka.ms/privacy_in_action)；抓取被 robots.txt 拒绝，当前发布包与许可未确认。论文公开不代表实现已获开放许可。
+
+<a id="method-agentraft"></a>
+### M42. AgentRaft · 执行过程中数据过度暴露检测
+
+[AgentRaft: Automated Detection of Data Over-Exposure in LLM Agents](https://arxiv.org/html/2603.07557v1) — 2026 预印本；查阅 v1，2026-03-08。
+
+**核验日期 / 阅读范围**：2026-11-01；§§3–6，包括实验设置、组件评测与局限；原文资源链接与定向资源检索。
+
+- **机制**：由类型兼容性与语义判断构建跨工具调用图，合成触发指定路径的请求，结合运行时污点轨迹与多模型投票判断非必要数据是否传至外部。
+- **证据**：6,675 是爬取工具的生态调查规模；实际实验为四类场景选定工具集，在 AgentDojo 中实现功能，并使用生成的 PII / 业务资产与 GPT-5.1 Agent。57.07% 指所测 608 条潜在调用链中的 347 条，不是全部商业 Agent 的泄露率。
+- **边界**：依赖内部执行轨迹，未直接审计封闭商业 Agent 或终端用户真实部署。图边准确性、请求有效性、泄露检测与成本指标不能混报；LLM 判断错误和动态工具变化仍有限制。法规文本参与投票不构成法律认证；提示注入检测与运行时防御的扩展讨论不等于已证实安全能力。
+- **资源**：原文未找到作者实现 / 数据发布链接，定向检索亦未确认；**发布状态与实现许可未确认**。AgentDojo 是实验底座，其开放许可不能替代 AgentRaft 实现许可。
+
+<a id="method-raise"></a>
+### M48. RAISE · 选择性获取个人安全背景
+
+与 B55 为[同一论文](https://arxiv.org/html/2505.18882v5)，实读范围相同，仅计一次。
+
+- **机制：** 离线 LLM 引导 MCTS 缓存属性获取路径；在线检索指导提问，并判断信息是否足够/是否暂缓回答。
+- **边界：** 使用基准中的用户背景进行评估；不证明现实咨询安全，也不构成收集敏感属性的授权依据。
+
+<a id="method-gaap"></a>
+### M53. GAAP
+
+**方法：运行时信息流控制与披露授权**
+
+[An AI Agent Execution Environment to Safeguard User Data](https://arxiv.org/abs/2604.19657) · **arXiv v3，2026-09-24**；未确认正式发表场所。
+
+- **机制：** 受限计划解释器与信息流控制，结合持久化私有数据、权限和披露日志，约束跨步骤、跨任务的数据披露。
+- **保证范围：** 针对恶意模型/提供方及外部服务；依赖正确执行、用户授权和经核验的工具语义标注。**提示词中直接输入的秘密、提示时序元数据及数据/系统完整性不在保证内**。
+- **证据：** 自建 20 任务、七类攻击测试未出现成功披露；AgentDojo/AgentDyn 在批准全部披露的条件下仅测效用。不是普遍安全证明或真人可用性研究；论文报告显著费用/延迟开销。
+- **资源：** [源码公开](https://github.com/rssta/gaap)，但未发现 LICENSE，GitHub 许可字段为空；不声称具备开源使用授权。
+- **实际阅读：** v3 威胁模型、设计、评估与讨论；官方 README、目录和许可元数据；未安全审计。
+
+<a id="method-psg-agent"></a>
+### M55. PSG-Agent · 用户相关风险的分阶段护栏
+
+[PSG-Agent: Personality-Aware Safety Guardrail for LLM-based Agents](https://arxiv.org/html/2509.23614v1) — arXiv v1, 2025-09-28；未核实正式会场。
+
+从历史和当前请求构造用户安全条件，再以计划、工具、回答及记忆写入检查落实。132个人工种子经GPT-4o扩展，约2,900例且历史为模型生成；200例质量检查由四位专家各评50例。ALLOW/REFUSE分类以准确率、精确率、召回率和F1评价；另行采用三模型多数裁决评估安全/帮助性，配100例人工一致性检查。评测支持合成场景下的用户差异化安全判断，不证明真实医疗/金融安全或长期风险控制；运行时门控也不是形式安全/隐私保证。[论文所链匿名代码](https://anonymous.4open.science/r/psg-agent-code-7724/)本次无可读正文，完整性与许可未核实。
+
+**实读范围：** §3–5、威胁建模、组件与人工/模型裁判设置；匿名仓库入口。定向阅读，未审代码
+
+<a id="method-privacy-risk-search"></a>
+### M59. Searching for Privacy Risks — 交替搜索攻击与防御提示
+- **论文与交叉索引**：*Searching for Privacy Risks in LLM Agents via Simulation*，ICLR 2026；arXiv v3（2026-05-08）。同篇评测见 **B62**，只计一篇。
+- **方法**：用 LLM 分析轨迹，平行搜索并跨线程传播，交替优化攻击者与防御者指令；从直接索取发展到身份冒充/伪造同意，对应防御发展为提示层身份核验状态机。
+- **边界**：这些是模型遵循的指令，不是形式化权限系统或加密身份认证；不得写成可保证防泄漏的安全机制。合法同意分享与真实部署可靠性仍需独立验证。
+- **资源与实读范围**：[v3](https://arxiv.org/html/2508.10880v3) §§3–4、伦理说明、附录 G；[官方代码](https://github.com/SALT-NLP/search_privacy_risk)与[轨迹数据](https://huggingface.co/datasets/SALT-NLP/search_privacy_risk)。数据卡标 MIT；代码根目录未观察到许可，不能用数据许可替代代码许可。数据 viewer 报错不等于源文件不可下载；未运行复现。
+
+<a id="tmp-b-ci"></a>
+
+<a id="method-contextual-integrity-supervisor"></a>
+### M70. Information-flow-card supervisor
+
+**方法；唯一论文键 / Method; unique paper key: `CI`**
+
+[同篇原文](https://arxiv.org/html/2408.02373v2) · v2, 2024-09-13
+
+通过信息流卡明确语境、主体、接收方与披露信息，再由推理监督器控制填表。与自我审查、二分类及普通推理监督比较。提示与 few-shot 策略不构成硬授权机制；攻击鲁棒性及真实用户交互仍待验证。
+
+评测、来源、许可、阅读范围与复现限制均见 [B74](#benchmark-operationalizing-ci)。不是 H 类部署研究。
 
 <a id="human-studies"></a>
 ## 人机研究：真实使用与互动
