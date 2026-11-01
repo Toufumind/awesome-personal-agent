@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **146 篇不同论文**：79 个评测条目、79 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **154 篇不同论文**：81 个评测条目、86 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B79、M16–M79、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B81、M16–M86、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -677,6 +677,29 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 **资源与复现：** [官方数据卡](https://huggingface.co/datasets/Aiden0526/PersonaMem-Evo)列出 10 个人设、505 个样本；128k 链接字段为空，viewer 解析失败，未见许可元数据。[代码库](https://github.com/Aiden0526/EvoArena)不是经核实的全套发布，许可仍待添加。论文 CC BY 4.0 不替代资产许可。
 
 **核验日期／实际阅读范围：** 2026-11-01；版本页、§§3–6、附录 A／E 相关段落、仓库 README／根目录及 PersonaMem-Evo 数据卡；未运行复现。
+
+<a id="benchmark-indievaluecatalog"></a>
+### B80. 评测 — IndieValueCatalog
+
+[Can Language Models Reason about Individualistic Human Values and Preferences?](https://aclanthology.org/2025.acl-long.336/) — ACL 2025 主会长文；查阅 [2410.03868v2，2025-05-31](https://arxiv.org/html/2410.03868v2)。
+
+**核验日期 / 阅读范围**：2026-11-01；§§2–4、局限/伦理、附录 B 相关段落；官方 README / 根目录。
+
+- **输入与测量**：WVS 个体陈述预测未见价值选择；准确率与群体不均等指标。
+- **证据**：93,279 名真实调查受访者，800 人留出评测；不是交互式个人 Agent 用户。
+- **边界**：相邻个体价值建模；静态问卷与单一提示限制，人口属性不能替代个体证据。注意隐私、操控及自主性风险。
+- **资源与许可**：[官方代码](https://github.com/liweijiang/indievalue)含转换/元数据并链接转换标签；WVS 为研究用途、禁止再分发，论文 CC BY 不覆盖该限制；根目录未见代码许可。
+
+<a id="benchmark-dabench"></a>
+### B81. 评测 — DABench
+
+[DABench / Dynamic Affective Memory Management](https://arxiv.org/html/2510.27418v1) — arXiv:2510.27418v1，2025-10-31 预印本；未核验会议接收；与 [DAM-LLM](#method-dam-llm) 同篇。
+
+**核验日期 / 阅读范围**：2026-11-01；§§3–6、附录 A.3–A.4 相关段落与 arXiv 元数据。
+
+- **构成**：2,500 观察序列、100 模拟会话/1,000 轮、500 查询—记忆对；附录明确全部对话/记忆由 GPT-4 生成。
+- **测量与边界**：GPT-4 对准确、连贯、记忆引用、情感共鸣、个性化、流畅性评分；自动分数不证明真实情绪改善或临床收益，不能把裁判写成无偏。
+- **资源**：附录提供提示/参数；未找到官方代码、数据发布或资产许可；同篇方法与评测只计一次。
 
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
@@ -1876,6 +1899,85 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 **资源与复现：** [官方仓库](https://github.com/Aiden0526/EvoArena)根目录有 PersonaMem 与 Terminal 实现目录，未见 README 所述 SWE 目录；README 仍含待发布及待添加许可证说明。代码／数据不按论文许可推定可自由复用。
 
 **核验日期／实际阅读范围：** 2026-11-01；§§4–6、主结果表、附录 A，以及官方仓库 README／根目录；未运行复现。表中 SWE Qwen chain 的 12.2→10.1 被标为 +2.1，汇总结果引用须保留此内部一致性警示。
+
+<a id="method-evolving-conditional-memory"></a>
+### M80. 方法 — Evolving Conditional Memory
+
+[Personalized Large Language Model Assistant with Evolving Conditional Memory](https://aclanthology.org/2025.coling-main.254/) — COLING 2025；同篇预印本 2312.17257（2023 首发；v2 2024-10-13），只计一次。
+
+**核验日期 / 阅读范围**：2026-11-01；论文 §§3–5、局限与伦理相关段落、附录 A.1 / Table 7 与构建说明；arXiv 版本记录。
+
+- **机制**：选择值得记忆的发言，分存条件背景与知识；检索后反思、补充查询。
+- **证据**：300 知识、200 反馈、200 续话构造案例；以既有来源数据集为基础由 GPT-4 构造评测，反馈是伪人类反馈，使用 ROUGE / GPT-4 判断。另有每任务 50 样本、3 名标注员的人审，知识/反馈/续话 qualified 比例分别为 60%/84%/81%。
+- **边界**：直接个人记忆研究；非真人长期部署，GPT-4 单模型，时间戳与遗忘未解决。
+- **资源**：原文有提示与构建说明；未找到官方代码/数据发布，不能推定资产许可。
+
+<a id="method-lc-rag-copa"></a>
+### M81. 方法与人机证据 — LC-RAG / Copa
+
+[Personalizing Student-Agent Interactions Using Log-Contextualized Retrieval-Augmented Generation (RAG)](https://arxiv.org/html/2505.17238v3) — AIED25 Workshop on Epistemics and Decision-Making in AI-Supported Education；v3 2026-04-18，非主会论文。
+
+**核验日期 / 阅读范围**：2026-11-01；§§3–5 相关段落、arXiv 元数据、官方补充仓库 README / 根目录。
+
+- **机制**：RQ1 用 GPT-3.5-Turbo 将学生对话与操作日志形成检索摘要；Copa 结合当前模型与专家模型。
+- **证据**：RQ1：18 名同意参与的学生、216 片段、五种嵌入配置，GPT-4o 裁判进行检索比较；RQ2：18 名唯一学生的课堂/焦点组质性研究，其中 2 名也参加了 RQ1，不能将两组人数相加。
+- **边界**：相邻教育个性化，非持续个人记忆；五种嵌入有一种明显退步，存在错误建议及过度依赖，未证明因果学习收益。
+- **资源与许可**：报告 IRB、学生 assent / 家长 consent；[官方补充仓库](https://github.com/claytoncohn/AIED25_Supplementary_Materials)仅见六个提示文件及 README，未见根许可或原始学生数据。
+
+<a id="method-dam-llm"></a>
+### M82. 方法 — DAM-LLM
+
+[Dynamic Affective Memory Management for Personalized LLM Agents](https://arxiv.org/html/2510.27418v1) — arXiv:2510.27418v1，2025-10-31 预印本；未核验会议接收。
+
+**核验日期 / 阅读范围**：2026-11-01；§§3–6、附录 A.3–A.4 相关段落与 arXiv 元数据。
+
+- **机制**：对象/属性情感置信权重、Bayesian-inspired 更新、熵压缩、元数据过滤及语义重排。
+- **证据与边界**：直接个人情感记忆方法；Qwen-Max 系统，合成数据与 GPT-4 裁判，非真人/临床效益证据；同步更新开销仍是局限。
+- **资源**：附录提供部分提示/参数，但 A.3.2 未给出完整模拟会话生成提示，不能据此保证完全复现；未找到官方代码、数据发布或资产许可。评测见 [DABench](#benchmark-dabench)，同一论文只计一次。
+
+<a id="method-bi-mem"></a>
+### M83. Bi-Mem：用全局画像校准局部记忆
+
+[Bi-Mem: Bidirectional Construction of Hierarchical Memory for Personalized LLMs via Inductive-Reflective Agents](https://arxiv.org/html/2601.06490v1) — arXiv v1，2026-01-10。
+
+**类型 / 能力：** 直接面向个性化对话的记忆方法。自底向上提取事实、聚合场景、归纳画像，再自顶向下校准场景；通过层级搜索和关联扩散连接事实与场景。
+
+**证据与边界：** 在人机共创、人工修订的 LoCoMo 对话上评测，非自然用户长期部署。GPT-4o-mini 平均 F1 为 49.74，Mem0 为 45.08；排除对抗性问题，报告至少三次不同随机种子的均值。作者明确指出方法依赖底座推理能力和相对稳定的画像，不能据此认定已解决偏好变化。论文介绍原始 LoCoMo 的 50 段对话，公开仓库提供 `locomo10.json`；实际评测样本范围仍需核对，不写成“评测了50段”。
+
+**资源 / 实际阅读范围：** [作者代码与数据](https://github.com/tohsaka-sb/Bi-Mem)可访问；未见根目录 LICENSE，不能将论文 CC BY 4.0 推及代码或数据。已读方法、实验、局限、Appendix B.2、仓库 README 与目录；未运行复现。
+
+<a id="method-memgas"></a>
+### M84. MemGAS：按查询选择记忆粒度与关联
+
+[From Single to Multi-Granularity: Toward Long-Term Memory Association and Selection of Conversational Agents](https://arxiv.org/html/2505.19549v2) — 查阅 arXiv v2，2025-09-29；作者仓库标注 ICLR 2026。v1（2025-05-26）题名为 *Towards Multi-Granularity Memory Association and Selection for Long-Term Conversational Agents*；稳定 ID 为 `2505.19549`，只计一篇。
+
+**类型 / 能力：** 面向长期对话的多粒度记忆方法；组织会话、轮次、摘要与关键词，通过 GMM 建立关联，以熵路由、Personalized PageRank 和 LLM 过滤检索。
+
+**证据与边界：** 在 LongMemEval-s/m、LoCoMo 和 Long-MT-Bench+ 上测 QA 与检索。[LongMemEval](https://arxiv.org/html/2410.10813) 为真实来源与合成会话混合构造，LoCoMo 为人机共创，Long-MT-Bench+ 是重构基准；不能称为自然用户长期实验。LongMemEval-s 的 GPT-4o 评审分数为 60.20，但 LoCoMo 的 GPT-4o 评审分数（非 F1）为 41.07，低于 SeCom 44.21 和 HippoRAG2 45.62；不可概括为所有指标最优。部分大规模基线因运行成本缺失。
+
+**资源 / 实际阅读范围：** [官方仓库](https://github.com/quqxui/MemGAS)有 Python 实现及原始数据下载说明；未见根目录 LICENSE。后续 TypeScript 插件不等同于论文实验实现。已读 §§2–3、附录 A/G、版本记录、README 与目录，以及 LongMemEval 数据构造段落；OpenReview 页面触发浏览器验证，接收状态仅由作者仓库确认；未复现。
+
+<a id="method-o-mem"></a>
+### M85. O-Mem：动态用户画像、事件与多通道检索
+
+[O-Mem: Omni Memory System for Personalized, Long Horizon, Self-Evolving Agents](https://arxiv.org/html/2511.13593v3) — arXiv v3，2025-12-10；日期以 [arXiv 版本记录](https://arxiv.org/abs/2511.13593) 为准，不采用 HTML 中异常的2026年8月日期。
+
+**类型 / 能力：** 直接面向个人上下文的记忆方法，动态更新画像属性与事件，并结合主题、线索相关历史检索。
+
+**证据与边界：** 离线评测覆盖 LoCoMo、PERSONAMEM 和 PDR-Bench 的精选50查询 / 25用户子集。前两者分别为人机共创、[模拟对话](https://arxiv.org/html/2504.14225)；后者源于真实用户互动但经筛选，非自然连续部署。使用 GPT-4.1 时，LoCoMo F1 为51.67，PERSONAMEM 准确率为62.99。作者明确称其为初始设计：实验为单次运行，无固定种子或误差统计；共享算力存在波动，部分商业基线采用原论文结果；token 控制仅限 LoCoMo / GPT-4.1。PDR-Bench 已列于 B40，不另计一个新 benchmark。
+
+**资源 / 实际阅读范围：** [O-Mem](https://github.com/OPPO-PersonalAI/O-Mem) 与 [PDR-Bench](https://github.com/OPPO-PersonalAI/PersonalizedDeepResearchBench) 仓库可访问，均有 Apache-2.0；不因此推定所有上游数据权利相同。论文 Hugging Face 链接是论文页。已读 §§3–5、评测限制、版本记录、仓库 README / 目录 / 许可，以及 PERSONAMEM 模拟数据说明；未复现。
+
+<a id="method-eclair"></a>
+### M86. ECLAIR：企业助手中的交互澄清〔相邻能力〕
+
+[ECLAIR: Enhanced Clarification for Interactive Responses](https://arxiv.org/html/2503.15739v1) — IAAI-25 Emerging Applications，AAAI proceedings 39(28):28864–28870；查阅 arXiv v1，2025-03-19。[正式出版记录](https://ojs.aaai.org/index.php/AAAI/article/view/35152)。本条是完整论文，非 `2503.20791` 演示论文。
+
+**类型 / 能力：** 可迁移的企业域澄清方法，不是长期个性化方法。汇总句子、产品和实体歧义检测结果与领域知识，在统一提示中决定是否澄清并生成问题。
+
+**证据与边界：** 评测来自 AEP 真实客户查询的100个困难样本，已按历史改写和歧义检测筛选，并非随机生产流量。需澄清类 precision 从 .732 升至 .904，但 recall 从 .833 降至 .635、F1 从 .779 降至 .746；宏平均 F1 为 .657，基线 .520。用户画像检索被列为未来工作，98% precision 是部署目标而非结果。没有长期个性化收益证明。
+
+**资源 / 实际阅读范围：** 本次未找到官方代码或客户数据公开发布；arXiv 分发许可不构成代码 / 数据许可。已读架构、实验、经验与部署章节、正式出版记录，并检索作者资源；未复现。
 
 <a id="human-studies"></a>
 ## 人机研究：真实使用与互动
