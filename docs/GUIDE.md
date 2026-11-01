@@ -68,7 +68,7 @@
 
 以下按主要用途保留项目入口；同一项目的托管产品若另有收录，不视为另一套已验证能力。没有单独列出的付费条件与可用性，仍需按具体版本和服务核对。
 
-当前收录 **31 个源码项目：28 个主分类条目 + 3 个单列预览条目**，共五类主要用途及一个预览区。初始 14 项及首轮新增 15 项全部保留；本轮再补充 [AstrBot 与 Eigent](SOURCES.md#personal-work-additions)，共新增 17 项。各轮固定 commit、许可和发布记录及仅文档核验的范围见来源记录。条目中的发布号不保证该版本具备主分支全部功能，`prerelease=false` 也不代表成熟或已经实测。新增条目的根许可仅指已读仓库代码，不自动覆盖模型、依赖、插件、商标或托管服务；详见 [扩充来源](SOURCES.md#expansion)。
+当前收录 **33 个源码项目：30 个主分类条目 + 3 个单列预览条目**，共六类主要用途及一个预览区。初始 14 项及首轮新增 15 项全部保留；前轮补充 [AstrBot 与 Eigent](SOURCES.md#personal-work-additions)；本轮补充 [Home Assistant Assist 与 Omi](SOURCES.md#home-voice-additions)，共新增 19 项。各轮固定 commit、许可和发布记录及仅文档核验的范围见来源记录。条目中的发布号不保证该版本具备主分支全部功能，`prerelease=false` 也不代表成熟或已经实测。新增条目的根许可仅指已读仓库代码，不自动覆盖模型、依赖、插件、商标或托管服务；详见 [扩充来源](SOURCES.md#expansion)。
 
 <a id="personal-assistants"></a>
 ### 常驻个人助理 · Persistent personal assistants
@@ -89,6 +89,20 @@
 | [PicoClaw](https://github.com/sipeed/picoclaw) | 轻量常驻助理。WebUI、CLI 与聊天任务可调用工具、记忆和提醒，提供二进制、Docker 与 Android 运行路径。MIT。 | **Pre-1.0**：v0.3.1 与 nightly 分开，官方提示 v1.0 前勿部署生产。Android 可运行不等于能控制任意 App；低运行时资源占用不含完整本地大模型成本。 |
 | [QwenPaw（原 CoPaw）](https://github.com/agentscope-ai/QwenPaw) | 应用 / 常驻运行时。Console、TUI 与聊天渠道中的任务可生成摘要、办公文件、浏览器工作和通知。Apache-2.0。 | 非预发布 v2.2.2.post1；v2.3.0-beta.1 与桌面版均须保留 Beta 区分。Python/Docker 部署需配置模型和渠道；初始化 `--defaults` 会接受其声明的匿名遥测。CoPaw 不另计。 |
 | [ZeroClaw](https://github.com/zeroclaw-labs/zeroclaw) | Rust 常驻运行时。消息、CLI、webhook 与外设事件触发 Shell、浏览器、HTTP、硬件工具和可恢复 SOP。MIT OR Apache-2.0。 | 观察到 v0.8.7；后台服务、模型、渠道和硬件需分别设置。默认 supervised 之外还有放松限制的 YOLO 路径；检查实际策略、工作区与 OS 沙箱，不能因 Rust 断言安全。 |
+
+<a id="home-voice-wearables"></a>
+### 家居、语音与可穿戴
+
+**文档核验：2026-11-01（UTC）；未安装、购买、连接账户、录音或实测。** 两项补充不同任务与交互形态，不代表完整市场覆盖。[依据](SOURCES.md#home-voice-additions)
+
+| 项目 | 形态与个人任务 | 依赖、数据与选型提醒 |
+| --- | --- | --- |
+| [Home Assistant Assist](https://github.com/home-assistant/core) | 家居语音 / 文字入口。内置意图匹配与可选 LLM Agent 分开；后者通过工具访问暴露的家居实体。Core 根许可 Apache-2.0。 | 需运行 Home Assistant、接入设备并配置语音链路 / 会话集成。Ollama 控制需独立服务器和支持工具的模型，仍属实验性；云模型另需 API / 计费。逐段检查唤醒、转写、推理和语音合成的数据流；本地 Hub 不等于全离线。先仅暴露测试灯，不授权门锁等高风险设备，确认家庭成员的使用和录音边界。 |
+| [Omi](https://github.com/BasedHardware/omi) | 语音 / 环境记忆应用与平台：手机、桌面或可穿戴采集形成记忆、任务；Apps 可处理记忆并连接外部工具。根许可 MIT。录音摘要不等于自主执行。 | 可不购买硬件使用 App；源码构建与托管产品分开。macOS 快速启动连接云后端，不是离线部署；完整后端、转写 / 模型及集成各有配置依赖。检查录音、转写、人物声纹、屏幕上下文和第三方 Apps 的访问范围。录音前告知参与者并取得适用同意，勿采集旁人私密对话；暂停采集、删除和导出须另核对。 |
+
+**源码与服务不重复计数：** 每个官方仓库只计一项。Omi 的[托管 App / 硬件](https://www.omi.me/pages/product)有独立条款、额度和费用；未核实完整地区、套餐或配送，不新增为产品目录中的已核验商业条目。Home Assistant Cloud 也不是 Assist 的必需订阅。
+
+**建议首测（未执行）：** Assist 仅控制测试灯并核对实际状态；Omi 只录制自己的一段虚构待办，检查任务、停止采集和删除，不连接私人账户或自动外发。
 
 <a id="mobile-agents"></a>
 ### 手机 Agent · Mobile agents
@@ -210,4 +224,3 @@
 欢迎补充项目、产品与论文，纠正过时信息，也欢迎可复现的使用或研究复现记录。请先读 [中文贡献指南](../CONTRIBUTING.md) / [English contribution guide](../CONTRIBUTING.en.md)，同步更新对应目录的来源与日期，并遵循 [来源记录](SOURCES.md) 的核验口径。
 
 **原创文档文字与原创编选内容采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en)；本仓库已指定的原创脚本及测试代码采用 [MIT](../scripts/LICENSE)。** 完整范围与当前适用文件见 [许可范围声明](LICENSE.md#zh)。这是按材料类型分开的许可，不是全仓库双重许可。第三方材料、所链接的项目及其商标保留各自条款；独立机器可读夹具与结果模板不因上述声明获得授权。收录不构成重新授权或背书。
-
