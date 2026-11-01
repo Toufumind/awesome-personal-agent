@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **41 篇不同论文**：27 个评测条目、16 个方法条目；Proactive Agent 与 MemoProAgent 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **45 篇不同论文**：31 个评测条目、18 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU 与 Ask-before-Plan/CEP 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B27、M16 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B31、M16–M18 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -44,6 +44,8 @@
 | 怎样管理长期记忆与生命周期 | [MemGPT](#method-memgpt)、[MemoryBank](#method-memorybank)、[A-MEM](#method-a-mem)、[Mem0](#method-mem0)、[Zep](#method-zep)、[MemOS](#method-memos) | 失效或不再使用不等于物理删除；还需权限、调度与可观测性 |
 | 怎样复用经验、技能与多代理协作 | [ReAct](#method-react)、[Reflexion](#method-reflexion)、[Voyager](#method-voyager)、[ExpeL](#method-expel)、[AutoGen](#method-autogen)（历史） | 长期真人效用、单代理对照、经验过时与运行成本 |
 
+
+**个人规划阅读路线**：先看 [TravelPlanner+](#benchmark-travelplanner-plus)：怎样把画像与个人概念变成计划条件；再看 [PbP](#benchmark-pbp) / [InTU](#method-intu)：怎样从行为提炼未明说的偏好；信息不足时读 [Ask-before-Plan](#benchmark-ask-before-plan) / [CEP](#method-cep)；执行反馈后的偏好保持读 [PDEU-Bench](#benchmark-pdeu-bench)；最后用 [AuthorizationBench](#benchmark-authorizationbench) 区分“完成了”与“有权这样做”。这是按问题组织的阅读顺序，不是单一系统的完整能力证明；跨会话状态、真实长期效用及授权变更仍须另测。
 
 <a id="user-profile-reading-path"></a>
 ### 用户画像：按四个问题读
@@ -230,6 +232,30 @@
 - **边界**：20 个合成人物、固定规则与模型路由，不代表真实偏好变化或打扰成本；多问不等于更好。
 - **资源**：[官方代码 / 数据](https://github.com/BUPT-GAMMA/ATRBench)。代码 Apache-2.0；NOTICE 单列源人物数据 CC BY 4.0，勿推定全部资产同一许可。未运行。
 
+<a id="benchmark-travelplanner-plus"></a>
+### B28. TravelPlanner+ · 用户画像怎样改变计划
+
+[Personal Large Language Model Agents: A Case Study on Tailored Travel Planning](https://aclanthology.org/2024.emnlp-industry.37/) — EMNLP 2024 Industry Track。标题按 ACL 元数据；PDF 标题末词为 Tailored Travel Planners。
+
+**核验日期 / 阅读范围**：2026-11-01；摘要、§1、§4.2 及结果表；待审，未复现。
+
+- **输入 → 输出**：用户模型、含个人概念的请求及旅行参考信息 → 个性化行程。
+- **测量**：计划交付、常识 / 硬约束与最终通过率；另用 LLM judge 比较个性化与通用计划的偏好率。
+- **边界**：judge 偏好率不是真人满意度，也不等于约束通过率；部分个性化设置的约束指标下降。不是长期在线规划。
+- **资源**：[论文全文](https://aclanthology.org/2024.emnlp-industry.37.pdf)；本次未定位可核验的 TravelPlanner+ 官方代码 / 数据入口，不以原始 TravelPlanner 仓库冒充。
+
+<a id="benchmark-pbp"></a>
+### B29. PbP · 从示范推断规划偏好
+
+[Inferring the Unspoken: Aligning Embodied Agents with Implicit Preferences](https://arxiv.org/abs/2502.00858v4) — 2025 首发；此处为 2026-09-08 v4，arXiv 标注 EMNLP 2026。旧题为 Learning to Plan with Personalized Preferences；方法见 M17。
+
+**核验日期 / 阅读范围**：2026-11-01；仅 v4 摘要与版本记录，待审初读。
+
+- **输入 → 输出**：少量行为演示与新情境 → 符合隐含偏好的具身动作计划；摘要报告 5,000 个评测组、290 种偏好。
+- **测量**：比较给定真实偏好与从行为推断偏好后的规划表现；具体指标和评分协议尚待全文核验，不录入分数。
+- **边界**：具身场景，不代表办公工具规划或长期真人使用。PDF 抓取超出工具大小限制，HTML 不可用。
+- **资源**：本次未定位可核验官方代码 / 数据入口；不推定公开或可复现。
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -348,6 +374,18 @@
 - **边界**：116 是基础任务数，不是随机实例总数；以开源 / 系统应用为主，不保证对商业 App、不同手机或中文界面泛化。
 - **资源**：[官方论文项目页](https://google-research.github.io/android_world/)、[环境 / 任务代码](https://github.com/google-research/android_world)。
 
+<a id="benchmark-ask-before-plan"></a>
+### B30. Ask-before-Plan · 缺信息或不可行时先澄清
+
+[Ask-before-Plan: Proactive Language Agents for Real-World Planning](https://aclanthology.org/2024.findings-emnlp.636/) — Findings of EMNLP 2024；方法见 M18。
+
+**核验日期 / 阅读范围**：2026-11-01；摘要、§5.1–5.2 评测及附录 B.2–B.3；官方 README；待审。
+
+- **输入 → 输出**：对话与环境反馈 → 澄清问题、工具调用及旅行计划。
+- **测量**：澄清判断 / 问题质量、调用正确性、约束与最终通过率分别报告。
+- **边界**：子任务评测给后续模块正确的前序结果；整体框架的最终规划也使用 ground-truth conversation（附录 B.3），不能当作完全自由运行的端到端成绩。这是交互规划，不是长期画像学习。
+- **资源**：[官方代码 / 评测](https://github.com/magicgh/Ask-before-Plan)、[数据](https://huggingface.co/datasets/magicgh/Ask-before-Plan)。README 声明代码 MIT、数据与环境 CC BY 4.0；环境需另下载，未安装验证。
+
 <a id="safety-evaluation"></a>
 ## 评测 D：隐私规范与对抗安全
 
@@ -400,6 +438,18 @@
 - **测量**：Commit% 记录目标论断是否写入可供后续读取的持久状态；judge 另评后续迎合等风险。Max-FR@3 指三答中任一达到失败阈值；downstream failure 是四个逐回答维度的 Max-FR@3 均值，不是六项总平均。
 - **边界**：受控压力测试，不是产品总体风险率；低失败可能来自不会调用记忆工具。人工校验的 88% 是 ±1 Likert 一致，不是精确匹配。
 - **资源**：[官方代码 / 数据入口](https://github.com/henrymao2004/agent-sycophancy)。代码 MIT；论文称 PASB 为 CC BY 4.0，README 要求保留 PersistBench / ELEPHANT 上游条款，数据许可链仍需确认。未运行。
+
+<a id="benchmark-authorizationbench"></a>
+### B31. AuthorizationBench · 完成任务不等于有权执行
+
+[Act on Your Behalf, Beyond Your Authorization: Benchmarking LLM Agent Authorization Alignment](https://arxiv.org/html/2610.27548v2) — 2026 预印本；v2，2026-10-21。
+
+**核验日期 / 阅读范围**：2026-11-01；摘要、§4.1 指标、官方 README 的资源与许可说明；待审。
+
+- **输入 → 输出**：带授权边界的委托及沙箱状态 → 工具行动轨迹；286 个任务。
+- **测量**：结合完整轨迹与状态证据，分别判断任务完成和越权。
+- **边界**：通用委托边界评测，不是个性化规划方法；模拟服务与 judge 不代表真实部署风险率。
+- **资源**：[官方代码 / 任务](https://github.com/PEACH-Research-Lab/AuthorizationBench)。README 声明原创软件 / 基准制品 MIT，第三方材料另计；公开 6,864 份判定但仅保留 4,981 份原始轨迹，不能视为完整轨迹全集。未运行。
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -575,6 +625,26 @@
 - **核心**：将 LLM、工具执行和人类输入封装成可对话 Agent；例如数学请求经过代码、执行结果与反馈交换后产生答案。
 - **关联与边界**：通用多代理编排研究，不是个人化 benchmark。MATH、检索 QA、ALFWorld、OptiGuide 使用各自指标；多 Agent 或人类在环不自动带来权限隔离、可靠授权或更低成本，仍需单代理基线与安全测试。
 - **资源**：[官方仓库](https://github.com/microsoft/autogen)：代码 MIT，文档 / 其他内容 CC BY 4.0。当前 README 明确标“已归档、不再由 Microsoft 维护”；保留为研究沿革，不推荐为仍维护的生产选型。现行包结构不同于 2023 论文 API，未定位论文对应提交。
+
+<a id="method-intu"></a>
+### M17. InTU · 先说清偏好，再生成计划
+
+[Inferring the Unspoken](https://arxiv.org/abs/2502.00858v4) — 与 B29 同一篇，勿重复计数。
+
+**核验日期 / 阅读范围**：2026-11-01；仅 v4 摘要，待审初读。
+
+- **机制**：先将多模态演示中的隐含偏好表述为语言，再以其为条件生成动作计划。
+- **边界**：显式中间表示有助于解释与迁移，不意味着偏好推断已可靠；评测、资源和全文核验限制见 [B29](#benchmark-pbp)。
+
+<a id="method-cep"></a>
+### M18. CEP · 澄清、执行与规划分工
+
+[Ask-before-Plan](https://aclanthology.org/2024.findings-emnlp.636/) — 与 B30 同一篇，勿重复计数。
+
+**核验日期 / 阅读范围**：2026-11-01；摘要、评测设置及附录 B.3、官方 README 的训练和推理入口；待审。
+
+- **机制**：澄清、执行、规划三个角色；对澄清和静态执行做轨迹微调，动态执行使用记忆回想。
+- **边界**：角色分工不等于长期用户建模或执行授权；模块与整体成绩均须按各自协议解读，整体最终规划仍使用真实标注对话（附录 B.3）。资源及许可见 [B30](#benchmark-ask-before-plan)。
 
 <a id="personalization-methods"></a>
 ## 方法 C：个性化与偏好学习
