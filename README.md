@@ -1,6 +1,12 @@
+<div align="center">
+
 # Awesome Personal Agent
 
+</div>
+
 ![Awesome Personal Agent banner](assets/banner.png)
+
+<div align="center">
 
 精选个人 AI Agent：源码项目、可用产品与研究论文。
 
@@ -9,6 +15,8 @@
 **[31 个项目](#source-projects) · [产品目录](docs/PRODUCTS.md) · [论文目录](docs/PAPERS.md)**
 
 <a id="目录--contents"></a>
+</div>
+
 <a id="start-here"></a>
 ## 目录
 
