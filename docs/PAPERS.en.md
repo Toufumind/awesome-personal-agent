@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **57 distinct papers**: 37 evaluation entries and 27 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, and MemGuide/MS-TOD each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **63 distinct papers**: 42 evaluation entries and 29 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, and Me-Agent/User FingerTip each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B37 and M16–M27 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B42 and M16–M29 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -327,6 +327,61 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Measures**: GPT-4 judging, Joint Goal Accuracy, completion turns, success rate, and human quality ratings. The paper reports 132 personas and 956 task goals; the official README reports 2,860 sessions.
 - **Limits**: SGD-seeded, GPT-4-generated dialogues use three temporally ordered sessions per task with human validation; each session is simplified to one service/intent. Slot-based confirmation success is not a completed real booking, payment, or longitudinal user benefit.
 - **Versions/resources**: 2505.20231v1 (2025-05-26), *Bridging the Long-Term Gap: A Memory-Active Policy for Multi-Session Task-Oriented Dialogue*, was renamed MemGuide in v2 (2025-08-13); count once. [Official code/data](https://github.com/Elvin-Yiming-Du/MS_TOD_Memory); no root license observed, and reuse terms remain unverified.
+
+<a id="benchmark-prefdisco"></a>
+### B38. PrefDisco · Proactively discovering communication preferences
+
+[PrefDisco: Benchmarking Proactive Personalized Reasoning](https://arxiv.org/html/2510.00177v2) — [ICLR 2026](https://proceedings.iclr.cc/paper_files/paper/2026/hash/82d50077a0e140b524a18f380c95d55a-Abstract-Conference.html); inspected arXiv v2, March 4, 2026. V1 used the *Personalized Reasoning* title.
+
+**Verified / actual reading scope:** 2026-11-01; v2 §2 preference modeling/metrics, §3 benchmark construction, relevant §4 experimental-setting passages, and Limitations; arXiv version history and author README. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
+
+- **Evaluation:** Converts static reasoning questions into cold-start interactions with generated personas and passive simulated users. Preference alignment and factual correctness remain separate outcomes.
+- **Limits:** Primarily communication preferences—not content preferences, longitudinal change or demonstrated human utility. Over-personalization and sycophancy are outside scope.
+- **Resources:** [Author repository](https://github.com/stellalisy/PrefDisco) provides construction and evaluation tools; repository reuse license remains unconfirmed. Its newer PEP documentation should not automatically be attributed to the inspected v2. An earlier workshop-version relationship remains unverified.
+
+<a id="benchmark-latent-information"></a>
+### B39. Latent Information Discovery · Eliciting hidden preferences
+
+[Do LLMs Recognize Your Latent Preferences?](https://arxiv.org/html/2510.17132v1) — arXiv v1, October 20, 2025.
+
+**Verified / actual reading scope:** 2026-11-01; v1 §3 tasks/evaluation protocol, relevant Appendix A judge/user-comparison descriptions, and Appendix D data sources; arXiv version history. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
+
+- **Evaluation:** A User–Assistant–Judge setup covers 20 Questions, personalized QA and summarization. Reports all-preference success and average stopping turns, counting failures at the maximum turn budget.
+- **Limits:** GPT-4o simulates both user and judge; preferences are fixed and user answers truthful. Object guessing is a diagnostic, not itself a personal-assistant task. Judge approval does not establish human satisfaction.
+- **Resources:** Appendix documents generation and source datasets. PrefEval-derived generation code carries CC-BY-NC-4.0 restrictions; document-source terms vary. An original complete code/data release was not verified.
+
+<a id="benchmark-pdr-bench"></a>
+### B40. PDR-Bench · Research reports tailored to an individual
+
+[Towards Personalized Deep Research: Benchmarks and Evaluations](https://arxiv.org/html/2509.25106v3) — ICLR 2026; inspected v3, March 4, 2026.
+
+**Verified / actual reading scope:** 2026-11-01; v3 §3 construction, relevant §4 PQR evaluation passages, Appendix A limitations, and B.1–B.2 settings/subset selection; author README, repository root, and LICENSE. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
+
+- **Evaluation:** Fifty tasks and 25 volunteer-grounded profiles produce 250 task–user pairs. PQR separately measures personalization, content quality and factual/citation reliability.
+- **Limits:** Structured personas are real-user grounded, but annotators simulate dynamic interactions. Collection is Chinese-centered with English translations. Appendix selection proceeds 250→150→50; benchmark size is not full experimental coverage. Report quality does not demonstrate safe execution or long-term human utility.
+- **Resources:** [Author code/data](https://github.com/OPPO-PersonalAI/PersonalizedDeepResearchBench), verified Apache-2.0 root license; model/search APIs and upstream asset terms remain separate requirements.
+
+<a id="benchmark-personalens"></a>
+### B41. PersonaLens · Personalized dialogue across domains
+
+[PersonaLens](https://aclanthology.org/2025.findings-acl.927/) — Findings ACL 2025; inspected [arXiv v1](https://arxiv.org/html/2506.09902v1), June 11, 2025.
+
+**Verified / actual reading scope:** 2026-11-01; v1 §2 profiles/tasks/simulation protocol, §3 experimental setup, relevant §4 evaluation passages, and Limitations; ACL publication record, author README, and LICENSE.md. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
+
+- **Evaluation:** 111 tasks across 20 domains, with simulated users and judges assessing personalization, task completion, naturalness and coherence.
+- **Limits:** The 1,500 profiles use real PRISM demographics but generated preferences, histories and contexts—not 1,500 real assistant users. Section 3 states that all reported experiments use a random subset of 50 profiles, comprising 3,283 single-domain and 813 multi-domain dialogues; construction scale is not evaluation coverage. Bookings and purchases are simulated dialogue, not executed actions. Demographic conditioning can reproduce stereotypes.
+- **Resources:** [Author code/data](https://github.com/amazon-science/PersonaLens), verified **CC-BY-NC-4.0** `LICENSE.md`; execution requires Amazon Bedrock access.
+
+<a id="benchmark-user-fingertip"></a>
+### B42. User FingerTip · Resolving ambiguous app and content requests
+
+[Me-Agent](https://arxiv.org/html/2601.20162v1) — arXiv v1, January 28, 2026; same paper as M29.
+
+**Verified / actual reading scope:** 2026-11-01; v1 §3 User FingerTip construction/statistics, §5.1–5.2 metrics/results and Table 3, and Limitations; arXiv version history, repository root, and README. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
+
+- **Evaluation:** Extends FingerTip by removing app names or obscuring requested content. Reports 60 users, 33 apps, 300 Type-I and 267 Type-II instructions.
+- **Limits:** Counts versus “15 training/5 test instructions per user” need clarification; this is not established held-out-user evaluation. Table 3’s perfect app selection accompanies task-success rates of 80%/50%, not universal success. Long-term human deployment is unproven.
+- **Resources:** [Author repository](https://github.com/Gianthaha/personal-mobile-agent) is MIT-labeled and contains implementation directories, but README still promises updates; complete benchmark packaging remains unverified.
 
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
@@ -835,6 +890,28 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Evidence**: MultiHop-RAG, 200 synthetic business tasks, and a SciQAG dynamic-permission setting. Business tasks lack gold answers and primarily report resource usage, not verified answer accuracy.
 - **Relevance/limits**: Useful for personal-agent multi-user boundaries, but primarily collaborative permission management rather than individual preference learning. Formal policy properties and controlled tests are not implementation audits or protection against all inferential leakage.
 - **Resources**: Official code/data releases and licenses were not verified. Duplicate survey citations do not create another paper.
+
+<a id="method-rgmem"></a>
+### M28. RGMem · Hierarchical user-profile evolution
+
+[RGMem: Renormalization Group-inspired Memory Evolution for Language Agents](https://arxiv.org/html/2510.16392v3) — arXiv records ICML 2026 acceptance; inspected v3, June 2, 2026. The earlier “…Group-based…User Profile” title is the same paper.
+
+**Verified / actual reading scope:** 2026-11-01; v3 relevant §3 methodology passages and Appendix B.1 evaluation protocol; arXiv version/acceptance record, author README, and repository root. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
+
+- **Mechanism:** Aggregates episodic facts and user inferences into a hierarchical graph, separating rapidly changing evidence from slower traits through thresholded updates and multi-scale retrieval.
+- **Evidence/limits:** LOCOMO uses model judging; PersonaMem-128k uses multiple-choice accuracy, averaged over three runs. External-memory evolution is not continual backbone training; neither benchmark proves profile truth, privacy or long-term human utility.
+- **Resources:** [Author implementation](https://github.com/fenhg297/RGMem), MIT-labeled; requires components including Elasticsearch, Neo4j and Redis. Not executed.
+
+<a id="method-me-agent"></a>
+### M29. Me-Agent · Experience and hierarchical preference memory
+
+[Me-Agent](https://arxiv.org/html/2601.20162v1) — same paper as B42; do not count twice.
+
+**Verified / actual reading scope:** 2026-11-01; v1 §4.2–4.4 methodology, relevant §5.1–5.2 settings/results passages, and Limitations; repository root and README. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
+
+- **Mechanism:** VLM-scored trajectories yield natural-language experiences for prompts; app-specific memory supplies workflows and content preferences. The method describes parameter-free adaptation, not personalized backbone fine-tuning.
+- **Evidence/limits:** Evaluated on User FingerTip and general mobile tasks. UI changes can invalidate stored positions/workflows; situational factors such as current location remain limited. Inferring a habitual choice does not establish authorization for a new action.
+- **Resources:** [Author implementation](https://github.com/Gianthaha/personal-mobile-agent); benchmark-count, packaging and licensing-scope caveats are shared with B42.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
