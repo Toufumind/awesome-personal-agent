@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **180 篇不同论文**：86 个评测条目、109 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **183 篇不同论文**：86 个评测条目、112 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B86、M16–M109、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B86、M16–M112、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -1927,6 +1927,34 @@ IUI 2026 DOI线索 `10.1145/3742413.3789222`；ACM fetch返回403。venue以官�
 - **资源/许可：**正式论文未找到官方实现链接，定向检索亦未核实代码库；代码及方法新增资源许可未知。上游 LoCoMo 与依赖模型权利需单独检查，不把论文可访问当作系统开源。
 - **实际阅读：**[EACL PDF](https://aclanthology.org/2026.eacl-long.15.pdf)摘要、§§3–4、§7；ACL 元数据；2025v1 方法/实验/限制片段；[LoCoMo 原论文](https://arxiv.org/html/2402.17753v1)摘要、§3.4、§8 的数据来源。未复现或验证论文声称的全部增益。
 
+<a id="study-does-memory-need-graphs"></a>
+### M110. Does Memory Need Graphs? · 图与扁平记忆的受控比较
+
+[Does Memory Need Graphs? A Unified Framework and Empirical Analysis for Long-Term Dialog Memory](https://aclanthology.org/2026.acl-long.1232/) — ACL 2026；实读 [arXiv v3，2026-02-10](https://arxiv.org/html/2601.01280v3)。**本条是方法设计的受控实证比较，不是新 Agent 方法或新 benchmark**，放在此处作为图记忆研究的比较依据。
+
+- **证据：** 将记忆拆为键值表示、组织、更新与检索，在 LongMemEval S/M、HaluMem Medium 上逐阶段比较图与扁平索引；检索召回与模型裁判的答案质量分别评估。
+- **边界：** 基础配置能显著改变结果；图并非天然更好，也不是完全无用。结论限于所测数据、底座与设计，不覆盖全部层级图、训练方法或真人长期使用。
+- **资源与实读：** [官方 UnifiedMem](https://github.com/AvatarMemory/UnifiedMem) 已公开；所查根目录/README 未见许可，使用授权未确认。核验于 2026-11-01；实读 §§3–5、局限及数据/设置附录；未运行复现。
+
+<a id="method-gam-hierarchical-graph"></a>
+### M111. GAM · 分离即时编码与长期巩固
+
+[GAM: Hierarchical Graph-based Agentic Memory for LLM Agents](https://aclanthology.org/2026.acl-long.1600/) — ACL 2026；实读 [arXiv v1，2026-04-14](https://arxiv.org/html/2604.12285v1)。
+
+- **机制与证据：** 当前事件图在语义边界触发后才并入长期主题图，再结合角色、时间及置信度检索。LoCoMo 与电视剧脚本改编的 LongDialQA 测离线问答，报告 F1/BLEU-1；不是持续真人部署。
+- **边界：** 视频描述文本流代理实验不是原生多模态能力。论文将隐私过滤、用户同意及删除界面列为部署所需工作，不能写成已实现保障。
+- **资源与实读：** 未确认作者实现与软件许可，不以第三方同名或受启发项目替代。核验于 2026-11-01；实读 §§3–4、局限/伦理及实现、鲁棒性附录；未复现。
+
+<a id="method-hypermem"></a>
+### M112. HyperMem · 用超边连接高阶关联
+
+[HyperMem: Hypergraph Memory for Long-Term Conversations](https://aclanthology.org/2026.acl-long.1627/) — ACL 2026；本条采用[正式论文](https://aclanthology.org/2026.acl-long.1627.pdf)，不把较早预印本的评测范围当作正式版全集。
+
+- **机制与证据：** 主题—事件片段—事实三级超图，结合词法/语义索引与由粗到细的检索。正式论文同时报告 LoCoMo 四类问答的模型裁判成绩，以及 PersonaMem 的四选一表现；二者不合成同一分数，也不等于真人长期效用。
+- **边界：** 使用 GPT-4.1-mini 生成与 Qwen3-4B 编码/重排；部分基线成绩引自其他论文，不是全部统一重跑。限定单用户，访问控制与记忆隔离仍是扩展挑战。
+- **资源与实读：** [官方代码](https://github.com/EverMind-AI/HyperMem)为 [Apache-2.0](https://github.com/EverMind-AI/HyperMem/blob/main/LICENSE)，数据与模型另受各自条款约束。六阶段实现不等于开箱复现：数据须另备，[默认脚本](https://github.com/EverMind-AI/HyperMem/blob/main/scripts/run_eval.sh)跳过阶段 1 且关闭重排，[配置默认值](https://github.com/EverMind-AI/HyperMem/blob/main/hypermem/config.py)也需与论文设置核对。核验于 2026-11-01；实读正式版 §§3–4、局限，README、许可、脚本和配置；未安装，完整复现未验证。
+
+
 <a id="agent-methods"></a>
 <a id="方法-b规划工具反思主动性与协作"></a>
 <a id="planning-action-methods"></a>
@@ -2436,3 +2464,4 @@ IUI 2026 DOI线索 `10.1145/3742413.3789222`；ACM fetch返回403。venue以官�
 - **公开可读不等于任意再利用**：LaMP、LoCoMo、PersonaBench、PrefEval 与 MemoPro 代码的非商业条款，GAIA 的门控 / 防污染要求，以及 AppWorld / Ego4D 的额外资源规则已在对应条目提示。未列许可不代表没有限制；代码、数据、模型和第三方素材可能适用不同条款。
 - 本次未进行逐资产法律审查、下载完整权重验证或全依赖复现。根目录缺许可、文件访问失败或外部服务变化均不能被“有 GitHub 链接”消除。
 - 维护时先修正文献版本、任务范围与失效资源，再补新论文；欢迎提供具体一手证据，不以榜单名次、引用量或 Star 作为可靠性结论。
+
