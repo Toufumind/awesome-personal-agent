@@ -39,6 +39,39 @@
 
 表中摘要的依据、平台及权限边界见对应条目。
 
+<a id="release-timeline"></a>
+## 发布时间线
+
+**核对于 2026-11-01。** 从公开介绍到正式开放，分开记；当前套餐和地区限制见各产品条目。
+
+| 日期 | 产品 | 阶段 / 范围 | 来源 |
+| --- | --- | --- | --- |
+| 2025-02-26 | [Alexa+](#alexa) | 公布；美国 Early Access 预告 | [原文](https://www.aboutamazon.com/news/devices/amazon-2025-devices-alexa-event-live-updates) |
+| 2025-04-02 | [Genspark Super Agent](#genspark) | 发布介绍 | [原文](https://www.genspark.ai/blog/genspark-super-agent) |
+| 2025-07-09 | [Comet Assistant](#comet) | 有限发布 | [原文](https://www.perplexity.ai/en-GB/hub/blog/comet-is-now-available-to-everyone-worldwide) |
+| 2025-09-08 | [Poke](#poke) | 公开发布；申请访问 | [原文](https://www.webwire.com/ViewPressRel.asp?aId=343533) |
+| 2026-01-12 | [Claude Cowork](#claude-cowork) | 研究预览；Max、macOS | [原文](https://support.claude.com/en/articles/12138966-release-notes) |
+| 2026-03-19 | [Poke](#poke) | GA；取消筛选与等候名单 | [原文](https://poke.com/docs/release-notes) |
+| 2026-04-09 | [Claude Cowork](#claude-cowork) | GA；付费计划 | [原文](https://claude.com/resources/articles/cowork-for-enterprise) |
+| 2026-05-19 | [Gemini Tasks](#gemini) | 以 Spark 名称开始向受邀测试者推出 | [原文](https://gemini.google/release-notes/) |
+| 2026-07-09 | [ChatGPT Work](#chatgpt-work) | 开始分批开放 | [原文](https://openai.com/index/chatgpt-for-your-most-ambitious-work/) |
+| 2026-08-11 | [Grok Bot](#grok-bot) | Beta 开放 | [原文](https://x.ai/news/introducing-grok-bot) |
+| 2026-09-08 | [Meta Muse](#muse) | 美国分批开放 | [原文](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/) |
+
+<details>
+<summary>日期说明与待核实项</summary>
+
+- 表中是已找到依据的节点，不保证是首次披露。GA 指正式开放；预览、候补和地区分批开放另标。日期沿用来源，未注明时区的不换算。
+- **[Manus](#manus)：** 早期官方社媒原帖不可读，日期显示有差异，首发日待核实。[2026-09-28](https://manus.im/blog/introducing-manus-2-0)是 2.0 发布日。
+- **[Town](#town)：** 产品首发日待核实；[2026-03-09](https://www.town.com/updates)可确认的是 iOS GA。
+- **[Lindy](#lindy)：** 搜索索引显示现款 Assistant 于 2026-02-10 上线，但[原公告](https://community.lindy.ai/x/announcements/43j9k4ynbcx0/lindy-assistant-is-live)当前返回 502，待复核。[早期介绍](https://www.lindy.ai/blog/meet-lindy)的 2023-03-21 标为 Last Updated，不当作首发日。
+- **[Perplexity Computer](#perplexity-computer)：** [原文](https://www.perplexity.ai/en-GB/hub/blog/introducing-perplexity-computer)确认发布时向 Max 开放；2026-02-25 来自搜索中的官方索引快照，[索引](https://hub-prod.perplexity.ai/)当前返回 404，日期待复核。它与本机 Personal Computer 分开记。
+- **[Copilot Cowork（个人版）](#copilot)：** 现名首发日待核实；[当前仍为 Preview](https://support.microsoft.com/en-us/microsoft-365-copilot/get-started-with-cowork)，不套用企业版 GA 日期。
+- **[Instinct（候选）](#instinct)：** 首发日和完整个人版自助开放均待核实，不计入 14 项已收录产品。
+- Genspark 行只指 Super Agent；Lindy 行只讨论现款 Assistant。Gemini Spark → Task 改名日期未知；Muse 的 09-30 是文章更新日。索引快照不等于原文直接核验，失效原链接仅供追溯。
+
+</details>
+
 ## 已提供的产品
 
 <a id="chatgpt-work"></a>
