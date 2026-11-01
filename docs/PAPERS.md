@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **40 篇不同论文**：27 个评测条目、15 个方法条目；Proactive Agent 与 MemoProAgent 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **41 篇不同论文**：27 个评测条目、16 个方法条目；Proactive Agent 与 MemoProAgent 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**待审增量**：B25–B27 核验于 2026-11-01；旧条目保留原核验日期。尚未发布。
+**条目核验**：B25–B27、M16 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -21,6 +21,7 @@
 - [评测：隐私规范与对抗安全](#safety-evaluation)
 - [方法：记忆与长期状态](#memory-methods)
 - [方法：规划、工具、反思、主动性与协作](#agent-methods)
+- [方法：个性化与偏好学习](#personalization-methods)
 - [怎样比较与复现](#reproducibility)
 - [来源与许可边界](#sources-and-rights)
 
@@ -39,9 +40,22 @@
 | 多应用任务能否真的完成 | [AppWorld](#benchmark-appworld)、[WebArena](#benchmark-webarena)、[OSWorld](#benchmark-osworld)、[AndroidWorld](#benchmark-androidworld) | 真实账号、环境变化、不可逆操作 |
 | 多次尝试是否稳定遵守流程 | [τ-bench](#benchmark-tau-bench) | 模拟用户与真人差异、完整过程安全 |
 | 读到的信息是否应该向外分享 | [PrivacyLens](#benchmark-privacylens)、[AgentCIBench](#benchmark-agentcibench)；[AgentDojo](#benchmark-agentdojo) 另测间接提示注入 | 完整隐私合规、跨用户 / 多代理隔离、所有攻击面 |
+| 怎样从个人反馈学习偏好 | [P-RLHF](#method-p-rlhf) | 冷启动、偏好变化、真人长期效用；不等同于记忆存储 |
 | 怎样管理长期记忆与生命周期 | [MemGPT](#method-memgpt)、[MemoryBank](#method-memorybank)、[A-MEM](#method-a-mem)、[Mem0](#method-mem0)、[Zep](#method-zep)、[MemOS](#method-memos) | 失效或不再使用不等于物理删除；还需权限、调度与可观测性 |
 | 怎样复用经验、技能与多代理协作 | [ReAct](#method-react)、[Reflexion](#method-reflexion)、[Voyager](#method-voyager)、[ExpeL](#method-expel)、[AutoGen](#method-autogen)（历史） | 长期真人效用、单代理对照、经验过时与运行成本 |
 
+
+<a id="user-profile-reading-path"></a>
+### 用户画像：按四个问题读
+
+这是跨条目的阅读路线，**不替代“评测 / 方法”分类，同一论文可出现在多行**。这里的“画像”包括用户历史、偏好摘要和学到的用户表示，不一定是一张固定资料卡；下表是本清单的归纳，不是论文自带的分类。
+
+| 问题 | 先读什么、看什么 | 不能据此认定什么 |
+| --- | --- | --- |
+| **1. 怎么理解用户？** | [MemoryBank](#method-memorybank)：从历史互动汇总用户信息；[P-RLHF](#method-p-rlhf)：从显式偏好文本和个人比较反馈学习用户表示；[PrefEval](#benchmark-prefeval)：检验显式 / 隐含偏好能否被识别并遵循。 | 用户表示不等于完整、准确的人格；PrefEval 是能力测试，不是画像构建系统。 |
+| **2. 怎么存、怎么更新？** | [MemoryBank](#method-memorybank)：存储、检索、强化与淡化记忆；[Zep](#method-zep)：用时间关系处理冲突并保留历史。再用 [LongMemEval](#benchmark-longmemeval) 检验更新后能否答对。 | 记忆淡化或关系失效不等于物理删除；P-RLHF 的训练也不是持续记忆更新机制。 |
+| **3. 怎么把画像用起来？** | [LaMP](#benchmark-lamp)：将用户历史用于个性化分类 / 生成；[P-RLHF](#method-p-rlhf)：让生成随学到的用户偏好变化。若关心行动，接着读 [Mem2ActBench](#benchmark-mem2actbench) 的记忆到工具参数。 | 检索历史与学习用户表示是不同路线；回答更合偏好、工具参数正确，都不等于真实任务已完成。 |
+| **4. 怎么评估？** | [LaMP](#benchmark-lamp)：个性化任务质量；[PrefEval](#benchmark-prefeval)：是否遵循已知偏好；[PersonaMem（v1）](#benchmark-personamem-v1)：能否识别偏好变化并迁移到新场景。 | 三者不是同一指标；PersonaMem 的合成历史与四选一不能代替开放式回答质量或长期真人满意度。 |
 
 <a id="personal-evaluation"></a>
 ## 评测 A：个人上下文、记忆与主动性
@@ -562,6 +576,20 @@
 - **关联与边界**：通用多代理编排研究，不是个人化 benchmark。MATH、检索 QA、ALFWorld、OptiGuide 使用各自指标；多 Agent 或人类在环不自动带来权限隔离、可靠授权或更低成本，仍需单代理基线与安全测试。
 - **资源**：[官方仓库](https://github.com/microsoft/autogen)：代码 MIT，文档 / 其他内容 CC BY 4.0。当前 README 明确标“已归档、不再由 Microsoft 维护”；保留为研究沿革，不推荐为仍维护的生产选型。现行包结构不同于 2023 论文 API，未定位论文对应提交。
 
+<a id="personalization-methods"></a>
+## 方法 C：个性化与偏好学习
+
+<a id="method-p-rlhf"></a>
+### M16. P-RLHF · 从个人反馈学习偏好
+
+[Personalized Language Modeling from Personalized Human Feedback](https://arxiv.org/html/2402.05133v3) — 2024 预印本；首发 2024-02-06，查阅 v3，2024-12-09。
+
+**核验日期 / 阅读范围**：2026-11-01；摘要、§4.1–4.4 用户模型与 P-DPO、§5 实验相关段落；官方 README 的数据、训练与评测说明。未安装或训练。
+
+- **核心**：联合学习轻量用户模型与 LLM；把用户文本中的显式偏好、个人比较反馈中的隐式偏好编码为用户嵌入。用户嵌入通过软提示参与生成，P-DPO 将偏好优化条件化到用户。
+- **关联与边界**：个性化方法，不是 benchmark 或长期记忆系统。实验包含合成、半合成及 PRISM 真人反馈；回答比较依赖模型 judge，不证明长期真人满意度、动态偏好更新或工具执行。没有用户文本且用户 ID 未知时退回非个性化回答。
+- **资源**：[官方实现](https://github.com/HumainLab/Personalized_RLHF)提供用户模型、数据处理、训练与评测入口；代码公开不代表训练已复现，上游数据和底座模型须另查条款。
+
 <a id="reproducibility"></a>
 ## 怎样比较与复现
 
@@ -585,5 +613,6 @@
 - **公开可读不等于任意再利用**：LaMP、LoCoMo、PersonaBench、PrefEval 与 MemoPro 代码的非商业条款，GAIA 的门控 / 防污染要求，以及 AppWorld / Ego4D 的额外资源规则已在对应条目提示。未列许可不代表没有限制；代码、数据、模型和第三方素材可能适用不同条款。
 - 本次未进行逐资产法律审查、下载完整权重验证或全依赖复现。根目录缺许可、文件访问失败或外部服务变化均不能被“有 GitHub 链接”消除。
 - 维护时先修正文献版本、任务范围与失效资源，再补新论文；欢迎提供具体一手证据，不以榜单名次、引用量或 Star 作为可靠性结论。
+
 
 
