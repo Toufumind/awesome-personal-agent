@@ -12,7 +12,7 @@ Research, evaluation, and practice for personal agents.
 
 [简体中文](README.md) · **English**
 
-**[31 projects](#source-projects) · [Products](docs/PRODUCTS.en.md) · [Papers](docs/PAPERS.en.md) · [Timeline](docs/PRODUCTS.en.md#release-timeline)**
+**[31 projects](#source-projects) · [Products](docs/PRODUCTS.en.md) · [Papers](docs/PAPERS.en.md) · [Surveys](docs/SURVEYS.en.md) · [Timeline](docs/PRODUCTS.en.md#release-timeline)**
 
 </div>
 
