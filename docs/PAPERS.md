@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **176 篇不同论文**：86 个评测条目、105 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **180 篇不同论文**：86 个评测条目、109 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B86、M16–M105、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B86、M16–M109、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -1401,6 +1401,18 @@ AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐�
 - **边界：**作者承认任务狭窄；语音助手是应用动机，不是线上部署或真实用户收益证明；未建立跨应用画像授权或临床验证证据。
 - **资源/许可：**未核实论文专属官方代码；使用 LaMP 不产生新 benchmark。论文 CC BY-SA 4.0 不替代数据/模型许可。
 
+<a id="method-recap"></a>
+### M109. RECAP · 用历史检索与连续前缀适配未见用户
+
+[RECAP: Retrieval-Enhanced Context-Aware Prefix Encoder for Personalized Dialogue Response Generation](https://aclanthology.org/2023.acl-long.468/) — ACL 2023；实读 [arXiv v1](https://arxiv.org/html/2306.07206v1)，2023-06-12；DOI `10.18653/v1/2023.acl-long.468`。
+
+**核验日期 / 阅读范围**：2026-11-01；v1 §§2–4、伦理与资源说明；官方仓库 README、目录及许可标识。未运行复现。
+
+- **机制**：层级 Transformer 从用户历史检索相关回复，再通过上下文感知的连续前缀融合进 DialoGPT。
+- **证据**：真实 Reddit 文本，训练 / 验证 / 测试分别为 **10万 / 5千 / 1万位互不重叠用户**；主 Reddit 实验评估文本相似度、作者风格与人工评分，支持未见用户的离线个性化回复生成；特征分类另使用独立 PANDORA 用户，不是上述 1万位 Reddit 测试用户上的同一评测。
+- **边界**：不是工具执行或真人部署研究。作者模仿、特征分类分数不证明可靠理解用户或长期效用；论文承认 MBTI 有效性争议、二元性别简化及未过滤冒犯内容，亦提示未经同意模仿的风险。
+- **资源**：[官方实现](https://github.com/isi-nlp/RECAP)标为 MIT，含处理、训练、评测入口及数据链接；底层 Reddit 数据权利与个人同意不能由代码许可替代。
+
 <a id="memory-methods"></a>
 ## 方法：记忆与长期状态
 
@@ -1875,6 +1887,45 @@ IUI 2026 DOI线索 `10.1145/3742413.3789222`；ACM fetch返回403。venue以官�
 - **证据：**画像来自 Medical-Dialogue-System，再经模型自聊；医疗领域适配使用 HealthCareMagic-100k/iCliniq。60模拟用户、10,920段自聊对话；QA、偏好分类、回应胜率。两名医学背景硕士筛查100个数据样本，94%未发现安全问题；另由两名硕士评100对回应，用于核验自动评分一致性。
 - **边界：**94%仅是小规模数据样本安全筛查，不是临床安全、患者结局或疗效证明。非真实患者纵向试验；长期记忆未展示删除/更正/同意治理。
 - **资源/许可：**[官方仓库](https://github.com/MatthewKKai/MaLP)展示数据、生成/记忆/训练代码；LICENSE 为 MIT，但 README 的 License 节另称研究用途。两信号不可推定无限商用，也不证明上游医疗语料/模型权利、患者同意及商业授权链完整。
+
+<a id="method-mpc"></a>
+### M106. MPC：模块化提示与会话记忆
+
+**直接方法：对话画像与长期一致性；不是任务执行系统。**
+
+[Prompted LLMs as Chatbot Modules for Long Open-domain Conversation](https://aclanthology.org/2023.findings-acl.277/) — Findings of ACL 2023，4536–4554；arXiv `2305.04533`，同篇只计一次。
+
+- **机制：**澄清器改写查询，经 DPR 检索记忆，再由提示式记忆处理器与回应生成器作答；定期摘要写入记忆池，保存预设 persona 与对话中新获信息，不需微调。
+- **证据：**真人众包员/大学生进行单模型与随机双模型交互评估，判断合理性、一致性、吸引力及偏好。隐式 persona 测试先提供预设十轮历史，再由人继续六轮，并人为缩短模型上下文以测试历史记忆。因此包含真人交互，但不是自然长期使用日志或纵向部署试验。
+- **边界：**仅英语；多模块增加推理成本与错误传播；人工评估受主观性与指令偏差影响。对话一致性不证明个性化工具执行、授权或真实长期满意度。
+- **资源/许可：**[官方代码与评估界面](https://github.com/krafton-ai/MPC)公开；实际 [LICENSE](https://github.com/krafton-ai/MPC/blob/main/LICENSE) 为 **Apache-2.0**。论文 checklist 的预期 MIT 与现仓库不一致，以实际资源许可为准；不外推至依赖模型与数据。
+- **实际阅读：**[正式论文 PDF](https://aclanthology.org/2023.findings-acl.277.pdf)摘要、§§3–4、结论/Limitations、Responsible NLP Checklist；官方 README、根目录与 LICENSE。未逐页核验全部附录。
+
+<a id="method-rsum"></a>
+### M107. Rsum：递归更新会话摘要
+
+**直接方法：跨会话画像/偏好记忆更新。**
+
+[Recursively Summarizing Enables Long-Term Dialogue Memory in Large Language Models](https://arxiv.org/html/2308.15022v4) — 实际阅读 arXiv **v4，2025-08-25**；发表于 Neurocomputing 639 (2025)，130193，[DOI](https://doi.org/10.1016/j.neucom.2025.130193)。2023 初始预印本与2025期刊版为同篇版本链，作者列表有变化，不另计论文。
+
+- **机制：**每个会话结束后，把旧记忆与新会话递归汇总成新记忆；以最新记忆和当前上下文生成回应。可与检索、长上下文及少样本提示结合。
+- **证据：**MSC 真人—真人语料及机器翻译为英语的 CareCall，主要评第四/第五会话；BLEU、F1、BERTScore，三名众包员评分及 GPT-4 评判。CareCall 上游描述为采集真人—机器人对话并人工验证。这里是现有语料上的离线回应评测，不是 Rsum 新开展的真人部署试验。
+- **边界：**论文未计入大模型调用成本；摘要偶有事实错误。对话质量与记忆更新结果不证明现实任务完成、临床效果或权限治理。
+- **资源/许可：**[官方 Rsum](https://github.com/qingyue2014/Rsum)已有代码和运行脚本；旧摘要“将发布代码”已过时。未核实顶层 LICENSE 或明确复用授权。[CareCall](https://github.com/naver-ai/carecall-memory)另有非商业及禁止修改等限制，不能由方法代码公开推断上游数据可自由使用；arXiv 非独占传播许可也不是代码许可。
+- **实际阅读：**v4 摘要、§4、§5.1–5.2、§6.4–6.6、Limitations、版本头；期刊元数据/摘要；Rsum README/根目录；CareCall README 的来源、格式及许可。未核验全部结果表或运行代码。
+
+<a id="method-h-mem"></a>
+### M108. H-MEM：分层索引与反馈加权记忆
+
+**直接方法：用户画像与长期会话记忆；评测仍是构造对话 QA。**
+
+[H-MEM: Hierarchical Memory for High-Efficiency Long-Term Reasoning in LLM Agents](https://aclanthology.org/2026.eacl-long.15/) — **EACL 2026**，341–350，Haoran Sun、Shaoning Zeng、Bob Zhang；DOI `10.18653/v1/2026.eacl-long.15`。前身为 [2507.22925v1](https://arxiv.org/html/2507.22925v1)，2025-07-23，Sun/Zeng 两作者；同篇只计一次，不与其他同名 H-Mem 合并。
+
+- **机制：**领域/类别/记忆线索/情节四层存储，通过子节点位置索引逐层检索；情节层保留个人画像。按用户赞同/无反馈/反驳调整外部记忆权重，不更新 LLM 参数。
+- **证据：**LoCoMo 五类 QA，六种小模型配置，与五种基线比较 F1、BLEU-1；检索计算量/延迟的效率实验仅与 MemoryBank 比较。LoCoMo 来源是模型生成后人工验证/修改的对话，不是真实用户长期日志；未见 H-MEM 新的真人交互研究。不能由 QA 结果推出真实偏好变化适应能力。
+- **边界：**文本记忆为主；容量扩张、生命周期/删除管理及隐私安全仍待解决。论文描述的反馈加权机制不等于已验证的用户控制或删除保障。
+- **资源/许可：**正式论文未找到官方实现链接，定向检索亦未核实代码库；代码及方法新增资源许可未知。上游 LoCoMo 与依赖模型权利需单独检查，不把论文可访问当作系统开源。
+- **实际阅读：**[EACL PDF](https://aclanthology.org/2026.eacl-long.15.pdf)摘要、§§3–4、§7；ACL 元数据；2025v1 方法/实验/限制片段；[LoCoMo 原论文](https://arxiv.org/html/2402.17753v1)摘要、§3.4、§8 的数据来源。未复现或验证论文声称的全部增益。
 
 <a id="agent-methods"></a>
 <a id="方法-b规划工具反思主动性与协作"></a>
