@@ -529,7 +529,7 @@ Contains **2,020 simulated episodes in HM3D/Habitat** with explicit ownership de
 
 [PersonaFeedback: A Large-scale Human-annotated Benchmark For Personalization](https://arxiv.org/html/2506.12915v1) — arXiv v1, 2025-06-15, work in progress.
 
-**English review:** Evaluates binary response selection given explicit personas using selection accuracy against labels, with 8,298 human-labelled cases—not 8,298 real participants. Twenty real seed profiles underpin constructed personas; 200 are used for benchmarking. Model-generated material is human-filtered, with majority labels from nine evaluators. This is not a longitudinal user study or evidence that RAG generally fails. Subjective labels and persona simplification constrain conclusions. The public dataset declares Apache-2.0; its viewer currently reports incompatible schemas. No formal privacy guarantee was established.
+Evaluates binary response selection given explicit personas using selection accuracy against labels, with 8,298 human-labelled cases—not 8,298 real participants. Twenty real seed profiles underpin constructed personas; 200 are used for benchmarking. Model-generated material is human-filtered, with majority labels from nine evaluators. This is not a longitudinal user study or evidence that RAG generally fails. Subjective labels and persona simplification constrain conclusions. The [public dataset](https://huggingface.co/datasets/PersonalAILab/PersonaFeedback) declares Apache-2.0; its viewer currently reports incompatible schemas. No formal privacy guarantee was established.
 
 **Reading scope:** §3 construction/annotation, §4 evaluation setup, limitations; official dataset card and viewer status. Targeted construction, evaluation and limitations; dataset card/viewer, not a full dataset audit.
 
@@ -538,7 +538,7 @@ Contains **2,020 simulated episodes in HM3D/Habitat** with explicit ownership de
 
 [According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/html/2603.01990v1) — arXiv v1, 2026-03-02, preprint.
 
-**English review:** Uses roughly four years of human-origin multimodal memories and 1,038 human-annotated QA/evidence pairs. Structured memory supports retrieval and grounded answering. QS selects its scorer by answer type: EM for numbers, Jaccard for list recall, and an LLM judge for open-ended answers. Retrieval separately reports Recall@k and Recall@k_GT (k equals the ground-truth evidence count); Joint@k = QS × Recall@k. Consent, visual redaction, email paraphrasing and synthetic identifier replacement are not formal anonymity guarantees. The paper’s below-20% Hard finding belongs to its original evaluation. Code and data are now released: MIT code and CC BY-NC 4.0 data. Later repository benchmarks can use different release sets and must not be merged with preprint results.
+Uses roughly four years of human-origin multimodal memories and 1,038 human-annotated QA/evidence pairs. Structured memory supports retrieval and grounded answering. QS selects its scorer by answer type: EM for numbers, Jaccard for list recall, and an LLM judge for open-ended answers. Retrieval separately reports Recall@k and Recall@k_GT (k equals the ground-truth evidence count); Joint@k = QS × Recall@k. Consent, visual redaction, email paraphrasing and synthetic identifier replacement are not formal anonymity guarantees. The paper’s below-20% Hard finding belongs to its original evaluation. [Code](https://github.com/JingbiaoMei/ATM-Bench) and [data](https://huggingface.co/datasets/Jingbiao/ATM-Bench) are now released: MIT code and CC BY-NC 4.0 data. Later repository benchmarks can use different release sets and must not be merged with preprint results.
 
 **Reading scope:** §3–5, Appendix A privacy/licensing and Appendix B annotation; official repository timeline, result-version notes and dataset card. Targeted methods/evaluation/ethics/annotation plus release records; no raw personal-data inspection.
 
@@ -565,21 +565,21 @@ Extends 1,000 TripCraft plans of 3/5/7 days with model-generated, human-selected
 **Read:** v1 §§2–3, §5 and Appendix A. Paper-provided code/data links; no independent reproduction or reuse-license verification.
 
 <a id="benchmark-perltqa"></a>
-### B68. 个人记忆问答 / Personal-memory QA
+### B68. PerLTQA · Personal-memory QA
 
-[PerLTQA: A Personal Long-Term Memory Dataset for Memory Classification, Retrieval, and Synthesis in Question Answering](https://arxiv.org/html/2402.16288v1) — 查阅 / reviewed v1, 2024-02-26；[SIGHAN-10 2024 发表版](https://aclanthology.org/2024.sighan-1.18/)标题末段改为 / published title uses “Fusion”。
+[PerLTQA: A Personal Long-Term Memory Dataset for Memory Classification, Retrieval, and Synthesis in Question Answering](https://arxiv.org/html/2402.16288v1) — reviewed v1, 2024-02-26; the [SIGHAN-10 2024 published version](https://aclanthology.org/2024.sighan-1.18/) uses “Fusion” in the final part of the title.
 
 
 - **Scope**: §§3–5, generation/validation appendices; README/LICENSE.
 - **Input → output**: synthetic profiles, relationships, events, dialogues and questions → memory classes, retrieved memories and answers. GPT-3.5 generation uses ChatGPT/Wikipedia seeds with human checks. 8,593 QA items cover 30 fictional characters, not longitudinal participants.
 - **Measures**: classification P/R/F1/accuracy, Recall@K, anchor MAP and model-judged correctness/coherence.
 - **Boundary**: not real-user utility, action execution or privacy/security validation.
-- **Resources**: repository above; dataset CC BY-NC 4.0. README records a 2025-12-22 consistency update: pin the revision rather than equating current data with the paper snapshot.
+- **Resources**: [code / data repository](https://github.com/Elvin-Yiming-Du/PerLTQA); [dataset license CC BY-NC 4.0](https://github.com/Elvin-Yiming-Du/PerLTQA/blob/main/LICENSE.txt). README records a 2025-12-22 consistency update: pin the revision rather than equating current data with the paper snapshot.
 
 <a id="benchmark-personaconvbench"></a>
-### B69. 多用户对话历史 / Multi-user conversational history
+### B69. PERSONA-Bench · Multi-user conversational history
 
-[A Personalized Conversational Benchmark: Towards Simulating Personalized Conversations](https://arxiv.org/html/2505.14106v2) — [NeurIPS 2025 MTI-LLM workshop（非主会 / not main conference）](https://research.adobe.com/publication/a-personalized-conversational-benchmark-towards-simulating-personalized-conversations/)；方法与实验查阅 / methods and experiments reviewed in arXiv v2, 2025-05-25。
+[A Personalized Conversational Benchmark: Towards Simulating Personalized Conversations](https://arxiv.org/html/2505.14106v2) — [NeurIPS 2025 MTI-LLM workshop (not main conference)](https://research.adobe.com/publication/a-personalized-conversational-benchmark-towards-simulating-personalized-conversations/); methods and experiments reviewed in arXiv v2, 2025-05-25.
 
 
 - **Scope**: §§2–4, appendix C; official `Latest` README/data card.
@@ -587,19 +587,19 @@ Extends 1,000 TripCraft plans of 3/5/7 days with model-generated, human-selected
 - **Measures**: accuracy/F1/MCC, regression errors and generation similarity; separate protocols. Temporal access and target masking are reported, not independently audited.
 - **Comparison protocol**: §C.3 generates 10 candidates for every model except Claude and selects the highest-SBERT candidate; Claude uses one candidate. Cross-model generation scores therefore do not represent single-response performance under equal sampling budgets.
 - **Boundary**: “sentiment” is score-derived, not validated personal emotion. Historical evaluation is not deployed-assistant or mental-health effectiveness evidence.
-- **Resources**: code/data above. HF says MIT; repository says research-only/Reddit TOS. Resolve this discrepancy before reuse; do not describe data as unrestricted MIT.
+- **Resources**: [code](https://github.com/PERSONA-bench/PERSONA/tree/Latest) / [data](https://huggingface.co/datasets/PERSONABench/PERSONA-Bench). HF says MIT; repository says research-only/Reddit TOS. Resolve this discrepancy before reuse; do not describe data as unrestricted MIT.
 
 <a id="benchmark-teafarm"></a>
-### B70. 反事实记忆压力测试 / Counterfactual memory stress test
+### B70. TeaFarm · Counterfactual memory stress test
 
-[Towards Lifelong Dialogue Agents via Timeline-based Memory Management](https://arxiv.org/html/2406.10996v3) — NAACL 2025；查阅 / reviewed v3, 2025-01-29。方法见 / method: **M65**；同一论文 / same paper。
+[Towards Lifelong Dialogue Agents via Timeline-based Memory Management](https://arxiv.org/html/2406.10996v3) — NAACL 2025; reviewed v3, 2025-01-29. Method: **M65**; same paper.
 
 
 - **Scope**: §§3–5, appendices D/E/J; official resources.
 - **Input → output**: five-session MSC/Conversation Chronicles histories, synthetic continuations and counterfactual questions → answers. TeaBag has 100 source episodes, 200 QA pairs and 200 GPT-4-generated sixth sessions.
 - **Measure**: successful recall despite false premises, distinct from ordinary response quality.
 - **Boundary**: constructed stories, not lifelong participant observation; counterfactual QA is not comprehensive security certification.
-- **Resources**: code/data above; current dataset has 200 rows. Appendix J specifies academic/non-commercial use; check upstream terms separately.
+- **Resources**: [code](https://github.com/kimnamssya/Theanine) / [data](https://huggingface.co/datasets/LangAGI-Lab/teafarm); current dataset has 200 rows. Appendix J specifies academic/non-commercial use; check upstream terms separately.
 
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
@@ -838,7 +838,7 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 
 [AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](https://arxiv.org/html/2503.09780v3) — arXiv v3, 2025-10-01; [NeurIPS 2025 Datasets & Benchmarks](https://arxiv.org/abs/2503.09780).
 
-**English review:** Executes 246 tasks on self-hosted web replicas with synthetic user data derived from human seeds. Final-state checks measure utility; GPT-4o judges action-text disclosure. Leakage rate is the fraction of instances with leakage; privacy performance equals 1 minus leakage rate. The 98% human agreement validates only one GPT-4o/axtree run. Its threat model excludes malicious actors and external attacks: this is inadvertent data minimization, not prompt-injection defense. Prompting reduces leakage without guaranteeing privacy. Official resources combine CC BY-NC 4.0, MIT components and additional Llama 3.1-derived data terms.
+Executes 246 tasks on self-hosted web replicas with synthetic user data derived from human seeds. Final-state checks measure utility; GPT-4o judges action-text disclosure. Leakage rate is the fraction of instances with leakage; privacy performance equals 1 minus leakage rate. The 98% human agreement validates only one GPT-4o/axtree run. Its threat model excludes malicious actors and external attacks: this is inadvertent data minimization, not prompt-injection defense. Prompting reduces leakage without guaranteeing privacy. [Official resources](https://github.com/facebookresearch/ai-agent-privacy) combine CC BY-NC 4.0, MIT components and additional Llama 3.1-derived data terms.
 
 **Reading scope:** v3 §3 threat model, data, metrics and mitigation; §4–5 evaluation/discussion; arXiv venue metadata and official README licensing section. Targeted methods, evaluation and discussion plus venue/resource records; environments not deployed.
 
@@ -872,16 +872,16 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 **Read:** ACL paper §§3–5, Limitations and Ethical Considerations. Code link is supplied by the paper; installation and reuse licensing were not verified.
 
 <a id="benchmark-mextra"></a>
-### B67. 记忆抽取风险 / Memory extraction risk
+### B67. MEXTRA · Memory extraction risk
 
-[Unveiling Privacy Risks in LLM Agent Memory](https://arxiv.org/html/2502.13172v2) — ACL 2025 main；查阅 / reviewed v2, 2025-06-03。
+[Unveiling Privacy Risks in LLM Agent Memory](https://arxiv.org/html/2502.13172v2) — ACL 2025 main; reviewed v2, 2025-06-03.
 
 
 - **Scope**: §§2–6, limitations, appendices B–C; official README/root listing.
 - **Input → output**: black-box queries and varying implementation knowledge → historical queries extracted from retrieved query–solution memories. Main tests use EHRAgent and RAP/WebShop with static 200-record memories.
 - **Measures**: extraction count/efficiency, retrieval count, complete/any extraction rates; up to three attempts per prompt. Dataset queries plus generated solutions are not a survey of live multi-user services.
 - **Boundary**: no user/session memory isolation in the studied setup; not evidence that properly isolated products share the vulnerability, nor proof of comprehensive privacy compliance.
-- **Resources**: official code above; no overarching root/README license observed. Check upstream terms separately.
+- **Resources**: [official code](https://github.com/wangbo9719/MEXTRA); no overarching root/README license observed. Check upstream terms separately.
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -1459,7 +1459,6 @@ Same [paper](https://arxiv.org/html/2505.18882v5) and reading scope as B55; coun
 - **Limits:** Does not demonstrate superiority over standard RAG, reliable long-term entity consistency or validated dementia care. Scaling, long-term disambiguation and additional modalities remain future work.
 - **Resources/read scope:** Official code/data release and artifact licenses not verified. Read §§3–5 and arXiv version/workshop metadata. No reproduction.
 
-## New group: Human studies, not benchmarks
 
 <a id="method-iotgpt"></a>
 ### M52. IoTGPT
@@ -1484,7 +1483,7 @@ A restricted-plan interpreter and IFC combine persistent private-data, permissio
 
 [Extended Inductive Reasoning for Personalized Preference Inference from Behavioral Signals](https://arxiv.org/html/2505.18071v2) — arXiv v2, 2025-07-07; venue unverified.
 
-**English review:** Converts behavioral examples into explicit preferences using synthetic cold-start training and GRPO; streaming inference reuses the previous summary. AlignX/P-Soups tests mainly use preference pairs. Metrics distinguish Acc_jud (preference judging), Acc_gen (preference-guided generation), and GPT-4 win rate; “online evaluation” uses GPT-4 judgments, not live users. The main setting uses two four-example rounds; §4.4 also tests simulated reversals among eight pairs, and §4.5 extends efficiency testing to round four, totaling 16 signals. These do not establish lifelong adaptation; real-user validation is missing. Privacy statements provide no formal guarantee. Official code is accessible, but a project root license was not confirmed; the paper’s CC BY-NC-ND license does not establish code licensing.
+Converts behavioral examples into explicit preferences using synthetic cold-start training and GRPO; streaming inference reuses the previous summary. AlignX/P-Soups tests mainly use preference pairs. Metrics distinguish Acc_jud (preference judging), Acc_gen (preference-guided generation), and GPT-4 win rate; “online evaluation” uses GPT-4 judgments, not live users. The main setting uses two four-example rounds; §4.4 also tests simulated reversals among eight pairs, and §4.5 extends efficiency testing to round four, totaling 16 signals. These do not establish lifelong adaptation; real-user validation is missing. Privacy statements provide no formal guarantee. [Official code](https://github.com/AntResearchNLP/AlignXplore) is accessible, but a project root license was not confirmed; the paper’s CC BY-NC-ND license does not establish code licensing.
 
 **Reading scope:** v2 §3, §4 evaluation setup and streaming experiments, Appendices C–D; official README and root listing. Targeted methods, evaluation and limitations reading; official README/root, not an exhaustive full-paper review.
 
@@ -1493,7 +1492,7 @@ A restricted-plan interpreter and IFC combine persistent private-data, permissio
 
 [PSG-Agent: Personality-Aware Safety Guardrail for LLM-based Agents](https://arxiv.org/html/2509.23614v1) — arXiv v1, 2025-09-28; venue unverified.
 
-**English review:** Mines profiles and compiles contextual safety criteria for plan, tool, response and memory-write checks. Its approximately 2,900 cases and histories are largely GPT-4o-generated from 132 manual seeds. Four experts checked 200 cases, each rating 50 distinct examples—not all four rating every case. ALLOW/REFUSE classification uses accuracy, precision, recall and F1; a separate three-model majority vote scores safety/helpfulness, with a 100-case human comparison. Evidence concerns synthetic profile-sensitive judgments, not real clinical/financial outcomes or proven long-term protection. Runtime gates offer no formal safety/privacy guarantee. The linked anonymous repository returned no readable content; completeness and licensing remain unverified.
+Mines profiles and compiles contextual safety criteria for plan, tool, response and memory-write checks. Its approximately 2,900 cases and histories are largely GPT-4o-generated from 132 manual seeds. Four experts checked 200 cases, each rating 50 distinct examples—not all four rating every case. ALLOW/REFUSE classification uses accuracy, precision, recall and F1; a separate three-model majority vote scores safety/helpfulness, with a 100-case human comparison. Evidence concerns synthetic profile-sensitive judgments, not real clinical/financial outcomes or proven long-term protection. Runtime gates offer no formal safety/privacy guarantee. The [anonymous repository linked by the paper](https://anonymous.4open.science/r/psg-agent-code-7724/) returned no readable content; completeness and licensing remain unverified.
 
 **Reading scope:** §3–5, threat model, components, human review and LLM-judge setup; anonymous repository entry point. Targeted benchmark, framework and evaluation reading; repository landing-page check, no code audit.
 
@@ -1565,21 +1564,21 @@ Three gpt-3.5-turbo roles—user, system and moderator—use repurposed DuRecDia
 - **Resources and reading:** [v2](https://arxiv.org/html/2605.03804v2), §§4–5, Appendix B and metadata. No official code/weights release confirmed in the paper or targeted search. Its arXiv perpetual non-exclusive distribution license is not an open-source software license.
 
 <a id="method-theanine"></a>
-### M65. 时间线记忆 / Timeline-based memory
+### M65. Theanine · Timeline-based memory
 
-[Towards Lifelong Dialogue Agents via Timeline-based Memory Management](https://arxiv.org/html/2406.10996v3) — NAACL 2025；查阅 / reviewed v3, 2025-01-29。评测见 / evaluation: **B70**；同一论文 / same paper。
+[Towards Lifelong Dialogue Agents via Timeline-based Memory Management](https://arxiv.org/html/2406.10996v3) — NAACL 2025; reviewed v3, 2025-01-29. Evaluation: **B70**; same paper.
 
 
 - **Scope**: §§2–6, appendices D/E/J; official README/root listing.
 - **Mechanism**: retain old memories, link graph nodes by time and relations, retrieve complete timelines, then refine them for current dialogue and response generation.
 - **Evidence**: automatic, model and human evaluation plus ablations on MSC/Conversation Chronicles; TeaFarm separately stresses counterfactual recall.
 - **Boundary**: “lifelong” is an architectural aim, not lifelong human evidence. Retention does not establish consent withdrawal, deletion or permission isolation.
-- **Resources**: official code above; no standalone root code LICENSE observed. Non-commercial dataset terms and website-template licensing should not be substituted for code authorization.
+- **Resources**: [official code](https://github.com/kimnamssya/Theanine); no standalone root code LICENSE observed. Non-commercial dataset terms and website-template licensing should not be substituted for code authorization.
 
 <a id="method-ariel"></a>
-### M66. 脑电辅助情绪适配 / EEG-assisted emotional adaptation
+### M66. ARIEL · EEG-assisted emotional adaptation
 
-[ARIEL: Brain-Computer Interfaces meet Large Language Models for Emotional Support Conversation](https://iris.uniroma1.it/handle/11573/1727073) — UMAP **Adjunct** ’24, pp.601–609；DOI 10.1145/3631700.3665193。
+[ARIEL: Brain-Computer Interfaces meet Large Language Models for Emotional Support Conversation](https://iris.uniroma1.it/handle/11573/1727073) — UMAP **Adjunct** ’24, pp.601–609; DOI 10.1145/3631700.3665193.
 
 
 - **Scope**: institutional record and attached published PDF §§3–5.
@@ -1684,6 +1683,3 @@ These are this guide's evaluation recommendations, not claims that every listed 
 - **Public access is not unrestricted reuse.** Entries flag noncommercial terms for LaMP, LoCoMo, PersonaBench, PrefEval, and MemoPro code; GAIA gating / contamination controls; and additional AppWorld / Ego4D resource rules. An omitted license does not imply unrestricted use; code, data, weights, and third-party assets may have different terms.
 - This check did not include asset-by-asset legal review, downloading and validating full weights, or reproducing all dependencies. A GitHub link does not resolve missing licenses, inaccessible files, or changing external services.
 - Prioritize correcting versions, scope, and broken resources before adding papers. Contributions should provide specific primary evidence; rankings, citation counts, and stars are not reliability findings.
-
-
-
