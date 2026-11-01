@@ -108,6 +108,13 @@ Stars 由 Shields.io 展示，可能有缓存延迟；仅反映关注度，不�
 
 [ 部署与选型提醒 → ](docs/GUIDE.md#previews)
 
+<a id="experimental-related"></a>
+## 实验性相关项目
+
+以下编程研究原型仅供架构参考，不计入上方 31 个个人 Agent 源码项目。
+
+- [dsh-superagent](https://github.com/deepseek-ai/dsh-superagent-prototype) [![dsh-superagent GitHub stars](https://img.shields.io/github/stars/deepseek-ai/dsh-superagent-prototype?style=flat&label=Stars)](https://github.com/deepseek-ai/dsh-superagent-prototype) — DeepSeek 团队的单 GitHub 仓库主动编程 Agent，基于 DeepSeek Harness，可选接入飞书。**研究原型，非正式产品；未实测。** [依据](docs/SOURCES.md#deepseek-superagent)
+
 <a id="公开可用产品--publicly-available-products"></a>
 <a id="products"></a>
 ## 产品
