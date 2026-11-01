@@ -140,3 +140,10 @@ commit 日期是源码提交日期，发布日期是 GitHub `published_at`（均
 - 产品目录和论文目录的新增，不表示原有源码项目经过再次实测，也不把研究系统自动认定为公开可用产品。
 - 更新某条目时同步更改其来源与核验日期。若只复查了一部分，不应把整份清单的核验日期整体刷新。
 - 维护者已选择 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/legalcode.en) 用于原创文档文字与原创编选内容，并选择 [MIT](../scripts/LICENSE) 用于本仓库原创脚本与测试代码；适用文件和排除项见 [docs/LICENSE.md](LICENSE.md#zh)。MIT 正文于 2026-10-31 核对 [OSI 官方文本](https://opensource.org/license/mit)，不代表重新核验上表项目。第三方材料与商标保留自身条款；独立机器可读夹具和结果模板没有因此获许。未添加覆盖整个仓库的根 `LICENSE`，也不是全仓库双重许可。
+
+<a id="deepseek-superagent"></a>
+## 实验性相关项目：dsh-superagent
+
+**文档核验：2026-11-01（UTC）**。DeepSeek 团队的 [官方仓库 README](https://github.com/deepseek-ai/dsh-superagent-prototype#readme) 与 [MIT 许可](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/main/LICENSE) 表明：这是基于 DeepSeek Harness、面向单个 GitHub 仓库的主动编程研究原型，可选接入飞书；并非正式 DeepSeek 产品或生产就绪软件，文章中的部分设计尚未实现。[仓库元数据](https://api.github.com/repos/deepseek-ai/dsh-superagent-prototype) 的创建时间为 **2026-10-31 09:32:46 UTC**，不作为文章或产品发布日期。
+
+因本仓库主清单不收纯编程工具，此处仅作实验性架构参考，**不计入 31 个源码项目**。仅核验文档，未安装、运行、审计或复现实验；不将内部实例与公开原型的能力等同。
