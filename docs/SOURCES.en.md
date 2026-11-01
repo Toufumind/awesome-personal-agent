@@ -133,7 +133,7 @@ The following lists were read to understand their scope and discover candidates.
 
 ## Review scope and maintenance
 
-- The README now contains **31 source entries: 28 main-category entries and 3 separate previews**, across five main use categories and one preview section. The original 14 are retained, with 15 earlier additions and 2 in this round (17 additions total). Product and paper directories are excluded from this count; this is not a complete market survey.
+- The README now contains **33 source entries: 30 main-category entries and 3 separate previews**, across six main use categories and one preview section. The original 14 are retained, with 15 earlier additions, 2 personal-work additions, and 2 home / wearable additions (19 additions total). Product and paper directories are excluded from this count; this is not a complete market survey.
 - Stars, commit dates, and quantitative reliability are not used for ranking. Pinned commits support evidence tracing, not an activity score. Unverified metrics are not inferred.
 - A main-branch README does not establish that every version supports a capability. Check the specific release again before installation.
 - A readable page shows only that the source was accessible at review time—not software security, service availability, or future link stability.
@@ -146,4 +146,14 @@ The following lists were read to understand their scope and discover candidates.
 
 **Documentation reviewed: 2026-11-01 (UTC)**. The DeepSeek team's [official repository README](https://github.com/deepseek-ai/dsh-superagent-prototype#readme) and [MIT license](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/main/LICENSE) describe a proactive coding research prototype for one GitHub repository, built on DeepSeek Harness with optional Feishu integration. It is neither an official DeepSeek product nor production-ready software; some designs discussed in the article are not implemented. [Repository metadata](https://api.github.com/repos/deepseek-ai/dsh-superagent-prototype) records creation at **2026-10-31 09:32:46 UTC**; this is not treated as an article or product release date.
 
-The main list excludes coding-only tools, so this is an experimental architecture reference, **outside the 31 source projects**. Documentation review only: no installation, execution, audit, or experiment reproduction. Capabilities of the internal instance are not assumed to exist in the public prototype.
+The main list excludes coding-only tools, so this is an experimental architecture reference, **outside the 33 source projects**. Documentation review only: no installation, execution, audit, or experiment reproduction. Capabilities of the internal instance are not assumed to exist in the public prototype.
+
+<a id="home-voice-additions"></a>
+## Home / wearable additions: Home Assistant Assist and Omi
+
+**2026-11-01 (UTC), official documentation only.** Adds 2 source projects, not commercial-product entries. Mutable documents and root licenses below were read; no complete source commit was pinned or release package verified. No installation, purchase, account connection, recording, or task execution. Existing entries retain their review dates. Root licenses do not automatically cover models, hardware, dependencies, or hosted services.
+
+- **Home Assistant Assist:** [Assist](https://www.home-assistant.io/voice_control/) · [Architecture](https://contributors.home-assistant.io/architecture/platform/voice/) · [Ollama](https://www.home-assistant.io/integrations/ollama/) · [Cloud API](https://www.home-assistant.io/integrations/openai_conversation/) · [Apache-2.0](https://github.com/home-assistant/core/blob/dev/LICENSE.md). Configured household control, not a universal assistant. Ollama control is experimental; Voice Preview Edition names hardware, not the maturity of all Assist software.
+- **Omi:** [README](https://github.com/BasedHardware/omi#readme) · [MIT](https://github.com/BasedHardware/omi/blob/main/LICENSE) · [Overview](https://help.omi.me/en/articles/13135007-overview) · [Apps](https://help.omi.me/en/articles/13153599-omi-apps) · [Recording consent](https://help.omi.me/en/articles/13153576-using-omi-with-phone-only) · [Privacy](https://www.omi.me/pages/privacy). Distinguish capture, memory, task generation, and external execution. Source quick start connects to cloud; no offline or zero-retention guarantee. Third-party App permissions, backend deletion timing, complete regional access, and charges were not verified.
+
+Omi’s formal policy is effective **2026-10-31**: conversation audio may be stored encrypted for features such as playback, so the older help article’s no-audio-retention statement must not be carried forward. Training requires explicit permission according to the vendor; this is not zero retention. Account deletion includes a 14-day lock / restoration window and legal-retention exceptions; backend erasure was not verified.
