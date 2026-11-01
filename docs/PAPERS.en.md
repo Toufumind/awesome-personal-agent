@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **176 distinct papers**: 86 evaluation entries, 105 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, DAM/DABench, DuLeMon/PLATO-LTM, and ActMem/ActMemEval each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **180 distinct papers**: 86 evaluation entries, 109 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, DAM/DABench, DuLeMon/PLATO-LTM, and ActMem/ActMemEval each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B86, M16–M105, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B86, M16–M109, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -1393,6 +1393,18 @@ Results do not uniformly beat RAG: GPT-4o/LongMemEval correctness is 72.8% versu
 - **Limits:** Narrow benchmark; voice-assistant motivation is not deployment or real-user benefit evidence. Cross-application profiling consent and clinical validation are not established.
 - **Resources/rights:** No paper-specific official code verified. Reuses LaMP rather than introducing a benchmark. Paper CC BY-SA 4.0 does not establish data/model rights.
 
+<a id="method-recap"></a>
+### M109. RECAP · History retrieval and continuous prefixes for unseen users
+
+[RECAP: Retrieval-Enhanced Context-Aware Prefix Encoder for Personalized Dialogue Response Generation](https://aclanthology.org/2023.acl-long.468/) — ACL 2023; inspected [arXiv v1](https://arxiv.org/html/2306.07206v1), 2023-06-12; DOI `10.18653/v1/2023.acl-long.468`.
+
+**Checked / reading scope:** 2026-11-01; v1 §§2–4, ethics/artifact discussion; official README, directory and license designation. Not reproduced.
+
+- **Mechanism:** Hierarchical Transformer retrieval selects historical replies; a context-aware continuous prefix integrates them into DialoGPT.
+- **Evidence:** Real Reddit text; **100k / 5k / 10k disjoint training / validation / test users**. The main Reddit experiments assess text similarity, authorship style and human ratings for offline personalized generation with unseen users. Trait classification uses separate PANDORA users, not the same 10k Reddit test users.
+- **Limits:** No tool execution or deployment study. Imitation and trait scores do not establish dependable user understanding or long-term utility. The paper acknowledges contested MBTI validity, binary gender simplification, unfiltered offensive content and nonconsensual imitation risks.
+- **Resources:** [Official implementation](https://github.com/isi-nlp/RECAP), designated MIT, provides preprocessing, training/evaluation and data links. Code licensing does not replace underlying Reddit data rights or individual consent.
+
 <a id="memory-methods"></a>
 ## Methods: Memory and persistent state
 
@@ -1868,6 +1880,45 @@ IUI 2026 DOI lead: `10.1145/3742413.3789222`. Publisher fetch returned 403; the 
 - **Evidence:** Profiles derive from Medical-Dialogue-System, followed by model self-chat; medical adaptation uses HealthCareMagic-100k/iCliniq. Sixty simulated users and 10,920 self-chat dialogues; QA, preference classification and response judging. Two master's-student raters with medical backgrounds screened 100 dataset samples, reporting 94% without identified safety issues. Separately, two master's students rated 100 response pairs to check agreement with automated scoring.
 - **Limits:** The 94% is a small dataset-sample safety screen—not clinical safety, patient outcomes or efficacy. No longitudinal patient trial; persistent-memory deletion/correction/consent controls are not established.
 - **Resources/rights:** The [official repository](https://github.com/MatthewKKai/MaLP) exposes data and generation/memory/training code and has an MIT LICENSE, while its README License section describes research purposes. These differing signals do not justify unrestricted commercial use and do not establish upstream medical-data/model rights, patient consent or commercial authorization.
+
+<a id="method-mpc"></a>
+### M106. MPC: modular prompting and conversational memory
+
+**Direct method: conversational personas and consistency, not task execution.**
+
+[Prompted LLMs as Chatbot Modules for Long Open-domain Conversation](https://aclanthology.org/2023.findings-acl.277/) — Findings of ACL 2023, pp.4536–4554; arXiv `2305.04533`, counted once.
+
+- **Mechanism:** A clarifier rewrites queries; DPR retrieves memories; prompted memory-processing and response-generation modules answer. Periodic summaries populate a memory pool containing predefined personas and newly learned conversational information, without fine-tuning.
+- **Evidence:** Crowdworkers/students interact in single-model and randomized pairwise evaluations. An implicit-persona test supplies ten scripted turns, followed by six human turns, with an artificially shortened context window. Human interaction is present, but not natural longitudinal deployment evidence.
+- **Boundary:** English only; inference overhead, error propagation and subjective evaluation. Conversational consistency does not establish personalized tool execution, authorization or sustained real-world satisfaction.
+- **Resources/license:** [Official code and evaluation interface](https://github.com/krafton-ai/MPC) are public. The actual [LICENSE](https://github.com/krafton-ai/MPC/blob/main/LICENSE) is **Apache-2.0**, despite the paper checklist’s planned MIT license. This does not license upstream models/data.
+- **Actually read:** [Published PDF](https://aclanthology.org/2023.findings-acl.277.pdf): abstract, §§3–4, conclusion/Limitations and Responsible NLP Checklist; official README, root and LICENSE. Not every appendix page.
+
+<a id="method-rsum"></a>
+### M107. Rsum: recursively updated conversation summaries
+
+**Direct method: cross-session persona/preference memory updates.**
+
+[Recursively Summarizing Enables Long-Term Dialogue Memory in Large Language Models](https://arxiv.org/html/2308.15022v4) — read **v4, 2025-08-25**; Neurocomputing 639 (2025), 130193, [DOI](https://doi.org/10.1016/j.neucom.2025.130193). The 2023 preprint and 2025 journal article form one version chain, with changed authorship, not separate papers.
+
+- **Mechanism:** After each session, combine old memory and new dialogue into updated memory; generate responses from the latest memory and current context. Compatible with retrieval, longer contexts and few-shot prompting.
+- **Evidence:** MSC human–human conversations and English machine-translated CareCall, mainly sessions four/five; BLEU/F1/BERTScore, three human raters and GPT-4 judgments. CareCall’s source describes collected human–bot dialogues with human validation. These are offline corpus evaluations, not a new Rsum deployment study.
+- **Boundary:** Model-call costs are not accounted for; summaries sometimes contain factual errors. Results do not establish task completion, clinical benefit or permission governance.
+- **Resources/license:** [Official Rsum](https://github.com/qingyue2014/Rsum) now contains code/scripts; older release promises are stale. No top-level LICENSE or explicit reuse grant verified. [CareCall](https://github.com/naver-ai/carecall-memory) has separate noncommercial/no-modification restrictions. Public method code and arXiv distribution rights do not establish unrestricted data/code reuse.
+- **Actually read:** v4 abstract, §4, §§5.1–5.2, §§6.4–6.6, Limitations/version header; journal metadata/abstract; Rsum README/root; CareCall provenance, format and license sections. Not all result tables; no execution.
+
+<a id="method-h-mem"></a>
+### M108. H-MEM: hierarchical indexing and feedback-weighted memory
+
+**Direct method: user profiles and long-term conversation memory; evaluation remains constructed-dialogue QA.**
+
+[H-MEM: Hierarchical Memory for High-Efficiency Long-Term Reasoning in LLM Agents](https://aclanthology.org/2026.eacl-long.15/) — **EACL 2026**, pp.341–350, Haoran Sun, Shaoning Zeng and Bob Zhang; DOI `10.18653/v1/2026.eacl-long.15`. Predecessor: [2507.22925v1](https://arxiv.org/html/2507.22925v1), 2025-07-23, Sun/Zeng. Count once; do not merge other similarly named H-Mem systems.
+
+- **Mechanism:** Domain/category/trace/episode hierarchy with child-position routing and stored user profiles. Approval, absent feedback or rebuttal changes external-memory weights, not LLM parameters.
+- **Evidence:** Five LoCoMo QA categories across six small-model configurations, with F1/BLEU-1 comparisons against five baselines; retrieval-computation/latency efficiency experiments compare only against MemoryBank. LoCoMo is model-generated then human-verified/edited, not real longitudinal user logs. No new H-MEM human-interaction study identified; QA results do not validate adaptation to actual preference changes.
+- **Boundary:** Primarily textual memory; capacity, lifecycle/deletion management and privacy/security remain unresolved. Feedback weighting does not establish user-control or deletion guarantees.
+- **Resources/license:** No official implementation link located in the published paper or targeted search; code/new-resource licenses unverified. Upstream LoCoMo/model rights require separate checks. An accessible paper is not an open-source system.
+- **Actually read:** [EACL PDF](https://aclanthology.org/2026.eacl-long.15.pdf) abstract, §§3–4 and §7; ACL metadata; 2025v1 methods/experiment/limitations passages; [LoCoMo primary paper](https://arxiv.org/html/2402.17753v1) abstract, §3.4 and §8 for provenance. No reproduction or verification of every reported gain.
 
 <a id="agent-methods"></a>
 <a id="methods-b-planning-tools-reflection-proactivity-and-coordination"></a>
