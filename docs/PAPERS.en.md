@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **45 distinct papers**: 31 evaluation entries and 18 method entries. Proactive Agent, MemoProAgent, PbP/InTU, and Ask-before-Plan/CEP each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **51 distinct papers**: 35 evaluation entries and 22 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, and PEToolLLM/PEToolLLaMA each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B31 and M16–M18 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B35 and M16–M22 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -255,6 +255,54 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Measures:** Compares given versus inferred preferences; exact metrics remain unverified.
 - **Limits:** Embodied setting, not office-agent deployment. PDF exceeded retrieval size; HTML unavailable.
 - **Resources:** No verified official release located; availability and reproducibility unconfirmed.
+
+<a id="benchmark-androidintent"></a>
+### B32. AndroidIntent · Inferring implicit GUI intent from long-term records
+
+[PersonalAlign: Hierarchical Implicit Intent Alignment for Personalized GUI Agent with Long-Term User-Centric Records](https://aclanthology.org/2026.acl-long.1669/) — ACL 2026; inspected [arXiv v2](https://arxiv.org/html/2601.09636v2), May 13, 2026. Method: M21.
+
+**Verified / reading scope:** 2026-11-01; task and construction passages, §6.1 metrics, Appendix A.3; official README and root listing. Not a full-paper read.
+
+- **Input → output:** mobile-use history and a vague instruction or current state → GUI actions or proactive suggestions; 775 preference cases and 215 routine cases.
+- **Measures:** offline action-type accuracy, step-wise success and weighted CSR; suggestions separately use semantic/judge alignment, precision, recall, false alarms and F1.
+- **Limits:** primary evaluation compares offline trajectories. CSR is not real-device task completion; an appropriate suggestion does not authorize execution.
+- **Resources:** [official code/data directories](https://github.com/iLearn-Lab/ACL26-PersonalAlign). Requires external FingerTip-20k. README describes restoration after disk failure; completeness unverified. No standalone root license found; upstream data terms require separate checking.
+
+<a id="benchmark-petoolbench"></a>
+### B33. PEToolBench · Inferring tool preferences from past calls
+
+[PEToolLLM: Towards Personalized Tool Learning in Large Language Models](https://aclanthology.org/2025.findings-acl.1107/) — Findings of ACL 2025; inspected [arXiv v1](https://arxiv.org/html/2502.18980v1), February 26, 2025. Method: M22.
+
+**Verified / reading scope:** 2026-11-01; §3 task, construction and metrics, §4 method overview; official README, LICENSE and dataset file listing. Not a full-paper read.
+
+- **Input → output:** instruction, candidate tools and past user calls → tool and arguments. Synthetic histories encode preferred-only, rating-integrated and chronological preferences. Paper: 12,000 examples, split into 9,000 training and 3,000 test examples.
+- **Measures:** separate tool-selection and parameter accuracies.
+- **Limits:** a correct generated call is not an executed service; synthetic preferences do not establish longitudinal real-user performance.
+- **Resources:** [official code](https://github.com/travis-xu/PEToolBench), [dataset files](https://huggingface.co/datasets/travisxu/PEToolBench/tree/main). [Repository license](https://github.com/travis-xu/PEToolBench/blob/main/LICENSE): Apache-2.0; this does not establish identical terms for upstream tool material.
+
+<a id="benchmark-etapp"></a>
+### B34. ETAPP · Personalized tool interaction and additional assistance
+
+[Evaluating Personalized Tool-Augmented LLMs from the Perspectives of Personalization and Proactivity](https://aclanthology.org/2025.acl-long.1064/) — ACL 2025; inspected [arXiv v1](https://arxiv.org/html/2503.00771v1), March 2, 2025.
+
+**Verified / reading scope:** 2026-11-01; §2 environment, memory and sample construction, §3 evaluation; official README/root. Not a full-paper read.
+
+- **Input → output:** profile, tool preferences, current state, history and request → sandbox tool interactions and response. The 800 cases combine 50 instructions with 16 synthetic profiles—not 800 users.
+- **Measures:** human key points assist an LLM judge scoring procedure, personalization and proactivity separately from 0–5. Tool-given and tool-retrieval settings differ.
+- **Limits:** proactivity here means useful assistance beyond an initiated request, not necessarily autonomous background initiation. Judge scores do not establish real-world service execution, safety or authorization.
+- **Resources:** [official code, data and tools](https://github.com/hypasd-art/ETAPP), with inference/evaluation instructions. No standalone root license found; dependencies and API availability untested.
+
+<a id="benchmark-toolspectrum"></a>
+### B35. ToolSpectrum · Selecting tools using profiles and environment
+
+[ToolSpectrum: Towards Personalized Tool Utilization for Large Language Models](https://aclanthology.org/2025.findings-acl.1063/) — Findings of ACL 2025; inspected [arXiv v1](https://arxiv.org/html/2505.13176v1), May 19, 2025.
+
+**Verified / reading scope:** 2026-11-01; §3 task, construction and statistics, §4.1 metrics; official README/root. Not a full-paper read.
+
+- **Input → output:** request, explicit profile, environment and overlapping toolset → application, API, required and personalized optional parameters, or `None` under application policies.
+- **Measures:** separate F1 at four levels. Its 1,000 cases comprise 450 profile, 220 environment and 330 combined cases.
+- **Limits:** evaluates selection/arguments given profiles, not learning profiles from history or executing transactions. The environment-only subset is not itself individual preference learning.
+- **Resources:** [official repository](https://github.com/BUAA-IRIP-LLM/ToolSpectrum) contains `api`, `data` and `prompts`. README does not document a complete evaluation workflow; no standalone root license found.
 
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
@@ -659,6 +707,54 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Core:** Jointly learns a lightweight user model and LLM. User embeddings combine explicit textual preferences with implicit preferences learned from individual comparison feedback. User embeddings enter generation through soft prompting, and P-DPO conditions preference optimization on the user.
 - **Relevance and limits:** A personalization method, not a benchmark or long-term memory system. Experiments include synthetic, semi-synthetic, and PRISM human feedback; model-judged response comparisons do not establish longitudinal human satisfaction, changing-preference tracking, or tool execution. An unknown user without textual information receives a non-personalized response.
 - **Resources:** [Official implementation](https://github.com/HumainLab/Personalized_RLHF) includes user models and data-processing, training, and evaluation entry points. Public code does not establish reproduced training; upstream data and base-model terms require separate checks.
+
+<a id="method-personaagent"></a>
+### M19. PersonaAgent · Connecting memory and action through an adaptable personal prompt
+
+[PersonaAgent: Bridging Memory and Action for Personalized LLM Agents](https://aclanthology.org/2026.findings-acl.1315/) — Findings of ACL 2026; [arXiv v2](https://arxiv.org/html/2506.06254v2), May 27, 2026. The earlier title, *When Large Language Model Agents Meet Personalization at Test Time*, is the same paper, not an additional work.
+
+**Verified / reading scope:** 2026-11-01; v1 method passages, v2 §3.1 and Appendices E–G, publication record. Not a full-paper read.
+
+- **Mechanism:** retrieves individual experiences and summarizes stable preferences; a user-specific system prompt guides actions and is optimized at test time using textual feedback from recent historical examples.
+- **Evidence:** LaMP classification, rating and generation tasks, measured with accuracy/F1, MAE/RMSE and ROUGE—not one combined action score.
+- **Limits:** implemented tools are Wikipedia search and personal-memory retrieval. Main evaluation selects 100 active users, with single-run experiments; this does not validate multi-app transactions or longitudinal deployment.
+- **Resources:** paper verified; no author implementation entry point confirmed in this pass. Unrelated repositories with the same name are not substitutes.
+
+<a id="method-rlpa"></a>
+### M20. RLPA · Learning to infer and use profiles across dialogue turns
+
+[Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment](https://proceedings.neurips.cc/paper_files/paper/2025/hash/2fbc1ea60e215275e823c86338417162-Abstract-Conference.html) — NeurIPS 2025; inspected [arXiv v2](https://arxiv.org/html/2505.15456v2), December 11, 2025.
+
+**Verified / reading scope:** 2026-11-01; §2–3 method passages, §4.1 and Table 1; official README/root/LICENSE. Not a full-paper read.
+
+- **Mechanism:** PPO trains Qwen2.5-3B through simulated-user interactions, combining profile-matching and personalized-response rewards. The trained model is Qwen-RLPA.
+- **Evidence:** ALOE same-schema and cross-schema settings; average alignment, normalized improvement and normalized coefficient of determination.
+- **Limits:** a dialogue method, not tool execution or deployed continual learning. Table 1 gives GPT-4o a higher raw Extended alignment score than RLPA; avoid blanket “beats GPT-4o” claims.
+- **Resources:** [official training code](https://github.com/XingYuSSS/RLPA), [Apache-2.0](https://github.com/XingYuSSS/RLPA/blob/main/LICENSE). A complete checkpoint/data/evaluation package was not confirmed.
+
+<a id="method-him-agent"></a>
+### M21. HIM-Agent · Keeping preferences and routines distinct
+
+[PersonalAlign](https://aclanthology.org/2026.acl-long.1669/) — ACL 2026; same paper as B32.
+
+**Verified / reading scope:** 2026-11-01; [v2](https://arxiv.org/html/2601.09636v2) method overview, §6.1 and Appendix A.3; official README/root. Not a full-paper read.
+
+- **Mechanism:** streaming record aggregation, followed by execution-based preference filtering and state-based routine filtering, produces separate intent memories.
+- **Evidence:** AndroidIntent offline GUI metrics and proactive suggestion alignment; see B32 for evaluation scope.
+- **Limits:** recognizing routines does not imply permission to execute them. Real-device end-to-end completion, safe authorization and longitudinal user benefit remain unestablished.
+- **Resources:** [official HIM-Agent and scripts](https://github.com/iLearn-Lab/ACL26-PersonalAlign). B32's data dependencies, restoration/completeness and missing-root-license caveats apply. The later skills-beta is not evidence of paper-validated cross-platform capability.
+
+<a id="method-petoolllama"></a>
+### M22. PEToolLLaMA · Training preference-aware tool calls
+
+[PEToolLLM: Towards Personalized Tool Learning in Large Language Models](https://aclanthology.org/2025.findings-acl.1107/) — Findings of ACL 2025; same paper as B33. PEToolLLM is the paper title, PEToolBench the benchmark and PEToolLLaMA the method.
+
+**Verified / reading scope:** 2026-11-01; [v1](https://arxiv.org/html/2502.18980v1) §3 metrics and §4 method overview; official README/LICENSE and dataset file listing. Not a full-paper read.
+
+- **Mechanism:** personalized SFT conditions on history, instructions and candidate tools; DPO then improves preference-consistent call selection.
+- **Evidence:** tool and parameter accuracies under PEToolBench's three synthetic-history settings.
+- **Limits:** training is not persistent-memory management. Results do not establish real service completion, online preference shifts or safe side-effect control.
+- **Resources:** [official training/test scripts](https://github.com/travis-xu/PEToolBench), [data](https://huggingface.co/datasets/travisxu/PEToolBench/tree/main). Repository: Apache-2.0; upstream terms still require checking. Complete weight release and executable reproduction were not confirmed.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
