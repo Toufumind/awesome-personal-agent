@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **180 distinct papers**: 86 evaluation entries, 109 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, DAM/DABench, DuLeMon/PLATO-LTM, and ActMem/ActMemEval each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **183 distinct papers**: 86 evaluation entries, 112 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, DAM/DABench, DuLeMon/PLATO-LTM, and ActMem/ActMemEval each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B86, M16–M109, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B86, M16–M112, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -1920,6 +1920,34 @@ IUI 2026 DOI lead: `10.1145/3742413.3789222`. Publisher fetch returned 403; the 
 - **Resources/license:** No official implementation link located in the published paper or targeted search; code/new-resource licenses unverified. Upstream LoCoMo/model rights require separate checks. An accessible paper is not an open-source system.
 - **Actually read:** [EACL PDF](https://aclanthology.org/2026.eacl-long.15.pdf) abstract, §§3–4 and §7; ACL metadata; 2025v1 methods/experiment/limitations passages; [LoCoMo primary paper](https://arxiv.org/html/2402.17753v1) abstract, §3.4 and §8 for provenance. No reproduction or verification of every reported gain.
 
+<a id="study-does-memory-need-graphs"></a>
+### M110. Does Memory Need Graphs? · Controlled graph–flat memory comparisons
+
+[Does Memory Need Graphs? A Unified Framework and Empirical Analysis for Long-Term Dialog Memory](https://aclanthology.org/2026.acl-long.1232/) — ACL 2026; inspected [arXiv v3, 2026-02-10](https://arxiv.org/html/2601.01280v3). **This is a controlled empirical comparison of design choices, not a new agent method or benchmark**, placed here to inform comparisons of graph-memory research.
+
+- **Evidence:** A modular framework compares representations, organization, updates and retrieval on LongMemEval S/M and HaluMem Medium. Retrieval recall and model-judged answer quality are separate.
+- **Limits:** Configuration can outweigh architecture; neither universal graph superiority nor universal inferiority follows. Selected datasets, backbones and designs do not cover all hierarchical graphs, trained methods or long-term human use.
+- **Resources/read:** [Official UnifiedMem](https://github.com/AvatarMemory/UnifiedMem); no license observed in the inspected root/README, so reuse permission remains unconfirmed. Checked 2026-11-01; read §§3–5, limitations and dataset/settings appendices; not reproduced.
+
+<a id="method-gam-hierarchical-graph"></a>
+### M111. GAM · Separate immediate encoding from durable consolidation
+
+[GAM: Hierarchical Graph-based Agentic Memory for LLM Agents](https://aclanthology.org/2026.acl-long.1600/) — ACL 2026; inspected [arXiv v1, 2026-04-14](https://arxiv.org/html/2604.12285v1).
+
+- **Method/evidence:** An active event graph consolidates into a persistent topic graph at semantic boundaries; retrieval incorporates role, time and confidence. Offline QA uses LoCoMo and TV-script-derived LongDialQA, reporting F1/BLEU-1, not sustained human deployment.
+- **Limits:** Caption-stream proxy experiments do not establish native multimodal ability. Consent, privacy filtering and user-facing deletion remain deployment requirements, not demonstrated safeguards.
+- **Resources/read:** Author implementation and software license unconfirmed; third-party namesakes or inspired projects are not substitutes. Checked 2026-11-01; read §§3–4, limitations/ethics and implementation/robustness appendices; not reproduced.
+
+<a id="method-hypermem"></a>
+### M112. HyperMem · Represent higher-order associations with hyperedges
+
+[HyperMem: Hypergraph Memory for Long-Term Conversations](https://aclanthology.org/2026.acl-long.1627/) — ACL 2026; this entry uses the [published paper](https://aclanthology.org/2026.acl-long.1627.pdf), not the earlier preprint's evaluation scope as a complete account of the publication.
+
+- **Method/evidence:** Topic–episode–fact hypergraphs combine lexical/semantic indexing with coarse-to-fine retrieval. The published paper reports both model-judged LoCoMo QA across four categories and PersonaMem four-choice performance. These are separate metrics, neither establishing long-term human utility.
+- **Limits:** GPT-4.1-mini generation and Qwen3-Embedding-4B encoding and Qwen3-Reranker-4B reranking; some baseline scores come from earlier papers rather than a uniform rerun. Single-user design leaves access control and memory isolation as extension challenges.
+- **Resources/read:** [Official code](https://github.com/EverMind-AI/HyperMem), [Apache-2.0](https://github.com/EverMind-AI/HyperMem/blob/main/LICENSE); dataset/model terms remain separate. Six-stage code is not turnkey reproduction: data must be supplied, the [default script](https://github.com/EverMind-AI/HyperMem/blob/main/scripts/run_eval.sh) skips stage 1 and disables reranking, and [configuration defaults](https://github.com/EverMind-AI/HyperMem/blob/main/hypermem/config.py) need reconciliation with paper settings. Checked 2026-11-01; read published §§3–4, limitations, README, license, script and configuration; not installed or fully reproduced.
+
+
 <a id="agent-methods"></a>
 <a id="methods-b-planning-tools-reflection-proactivity-and-coordination"></a>
 <a id="planning-action-methods"></a>
@@ -2417,3 +2445,4 @@ These are this guide's evaluation recommendations, not claims that every listed 
 - **Public access is not unrestricted reuse.** Entries flag noncommercial terms for LaMP, LoCoMo, PersonaBench, PrefEval, and MemoPro code; GAIA gating / contamination controls; and additional AppWorld / Ego4D resource rules. An omitted license does not imply unrestricted use; code, data, weights, and third-party assets may have different terms.
 - This check did not include asset-by-asset legal review, downloading and validating full weights, or reproducing all dependencies. A GitHub link does not resolve missing licenses, inaccessible files, or changing external services.
 - Prioritize correcting versions, scope, and broken resources before adding papers. Contributions should provide specific primary evidence; rankings, citation counts, and stars are not reliability findings.
+
