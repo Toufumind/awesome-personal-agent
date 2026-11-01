@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **98 篇不同论文**：57 个评测条目、53 个方法条目及 3 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory 与 PENGUIN/RAISE 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **108 篇不同论文**：61 个评测条目、55 个方法条目及 7 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory 与 PENGUIN/RAISE 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B57、M16–M53、H1–H3 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B61、M16–M55、H1–H7 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -525,6 +525,31 @@
 - **资源：** [官方仓库](https://github.com/ZiliottoFilippoDev/PersONAL)为 **CC-BY-4.0**；数据、生成程序及 [baselines 分支](https://github.com/ZiliottoFilippoDev/PersONAL/tree/baselines)代码已存在。HM3D 另需 Matterport 访问及上游许可。
 - **实际阅读：** arXiv v1 §§III–VII、结果表、官方主分支及 baseline README/目录、帕多瓦大学发表元数据；未核对会议最终版全文，未运行机器人或基线。
 
+<a id="benchmark-pin"></a>
+### B58. PIN / PInNED — 用户特定物体导航
+- **论文**：*Personalized Instance-based Navigation Toward User-Specific Objects in Realistic Environments*，NeurIPS 2024 Datasets and Benchmarks；读取 arXiv v2（2025-02-19）。PIN 是任务、PInNED 是数据集，按一篇计。
+- **设置与证据**：在 Habitat 仿真中根据图片/人工描述寻找特定实例并区分同类干扰物；338 个物体、18 类，比较模块化及端到端导航基线。不是实际家庭用户或实体机器人试验。
+- **边界**：反映受控仿真中的实例识别与导航；小物体、远距离细节和渲染退化是困难，不证明真实家庭个人助理可靠性。
+- **许可与实读范围**：[论文](https://arxiv.org/html/2410.18195v2) §3–5、Appendix B/G/I；[项目](https://aimagelab.github.io/pin/)、[代码](https://github.com/aimagelab/pin)。代码 MIT；episodes/描述 CC BY；HM3D 非商业学术条件；物体混合多种 CC 许可，不能整体称可商用。
+
+<a id="benchmark-personafeedback"></a>
+### B59. PersonaFeedback · 显式画像下的响应偏好判断
+
+[PersonaFeedback: A Large-scale Human-annotated Benchmark For Personalization](https://arxiv.org/html/2506.12915v1) — arXiv v1, 2025-06-15，work in progress.
+
+**待审：** 给定画像、问题和候选回答，选择更个性化且有帮助的回答；8,298个人工标注二选一测试例，以selection accuracy衡量判断是否符合标签。20个真实种子画像扩展为构造画像，基准使用其中200个；问题/回答含模型生成，九位评者多数选择作为标签。不是8,298名真实用户、长期画像推断或部署满意度研究；主观标签及构造画像偏差限制结论，“RAG不足”仅限所测设置。[公开数据](https://huggingface.co/datasets/PersonalAILab/PersonaFeedback)标注Apache-2.0，区别于论文CC BY 4.0；当前在线预览有字段不一致报错，不代表文件不可获取。未发现形式隐私保证。
+
+**实读范围：** §3构造和标注、§4评测设置、limitations；官方数据卡和预览状态。定向阅读，未复核全量样例
+
+<a id="benchmark-atm-bench"></a>
+### B60. ATM-Bench · 跨来源个人指代记忆问答
+
+[According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/html/2603.01990v1) — arXiv v1, 2026-03-02，preprint.
+
+**待审：** 约四年的人类来源邮件、图像和视频，配1,038个人工问题—答案—证据标注；考察指代、多证据和更新记忆。Schema-Guided Memory统一结构；答案指标QS按答案类型选择：数值类用EM，列表召回类用Jaccard，开放回答用LLM裁判。检索另报Recall@k及Recall@k_GT（k取真实证据数）；Joint@k=QS×Recall@k。同意、视觉模糊/脱敏、邮件改写和合成标识替换不构成可证明匿名性。论文Hard低于20%的结论仅适用于原实验。[代码库](https://github.com/JingbiaoMei/ATM-Bench)已发布代码与后续代理评测，注明发布集可能不同于预印本；[数据](https://huggingface.co/datasets/Jingbiao/ATM-Bench)现已公开，CC BY-NC 4.0，代码MIT。勿沿用论文“待发布”脚注或混合新旧榜单。
+
+**实读范围：** §3–5、Appendix A隐私/许可、B标注；官方仓库时间线、结果版本说明与数据卡。定向阅读，未检查原始个人数据
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -756,6 +781,15 @@
 - **指标：** 风险敏感性、情感共情与用户特定对齐。14,000个场景，Reddit 衍生与合成各半，覆盖七个领域；以350例、三位标注者校验 GPT-4o 评审。
 - **边界：** 测量回答的代理评分，而非实际伤害下降。Reddit 富背景筛选、人工定义属性及等成本获取假设限制推广。
 - **资源：** [官方实现](https://github.com/yuchenlwu/PersonalizedSafety)、[项目页](https://personalized-safety.github.io/)；README 含过时克隆地址/运行文件引用。已核验可访问，未尝试复现；README 的 MIT 声明未另以许可文件核对。
+
+<a id="benchmark-agentdam"></a>
+### B61. AgentDAM · Web执行中的非必要披露
+
+[AgentDAM: Privacy Leakage Evaluation for Autonomous Web Agents](https://arxiv.org/html/2503.09780v3) — arXiv v3, 2025-10-01；[NeurIPS 2025 Datasets & Benchmarks](https://arxiv.org/abs/2503.09780).
+
+**待审：** 246个任务在自托管Reddit、GitLab与购物站副本中实际运行代理；人工种子扩展合成用户资料。最终站点状态衡量效用，动作文本由GPT-4o判断不必要披露；泄漏率为发生泄漏的实例比例，隐私率为1−泄漏率。98%人工一致率仅验证GPT-4o/axtree的一次运行。威胁模型明确无恶意参与者/外部攻击；不能代表提示注入防御。隐私感知提示减少泄漏但不保证零泄漏。[官方资源](https://github.com/facebookresearch/ai-agent-privacy)主体CC BY-NC 4.0、VisualWebArena部分MIT，数据另受Llama 3.1相关条款约束；不能整体标为MIT。
+
+**实读范围：** v3 §3威胁模型、数据、指标、缓解方法，§4–5评测/讨论；arXiv会场记录及官方README许可段。定向阅读，未部署Web环境
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -1359,6 +1393,24 @@
 - **资源：** [源码公开](https://github.com/rssta/gaap)，但未发现 LICENSE，GitHub 许可字段为空；不声称具备开源使用授权。
 - **实际阅读：** v3 威胁模型、设计、评估与讨论；官方 README、目录和许可元数据；未安全审计。
 
+<a id="method-alignxplore"></a>
+### M54. AlignXplore · 从行为信号推断可更新偏好
+
+[Extended Inductive Reasoning for Personalized Preference Inference from Behavioral Signals](https://arxiv.org/html/2505.18071v2) — arXiv v2, 2025-07-07；未核实正式会场。
+
+**待审：** 将行为样例转换为自然语言偏好，以合成冷启动数据和GRPO训练推断模型；流式设置复用已有偏好摘要。AlignX/P-Soups实验主要使用偏好比较对；指标区分Acc_jud（偏好判断）、Acc_gen（偏好引导生成）与GPT-4 win rate；所谓“online evaluation”是GPT-4裁判比较生成回答，不是真实用户在线实验。主设置为两轮、每轮四条信号；§4.4另有八对信号的模拟反转测试，§4.5效率实验延至第四轮、累计16条信号。论文明确缺少真实LLM—用户交互验证，不能据此宣称长期偏好漂移已解决。隐私/同意陈述不是形式保证。[官方代码](https://github.com/AntResearchNLP/AlignXplore)可访问，未确认项目根目录许可证；论文CC BY-NC-ND不等于代码许可。
+
+**实读范围：** v2 §3、§4评测设置与流式实验、Appendices C–D；官方README与根目录。定向阅读，非全文逐页审读
+
+<a id="method-psg-agent"></a>
+### M55. PSG-Agent · 用户相关风险的分阶段护栏
+
+[PSG-Agent: Personality-Aware Safety Guardrail for LLM-based Agents](https://arxiv.org/html/2509.23614v1) — arXiv v1, 2025-09-28；未核实正式会场。
+
+**待审：** 从历史和当前请求构造用户安全条件，再以计划、工具、回答及记忆写入检查落实。132个人工种子经GPT-4o扩展，约2,900例且历史为模型生成；200例质量检查由四位专家各评50例。ALLOW/REFUSE分类以准确率、精确率、召回率和F1评价；另行采用三模型多数裁决评估安全/帮助性，配100例人工一致性检查。评测支持合成场景下的用户差异化安全判断，不证明真实医疗/金融安全或长期风险控制；运行时门控也不是形式安全/隐私保证。[论文所链匿名代码](https://anonymous.4open.science/r/psg-agent-code-7724/)本次无可读正文，完整性与许可未核实。
+
+**实读范围：** §3–5、威胁建模、组件与人工/模型裁判设置；匿名仓库入口。定向阅读，未审代码
+
 <a id="human-studies"></a>
 ## 人机研究：真实使用与互动
 
@@ -1393,6 +1445,34 @@
 - **边界：** 无对照、前后测或延迟保持测试；**不能声称提高长期掌握程度**。内容质量、重复及模型推断“已掌握”仍有问题。
 - **资源：** PDF 提供[匿名代码/演示入口](https://anonymous.4open.science/r/LoomDemo)，本次访问返回 **HTTP 403**；内容及许可证未核实。
 - **实际阅读：** 原文系统、研究方法、结果和局限；[PDF](https://arxiv.org/pdf/2511.21037) 的 workshop 标注及资源脚注；未运行系统。
+
+<a id="human-compeer"></a>
+### H4. ComPeer — 主动同伴支持
+- **论文**：*ComPeer: A Generative Conversational Agent for Proactive Peer Support*，UIST 2024；DOI `10.1145/3654777.3676430`。读取 arXiv v2（2024-08-06）。
+- **方法与证据**：根据对话记忆检测事件、反思并安排主动消息。24 名中国大学生随机分组，首周与共享记忆和生成模块、但不主动发起对话的基线比较；第二周全部使用 ComPeer。
+- **边界**：两组自报压力均下降，组间无显著差异；不能宣称优于基线的压力改善或临床疗效。短期、学生样本和新奇效应限制推广；打扰、错误信息、同伴压力与依赖风险仍存在。
+- **资源与实读范围**：[论文](https://arxiv.org/html/2407.18064v2) §4–7；[作者代码](https://github.com/liutj9/ComPeer)。未确认代码许可证；arXiv 发布许可不等于代码许可。
+
+<a id="human-planfitting"></a>
+### H5. PlanFitting — 个人约束驱动的运动规划
+- **论文**：*PlanFitting: Personalized Exercise Planning with Large Language Model-driven Conversational Agent*，**CUI 2025 正式版**，19 页；DOI `10.1145/3719160.3736607`。
+- **方法与证据**：通过动态提示与检索收集目标、时间和障碍，生成并修订 IF–THEN 周计划。18 名真实参与者完成约一小时实验；后续修订基于**想象的下一周情境**。两名研究者检查指南一致性；三名物理治疗师各评六份初始计划。不是随机对照健康干预。
+- **边界**：测量计划质量和用户感知，未验证长期依从性、运动收益或临床安全；仍有休息日和运动组合问题。
+- **资源与实读范围**：[正式版本 PDF](https://faculty.washington.edu/garyhs/docs/shin-cui2025-planfitting-paper.pdf) §4–6、§7.5。论文 CC BY 4.0；代码/数据许可未确认。
+
+<a id="human-teachtune"></a>
+### H6. TeachTune — 教师审查与学生模拟
+- **论文**：*TeachTune: Reviewing Pedagogical Agents Against Diverse Student Profiles with Simulated Students*，CHI 2025；DOI `10.1145/3706598.3714054`。
+- **方法与证据**：教师编辑代理状态图及学生知识/特征，观察模拟对话。30 名科学教师分为三组：直接聊天/单轮测试、完整 Autochat、仅模拟知识的 Knowledge；另六名观察参与者不计入组间统计。Autochat 参与者提交更多不同学生画像；自评覆盖感无显著差异。两位专家评估的代理质量也无显著组间差异。
+- **边界**：真实参与者是教师，学生是模拟的；未测真实学生学习增益。单一相变主题、有限静态特征和模拟真实性限制推广。
+- **资源与实读范围**：[论文](https://jeongeonpark.com/assets/pdf/papers/chi25-teachtune.pdf) §4、§5.3–5.4、Table 5、§7；[项目页](https://teachtune.kixlab.org/)需联系试用。论文 CC BY-NC-SA 4.0；代码许可未确认。
+
+<a id="human-memolet"></a>
+### H7. Memolet — 可操作的对话记忆
+- **论文**：*Memolet: Reifying the Reuse of User-AI Conversational Memories*，UIST 2024；DOI `10.1145/3654777.3676388`。
+- **方法与证据**：可视对象支持抽取、组织、添加/排除、加权与合并记忆，并通过提示/RAG影响生成。12 名真实参与者进行被试内比较，在一天后复用写作、编程或旅行规划对话；两条件共享基础生成/检索能力。
+- **边界**：主要支持交互控制与用户体验结论，不证明长期记忆准确性或自主记忆管理。便利样本、受控任务和一天间隔限制真实部署推广。
+- **资源与实读范围**：[作者 PDF](https://www.jeffjianzhao.com/papers/memolet.pdf#page=1) §4.6、§5–6、§8。作者版标注个人使用、不得再分发；未确认开放代码/数据许可。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
