@@ -1,12 +1,20 @@
+<div align="center">
+
 # Awesome Personal Agent
 
+</div>
+
 ![Awesome Personal Agent banner](assets/banner.png)
+
+<div align="center">
 
 Personal AI agents: projects, products, and research.
 
 [简体中文](README.md) · **English**
 
 **[31 projects](#source-projects) · [Products](docs/PRODUCTS.en.md) · [Papers](docs/PAPERS.en.md)**
+
+</div>
 
 <a id="start-here"></a>
 ## Contents
