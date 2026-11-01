@@ -103,6 +103,8 @@ PAPER_SECTIONS = {
     'execution-evaluation': 'B', 'safety-evaluation': 'B',
     'memory-methods': 'M', 'agent-methods': 'M',
     'personalization-methods': 'M', 'human-studies': 'H',
+    'user-understanding-methods': 'M', 'planning-action-methods': 'M',
+    'proactive-clarification-methods': 'M', 'privacy-safety-methods': 'M',
 }
 PAPER_ENTRY = re.compile(r'^###\s+([BMH][1-9]\d*)\.\s+')
 REVIEW_LABEL = re.compile(r'^\s*\*\*(?:待审\s*[：:]|English review\s*:)\*\*', re.I | re.M)
