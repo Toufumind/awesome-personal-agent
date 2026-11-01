@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **108 篇不同论文**：61 个评测条目、55 个方法条目及 7 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory 与 PENGUIN/RAISE 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **118 篇不同论文**：66 个评测条目、60 个方法条目及 8 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE 与 Searching for Privacy Risks 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B61、M16–M55、H1–H7 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B66、M16–M60、H1–H8 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -550,6 +550,28 @@
 
 **实读范围：** §3–5、Appendix A隐私/许可、B标注；官方仓库时间线、结果版本说明与数据卡。定向阅读，未检查原始个人数据
 
+<a id="benchmark-triptide"></a>
+### B65. TripTide · 扰动后的个性化行程修订
+
+[TripTide: A Benchmark for Adaptive Travel Planning under Disruptions](https://arxiv.org/html/2510.21329v1) — arXiv 2510.21329v1, 2025-10-24; no verified conference publication.
+
+扩展TripCraft的1,000个3/5/7天计划；模型生成候选扰动，人工选择并修订，包含step/day/plan严重度及两类容忍画像。比较GPT-4o、Qwen2.5-7B、Phi-4-mini的约束通过、语义/空间/顺序变化与扰动响应；Llama裁判仅评GPT-4o输出，另由三位专家评审100个修订计划。
+
+**边界：** §4.2在整个数据集上评测，没有预定义训练/测试划分；结果用于诊断规划行为，不构成留出测试上的泛化证据。合成扰动和预设画像，不是真实旅行部署；响应率不是计时延迟，少改动不等于可执行。裁判感知质量与硬约束可不一致。未验证实时库存、交易授权或用户满意度。文中残留2018会场/DOI模板，不作发表证据。
+
+**实读范围：** v1 §3–6及相关附录段落；匿名代码入口由论文提供，未复现。
+
+<a id="benchmark-convomem"></a>
+### B66. ConvoMem · 完整上下文作为记忆强基线
+
+[ConvoMem Benchmark: Why Your First 150 Conversations Don't Need RAG](https://arxiv.org/html/2511.10523v1) — arXiv 2511.10523v1, 2025-11-13.
+
+75,336个QA覆盖用户/助手事实、拒答、偏好、事实变化及隐含联系；企业角色合成人设经场景、证据、对话生成，证据与填充对话使用同一流程并由多模型校验。比较完整上下文、Mem0与两阶段提取的准确率、成本及延迟，历史长度实验延至300段对话。
+
+**边界：** “150段无需RAG”是特定数据、模型及成本设置下的经验，非通用阈值；不是真实长期用户日志。缺失信息拒答不等于隐私/权限拒答；未验证同意、删除、访问隔离或泄露防护。
+
+**实读范围：** v1 §2–3、§5及Appendix A；代码/数据入口由原文提供，未独立复现或确认再利用许可。
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -790,6 +812,35 @@
 **待审：** 246个任务在自托管Reddit、GitLab与购物站副本中实际运行代理；人工种子扩展合成用户资料。最终站点状态衡量效用，动作文本由GPT-4o判断不必要披露；泄漏率为发生泄漏的实例比例，隐私率为1−泄漏率。98%人工一致率仅验证GPT-4o/axtree的一次运行。威胁模型明确无恶意参与者/外部攻击；不能代表提示注入防御。隐私感知提示减少泄漏但不保证零泄漏。[官方资源](https://github.com/facebookresearch/ai-agent-privacy)主体CC BY-NC 4.0、VisualWebArena部分MIT，数据另受Llama 3.1相关条款约束；不能整体标为MIT。
 
 **实读范围：** v3 §3威胁模型、数据、指标、缓解方法，§4–5评测/讨论；arXiv会场记录及官方README许可段。定向阅读，未部署Web环境
+
+<a id="benchmark-privacy-risk-search"></a>
+### B62. Searching for Privacy Risks — 多轮身份冒充与伪造同意
+- **论文与交叉索引**：ICLR 2026 / arXiv v3；方法见 **M59**。
+- **评测对象与证据**：Training-5 与 Testing-100 配置，测试默认每配置模拟 10 次；Gemini 泄漏判断在 200 条人工标注动作上取得 98.5% 一致率。主体是合成 Agent 交互，不是真人研究。v3 另含 Atlas/GPT-5.1 操作真实 Outlook 界面的微型案例：5 次试验中攻击成功 3 次。
+- **边界**：不能把 3/5 当产品总体风险或人群发生率。模拟中数据主体不再授予同意，合法分享尚未覆盖；人工标注一致率不是部署安全证明。此版本主指标称 leak velocity，与 leak rate 区分，不沿用旧版名称或混合数值。
+- **资源与实读范围**：与 **M59** 相同；同篇、同版本、同许可边界。论文声明没有真人被试或个人可识别数据，真实邮件界面案例不等于使用了真实受害者数据。
+
+<a id="benchmark-personal-data-flows"></a>
+### B63. 第三方 GPT 的数据流与政策可追溯性
+
+[Personal Data Flows and Privacy Policy Traceability in Third-party LLM Apps in the GPT Ecosystem](https://petsymposium.org/popets/2026/popets-2026-0015.pdf) — PoPETs 2026(1), 273–295; DOI 10.56553/popets-2026-0015.
+
+**生态测量，非传统任务 benchmark。** 以 GPTStore.ai（2024年4月抓取）和 BeeTrove 为来源，筛出5,286个可解析 Action schema 的 GPT、44,102个参数；结合个人信息分类与政策解析，检查参数所指的数据类别是否获政策披露。约35%参数被归为敏感/可识别类别；792个GPT约占总体15%，具完整可追溯性；其中753个的相关Action参数全部被分类为NON_PI，未发现经这些参数发送个人信息。因此15%不是采集个人数据的应用中的充分披露率（§4.4.5）。
+
+**边界：** 大规模结果主要描述schema允许/声明的数据流，并非逐个监测生产调用；另有三个受控端点的主动审计。完整披露不等于合法授权或隐私安全。仅研究Action参数收集，未追踪后续处理；英语政策限制、分类误差与跨平台外推须保留。
+
+**实读范围：** 正式PDF §3.1–3.5、§4.1/4.4、§5.3；定向阅读，未独立复现。
+
+<a id="benchmark-privaci"></a>
+### B64. PrivaCI-Bench · 上下文理解与合规分类
+
+[PrivaCI-Bench: Evaluating Privacy with Contextual Integrity and Legal Compliance](https://aclanthology.org/2025.acl-long.518/) — ACL 2025 Long Papers, July 2025, 10544–10559.
+
+6,351个合规性判定样本及147,840道选择题，来自法院/执法案例、OPP-115/APP-350政策，以及基于AI Act检查器的合成情境；LLM提取CI信息流；三位作者与两位法学院学生校正解析错误，三位作者进行抽样质检。评测许可/禁止/不适用三分类与上下文理解，比较直接提示、CoT、RAG及给定标注CI/法规的条件；分类报告准确率、精确率、召回率与F1，选择题报告准确率。
+
+**边界：** 将政策作为许可样本是构造假设，非独立法律审计；法律规范未覆盖个人、文化、伦理期待。单次评测、固定提示，未检验提示敏感性；不是运行时权限执行或专业法律判断系统。
+
+**实读范围：** ACL原文§3–5、Limitations、Ethical Considerations。代码入口来自原文；未安装或核实再利用许可。
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -1411,6 +1462,45 @@
 
 **实读范围：** §3–5、威胁建模、组件与人工/模型裁判设置；匿名仓库入口。定向阅读，未审代码
 
+<a id="method-encode-store-retrieve"></a>
+### M56. Encode–Store–Retrieve — 语言编码的第一人称记忆
+- **论文**：*Encode-Store-Retrieve: Augmenting Human Memory through Language-Encoded Egocentric Perception*，ISMAR 2024；arXiv `2308.05822` v3（2024-10-18）；作者页面亦使用 “Enhancing Memory Augmentation” 标题变体。
+- **方法与证据**：ego-LLaVA 将视频编码为文本，Chroma 检索后交给 GPT-4。QA-Ego4D 评测之外，12 人使用 HoloLens 2 完成受控居家任务，5–7 天后测试回忆；参与者评分为系统 4.1/5、人类回答 2.5/5。
+- **边界**：逐帧编码难以保留动态动作与计数；缺少真实长期部署。设备无关不等于跨设备同步。视频上传服务器、文本化存储均不能证明隐私保护或安全隔离。
+- **资源与实读范围**：[ISMAR 作者 PDF](https://pokristensson.com/pubs/ShenEtAlISMAR2024a.pdf) §§3–7；[版本记录](https://arxiv.org/abs/2308.05822)。未确认官方实现、权重或软件/数据再使用许可；不把既有 QA-Ego4D 当成本论文新发布数据。
+
+<a id="method-livia"></a>
+### M57. Livia — AR 情绪陪伴与压缩记忆
+- **论文**：*Livia: An Emotion-Aware AR Companion Powered by Modular AI Agents and Progressive Memory Compression*，AIVR 2025 作者接收稿；arXiv v1（2025-08-12）。
+- **方法与证据**：模块化情绪、对话、记忆和行为编排，TBC/DIMF 记忆压缩与 AR 呈现。§8 报告 50 名用户的 200 条片段、38 人四周使用、24 人访谈及 11,504 轮日志；这些样本口径不可相加或互换。
+- **边界**：年轻、北美、英语样本；比较分组描述有限。摘要宣称孤独感显著下降，但评测未给出对应量表、前后测统计或显著性检验，**不据此宣称临床/心理健康疗效**。实时面部表情分析属未来方向；加密、同意与安全存储是部署要求，非验证过的保证。
+- **资源与实读范围**：[作者稿](https://arxiv.org/pdf/2509.05298) §§3–10；[版本/会议信息](https://arxiv.org/abs/2509.05298)。稿件 CC BY-NC-ND 4.0；未确认官方代码/数据发布或软件许可。
+
+<a id="method-aipom"></a>
+### M58. AIPOM — 可检查、可修改的多 Agent 计划
+- **论文**：*AIPOM: Agent-aware Interactive Planning for Multi-Agent Systems*，EMNLP 2025 System Demonstrations，85–96。
+- **方法与证据**：聊天与可编辑图联合表达任务、Agent 分配、依赖和输出。实验使用 50 道 GSM8K、50 道 BBH 算术题及人工扰动的计划；真人先导研究为 9 名有 LLM 经验的研究机构成员、12 道数学题。参与者反馈离线后处理，未要求其确认/拒绝实际修订结果。
+- **边界**：支持计划检查与修改，不是执行权限、敏感操作授权或安全保证；不能推广为一般用户的长期信任。系统是集中编排的功能模块，不是自主主动 Agent 群。
+- **资源与实读范围**：[论文](https://aclanthology.org/2025.emnlp-demos.7.pdf) §§2–4、6、附录 C；[官方代码/演示](https://github.com/megagonlabs/aipom)。根 `LICENSE` 为 BSD-3-Clause；数据和依赖许可独立，README 另列第三方材料限制；web-search 默认禁用。未安装复现。
+
+<a id="method-privacy-risk-search"></a>
+### M59. Searching for Privacy Risks — 交替搜索攻击与防御提示
+- **论文与交叉索引**：*Searching for Privacy Risks in LLM Agents via Simulation*，ICLR 2026；arXiv v3（2026-05-08）。同篇评测见 **B62**，只计一篇。
+- **方法**：用 LLM 分析轨迹，平行搜索并跨线程传播，交替优化攻击者与防御者指令；从直接索取发展到身份冒充/伪造同意，对应防御发展为提示层身份核验状态机。
+- **边界**：这些是模型遵循的指令，不是形式化权限系统或加密身份认证；不得写成可保证防泄漏的安全机制。合法同意分享与真实部署可靠性仍需独立验证。
+- **资源与实读范围**：[v3](https://arxiv.org/html/2508.10880v3) §§3–4、伦理说明、附录 G；[官方代码](https://github.com/SALT-NLP/search_privacy_risk)与[轨迹数据](https://huggingface.co/datasets/SALT-NLP/search_privacy_risk)。数据卡标 MIT；代码根目录未观察到许可，不能用数据许可替代代码许可。数据 viewer 报错不等于源文件不可下载；未运行复现。
+
+<a id="method-topdial"></a>
+### M60. TopDial · 个性化目标对话的角色扮演数据生成
+
+[Target-oriented Proactive Dialogue Systems with Personalization: Problem Formulation and Dataset Curation](https://arxiv.org/html/2310.07397v2) — EMNLP 2023; arXiv v1 2023-10-11, read v2 2023-10-13.
+
+用户、系统和moderator三个gpt-3.5-turbo角色，以重构DuRecDial 2.0、随机画像slot和Big Five描述生成18,009个多轮对话；目标为系统侧〈对话行为、主题〉。100个目标的配对对话由模型/人工评价；等训练量微调DialoGPT/Alpaca-7B，以混合测试集的BLEU、知识F1、画像F1及target success检验训练资源效果。
+
+**边界：** 合成角色与离线指标，不是真实用户主动帮助接受度；存在幻觉和moderator误判终止。用户第二次明确拒绝目标行为时才触发拒绝终止规则；这不构成部署安全保证。作者提醒目标约束、用户隐私与bot身份透明。
+
+**实读范围：** v2 §3–4、Limitations、Ethical Considerations；代码/数据链接来自原文，未复现。不另列第二个benchmark条目。
+
 <a id="human-studies"></a>
 ## 人机研究：真实使用与互动
 
@@ -1473,6 +1563,13 @@
 - **方法与证据**：可视对象支持抽取、组织、添加/排除、加权与合并记忆，并通过提示/RAG影响生成。12 名真实参与者进行被试内比较，在一天后复用写作、编程或旅行规划对话；两条件共享基础生成/检索能力。
 - **边界**：主要支持交互控制与用户体验结论，不证明长期记忆准确性或自主记忆管理。便利样本、受控任务和一天间隔限制真实部署推广。
 - **资源与实读范围**：[作者 PDF](https://www.jeffjianzhao.com/papers/memolet.pdf#page=1) §4.6、§5–6、§8。作者版标注个人使用、不得再分发；未确认开放代码/数据许可。
+
+<a id="human-chatlab"></a>
+### H8. ChatLab — 用户定制角色、头像与语音输出
+- **论文**：*Customizing Emotional Support: How Do Individuals Construct and Interact With LLM-Powered Chatbots*，CHI 2025；arXiv v2（2025-04-18）。
+- **方法与证据**：约一周田野研究（流程允许 7–10 天），26 人完成田野阶段，分析 22 人的资料，结合日记、访谈与设计活动；研究用户如何定制情感支持角色、头像和 TTS 输出。**不支持语音输入**。
+- **边界**：设计探针，不是心理健康疗效试验；短期、亚洲文化样本不能证明长期获益。可调记忆是受访者提出的设计机会，不应写成已实现功能。研究团队访问控制与云端存储描述不构成安全保证。
+- **资源与实读范围**：[论文](https://arxiv.org/html/2504.12943v2) §§3–4、6–8；[作者原型页](https://xizhengxi.com/prototypes.html)。未确认官方代码/数据发布或软件许可；arXiv 分发许可不等于开源许可。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
