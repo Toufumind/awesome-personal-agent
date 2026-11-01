@@ -319,5 +319,49 @@ class PaperCatalogTests(unittest.TestCase):
         self.write(text, text)
         self.assertEqual(self.errors(), [])
 
+    def test_stable_method_aliases_share_heading_group(self):
+        for alias, canonical in check_docs.PAPER_SECTION_ALIASES.items():
+            for separator in ('\n', '\n\n'):
+                with self.subTest(alias=alias, separator=separator):
+                    group = separator.join((f'<a id="{alias}"></a>',
+                        '<a id="historical-heading"></a>',
+                        f'<a id="{canonical}"></a>'))
+                    text = self.CATALOG.replace('<a id="memory-methods"></a>', group)
+                    self.write(text, text)
+                    self.assertEqual(self.errors(), [])
+
+    def test_stable_method_alias_rejects_intervening_entry(self):
+        for alias, canonical in check_docs.PAPER_SECTION_ALIASES.items():
+            with self.subTest(alias=alias):
+                group = (f'<a id="{alias}"></a>\n### M2. Inserted entry\n'
+                         f'<a id="{canonical}"></a>')
+                text = self.CATALOG.replace('<a id="memory-methods"></a>', group)
+                self.write(text, text)
+                self.assertTrue(any(f'section alias #{alias}' in e for e in self.errors()))
+
+    def test_stable_method_alias_rejects_wrong_section(self):
+        for alias, canonical in check_docs.PAPER_SECTION_ALIASES.items():
+            for group in (f'<a id="{alias}"></a>\n<a id="memory-methods"></a>',
+                          f'<a id="{alias}"></a>\n<a id="{canonical}"></a>\n'
+                          '<a id="memory-methods"></a>'):
+                with self.subTest(alias=alias, group=group):
+                    text = self.CATALOG.replace('<a id="memory-methods"></a>', group)
+                    self.write(text, text)
+                    self.assertTrue(any(f'section alias #{alias}' in e for e in self.errors()))
+
+    def test_stable_method_alias_rejects_prose_or_missing_heading(self):
+        for alias, canonical in check_docs.PAPER_SECTION_ALIASES.items():
+            for suffix in ('Prose before heading\n## Methods', '### Not H2', ''):
+                with self.subTest(alias=alias, suffix=suffix):
+                    text = (f'<a id="{alias}"></a>\n\n'
+                            f'<a id="{canonical}"></a>\n' + suffix)
+                    self.assertTrue(check_docs.check_section_aliases(text, 'test'))
+
+    def test_stable_method_alias_ignores_fences_and_comments(self):
+        text = self.CATALOG + ('\n<!-- <a id="agent-methods"></a> -->\n'
+                               '```md\n<a id="personalization-methods"></a>\n```\n')
+        self.write(text, text)
+        self.assertEqual(self.errors(), [])
+
 if __name__ == '__main__':
     unittest.main()
