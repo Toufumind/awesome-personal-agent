@@ -15,10 +15,13 @@ Years and versions identify the listed paper, not the current project. Original 
 ## Contents
 
 - [Start with a research question](#reading-paths)
-- [Evaluation: personal context, memory, and proactivity](#personal-evaluation)
-- [Evaluation: transferable memory and sequential tasks](#transferable-memory-evaluation)
-- [Evaluation: task execution and interaction](#execution-evaluation)
-- [Evaluation: privacy norms and adversarial safety](#safety-evaluation)
+- [Evaluation: User profiles and preferences](#user-profile-evaluation)
+- [Evaluation: Long-term personal memory](#personal-memory-evaluation)
+- [Evaluation: Personalized planning and action](#planning-action-evaluation)
+- [Evaluation: Proactivity and clarification](#proactive-clarification-evaluation)
+- [Evaluation: Privacy, authorization and safety](#safety-evaluation)
+- [Evaluation: Transferable memory and sequential tasks](#transferable-memory-evaluation)
+- [Evaluation: Transferable execution and interaction](#execution-evaluation)
 - [Methods: User understanding, profiles, and preference learning](#user-understanding-methods)
 - [Methods: Memory and persistent state](#memory-methods)
 - [Methods: Planning, tools, and action](#planning-action-methods)
@@ -27,6 +30,8 @@ Years and versions identify the listed paper, not the current project. Original 
 - [Human studies](#human-studies)
 - [Comparison and reproducibility](#reproducibility)
 - [Sources and rights](#sources-and-rights)
+
+**Evaluation navigation:** Groups follow the question primarily measured, not keywords in the title. Each B entry has one home; scope and overlapping questions remain in the entry and cross-links. Personal-context, transferable and risk evidence must still be distinguished. IDs, benchmark/method boundaries and dedicated human studies stay unchanged. **No single benchmark evaluates an entire personal agent.**
 
 **Method navigation:** The five themes below are this guide’s editorial reading map, not the papers’ own taxonomy or one implemented architecture. Each M entry has one primary home; overlapping capabilities remain described in the entry. IDs and entry links stay stable, and dedicated human-study entries remain separate; method entries may also include human evidence. These are research mechanisms, not certified personal-assistant products.
 
@@ -64,10 +69,12 @@ This cross-cutting route **preserves the benchmark / method distinction; a paper
 | **3. How do we apply it?** | [LaMP](#benchmark-lamp): use user history for personalized classification / generation. [P-RLHF](#method-p-rlhf): condition generation on learned user preferences. For actions, continue to [Mem2ActBench](#benchmark-mem2actbench): memory-to-tool arguments. | Retrieving history and learning user representations are different approaches. Preference-aligned answers or correct tool arguments do not establish real task completion. |
 | **4. How do we evaluate it?** | [LaMP](#benchmark-lamp): personalized task quality. [PrefEval](#benchmark-prefeval): following known preferences. [PersonaMem (v1)](#benchmark-personamem-v1): recognizing changing preferences and transferring them to new situations. | These are not interchangeable metrics. PersonaMem's synthetic histories and four-choice protocol cannot substitute for open-ended response quality or long-term satisfaction of real users. |
 
+<a id="evaluation-a-personal-context-memory-and-proactivity"></a>
 <a id="personal-evaluation"></a>
-## Evaluation A: personal context, memory, and proactivity
+<a id="user-profile-evaluation"></a>
+## Evaluation: User profiles and preferences
 
-These benchmarks directly involve user history, preferences, or proactive help. **None alone evaluates an entire personal agent.**
+Does the response fit this person? Read profile inference, preference following and personalized response quality here. These protocols are not interchangeable: static survey evidence (B80), synthetic personas and constructed dialogues are not longitudinal assistant use. For eliciting unknown preferences, continue to [proactivity and clarification](#proactive-clarification-evaluation).
 
 <a id="benchmark-lamp"></a>
 ### B1. LaMP · Personalized language tasks
@@ -81,30 +88,6 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Tests personalized retrieval and generation, not multi-step tool execution or longitudinal use with real users.
 - **Resources:** [Official code](https://github.com/LaMP-Benchmark/LaMP), [data](https://lamp-benchmark.github.io/download). Code and construction methods use CC BY-NC-SA 4.0; underlying datasets retain their own licenses.
 
-<a id="benchmark-locomo"></a>
-### B2. LoCoMo · Long-term conversational memory
-
-[Evaluating Very Long-Term Conversational Memory of LLM Agents](https://aclanthology.org/2024.acl-long.747/) — ACL 2024.
-
-**Checked / reading scope:** 2026-10-31; Paper abstract, §4 QA metrics, relevant §6 summary-evaluation and §8 limitations passages; official README data notes and LICENSE.
-
-- **Input → output:** Timestamped, multi-session conversations → QA, event summaries, or multimodal dialogue continuation. Model-generated dialogues are human-checked and edited.
-- **Measures:** Category-level QA F1; ROUGE and atomic-fact measures for summaries; separate multimodal relevance measures. These are not one interchangeable “memory score.”
-- **Limits:** The current official release contains **10 long conversations**, not the earlier 50-conversation release. Offline history is not months of real assistant use.
-- **Resources:** [Code / data](https://github.com/snap-research/locomo). Original images are not distributed; URLs and related information are provided. [License](https://github.com/snap-research/locomo/blob/main/LICENSE.txt): CC BY-NC 4.0.
-
-<a id="benchmark-longmemeval"></a>
-### B3. LongMemEval · Cross-session recall, updates, and abstention
-
-[LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory](https://arxiv.org/abs/2410.10813) — 2024 preprint; ICLR 2025.
-
-**Checked / reading scope:** 2026-10-31; Paper abstract and §3.3 evaluation passages; official README data-format/evaluation notes and cleaned dataset card.
-
-- **Input → output:** Timestamped user–assistant history and a question → an answer or abstention. Its 500 questions cover extraction, cross-session / temporal reasoning, updates, and abstention.
-- **Measures:** LLM-judged answers, with optional retrieval Recall@k / NDCG@k. S, M, and oracle expose different history lengths and evidence.
-- **Limits:** Retrieval recall is not answer accuracy; constructed-history QA does not establish task execution, deletion, or continuous availability.
-- **Resources:** [Evaluation code](https://github.com/xiaowu0162/LongMemEval), [official cleaned data](https://huggingface.co/datasets/xiaowu0162/longmemeval-cleaned). Pin the data revision and judge version.
-
 <a id="benchmark-personamem-v1"></a>
 ### B4. PersonaMem · Evolving user profiles
 
@@ -116,30 +99,6 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Measures:** Selection accuracy across seven query types, context lengths, and distances from preference mentions; separates recall, updates, and preference transfer.
 - **Limits:** Four-choice accuracy is not open-ended personalized response quality. Synthetic personas are not longitudinal human participants. Do not mix with PersonaMem-v2 data.
 - **Resources:** [Official code](https://github.com/bowen-upenn/PersonaMem), [v1 data](https://huggingface.co/datasets/bowen-upenn/PersonaMem-v1), including 32k, 128k, and 1M context settings.
-
-<a id="benchmark-mem2actbench"></a>
-### B5. Mem2ActBench · From memory to tool arguments
-
-[Mem2ActBench: A Benchmark for Evaluating Long-Term Memory Utilization in Task-Oriented Autonomous Agents](https://aclanthology.org/2026.acl-long.370/) — ACL 2026.
-
-**Checked / reading scope:** 2026-10-31; Paper abstract, relevant §4.1 experimental-setup and §5.4 tool-selection passages; official README (including its License statement), root listing, and data-directory entry points.
-
-- **Input → output:** Historical memory, an implicitly constrained request, and tool schemas → tool selection and arguments. The paper constructs 400 memory-dependent tasks.
-- **Measures:** Argument matching / F1, tool selection, and whole-call matching. Main experiments supply the correct tool; separate experiments add distractor tools.
-- **Limits:** Correct arguments are not a completed real transaction. Main results should not be presented as open-ended tool-selection performance.
-- **Resources:** [Official construction code / data directories](https://github.com/Cantaloupe-M/Mem2ActBench). The [README License section](https://github.com/Cantaloupe-M/Mem2ActBench#license) declares MIT License, but no separate LICENSE file was observed in the root listing. Confirm the full license text and scope before reuse. Check upstream ToolACE, BFCL, and OASST1 terms separately; this declaration does not establish MIT licensing for all data.
-
-<a id="benchmark-proactivebench-lu"></a>
-### B6. ProactiveBench (Lu et al.) · When to offer help
-
-[Proactive Agent: Shifting LLM Agents from Reactive Responses to Active Assistance](https://arxiv.org/abs/2410.12361) — 2024 preprint; ICLR 2025.
-
-**Checked / reading scope:** 2026-10-31; Paper abstract and evaluation-metric passages; official README system overview, data statistics, and evaluation entry points.
-
-- **Input → output:** User activity and environment events → a proposed assistance task, or no proposal. The paper includes 6,790 events across coding, writing, and daily-life settings.
-- **Measures:** Precision, recall, F1, and false alarms under acceptance / rejection judgments; automated evaluation uses a learned reward model.
-- **Limits:** Appropriate offers are not long-term human satisfaction or task completion. A proactive suggestion does not authorize execution.
-- **Resources:** [Code, data, evaluation](https://github.com/thunlp/ProactiveAgent). Other papers use the same benchmark name; this entry specifically means Lu et al. See M11 for the method.
 
 <a id="benchmark-personabench"></a>
 ### B7. PersonaBench · Understanding users through private documents
@@ -177,41 +136,307 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** Not using a fact after a forget request does not prove erasure from storage, backups, or model weights. The paper also trains a readable-memory system; those results are not generic deployed-agent capabilities. This entry covers text settings.
 - **Resources:** [Official data](https://huggingface.co/datasets/bowen-upenn/PersonaMem-v2): CC BY 4.0; [family repository](https://github.com/bowen-upenn/PersonaMem): MIT. The current card includes later multimodal resources. Pin text revision, split, 32k / 128k setting, and evaluation mode. A complete v2 RL reproduction package was not confirmed.
 
-<a id="benchmark-knowu-bench"></a>
-### B10. KnowU-Bench · Clarification, consent, and restraint
+<a id="benchmark-pdr-bench"></a>
+### B40. PDR-Bench · Research reports tailored to an individual
 
-[KnowU-Bench: Towards Interactive, Proactive, and Personalized Mobile Agent Evaluation](https://arxiv.org/html/2604.08455v1) — 2026 preprint; inspected v1, 2026-04-09.
+[Towards Personalized Deep Research: Benchmarks and Evaluations](https://arxiv.org/html/2509.25106v3) — ICLR 2026; inspected v3, March 4, 2026.
 
-**Checked / reading scope:** 2026-10-31; Abstract, §3.4 and relevant experimental discussion, official repository.
+**Verified / actual reading scope:** 2026-11-01; v3 §3 construction, relevant §4 PQR evaluation passages, Appendix A limitations, and B.1–B.2 settings/subset selection; author README, repository root, and LICENSE. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
 
-- **Input → output:** Behavioral logs, vague requests or proactive triggers, and Android state → GUI actions, clarification, consent requests, or abstention. The profile is hidden, but a profile-grounded user simulator can answer questions.
-- **Measures:** 42 general, 86 personalized, and 64 proactive tasks. Rules check recipients, order / calendar / setting states, and post-rejection violations; judges evaluate semantic preference alignment.
-- **Limits:** Directly studies personalized and proactive mobile agents. Simulator, rubric, and judge dependence preclude interpreting scores as human acceptance rates. The environment was not downloaded or execution-tested.
-- **Resources:** [Official project](https://zju-real.github.io/KnowU-Bench/), [environment, tasks, and code](https://github.com/ZJU-REAL/KnowU-Bench). Repository: Apache-2.0; third-party Android apps, images, and models have separate terms.
+- **Evaluation:** Fifty tasks and 25 volunteer-grounded profiles produce 250 task–user pairs. PQR separately measures personalization, content quality and factual/citation reliability.
+- **Limits:** Structured personas are real-user grounded, but annotators simulate dynamic interactions. Collection is Chinese-centered with English translations. Appendix selection proceeds 250→150→50; benchmark size is not full experimental coverage. Report quality does not demonstrate safe execution or long-term human utility.
+- **Resources:** [Author code/data](https://github.com/OPPO-PersonalAI/PersonalizedDeepResearchBench), verified Apache-2.0 root license; model/search APIs and upstream asset terms remain separate requirements.
 
-<a id="benchmark-memoprobench"></a>
-### B11. MemoProBench · When to speak, what to say, and when not to
+<a id="benchmark-personalens"></a>
+### B41. PersonaLens · Personalized dialogue across domains
 
-[MemoProAgent: Toward Memory-Driven Proactive Assistance](https://arxiv.org/html/2610.22671v2) — 2026 preprint; inspected v2, 2026-10-21. Earlier indexes may use ProPerAgent / ProPerMem; this entry uses v2 names. See M12 for the method.
+[PersonaLens](https://aclanthology.org/2025.findings-acl.927/) — Findings ACL 2025; inspected [arXiv v1](https://arxiv.org/html/2506.09902v1), June 11, 2025.
 
-**Checked / reading scope:** 2026-10-31; v2 abstract, §3.3 metrics, method overview, official README and LICENSE.
+**Verified / actual reading scope:** 2026-11-01; v1 §2 profiles/tasks/simulation protocol, §3 experimental setup, relevant §4 evaluation passages, and Limitations; ACL publication record, author README, and LICENSE.md. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
 
-- **Input → output:** Egocentric video streams and long personal histories, without an explicit query → grounded, timely reminders or silence.
-- **Measures:** Perfect requires exactly one correct intervention within the allowed window. Also report Hit, early, late, repeated, and negative-case false triggers; Hit alone hides unwanted interruptions.
-- **Limits:** Direct personal-memory-driven proactivity, but constructed histories are not a year-long human study. It does not evaluate authorized transaction completion or establish all-day usability.
-- **Resources:** [Official inference code](https://github.com/facebookresearch/Memo-Pro-Agent): CC BY-NC 4.0; [history data (restricted)](https://huggingface.co/datasets/facebook/MemProBench). The official [README data notes](https://github.com/facebookresearch/Memo-Pro-Agent#data-and-reproducibility) state that `facebook/MemProBench` histories are currently private and require authorized Hugging Face access. Download access was not obtained in this review; independent dataset licensing remains unconfirmed and cannot be inferred from the code license. Videos require separate [Ego4D](https://ego4d-data.org/) access and terms; an inference harness is not a complete RL reproduction package.
+- **Evaluation:** 111 tasks across 20 domains, with simulated users and judges assessing personalization, task completion, naturalness and coherence.
+- **Limits:** The 1,500 profiles use real PRISM demographics but generated preferences, histories and contexts—not 1,500 real assistant users. Section 3 states that all reported experiments use a random subset of 50 profiles, comprising 3,283 single-domain and 813 multi-domain dialogues; construction scale is not evaluation coverage. Bookings and purchases are simulated dialogue, not executed actions. Demographic conditioning can reproduce stereotypes.
+- **Resources:** [Author code/data](https://github.com/amazon-science/PersonaLens), verified **CC-BY-NC-4.0** `LICENSE.md`; execution requires Amazon Bedrock access.
 
-<a id="benchmark-pi-bench"></a>
-### B23. π-Bench · Hidden intents and proactive clarification across sessions
+<a id="benchmark-pal-bench"></a>
+### B52. PAL-Bench · Requirements and preferences from long-term personal histories
 
-[π-Bench: Evaluating Proactive Personal Assistant Agents in Long-Horizon Workflows](https://arxiv.org/html/2605.14678v1) — 2026 preprint; initial reading of v1, 2026-05-14. The official README announces NeurIPS 2026 acceptance; this is not an independently checked proceedings record.
+[Mem-PAL: Towards Memory-based Personalized Dialogue Assistants for Long-term User-Agent Interaction](https://arxiv.org/html/2511.13410v2) — v2, 2025-11-26; AAAI 2026 Oral. Same paper as M47.
 
-**Checked / reading scope:** 2026-10-31; v1 abstract, evaluation discussion and relevant §4 passages; official project-page metric definitions and README resource / acceptance notes. Initial literature reading, not installation or testing.
+**Actual reading scope:** PAL-Bench construction/tasks, H²Memory framework and Experiments, including external validation; repository README and file listing. Appendices were sampled, not comprehensively read.
 
-- **Input → output:** Underspecified requests, earlier sessions and a persistent workspace → targeted clarification, tool actions and artifacts; five personas each have 20 sessions, totaling 100 tasks.
-- **Measures:** Proc counts hidden intents proactively satisfied or elicited through targeted clarification; Comp scores checklist requirements across the full trajectory, tool records and artifacts. Eventual completion is not proactive requirement discovery; report both separately.
-- **Limits:** Proactivity means reducing specification burden during interaction, not initiating background tasks or granting permission to act. Simulated users and model grading do not establish longitudinal human satisfaction.
-- **Resources:** [Official code / data](https://github.com/Simplified-Reasoning/Pi-Bench), [project and metric definitions](https://simplified-reasoning.github.io/Pi-Bench/). Repository Apache-2.0; AppWorld, NanoBot and other dependencies retain their own terms. Pin paper, code, model and judge configurations before comparing.
+- **Input → output:** behavioral logs plus dialogue history → restated requirements, proposed/selected solutions, multi-turn responses.
+- **Measures:** BLEU, GPT-4 implicit-need judgments, solution-selection scores and pairwise dialogue judgments.
+- **Boundary:** PAL-Set has 100 synthetic users, approximately 29 sessions and 9.4 simulated months each; human verification does not make this a longitudinal user study. Multi-turn users are simulated by an LLM. External validation covers only LongMemEval’s single-session-preference subset and uses the dialogue components (Topic Outline + Principle), not the complete four-component system.
+- **Resources/language:** [official code/data](https://github.com/hzp3517/Mem-PAL). README identifies the English version as a DeepSeek-V3 translation without item-by-item human verification. Appendix B states an intended PAL-Set release under CC BY-NC 4.0; this author statement uses future-release wording and is separate from verifying the distributed dataset’s terms or the implementation’s license. Repository reuse-license verification remains incomplete.
+
+<a id="benchmark-personafeedback"></a>
+### B59. PersonaFeedback · Response selection with explicit personas
+
+[PersonaFeedback: A Large-scale Human-annotated Benchmark For Personalization](https://arxiv.org/html/2506.12915v1) — arXiv v1, 2025-06-15, work in progress.
+
+Evaluates binary response selection given explicit personas using selection accuracy against labels, with 8,298 human-labelled cases—not 8,298 real participants. Twenty real seed profiles underpin constructed personas; 200 are used for benchmarking. Model-generated material is human-filtered, with majority labels from nine evaluators. This is not a longitudinal user study or evidence that RAG generally fails. Subjective labels and persona simplification constrain conclusions. The [public dataset](https://huggingface.co/datasets/PersonalAILab/PersonaFeedback) declares Apache-2.0; its viewer currently reports incompatible schemas. No formal privacy guarantee was established.
+
+**Reading scope:** §3 construction/annotation, §4 evaluation setup, limitations; official dataset card and viewer status. Targeted construction, evaluation and limitations; dataset card/viewer, not a full dataset audit.
+
+<a id="benchmark-personaconvbench"></a>
+### B69. PERSONA-Bench · Multi-user conversational history
+
+[A Personalized Conversational Benchmark: Towards Simulating Personalized Conversations](https://arxiv.org/html/2505.14106v2) — [NeurIPS 2025 MTI-LLM workshop (not main conference)](https://research.adobe.com/publication/a-personalized-conversational-benchmark-towards-simulating-personalized-conversations/); methods and experiments reviewed in arXiv v2, 2025-05-25.
+
+
+- **Scope**: §§2–4, appendix C; official `Latest` README/data card.
+- **Input → output**: prior conversational/user trajectories constructed from raw Reddit posts in ten domains → binary label, community-score forecast or next-user text.
+- **Measures**: accuracy/F1/MCC, regression errors and generation similarity; separate protocols. Temporal access and target masking are reported, not independently audited.
+- **Comparison protocol**: §C.3 generates 10 candidates for every model except Claude and selects the highest-SBERT candidate; Claude uses one candidate. Cross-model generation scores therefore do not represent single-response performance under equal sampling budgets.
+- **Boundary**: “sentiment” is score-derived, not validated personal emotion. Historical evaluation is not deployed-assistant or mental-health effectiveness evidence.
+- **Resources**: [code](https://github.com/PERSONA-bench/PERSONA/tree/Latest) / [data](https://huggingface.co/datasets/PERSONABench/PERSONA-Bench). HF says MIT; repository says research-only/Reddit TOS. Resolve this discrepancy before reuse; do not describe data as unrestricted MIT.
+
+<a id="benchmark-personal-laps"></a>
+### B71. Doing Personal LAPS · Human-involved multi-session preference data
+
+[Doing Personal LAPS: LLM-Augmented Dialogue Construction for Personalized Multi-Session Conversational Search](https://arxiv.org/abs/2405.03480v1) — SIGIR 2024; [proceedings DOI](https://doi.org/10.1145/3626772.3657815).
+
+**Checked / reading scope:** 2026-11-01; construction §3, recommendation/evaluation §4, results §5 including Tables 7–8, and repository resource/license documentation.
+
+- **Construction / input → output:** One worker writes both dialogue roles with LLM guidance, expressing actual preferences. Histories support preference extraction and personalized recommendation across recipe and movie domains, totaling 1,406 dialogues.
+- **Measurement:** Dialogue quality/diversity, extraction, preference utilization, and human judgments of recommendations and rationales.
+- **Boundary / counterexample:** Constructed self-dialogues are not deployment logs. Preference memory improves recipe recommendations and rationales in both domains, but not movie recommendation quality; movie utilization F1 is numerically slightly lower (.424 to .419); the paper does not support inferring a statistically significant decrease.
+- **Resources:** The [MIT-labelled repository](https://github.com/informagi/laps) includes data, collection and evaluation code, and downstream resources. Listed as data/evaluation evidence, not general autonomous action capability.
+
+<a id="benchmark-lamp-qa"></a>
+### B72. LaMP-QA · Personalized long-form answers
+
+[LaMP-QA: A Benchmark for Personalized Long-form Question Answering](https://aclanthology.org/2025.emnlp-main.60/) — EMNLP 2025 Main; arXiv `2506.00137v2` is the same work.
+
+**Checked / reading scope:** 2026-11-01; formulation, construction, metrics, baselines and experiments §§2–5, limitations, repository documentation and dataset card.
+
+- **Input → output:** Real StackExchange question histories plus a current title → personalized long-form answers. The current post narrative is withheld from generation and used for evaluation.
+- **Measurement:** Rubric-based requirement coverage and human comparisons; PlanPers/RAG wins are 35%/26% over 100 comparisons, with the remainder tied.
+- **Boundary / counterexample:** Real posts are not assistant deployment logs. Narratives may omit needs; annotators are not the original users. Requirement coverage is not deployment satisfaction, privacy protection or action execution.
+- **Resources:** [Code](https://github.com/LaMP-Benchmark/LaMP-QA) and [data](https://huggingface.co/datasets/alireza7/LaMP-QA) are accessible. The paper identifies upstream SE-PQA as CC-BY-SA 4.0; a separate downstream code/data license was not verified. Do not substitute the article license. LaMP-QA is distinct from LaMP and LongLaMP.
+
+<a id="benchmark-hicupid"></a>
+### B73. HiCUPID · Synthetic personalized dialogue and proxy evaluation
+
+[Exploring the Potential of LLMs as Personalized Assistants: Dataset, Evaluation, and Analysis](https://aclanthology.org/2025.acl-long.504/) — ACL 2025 Main. HiCUPID is the resource name; arXiv `2506.01262v1` is the same paper.
+
+**Checked / reading scope:** 2026-11-01; construction §3, evaluation §4, results §5/Tables 3–4, license Appendix A12, and official repository/data/model cards.
+
+- **Input → output:** Synthetic preference, profile and schedule dialogues → personalized single-/multi-information answers for 1,500 synthetic users, not real interaction logs.
+- **Measurement:** GPT-4o and distilled Llama-3.2 evaluators, separate seen-user/unseen-question and unseen-user/unseen-question settings, and human evaluation of four LLMs’ zero-shot outputs on 100 persona QA pairs sampled from Test Set 1—not 100 responses in total.
+- **Boundary / counterexample:** DPO alone does not consistently improve personalization in the reported settings; multi-information reasoning remains difficult. Proactiveness means suggestions in responses, not autonomous initiation or external actions.
+- **Resources:** [Code](https://github.com/12kimih/HiCUPID), [data](https://huggingface.co/datasets/12kimih/HiCUPID) and [evaluator](https://huggingface.co/12kimih/Llama-3.2-3B-HiCUPID) cards claim Apache-2.0; the Llama-3.2 base-model Community License remains a separate consideration. The project label does not establish that every component is free of additional restrictions.
+
+<a id="benchmark-implexconv"></a>
+### B76. ImplexConv: cross-session implicit reasoning
+
+Tests personalized QA through supportive/opposed implicit scenarios; the paper reports 2,500 examples of roughly 100 sessions. Generated reasoning scenarios are combined with existing-dataset distractors and selective human verification, not a field study. Separate generation/evaluation models do not establish contamination freedom.
+
+- Paper/version: [Toward Multi-Session Personalized Conversation: A Large-Scale Dataset and Hierarchical Tree Framework for Implicit Reasoning, 2503.07018v1](https://arxiv.org/html/2503.07018v1), 2025-03-10.
+- Cross-reference: M74; same paper, counted once. Internal IMPersona/IMPACT naming remnants are not separate papers.
+- Assets: [Official repository](https://github.com/Kaylee0501/ImplexConv) contains framework/evaluation files; code license unverified. Current cards list [opposed](https://huggingface.co/datasets/Kaylee0501/ImplexConv-opposed) 1,550 + [supportive](https://huggingface.co/datasets/Kaylee0501/ImplexConv-supportive) 814 = 2,364 examples, unlike the paper’s total. Their MIT data label does not establish code licensing.
+- Inspected: §§3–6, limitations, README, dataset cards, repository root.
+
+<a id="benchmark-evoarena"></a>
+### B79. EvoArena · PersonaMem-Evo subset
+
+**Conditionally direct evaluation: synthetic preference evolution**
+
+[Paper](https://arxiv.org/html/2606.13681v2) · arXiv v2, 2026-06-17. Method: M79; count the shared paper once.
+
+PersonaMem-Evo generates interaction histories and evolving preferences from synthetic personas, testing four-way single-pattern transfer, multi-pattern synthesis, conflict resolution, and temporal-trajectory inference, with persona-only/no-context shortcut filtering. It is not a real-user longitudinal study. Terminal-Bench-Evo and SWE-Chain-Evo supply adjacent, transferable evidence.
+
+**Resources:** The [official data card](https://huggingface.co/datasets/Aiden0526/PersonaMem-Evo) reports 10 personas/505 examples, empty 128k links, a broken viewer, and no license metadata. The [repository](https://github.com/Aiden0526/EvoArena) is not a verified complete release; its license remains pending. The paper’s CC BY 4.0 does not establish asset permissions.
+
+**Verification date / actually read:** 2026-11-01; version page, §§3–6, relevant Appendices A/E, repository README/root, and PersonaMem-Evo data card. No reproduction run.
+
+<a id="benchmark-indievaluecatalog"></a>
+### B80. Benchmark — IndieValueCatalog
+
+[Can Language Models Reason about Individualistic Human Values and Preferences?](https://aclanthology.org/2025.acl-long.336/) — ACL 2025 main-conference long paper; examined [arXiv:2410.03868v2, May 31, 2025](https://arxiv.org/html/2410.03868v2).
+
+**Checked / reading scope**: November 1, 2026; relevant §§2–4, limitations/ethics, Appendix B, official README/root listing.
+
+- **Task and metrics**: Predict unseen individual value choices from WVS statements; accuracy and inequity metrics.
+- **Evidence**: 93,279 real survey respondents; 800 held out, not interactive-agent users.
+- **Limits**: Adjacent individual-value modeling; static surveys/single-prompt limitations; demographics cannot replace individual evidence. Privacy, manipulation and autonomy remain concerns.
+- **Resources and rights**: [Official repository](https://github.com/liweijiang/indievalue) provides conversion/metadata code and links converted labels. WVS research-use, non-redistribution terms remain separate from the paper's CC BY license; no root code license observed.
+
+<a id="benchmark-dulemon"></a>
+### B84.  Benchmark
+
+**DuLeMon**, from **Long Time No See! Open-Domain Conversation with Long-Term Persona Memory** | [Findings of ACL 2022](https://aclanthology.org/2022.findings-acl.207/); [2203.05797v2](https://arxiv.org/html/2203.05797v2), 2022-03-14, following March 11 v1. Same-paper method: **M95**.
+
+Chinese mutual-persona conversation with supplied role descriptions and persona grounding: 27,501 crowdsourced role-play dialogues, not natural longitudinal user histories. Human evaluation rates bot–bot conversations using PLATO-LTM as the user simulator: ten episodes × four sessions × sixteen rounds per chatbot. Human rating is not longitudinal human use.
+
+**Resources/license:** the [official directory](https://github.com/PaddlePaddle/Research/tree/master/NLP/ACL2022-DuLeMon) supplies a dataset download script. Parent repository [Apache 2.0](https://github.com/PaddlePaddle/Research/blob/master/LICENSE); separate terms for externally downloaded data unverified. **Inspected:** §3 construction, §5 evaluation, ethics, Appendices A/B, version history, official README/directory and parent license; dataset not downloaded/unpacked.
+
+<a id="personal-memory-evaluation"></a>
+## Evaluation: Long-term personal memory
+
+What can the agent retrieve, update and reason about across sessions? Keep retrieval, factual QA and response judgments separate. ActMemEval (B85) tests memory-dependent constraints through QA, not executed actions; memory-to-tool and embodied tasks belong under [planning and action](#planning-action-evaluation).
+
+<a id="benchmark-locomo"></a>
+### B2. LoCoMo · Long-term conversational memory
+
+[Evaluating Very Long-Term Conversational Memory of LLM Agents](https://aclanthology.org/2024.acl-long.747/) — ACL 2024.
+
+**Checked / reading scope:** 2026-10-31; Paper abstract, §4 QA metrics, relevant §6 summary-evaluation and §8 limitations passages; official README data notes and LICENSE.
+
+- **Input → output:** Timestamped, multi-session conversations → QA, event summaries, or multimodal dialogue continuation. Model-generated dialogues are human-checked and edited.
+- **Measures:** Category-level QA F1; ROUGE and atomic-fact measures for summaries; separate multimodal relevance measures. These are not one interchangeable “memory score.”
+- **Limits:** The current official release contains **10 long conversations**, not the earlier 50-conversation release. Offline history is not months of real assistant use.
+- **Resources:** [Code / data](https://github.com/snap-research/locomo). Original images are not distributed; URLs and related information are provided. [License](https://github.com/snap-research/locomo/blob/main/LICENSE.txt): CC BY-NC 4.0.
+
+<a id="benchmark-longmemeval"></a>
+### B3. LongMemEval · Cross-session recall, updates, and abstention
+
+[LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory](https://arxiv.org/abs/2410.10813) — 2024 preprint; ICLR 2025.
+
+**Checked / reading scope:** 2026-10-31; Paper abstract and §3.3 evaluation passages; official README data-format/evaluation notes and cleaned dataset card.
+
+- **Input → output:** Timestamped user–assistant history and a question → an answer or abstention. Its 500 questions cover extraction, cross-session / temporal reasoning, updates, and abstention.
+- **Measures:** LLM-judged answers, with optional retrieval Recall@k / NDCG@k. S, M, and oracle expose different history lengths and evidence.
+- **Limits:** Retrieval recall is not answer accuracy; constructed-history QA does not establish task execution, deletion, or continuous availability.
+- **Resources:** [Evaluation code](https://github.com/xiaowu0162/LongMemEval), [official cleaned data](https://huggingface.co/datasets/xiaowu0162/longmemeval-cleaned). Pin the data revision and judge version.
+
+<a id="benchmark-memsim"></a>
+### B36. MemSim / MemDaily · Synthetic personal-memory evaluation
+
+[MemSim: A Bayesian Simulator for Evaluating Memory of LLM-based Personal Assistants](https://arxiv.org/abs/2409.20163) — 2024 preprint; v1, 2024-09-30.
+
+**Verification / reading scope**: 2026-11-01; relevant passages in [v1](https://arxiv.org/html/2409.20163v1) §3 methods, §4 data quality, and §5 benchmark; official README and root listing.
+
+- **Input → output**: Synthetic user-message streams and personal questions → text or multiple-choice answers; supporting-message annotations also enable retrieval evaluation.
+- **Measures**: Answering and retrieval are separate; question types cover single-/multi-hop, comparison, aggregation, post-processing, and noise. Full, recent, retrieved, absent, and oracle memory are compared, primarily with GLM-4-9B. Do not pool MemDaily settings with different irrelevant-post ratios.
+- **Limits**: Bayesian profiles and structured hints improve consistency, but sampled human checks do not guarantee error-free data. Synthetic factual QA does not establish real-user preference understanding or tool execution.
+- **Resources**: [Official code/data](https://github.com/nuster1128/MemSim) includes generation, benchmarking, and `data_generation/final_dataset/memdaily.json`; README reports 2,954 trajectories/questions and 26,003 messages. Code/data licensing was not verified; the paper's CC BY 4.0 does not automatically cover them.
+
+<a id="benchmark-mpr"></a>
+### B46. MPR · Multi-hop personalized factual reasoning
+
+[Explicit v.s. Implicit Memory: Exploring Multi-hop Complex Reasoning Over Personalized Information](https://arxiv.org/html/2508.13250v1) — arXiv v1, 2025-08-18; method in M38. Count the paper once.
+
+**Verification date / reading scope:** 2026-11-01; §3–6; official README, complete file tree and release metadata.
+
+- **Input → output:** Synthetic user graphs, generated single-hop statements and questions → 2–10-hop personalized factual answers; not observed human histories.
+- **Measurement:** Normalized answer exact match; experiments use a balanced 2,700-question subset. Report oracle and ordinary retrieval separately.
+- **Boundary:** Not tool execution, online preference changes or longitudinal satisfaction. Table 2 says 108,000 QA but §3.3.3 says 10,800; retain the discrepancy rather than silently correcting it.
+- **Resources:** [official repository](https://github.com/nuster1128/MPR), master, last pushed 2025-08-24; no releases or declared repository license. README links a Drive dataset, but its archive was inaccessible during verification. Paper CC BY 4.0 does not establish code/data reuse rights.
+
+<a id="benchmark-realmem"></a>
+### B56. RealMem
+
+**Benchmark: long-term project state and cross-session memory**
+
+[RealMem: Benchmarking LLMs in Real-World Memory-Driven Interaction](https://aclanthology.org/2026.findings-acl.703/) · **Findings of ACL 2026**, with arXiv:2601.06966v1 as the earlier version.
+
+Evaluates evolving state, temporal reasoning and goal alignment using over 2,000 **synthetic** cross-session dialogues across 11 scenarios—not longitudinal deployment logs. Final Table 2 reports memory-only GPT-4o QA of 0.567 for MemoryOS versus 0.804 for the oracle. Human validation covers 30 instances and two NLP-background annotators, not user outcomes. Prefer the final paper, which adds LightMem, full-context baselines and evaluation details. Synthetic data and model-based judging limit generalization. [Official code/data](https://github.com/AvatarMemory/RealMemBench) are available; **LICENSE states Apache-2.0; README badge says MIT**. **Read:** arXiv methods/results, final PDF results/limitations/human protocol, repository README/LICENSE; no reproduction.
+
+<a id="benchmark-atm-bench"></a>
+### B60. ATM-Bench · Multi-source personal referential memory QA
+
+[According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/html/2603.01990v1) — arXiv v1, 2026-03-02, preprint.
+
+Uses roughly four years of human-origin multimodal memories and 1,038 human-annotated QA/evidence pairs. Structured memory supports retrieval and grounded answering. QS selects its scorer by answer type: EM for numbers, Jaccard for list recall, and an LLM judge for open-ended answers. Retrieval separately reports Recall@k and Recall@k_GT (k equals the ground-truth evidence count); Joint@k = QS × Recall@k. Consent, visual redaction, email paraphrasing and synthetic identifier replacement are not formal anonymity guarantees. The paper’s below-20% Hard finding belongs to its original evaluation. [Code](https://github.com/JingbiaoMei/ATM-Bench) and [data](https://huggingface.co/datasets/Jingbiao/ATM-Bench) are now released: MIT code and CC BY-NC 4.0 data. Later repository benchmarks can use different release sets and must not be merged with preprint results.
+
+**Reading scope:** §3–5, Appendix A privacy/licensing and Appendix B annotation; official repository timeline, result-version notes and dataset card. Targeted methods/evaluation/ethics/annotation plus release records; no raw personal-data inspection.
+
+<a id="benchmark-convomem"></a>
+### B66. ConvoMem · Full context as a strong memory baseline
+
+[ConvoMem Benchmark: Why Your First 150 Conversations Don't Need RAG](https://arxiv.org/html/2511.10523v1) — arXiv 2511.10523v1, 2025-11-13.
+
+75,336 QA pairs cover user/assistant facts, abstention, preferences, changing facts and implicit connections. Synthetic enterprise personas feed scenario, evidence and conversation generation; evidence and filler share a pipeline with multi-model validation. Full context, Mem0 and two-stage extraction are compared for accuracy, cost and latency, with histories tested up to 300 conversations.
+
+**Limits:** The title's 150-conversation threshold is conditional on the data, models and costs, not universal. These are not longitudinal real-user logs. Missing-information abstention is not privacy/permission refusal; consent, deletion, access isolation and leakage protection are untested.
+
+**Read:** v1 §§2–3, §5 and Appendix A. Paper-provided code/data links; no independent reproduction or reuse-license verification.
+
+<a id="benchmark-perltqa"></a>
+### B68. PerLTQA · Personal-memory QA
+
+[PerLTQA: A Personal Long-Term Memory Dataset for Memory Classification, Retrieval, and Synthesis in Question Answering](https://arxiv.org/html/2402.16288v1) — reviewed v1, 2024-02-26; the [SIGHAN-10 2024 published version](https://aclanthology.org/2024.sighan-1.18/) uses “Fusion” in the final part of the title.
+
+
+- **Scope**: §§3–5, generation/validation appendices; README/LICENSE.
+- **Input → output**: synthetic profiles, relationships, events, dialogues and questions → memory classes, retrieved memories and answers. GPT-3.5 generation uses ChatGPT/Wikipedia seeds with human checks. 8,593 QA items cover 30 fictional characters, not longitudinal participants.
+- **Measures**: classification P/R/F1/accuracy, Recall@K, anchor MAP and model-judged correctness/coherence.
+- **Boundary**: not real-user utility, action execution or privacy/security validation.
+- **Resources**: [code / data repository](https://github.com/Elvin-Yiming-Du/PerLTQA); [dataset license CC BY-NC 4.0](https://github.com/Elvin-Yiming-Du/PerLTQA/blob/main/LICENSE.txt). README records a 2025-12-22 consistency update: pin the revision rather than equating current data with the paper snapshot.
+
+<a id="benchmark-teafarm"></a>
+### B70. TeaFarm · Counterfactual memory stress test
+
+[Towards Lifelong Dialogue Agents via Timeline-based Memory Management](https://arxiv.org/html/2406.10996v3) — NAACL 2025; reviewed v3, 2025-01-29. Method: **M65**; same paper.
+
+
+- **Scope**: §§3–5, appendices D/E/J; official resources.
+- **Input → output**: five-session MSC/Conversation Chronicles histories, synthetic continuations and counterfactual questions → answers. TeaBag has 100 source episodes, 200 QA pairs and 200 GPT-4-generated sixth sessions.
+- **Measure**: successful recall despite false premises, distinct from ordinary response quality.
+- **Boundary**: constructed stories, not lifelong participant observation; counterfactual QA is not comprehensive security certification.
+- **Resources**: [code](https://github.com/kimnamssya/Theanine) / [data](https://huggingface.co/datasets/LangAGI-Lab/teafarm); current dataset has 200 rows. Appendix J specifies academic/non-commercial use; check upstream terms separately.
+
+<a id="benchmark-context-time-memory"></a>
+### B77. Context- and time-sensitive memory evaluation
+
+Adds padding and simulated timestamps to 12 simulated, human-edited LoCoMo logs; tests temporal, temporal-plus-content, and ambiguous temporal queries. Recall/F2 measure retrieved response IDs, not answer accuracy or real-user task success.
+
+- Paper/version: [Toward Conversational Agents with Context and Time Sensitive Long-term Memory, 2406.00057v2](https://arxiv.org/html/2406.00057v2), 2024-06-04. Reversed Time/Context wording in the resource citation is an alias.
+- Cross-reference: M75; same paper, counted once.
+- Assets: [TemporalMemoryDataset](https://github.com/Zyphra/TemporalMemoryDataset) exposes conversation/test data; method code and explicit repository license unverified. The paper’s CC BY 4.0 does not establish repository licensing.
+- Inspected: §§3–6, Appendix A.1–A.3, README, repository root.
+
+<a id="benchmark-dabench"></a>
+### B81. Benchmark — DABench
+
+[DABench / Dynamic Affective Memory Management](https://arxiv.org/html/2510.27418v1) — arXiv:2510.27418v1, October 31, 2025 preprint; conference acceptance not verified. Same paper as [DAM-LLM](#method-dam-llm).
+
+**Checked / reading scope**: November 1, 2026; relevant §§3–6, Appendix A.3–A.4 and arXiv metadata.
+
+- **Composition**: 2,500 observation sequences; 100 simulated sessions/1,000 turns; 500 query-memory pairs. All dialogue/memory explicitly GPT-4-generated.
+- **Measurement and limits**: GPT-4 ratings of accuracy, coherence, memory reference, emotional resonance, personalization and fluency do not establish real emotional improvement, clinical benefit or an unbiased judge.
+- **Resources**: Appendix prompts/parameters are partial: A.3.2 does not supply the complete simulated-session generation prompt, so full reproducibility is not established. No official code/data release or artifact license located. Method/benchmark entries count as one paper.
+
+<a id="benchmark-actmemeval"></a>
+### B85.  Benchmark: ActMemEval
+
+[ActMem: Bridging the Gap Between Memory Retrieval and Reasoning in LLM Agents](https://arxiv.org/html/2603.00026v2) — 2603.00026v2, revised 2026-06-17; preprint, venue unverified.
+
+- **Task:** Memory-dependent implicit constraints across safety/health, feasibility, time-space-procedure, availability, preferences and reuse opportunities; not executed actions.
+- **Samples:** 327 synthetic questions, averaging 67.25 sessions and 120k tokens. Gemini generation, Claude validation and three researcher checks; not longitudinal human users.
+- **Measurement:** Evidence recall and QA accuracy judged by DeepSeek-V3, with sampled human-agreement checks. Scores do not establish execution safety, authorization enforcement or causal identification.
+- **Resources/rights:** [Official repository](https://github.com/nju-websoft/ActMem) exposes `dataset/ActMemEval.json` (96,837,216 bytes); only directory metadata was checked, not individual records. Root MIT differs from Appendix G's dataset CC BY 4.0 plus academic-research-only wording; reuse scope remains unresolved.
+- **Reading scope:** arXiv metadata, relevant §§3–5 text, Tables 1–2 and Appendices F/G. No experiment execution or complete visual figure inspection. Same paper as the method entry below.
+
+<a id="benchmark-engramabench"></a>
+### B86.  Benchmark: EngramaBench
+
+[EngramaBench: Evaluating Long-Term Conversational Memory with Structured Graph Retrieval](https://arxiv.org/html/2604.21229v1) — 2604.21229v1, 2026-04-23; preprint, venue unverified.
+
+- **Samples/tasks:** Five entirely synthetic personas, 100 conversations, 150 queries: factual, cross-space, temporal, abstention and synthesis. No real user data.
+- **Evidence:** Shared GPT-4o answering model. Global composite: full context 0.6186, Engrama 0.5367, Mem0 0.4809. Engrama leads full context on the cross-space slice only: 0.6532 versus 0.6291, n=30, with limited statistical power—not global superiority.
+- **Limits:** Token-F1 synthesis scoring; incomplete runtime evidence-provenance auditing; costs are query-time only, excluding memory construction. Not production validation.
+- **Resources/rights:** [Repository](https://github.com/julianacunadc/engramabench/blob/main/README.md) provides data, scorer, public baselines and canonical results; [MIT license text](https://github.com/julianacunadc/engramabench/blob/main/LICENSE) verified. **Proprietary Engrama is excluded.** DOI `10.5281/zenodo.19697774` is linked by the paper/repository; the Zenodo record could not be inspected.
+- **Reading scope:** Metadata, relevant §§3–8, limitations/ethics and cost appendix text; repository README/LICENSE. No scorer execution, record-by-record data audit or proprietary-system reproduction.
+
+<a id="planning-action-evaluation"></a>
+## Evaluation: Personalized planning and action
+
+Do personal context and preferences change plans, tool arguments or actions? Distinguish itinerary quality, generated calls, task-oriented dialogue and executed trajectories; embodiment and mobile settings retain their own boundaries. Clarification overlaps with B50 and ETAPP (B34), but the primary home follows the planning/tool outcome. Completion never substitutes for [authorization and safety](#safety-evaluation).
+
+<a id="benchmark-mem2actbench"></a>
+### B5. Mem2ActBench · From memory to tool arguments
+
+[Mem2ActBench: A Benchmark for Evaluating Long-Term Memory Utilization in Task-Oriented Autonomous Agents](https://aclanthology.org/2026.acl-long.370/) — ACL 2026.
+
+**Checked / reading scope:** 2026-10-31; Paper abstract, relevant §4.1 experimental-setup and §5.4 tool-selection passages; official README (including its License statement), root listing, and data-directory entry points.
+
+- **Input → output:** Historical memory, an implicitly constrained request, and tool schemas → tool selection and arguments. The paper constructs 400 memory-dependent tasks.
+- **Measures:** Argument matching / F1, tool selection, and whole-call matching. Main experiments supply the correct tool; separate experiments add distractor tools.
+- **Limits:** Correct arguments are not a completed real transaction. Main results should not be presented as open-ended tool-selection performance.
+- **Resources:** [Official construction code / data directories](https://github.com/Cantaloupe-M/Mem2ActBench). The [README License section](https://github.com/Cantaloupe-M/Mem2ActBench#license) declares MIT License, but no separate LICENSE file was observed in the root listing. Confirm the full license text and scope before reuse. Check upstream ToolACE, BFCL, and OASST1 terms separately; this declaration does not establish MIT licensing for all data.
 
 <a id="benchmark-pdeu-bench"></a>
 ### B25. PDEU-Bench · Preferences across plan revisions
@@ -224,18 +449,6 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Measures:** A fixed judge applies binary preference/quality rubrics; strict success requires all relevant stages to pass. Execution scores preference-sensitive arguments only.
 - **Limits:** Synthetic preferences and an offline sandbox do not establish real transactions or longitudinal user benefit.
 - **Resources:** The abstract points to code/data in an appendix, but no verifiable official release was located in the consulted HTML or search. Licensing and runnability remain unconfirmed.
-
-<a id="benchmark-atrbench"></a>
-### B26. ATRBench · Ask now, use later
-
-[Ask Now, Use Later: Benchmarking the Proactivity Gap in Long-Lived LLM Agents](https://arxiv.org/html/2605.28108v3) — v3, 2026-09-15; author metadata lists EMNLP 2026 Main.
-
-**Checked / reading scope:** 2026-11-01; abstract, §§3.1–3.2, Limitations, Ethical Considerations; official README and NOTICE.
-
-- **Input → output:** Ordinary simulated-user tasks → eliciting preferences useful later, not needed now. History is then frozen; test users are offline.
-- **Measures:** TSAcc deterministically checks the first relevant tool decision, macro-averaged by user; asking, acquisition, and application are reported separately.
-- **Limits:** Twenty synthetic personas, fixed rules, and model routing do not establish changing real preferences or interruption costs. More questions need not help.
-- **Resources:** [Official code/data](https://github.com/BUPT-GAMMA/ATRBench). Code: Apache-2.0; NOTICE separately attributes source personas under CC BY 4.0. Do not assume one license covers every asset. Not run.
 
 <a id="benchmark-travelplanner-plus"></a>
 ### B28. TravelPlanner+ · How profiles change plans
@@ -309,18 +522,6 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits:** evaluates selection/arguments given profiles, not learning profiles from history or executing transactions. The environment-only subset is not itself individual preference learning.
 - **Resources:** [official repository](https://github.com/BUAA-IRIP-LLM/ToolSpectrum) contains `api`, `data` and `prompts`. README does not document a complete evaluation workflow; no standalone root license found.
 
-<a id="benchmark-memsim"></a>
-### B36. MemSim / MemDaily · Synthetic personal-memory evaluation
-
-[MemSim: A Bayesian Simulator for Evaluating Memory of LLM-based Personal Assistants](https://arxiv.org/abs/2409.20163) — 2024 preprint; v1, 2024-09-30.
-
-**Verification / reading scope**: 2026-11-01; relevant passages in [v1](https://arxiv.org/html/2409.20163v1) §3 methods, §4 data quality, and §5 benchmark; official README and root listing.
-
-- **Input → output**: Synthetic user-message streams and personal questions → text or multiple-choice answers; supporting-message annotations also enable retrieval evaluation.
-- **Measures**: Answering and retrieval are separate; question types cover single-/multi-hop, comparison, aggregation, post-processing, and noise. Full, recent, retrieved, absent, and oracle memory are compared, primarily with GLM-4-9B. Do not pool MemDaily settings with different irrelevant-post ratios.
-- **Limits**: Bayesian profiles and structured hints improve consistency, but sampled human checks do not guarantee error-free data. Synthetic factual QA does not establish real-user preference understanding or tool execution.
-- **Resources**: [Official code/data](https://github.com/nuster1128/MemSim) includes generation, benchmarking, and `data_generation/final_dataset/memdaily.json`; README reports 2,954 trajectories/questions and 26,003 messages. Code/data licensing was not verified; the paper's CC BY 4.0 does not automatically cover them.
-
 <a id="benchmark-ms-tod"></a>
 ### B37. MS-TOD · Cross-session intent and slot tracking
 
@@ -333,50 +534,6 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Limits**: SGD-seeded, GPT-4-generated dialogues use three temporally ordered sessions per task with human validation; each session is simplified to one service/intent. Slot-based confirmation success is not a completed real booking, payment, or longitudinal user benefit.
 - **Versions/resources**: 2505.20231v1 (2025-05-26), *Bridging the Long-Term Gap: A Memory-Active Policy for Multi-Session Task-Oriented Dialogue*, was renamed MemGuide in v2 (2025-08-13); count once. [Official code/data](https://github.com/Elvin-Yiming-Du/MS_TOD_Memory); no root license observed, and reuse terms remain unverified.
 
-<a id="benchmark-prefdisco"></a>
-### B38. PrefDisco · Proactively discovering communication preferences
-
-[PrefDisco: Benchmarking Proactive Personalized Reasoning](https://arxiv.org/html/2510.00177v2) — [ICLR 2026](https://proceedings.iclr.cc/paper_files/paper/2026/hash/82d50077a0e140b524a18f380c95d55a-Abstract-Conference.html); inspected arXiv v2, March 4, 2026. V1 used the *Personalized Reasoning* title.
-
-**Verified / actual reading scope:** 2026-11-01; v2 §2 preference modeling/metrics, §3 benchmark construction, relevant §4 experimental-setting passages, and Limitations; arXiv version history and author README. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
-
-- **Evaluation:** Converts static reasoning questions into cold-start interactions with generated personas and passive simulated users. Preference alignment and factual correctness remain separate outcomes.
-- **Limits:** Primarily communication preferences—not content preferences, longitudinal change or demonstrated human utility. Over-personalization and sycophancy are outside scope.
-- **Resources:** [Author repository](https://github.com/stellalisy/PrefDisco) provides construction and evaluation tools; repository reuse license remains unconfirmed. Its newer PEP documentation should not automatically be attributed to the inspected v2. An earlier workshop-version relationship remains unverified.
-
-<a id="benchmark-latent-information"></a>
-### B39. Latent Information Discovery · Eliciting hidden preferences
-
-[Do LLMs Recognize Your Latent Preferences?](https://arxiv.org/html/2510.17132v1) — arXiv v1, October 20, 2025.
-
-**Verified / actual reading scope:** 2026-11-01; v1 §3 tasks/evaluation protocol, relevant Appendix A judge/user-comparison descriptions, and Appendix D data sources; arXiv version history. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
-
-- **Evaluation:** A User–Assistant–Judge setup covers 20 Questions, personalized QA and summarization. Reports all-preference success and average stopping turns, counting failures at the maximum turn budget.
-- **Limits:** GPT-4o simulates both user and judge; preferences are fixed and user answers truthful. Object guessing is a diagnostic, not itself a personal-assistant task. Judge approval does not establish human satisfaction.
-- **Resources:** Appendix documents generation and source datasets. PrefEval-derived generation code carries CC-BY-NC-4.0 restrictions; document-source terms vary. An original complete code/data release was not verified.
-
-<a id="benchmark-pdr-bench"></a>
-### B40. PDR-Bench · Research reports tailored to an individual
-
-[Towards Personalized Deep Research: Benchmarks and Evaluations](https://arxiv.org/html/2509.25106v3) — ICLR 2026; inspected v3, March 4, 2026.
-
-**Verified / actual reading scope:** 2026-11-01; v3 §3 construction, relevant §4 PQR evaluation passages, Appendix A limitations, and B.1–B.2 settings/subset selection; author README, repository root, and LICENSE. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
-
-- **Evaluation:** Fifty tasks and 25 volunteer-grounded profiles produce 250 task–user pairs. PQR separately measures personalization, content quality and factual/citation reliability.
-- **Limits:** Structured personas are real-user grounded, but annotators simulate dynamic interactions. Collection is Chinese-centered with English translations. Appendix selection proceeds 250→150→50; benchmark size is not full experimental coverage. Report quality does not demonstrate safe execution or long-term human utility.
-- **Resources:** [Author code/data](https://github.com/OPPO-PersonalAI/PersonalizedDeepResearchBench), verified Apache-2.0 root license; model/search APIs and upstream asset terms remain separate requirements.
-
-<a id="benchmark-personalens"></a>
-### B41. PersonaLens · Personalized dialogue across domains
-
-[PersonaLens](https://aclanthology.org/2025.findings-acl.927/) — Findings ACL 2025; inspected [arXiv v1](https://arxiv.org/html/2506.09902v1), June 11, 2025.
-
-**Verified / actual reading scope:** 2026-11-01; v1 §2 profiles/tasks/simulation protocol, §3 experimental setup, relevant §4 evaluation passages, and Limitations; ACL publication record, author README, and LICENSE.md. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
-
-- **Evaluation:** 111 tasks across 20 domains, with simulated users and judges assessing personalization, task completion, naturalness and coherence.
-- **Limits:** The 1,500 profiles use real PRISM demographics but generated preferences, histories and contexts—not 1,500 real assistant users. Section 3 states that all reported experiments use a random subset of 50 profiles, comprising 3,283 single-domain and 813 multi-domain dialogues; construction scale is not evaluation coverage. Bookings and purchases are simulated dialogue, not executed actions. Demographic conditioning can reproduce stereotypes.
-- **Resources:** [Author code/data](https://github.com/amazon-science/PersonaLens), verified **CC-BY-NC-4.0** `LICENSE.md`; execution requires Amazon Bedrock access.
-
 <a id="benchmark-user-fingertip"></a>
 ### B42. User FingerTip · Resolving ambiguous app and content requests
 
@@ -387,15 +544,6 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 - **Evaluation:** Extends FingerTip by removing app names or obscuring requested content. Reports 60 users, 33 apps, 300 Type-I and 267 Type-II instructions.
 - **Limits:** Counts versus “15 training/5 test instructions per user” need clarification; this is not established held-out-user evaluation. Table 3’s perfect app selection accompanies task-success rates of 80%/50%, not universal success. Long-term human deployment is unproven.
 - **Resources:** [Author repository](https://github.com/Gianthaha/personal-mobile-agent) is MIT-labeled and contains implementation directories, but README still promises updates; complete benchmark packaging remains unverified.
-
-<a id="benchmark-userville"></a>
-### B43. UserVille · Hidden tasks and interaction preferences
-
-Same paper as M30; do not count twice. [Original paper](https://arxiv.org/html/2511.02208v2); reading scope and resource limitations as above.
-
-- **Automated component:** Obscures task descriptions and uses preference-conditioned LLM users; 20 interaction preferences include eight held out. Code localization uses F1, BrowseComp-Plus uses EM; personalization covers only sessions containing a question.
-- **Human component:** v2 includes 33 programmers and 300 evaluations on SWE-Bench tasks. Participants could see descriptions and gold patches; this is not natural longitudinal deployment. Satisfaction is PPP 3.75 versus GPT-5 3.79, but reported resolution is 71% versus 85%. Do not report satisfaction alone.
-- **Interpretation:** Table 1 composite means are 62.04 versus Seed-OSS-36B 45.32. The +16.72 comparison is against Seed, not GPT-5, and is not task-success percentage points.
 
 <a id="benchmark-personalwab"></a>
 ### B44. PersonalWAB · Shopping-history-conditioned function tasks
@@ -417,18 +565,6 @@ Same paper as M31; do not count twice. [Original paper](https://arxiv.org/html/2
 - **Data/metrics:** Real POIs/itineraries are supplemented and LLM-rewritten; queries are generated. An LLM first extracts key entities and activities from natural-language plans; scripts then check feasibility/rationality against the sandbox. This is not purely deterministic evaluation of raw plans. LLM and reward-model judges separately compare personalization with reference plans.
 - **Boundary:** Not thousands of participant requests; China-only, single-turn and model biases limit generalization. No booking/execution validation.
 - **Resources:** Public code/data.7z; main last pushed 2025-10-22, no releases. No declared repository license or license file; reuse permission remains unverified.
-
-<a id="benchmark-mpr"></a>
-### B46. MPR · Multi-hop personalized factual reasoning
-
-[Explicit v.s. Implicit Memory: Exploring Multi-hop Complex Reasoning Over Personalized Information](https://arxiv.org/html/2508.13250v1) — arXiv v1, 2025-08-18; method in M38. Count the paper once.
-
-**Verification date / reading scope:** 2026-11-01; §3–6; official README, complete file tree and release metadata.
-
-- **Input → output:** Synthetic user graphs, generated single-hop statements and questions → 2–10-hop personalized factual answers; not observed human histories.
-- **Measurement:** Normalized answer exact match; experiments use a balanced 2,700-question subset. Report oracle and ordinary retrieval separately.
-- **Boundary:** Not tool execution, online preference changes or longitudinal satisfaction. Table 2 says 108,000 QA but §3.3.3 says 10,800; retain the discrepancy rather than silently correcting it.
-- **Resources:** [official repository](https://github.com/nuster1128/MPR), master, last pushed 2025-08-24; no releases or declared repository license. README links a Drive dataset, but its archive was inaccessible during verification. Paper CC BY 4.0 does not establish code/data reuse rights.
 
 <a id="benchmark-familytool"></a>
 ### B47. FamilyTool · Multi-hop personal knowledge to tool arguments
@@ -479,18 +615,6 @@ Same paper as M31; do not count twice. [Original paper](https://arxiv.org/html/2
 - **Limits:** human checking is not naturalistic user interaction. Static generated calls do not establish successful transactions, authorization or longitudinal adaptation. Table 1 is internally inconsistent: its train 7,096 plus test 1,083 equals 8,179, not the printed total 8,197. Dataset-total prose is also inconsistent. Preserve labeled split counts and flag the unresolved total; do not treat the whole table as reconciled ground truth.
 - **Resources:** [official code/test data](https://github.com/hyfshadow/PTBench); training/model release and reuse license unverified.
 
-<a id="benchmark-pal-bench"></a>
-### B52. PAL-Bench · Requirements and preferences from long-term personal histories
-
-[Mem-PAL: Towards Memory-based Personalized Dialogue Assistants for Long-term User-Agent Interaction](https://arxiv.org/html/2511.13410v2) — v2, 2025-11-26; AAAI 2026 Oral. Same paper as M47.
-
-**Actual reading scope:** PAL-Bench construction/tasks, H²Memory framework and Experiments, including external validation; repository README and file listing. Appendices were sampled, not comprehensively read.
-
-- **Input → output:** behavioral logs plus dialogue history → restated requirements, proposed/selected solutions, multi-turn responses.
-- **Measures:** BLEU, GPT-4 implicit-need judgments, solution-selection scores and pairwise dialogue judgments.
-- **Boundary:** PAL-Set has 100 synthetic users, approximately 29 sessions and 9.4 simulated months each; human verification does not make this a longitudinal user study. Multi-turn users are simulated by an LLM. External validation covers only LongMemEval’s single-session-preference subset and uses the dialogue components (Topic Outline + Principle), not the complete four-component system.
-- **Resources/language:** [official code/data](https://github.com/hzp3517/Mem-PAL). README identifies the English version as a DeepSeek-V3 translation without item-by-item human verification. Appendix B states an intended PAL-Set release under CC BY-NC 4.0; this author statement uses future-release wording and is separate from verifying the distributed dataset’s terms or the implementation’s license. Repository reuse-license verification remains incomplete.
-
 <a id="benchmark-memento"></a>
 ### B53. MEMENTO · Applying personal memories to embodied tasks
 
@@ -502,15 +626,6 @@ Same paper as M31; do not count twice. [Original paper](https://arxiv.org/html/2
 - **Measures:** matched acquisition/utilization goals, single/joint memories, percent complete, success rate and planning cost; 438 episodes across 12 Habitat scenes with generated personal knowledge.
 - **Boundary:** main setting guarantees gold memories among retrieved candidates and oracle perception/motor skills. It isolates memory utilization, not unconstrained retrieval or real-world robot reliability. Synthetic users, no conversational clarification. GPT-4o joint-memory success drops 30.5 percentage points relative to its matched acquisition baseline.
 - **Resources/identity:** [official repository](https://github.com/Connoriginal/MEMENTO), MIT repository with Habitat/PARTNR dependencies. README’s older subtitle “Exploring Memory Utilization for Personalized Assistance” denotes the same paper.
-
-<a id="benchmark-realmem"></a>
-### B56. RealMem
-
-**Benchmark: long-term project state and cross-session memory**
-
-[RealMem: Benchmarking LLMs in Real-World Memory-Driven Interaction](https://aclanthology.org/2026.findings-acl.703/) · **Findings of ACL 2026**, with arXiv:2601.06966v1 as the earlier version.
-
-Evaluates evolving state, temporal reasoning and goal alignment using over 2,000 **synthetic** cross-session dialogues across 11 scenarios—not longitudinal deployment logs. Final Table 2 reports memory-only GPT-4o QA of 0.567 for MemoryOS versus 0.804 for the oracle. Human validation covers 30 instances and two NLP-background annotators, not user outcomes. Prefer the final paper, which adds LightMem, full-context baselines and evaluation details. Synthetic data and model-based judging limit generalization. [Official code/data](https://github.com/AvatarMemory/RealMemBench) are available; **LICENSE states Apache-2.0; README badge says MIT**. **Read:** arXiv methods/results, final PDF results/limitations/human protocol, repository README/LICENSE; no reproduction.
 
 <a id="benchmark-personal"></a>
 ### B57. PersONAL
@@ -528,24 +643,6 @@ Contains **2,020 simulated episodes in HM3D/Habitat** with explicit ownership de
 - **Boundary:** Controlled simulated recognition/navigation is not deployed personal-assistant reliability. Small objects, distant details and rendering degradation remain challenges.
 - **Licensing/reading scope:** [Paper](https://arxiv.org/html/2410.18195v2) §§3–5, Appendices B/G/I, [project](https://aimagelab.github.io/pin/) and [repository](https://github.com/aimagelab/pin) reviewed. Code: MIT; episodes/descriptions: CC BY; HM3D: noncommercial academic conditions; objects: mixed CC licenses. No blanket commercial-use claim.
 
-<a id="benchmark-personafeedback"></a>
-### B59. PersonaFeedback · Response selection with explicit personas
-
-[PersonaFeedback: A Large-scale Human-annotated Benchmark For Personalization](https://arxiv.org/html/2506.12915v1) — arXiv v1, 2025-06-15, work in progress.
-
-Evaluates binary response selection given explicit personas using selection accuracy against labels, with 8,298 human-labelled cases—not 8,298 real participants. Twenty real seed profiles underpin constructed personas; 200 are used for benchmarking. Model-generated material is human-filtered, with majority labels from nine evaluators. This is not a longitudinal user study or evidence that RAG generally fails. Subjective labels and persona simplification constrain conclusions. The [public dataset](https://huggingface.co/datasets/PersonalAILab/PersonaFeedback) declares Apache-2.0; its viewer currently reports incompatible schemas. No formal privacy guarantee was established.
-
-**Reading scope:** §3 construction/annotation, §4 evaluation setup, limitations; official dataset card and viewer status. Targeted construction, evaluation and limitations; dataset card/viewer, not a full dataset audit.
-
-<a id="benchmark-atm-bench"></a>
-### B60. ATM-Bench · Multi-source personal referential memory QA
-
-[According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/html/2603.01990v1) — arXiv v1, 2026-03-02, preprint.
-
-Uses roughly four years of human-origin multimodal memories and 1,038 human-annotated QA/evidence pairs. Structured memory supports retrieval and grounded answering. QS selects its scorer by answer type: EM for numbers, Jaccard for list recall, and an LLM judge for open-ended answers. Retrieval separately reports Recall@k and Recall@k_GT (k equals the ground-truth evidence count); Joint@k = QS × Recall@k. Consent, visual redaction, email paraphrasing and synthetic identifier replacement are not formal anonymity guarantees. The paper’s below-20% Hard finding belongs to its original evaluation. [Code](https://github.com/JingbiaoMei/ATM-Bench) and [data](https://huggingface.co/datasets/Jingbiao/ATM-Bench) are now released: MIT code and CC BY-NC 4.0 data. Later repository benchmarks can use different release sets and must not be merged with preprint results.
-
-**Reading scope:** §3–5, Appendix A privacy/licensing and Appendix B annotation; official repository timeline, result-version notes and dataset card. Targeted methods/evaluation/ethics/annotation plus release records; no raw personal-data inspection.
-
 <a id="benchmark-triptide"></a>
 ### B65. TripTide · Personalized itinerary revision after disruption
 
@@ -557,146 +654,6 @@ Extends 1,000 TripCraft plans of 3/5/7 days with model-generated, human-selected
 
 **Read:** v1 §§3–6 and relevant appendix passages; paper-provided anonymous code link, no reproduction.
 
-<a id="benchmark-convomem"></a>
-### B66. ConvoMem · Full context as a strong memory baseline
-
-[ConvoMem Benchmark: Why Your First 150 Conversations Don't Need RAG](https://arxiv.org/html/2511.10523v1) — arXiv 2511.10523v1, 2025-11-13.
-
-75,336 QA pairs cover user/assistant facts, abstention, preferences, changing facts and implicit connections. Synthetic enterprise personas feed scenario, evidence and conversation generation; evidence and filler share a pipeline with multi-model validation. Full context, Mem0 and two-stage extraction are compared for accuracy, cost and latency, with histories tested up to 300 conversations.
-
-**Limits:** The title's 150-conversation threshold is conditional on the data, models and costs, not universal. These are not longitudinal real-user logs. Missing-information abstention is not privacy/permission refusal; consent, deletion, access isolation and leakage protection are untested.
-
-**Read:** v1 §§2–3, §5 and Appendix A. Paper-provided code/data links; no independent reproduction or reuse-license verification.
-
-<a id="benchmark-perltqa"></a>
-### B68. PerLTQA · Personal-memory QA
-
-[PerLTQA: A Personal Long-Term Memory Dataset for Memory Classification, Retrieval, and Synthesis in Question Answering](https://arxiv.org/html/2402.16288v1) — reviewed v1, 2024-02-26; the [SIGHAN-10 2024 published version](https://aclanthology.org/2024.sighan-1.18/) uses “Fusion” in the final part of the title.
-
-
-- **Scope**: §§3–5, generation/validation appendices; README/LICENSE.
-- **Input → output**: synthetic profiles, relationships, events, dialogues and questions → memory classes, retrieved memories and answers. GPT-3.5 generation uses ChatGPT/Wikipedia seeds with human checks. 8,593 QA items cover 30 fictional characters, not longitudinal participants.
-- **Measures**: classification P/R/F1/accuracy, Recall@K, anchor MAP and model-judged correctness/coherence.
-- **Boundary**: not real-user utility, action execution or privacy/security validation.
-- **Resources**: [code / data repository](https://github.com/Elvin-Yiming-Du/PerLTQA); [dataset license CC BY-NC 4.0](https://github.com/Elvin-Yiming-Du/PerLTQA/blob/main/LICENSE.txt). README records a 2025-12-22 consistency update: pin the revision rather than equating current data with the paper snapshot.
-
-<a id="benchmark-personaconvbench"></a>
-### B69. PERSONA-Bench · Multi-user conversational history
-
-[A Personalized Conversational Benchmark: Towards Simulating Personalized Conversations](https://arxiv.org/html/2505.14106v2) — [NeurIPS 2025 MTI-LLM workshop (not main conference)](https://research.adobe.com/publication/a-personalized-conversational-benchmark-towards-simulating-personalized-conversations/); methods and experiments reviewed in arXiv v2, 2025-05-25.
-
-
-- **Scope**: §§2–4, appendix C; official `Latest` README/data card.
-- **Input → output**: prior conversational/user trajectories constructed from raw Reddit posts in ten domains → binary label, community-score forecast or next-user text.
-- **Measures**: accuracy/F1/MCC, regression errors and generation similarity; separate protocols. Temporal access and target masking are reported, not independently audited.
-- **Comparison protocol**: §C.3 generates 10 candidates for every model except Claude and selects the highest-SBERT candidate; Claude uses one candidate. Cross-model generation scores therefore do not represent single-response performance under equal sampling budgets.
-- **Boundary**: “sentiment” is score-derived, not validated personal emotion. Historical evaluation is not deployed-assistant or mental-health effectiveness evidence.
-- **Resources**: [code](https://github.com/PERSONA-bench/PERSONA/tree/Latest) / [data](https://huggingface.co/datasets/PERSONABench/PERSONA-Bench). HF says MIT; repository says research-only/Reddit TOS. Resolve this discrepancy before reuse; do not describe data as unrestricted MIT.
-
-<a id="benchmark-teafarm"></a>
-### B70. TeaFarm · Counterfactual memory stress test
-
-[Towards Lifelong Dialogue Agents via Timeline-based Memory Management](https://arxiv.org/html/2406.10996v3) — NAACL 2025; reviewed v3, 2025-01-29. Method: **M65**; same paper.
-
-
-- **Scope**: §§3–5, appendices D/E/J; official resources.
-- **Input → output**: five-session MSC/Conversation Chronicles histories, synthetic continuations and counterfactual questions → answers. TeaBag has 100 source episodes, 200 QA pairs and 200 GPT-4-generated sixth sessions.
-- **Measure**: successful recall despite false premises, distinct from ordinary response quality.
-- **Boundary**: constructed stories, not lifelong participant observation; counterfactual QA is not comprehensive security certification.
-- **Resources**: [code](https://github.com/kimnamssya/Theanine) / [data](https://huggingface.co/datasets/LangAGI-Lab/teafarm); current dataset has 200 rows. Appendix J specifies academic/non-commercial use; check upstream terms separately.
-
-<a id="benchmark-personal-laps"></a>
-### B71. Doing Personal LAPS · Human-involved multi-session preference data
-
-[Doing Personal LAPS: LLM-Augmented Dialogue Construction for Personalized Multi-Session Conversational Search](https://arxiv.org/abs/2405.03480v1) — SIGIR 2024; [proceedings DOI](https://doi.org/10.1145/3626772.3657815).
-
-**Checked / reading scope:** 2026-11-01; construction §3, recommendation/evaluation §4, results §5 including Tables 7–8, and repository resource/license documentation.
-
-- **Construction / input → output:** One worker writes both dialogue roles with LLM guidance, expressing actual preferences. Histories support preference extraction and personalized recommendation across recipe and movie domains, totaling 1,406 dialogues.
-- **Measurement:** Dialogue quality/diversity, extraction, preference utilization, and human judgments of recommendations and rationales.
-- **Boundary / counterexample:** Constructed self-dialogues are not deployment logs. Preference memory improves recipe recommendations and rationales in both domains, but not movie recommendation quality; movie utilization F1 is numerically slightly lower (.424 to .419); the paper does not support inferring a statistically significant decrease.
-- **Resources:** The [MIT-labelled repository](https://github.com/informagi/laps) includes data, collection and evaluation code, and downstream resources. Listed as data/evaluation evidence, not general autonomous action capability.
-
-<a id="benchmark-lamp-qa"></a>
-### B72. LaMP-QA · Personalized long-form answers
-
-[LaMP-QA: A Benchmark for Personalized Long-form Question Answering](https://aclanthology.org/2025.emnlp-main.60/) — EMNLP 2025 Main; arXiv `2506.00137v2` is the same work.
-
-**Checked / reading scope:** 2026-11-01; formulation, construction, metrics, baselines and experiments §§2–5, limitations, repository documentation and dataset card.
-
-- **Input → output:** Real StackExchange question histories plus a current title → personalized long-form answers. The current post narrative is withheld from generation and used for evaluation.
-- **Measurement:** Rubric-based requirement coverage and human comparisons; PlanPers/RAG wins are 35%/26% over 100 comparisons, with the remainder tied.
-- **Boundary / counterexample:** Real posts are not assistant deployment logs. Narratives may omit needs; annotators are not the original users. Requirement coverage is not deployment satisfaction, privacy protection or action execution.
-- **Resources:** [Code](https://github.com/LaMP-Benchmark/LaMP-QA) and [data](https://huggingface.co/datasets/alireza7/LaMP-QA) are accessible. The paper identifies upstream SE-PQA as CC-BY-SA 4.0; a separate downstream code/data license was not verified. Do not substitute the article license. LaMP-QA is distinct from LaMP and LongLaMP.
-
-<a id="benchmark-hicupid"></a>
-### B73. HiCUPID · Synthetic personalized dialogue and proxy evaluation
-
-[Exploring the Potential of LLMs as Personalized Assistants: Dataset, Evaluation, and Analysis](https://aclanthology.org/2025.acl-long.504/) — ACL 2025 Main. HiCUPID is the resource name; arXiv `2506.01262v1` is the same paper.
-
-**Checked / reading scope:** 2026-11-01; construction §3, evaluation §4, results §5/Tables 3–4, license Appendix A12, and official repository/data/model cards.
-
-- **Input → output:** Synthetic preference, profile and schedule dialogues → personalized single-/multi-information answers for 1,500 synthetic users, not real interaction logs.
-- **Measurement:** GPT-4o and distilled Llama-3.2 evaluators, separate seen-user/unseen-question and unseen-user/unseen-question settings, and human evaluation of four LLMs’ zero-shot outputs on 100 persona QA pairs sampled from Test Set 1—not 100 responses in total.
-- **Boundary / counterexample:** DPO alone does not consistently improve personalization in the reported settings; multi-information reasoning remains difficult. Proactiveness means suggestions in responses, not autonomous initiation or external actions.
-- **Resources:** [Code](https://github.com/12kimih/HiCUPID), [data](https://huggingface.co/datasets/12kimih/HiCUPID) and [evaluator](https://huggingface.co/12kimih/Llama-3.2-3B-HiCUPID) cards claim Apache-2.0; the Llama-3.2 base-model Community License remains a separate consideration. The project label does not establish that every component is free of additional restrictions.
-
-<a id="benchmark-implexconv"></a>
-### B76. ImplexConv: cross-session implicit reasoning
-
-Tests personalized QA through supportive/opposed implicit scenarios; the paper reports 2,500 examples of roughly 100 sessions. Generated reasoning scenarios are combined with existing-dataset distractors and selective human verification, not a field study. Separate generation/evaluation models do not establish contamination freedom.
-
-- Paper/version: [Toward Multi-Session Personalized Conversation: A Large-Scale Dataset and Hierarchical Tree Framework for Implicit Reasoning, 2503.07018v1](https://arxiv.org/html/2503.07018v1), 2025-03-10.
-- Cross-reference: M74; same paper, counted once. Internal IMPersona/IMPACT naming remnants are not separate papers.
-- Assets: [Official repository](https://github.com/Kaylee0501/ImplexConv) contains framework/evaluation files; code license unverified. Current cards list [opposed](https://huggingface.co/datasets/Kaylee0501/ImplexConv-opposed) 1,550 + [supportive](https://huggingface.co/datasets/Kaylee0501/ImplexConv-supportive) 814 = 2,364 examples, unlike the paper’s total. Their MIT data label does not establish code licensing.
-- Inspected: §§3–6, limitations, README, dataset cards, repository root.
-
-<a id="benchmark-context-time-memory"></a>
-### B77. Context- and time-sensitive memory evaluation
-
-Adds padding and simulated timestamps to 12 simulated, human-edited LoCoMo logs; tests temporal, temporal-plus-content, and ambiguous temporal queries. Recall/F2 measure retrieved response IDs, not answer accuracy or real-user task success.
-
-- Paper/version: [Toward Conversational Agents with Context and Time Sensitive Long-term Memory, 2406.00057v2](https://arxiv.org/html/2406.00057v2), 2024-06-04. Reversed Time/Context wording in the resource citation is an alias.
-- Cross-reference: M75; same paper, counted once.
-- Assets: [TemporalMemoryDataset](https://github.com/Zyphra/TemporalMemoryDataset) exposes conversation/test data; method code and explicit repository license unverified. The paper’s CC BY 4.0 does not establish repository licensing.
-- Inspected: §§3–6, Appendix A.1–A.3, README, repository root.
-
-<a id="benchmark-evoarena"></a>
-### B79. EvoArena · PersonaMem-Evo subset
-
-**Conditionally direct evaluation: synthetic preference evolution**
-
-[Paper](https://arxiv.org/html/2606.13681v2) · arXiv v2, 2026-06-17. Method: M79; count the shared paper once.
-
-PersonaMem-Evo generates interaction histories and evolving preferences from synthetic personas, testing four-way single-pattern transfer, multi-pattern synthesis, conflict resolution, and temporal-trajectory inference, with persona-only/no-context shortcut filtering. It is not a real-user longitudinal study. Terminal-Bench-Evo and SWE-Chain-Evo supply adjacent, transferable evidence.
-
-**Resources:** The [official data card](https://huggingface.co/datasets/Aiden0526/PersonaMem-Evo) reports 10 personas/505 examples, empty 128k links, a broken viewer, and no license metadata. The [repository](https://github.com/Aiden0526/EvoArena) is not a verified complete release; its license remains pending. The paper’s CC BY 4.0 does not establish asset permissions.
-
-**Verification date / actually read:** 2026-11-01; version page, §§3–6, relevant Appendices A/E, repository README/root, and PersonaMem-Evo data card. No reproduction run.
-
-<a id="benchmark-indievaluecatalog"></a>
-### B80. Benchmark — IndieValueCatalog
-
-[Can Language Models Reason about Individualistic Human Values and Preferences?](https://aclanthology.org/2025.acl-long.336/) — ACL 2025 main-conference long paper; examined [arXiv:2410.03868v2, May 31, 2025](https://arxiv.org/html/2410.03868v2).
-
-**Checked / reading scope**: November 1, 2026; relevant §§2–4, limitations/ethics, Appendix B, official README/root listing.
-
-- **Task and metrics**: Predict unseen individual value choices from WVS statements; accuracy and inequity metrics.
-- **Evidence**: 93,279 real survey respondents; 800 held out, not interactive-agent users.
-- **Limits**: Adjacent individual-value modeling; static surveys/single-prompt limitations; demographics cannot replace individual evidence. Privacy, manipulation and autonomy remain concerns.
-- **Resources and rights**: [Official repository](https://github.com/liweijiang/indievalue) provides conversion/metadata code and links converted labels. WVS research-use, non-redistribution terms remain separate from the paper's CC BY license; no root code license observed.
-
-<a id="benchmark-dabench"></a>
-### B81. Benchmark — DABench
-
-[DABench / Dynamic Affective Memory Management](https://arxiv.org/html/2510.27418v1) — arXiv:2510.27418v1, October 31, 2025 preprint; conference acceptance not verified. Same paper as [DAM-LLM](#method-dam-llm).
-
-**Checked / reading scope**: November 1, 2026; relevant §§3–6, Appendix A.3–A.4 and arXiv metadata.
-
-- **Composition**: 2,500 observation sequences; 100 simulated sessions/1,000 turns; 500 query-memory pairs. All dialogue/memory explicitly GPT-4-generated.
-- **Measurement and limits**: GPT-4 ratings of accuracy, coherence, memory reference, emotional resonance, personalization and fluency do not establish real emotional improvement, clinical benefit or an unbiased judge.
-- **Resources**: Appendix prompts/parameters are partial: A.3.2 does not supply the complete simulated-session generation prompt, so full reproducibility is not established. No official code/data release or artifact license located. Method/benchmark entries count as one paper.
-
 <a id="benchmark-tripcraft"></a>
 ### B82. Persona-conditioned travel planning
 
@@ -704,154 +661,70 @@ PersonaMem-Evo generates interaction histories and evolving preferences from syn
 
 **Benchmark.** Evaluates persona-conditioned itineraries using temporal, spatial, ordering and preference metrics. Reviewed §3–4, limitations and official README. Its 1,000 queries combine real-world place data with constructed queries/personas and adjusted flight dates; human-refined references are not real-traveler validation. Embedding-based persona similarity does not establish satisfaction. No booking execution or authorization is tested. Data require application; internal research/commercial use and modification are permitted. Modifications must retain the paper citation and README; redistribution outside the requesting organization is prohibited. No root code license confirmed.
 
-<a id="benchmark-dulemon"></a>
-### B84.  Benchmark
+<a id="proactive-clarification-evaluation"></a>
+## Evaluation: Proactivity and clarification
 
-**DuLeMon**, from **Long Time No See! Open-Domain Conversation with Long-Term Persona Memory** | [Findings of ACL 2022](https://aclanthology.org/2022.findings-acl.207/); [2203.05797v2](https://arxiv.org/html/2203.05797v2), 2022-03-14, following March 11 v1. Same-paper method: **M95**.
+When should the agent help, ask or stay quiet? Separate timely offers, hidden-intent discovery, preference elicitation and clarification before planning. Ask-before-Plan (B30) is adjacent planning/clarification evidence, not longitudinal profiling. Asking well does not grant permission to act; see [authorization](#benchmark-authorizationbench).
 
-Chinese mutual-persona conversation with supplied role descriptions and persona grounding: 27,501 crowdsourced role-play dialogues, not natural longitudinal user histories. Human evaluation rates bot–bot conversations using PLATO-LTM as the user simulator: ten episodes × four sessions × sixteen rounds per chatbot. Human rating is not longitudinal human use.
+<a id="benchmark-proactivebench-lu"></a>
+### B6. ProactiveBench (Lu et al.) · When to offer help
 
-**Resources/license:** the [official directory](https://github.com/PaddlePaddle/Research/tree/master/NLP/ACL2022-DuLeMon) supplies a dataset download script. Parent repository [Apache 2.0](https://github.com/PaddlePaddle/Research/blob/master/LICENSE); separate terms for externally downloaded data unverified. **Inspected:** §3 construction, §5 evaluation, ethics, Appendices A/B, version history, official README/directory and parent license; dataset not downloaded/unpacked.
+[Proactive Agent: Shifting LLM Agents from Reactive Responses to Active Assistance](https://arxiv.org/abs/2410.12361) — 2024 preprint; ICLR 2025.
 
-<a id="benchmark-actmemeval"></a>
-### B85.  Benchmark: ActMemEval
+**Checked / reading scope:** 2026-10-31; Paper abstract and evaluation-metric passages; official README system overview, data statistics, and evaluation entry points.
 
-[ActMem: Bridging the Gap Between Memory Retrieval and Reasoning in LLM Agents](https://arxiv.org/html/2603.00026v2) — 2603.00026v2, revised 2026-06-17; preprint, venue unverified.
+- **Input → output:** User activity and environment events → a proposed assistance task, or no proposal. The paper includes 6,790 events across coding, writing, and daily-life settings.
+- **Measures:** Precision, recall, F1, and false alarms under acceptance / rejection judgments; automated evaluation uses a learned reward model.
+- **Limits:** Appropriate offers are not long-term human satisfaction or task completion. A proactive suggestion does not authorize execution.
+- **Resources:** [Code, data, evaluation](https://github.com/thunlp/ProactiveAgent). Other papers use the same benchmark name; this entry specifically means Lu et al. See M11 for the method.
 
-- **Task:** Memory-dependent implicit constraints across safety/health, feasibility, time-space-procedure, availability, preferences and reuse opportunities; not executed actions.
-- **Samples:** 327 synthetic questions, averaging 67.25 sessions and 120k tokens. Gemini generation, Claude validation and three researcher checks; not longitudinal human users.
-- **Measurement:** Evidence recall and QA accuracy judged by DeepSeek-V3, with sampled human-agreement checks. Scores do not establish execution safety, authorization enforcement or causal identification.
-- **Resources/rights:** [Official repository](https://github.com/nju-websoft/ActMem) exposes `dataset/ActMemEval.json` (96,837,216 bytes); only directory metadata was checked, not individual records. Root MIT differs from Appendix G's dataset CC BY 4.0 plus academic-research-only wording; reuse scope remains unresolved.
-- **Reading scope:** arXiv metadata, relevant §§3–5 text, Tables 1–2 and Appendices F/G. No experiment execution or complete visual figure inspection. Same paper as the method entry below.
+<a id="benchmark-knowu-bench"></a>
+### B10. KnowU-Bench · Clarification, consent, and restraint
 
-<a id="benchmark-engramabench"></a>
-### B86.  Benchmark: EngramaBench
+[KnowU-Bench: Towards Interactive, Proactive, and Personalized Mobile Agent Evaluation](https://arxiv.org/html/2604.08455v1) — 2026 preprint; inspected v1, 2026-04-09.
 
-[EngramaBench: Evaluating Long-Term Conversational Memory with Structured Graph Retrieval](https://arxiv.org/html/2604.21229v1) — 2604.21229v1, 2026-04-23; preprint, venue unverified.
+**Checked / reading scope:** 2026-10-31; Abstract, §3.4 and relevant experimental discussion, official repository.
 
-- **Samples/tasks:** Five entirely synthetic personas, 100 conversations, 150 queries: factual, cross-space, temporal, abstention and synthesis. No real user data.
-- **Evidence:** Shared GPT-4o answering model. Global composite: full context 0.6186, Engrama 0.5367, Mem0 0.4809. Engrama leads full context on the cross-space slice only: 0.6532 versus 0.6291, n=30, with limited statistical power—not global superiority.
-- **Limits:** Token-F1 synthesis scoring; incomplete runtime evidence-provenance auditing; costs are query-time only, excluding memory construction. Not production validation.
-- **Resources/rights:** [Repository](https://github.com/julianacunadc/engramabench/blob/main/README.md) provides data, scorer, public baselines and canonical results; [MIT license text](https://github.com/julianacunadc/engramabench/blob/main/LICENSE) verified. **Proprietary Engrama is excluded.** DOI `10.5281/zenodo.19697774` is linked by the paper/repository; the Zenodo record could not be inspected.
-- **Reading scope:** Metadata, relevant §§3–8, limitations/ethics and cost appendix text; repository README/LICENSE. No scorer execution, record-by-record data audit or proprietary-system reproduction.
+- **Input → output:** Behavioral logs, vague requests or proactive triggers, and Android state → GUI actions, clarification, consent requests, or abstention. The profile is hidden, but a profile-grounded user simulator can answer questions.
+- **Measures:** 42 general, 86 personalized, and 64 proactive tasks. Rules check recipients, order / calendar / setting states, and post-rejection violations; judges evaluate semantic preference alignment.
+- **Limits:** Directly studies personalized and proactive mobile agents. Simulator, rubric, and judge dependence preclude interpreting scores as human acceptance rates. The environment was not downloaded or execution-tested.
+- **Resources:** [Official project](https://zju-real.github.io/KnowU-Bench/), [environment, tasks, and code](https://github.com/ZJU-REAL/KnowU-Bench). Repository: Apache-2.0; third-party Android apps, images, and models have separate terms.
 
-<a id="transferable-memory-evaluation"></a>
-## Evaluation B: transferable memory and sequential tasks
+<a id="benchmark-memoprobench"></a>
+### B11. MemoProBench · When to speak, what to say, and when not to
 
-These study incremental memory or cross-session task dependencies: **transferable general capabilities**, not complete personal assistants or longitudinal human studies.
+[MemoProAgent: Toward Memory-Driven Proactive Assistance](https://arxiv.org/html/2610.22671v2) — 2026 preprint; inspected v2, 2026-10-21. Earlier indexes may use ProPerAgent / ProPerMem; this entry uses v2 names. See M12 for the method.
 
-<a id="benchmark-memoryagentbench"></a>
-### B12. MemoryAgentBench · Incremental memory and conflicting updates
+**Checked / reading scope:** 2026-10-31; v2 abstract, §3.3 metrics, method overview, official README and LICENSE.
 
-[Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions](https://arxiv.org/html/2507.05257v1) — 2025 preprint; the repository identifies ICLR 2026. This entry pins v1, 2025-07-07.
+- **Input → output:** Egocentric video streams and long personal histories, without an explicit query → grounded, timely reminders or silence.
+- **Measures:** Perfect requires exactly one correct intervention within the allowed window. Also report Hit, early, late, repeated, and negative-case false triggers; Hit alone hides unwanted interruptions.
+- **Limits:** Direct personal-memory-driven proactivity, but constructed histories are not a year-long human study. It does not evaluate authorized transaction completion or establish all-day usability.
+- **Resources:** [Official inference code](https://github.com/facebookresearch/Memo-Pro-Agent): CC BY-NC 4.0; [history data (restricted)](https://huggingface.co/datasets/facebook/MemProBench). The official [README data notes](https://github.com/facebookresearch/Memo-Pro-Agent#data-and-reproducibility) state that `facebook/MemProBench` histories are currently private and require authorized Hugging Face access. Download access was not obtained in this review; independent dataset licensing remains unconfirmed and cannot be inferred from the code license. Videos require separate [Ego4D](https://ego4d-data.org/) access and terms; an inference harness is not a complete RL reproduction package.
 
-**Checked / reading scope:** 2026-10-31; Abstract, incremental construction, Appendix A / Table 5 tasks and metrics, official README and dataset card.
+<a id="benchmark-pi-bench"></a>
+### B23. π-Bench · Hidden intents and proactive clarification across sessions
 
-- **Input → output:** Incrementally ingested material followed by queries → factual answers, intent labels, recommendations, or summaries; examples include updating conflicting facts and learning banking intent labels from examples.
-- **Measures:** v1 groups accurate retrieval, test-time learning, long-range understanding, and conflict resolution. Subtasks use SubEM, Recall, accuracy, ROUGE, or model judgments.
-- **Limits:** General memory-component evaluation, not a complete personal assistant. Chunked ingestion is not longitudinal human interaction; conflict resolution is not privacy erasure. Later selective-forgetting terminology must not silently replace v1 settings or results.
-- **Resources:** [Official code](https://github.com/HUST-AI-HYZ/MemoryAgentBench), [dataset card](https://huggingface.co/datasets/ai-hyz/MemoryAgentBench): both mark MIT. Check upstream terms for repackaged datasets separately.
+[π-Bench: Evaluating Proactive Personal Assistant Agents in Long-Horizon Workflows](https://arxiv.org/html/2605.14678v1) — 2026 preprint; initial reading of v1, 2026-05-14. The official README announces NeurIPS 2026 acceptance; this is not an independently checked proceedings record.
 
-<a id="benchmark-memoryarena"></a>
-### B13. MemoryArena · Cross-session action dependencies
+**Checked / reading scope:** 2026-10-31; v1 abstract, evaluation discussion and relevant §4 passages; official project-page metric definitions and README resource / acceptance notes. Initial literature reading, not installation or testing.
 
-[Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks](https://arxiv.org/html/2602.16313v2) — inspected v2, 2026-09-17; project name: MemoryArena.
+- **Input → output:** Underspecified requests, earlier sessions and a persistent workspace → targeted clarification, tool actions and artifacts; five personas each have 20 sessions, totaling 100 tasks.
+- **Measures:** Proc counts hidden intents proactively satisfied or elicited through targeted clarification; Comp scores checklist requirements across the full trajectory, tool records and artifacts. Eventual completion is not proactive requirement discovery; report both separately.
+- **Limits:** Proactivity means reducing specification burden during interaction, not initiating background tasks or granting permission to act. Simulated users and model grading do not establish longitudinal human satisfaction.
+- **Resources:** [Official code / data](https://github.com/Simplified-Reasoning/Pi-Bench), [project and metric definitions](https://simplified-reasoning.github.io/Pi-Bench/). Repository Apache-2.0; AppWorld, NanoBot and other dependencies retain their own terms. Pin paper, code, model and judge configurations before comparing.
 
-**Checked / reading scope:** 2026-10-31; Abstract, §3.1 task construction, §4.2 metrics, project page, repository root, and dataset card.
+<a id="benchmark-atrbench"></a>
+### B26. ATRBench · Ask now, use later
 
-- **Input → output:** Session-separated dependent subtasks, observations, and previous experience → subsequent actions and answers, such as compatible follow-up purchases or accumulating group-travel constraints. v2 has 701 task groups across shopping, travel, progressive search, math, and physics.
-- **Measures:** Overall success rate (SR), subtask progress (PS), and constraint-level soft progress (sPS). Partial progress is not full-chain success.
-- **Limits:** General sequential tasks, partly relevant to personal assistants. It couples memory to action rather than only historical QA, but does not establish months-long real-user reliability.
-- **Resources:** [Project](https://memoryarena.github.io/), [official code](https://github.com/ZexueHe/MemoryArena), [data](https://huggingface.co/datasets/ZexueHe/memoryarena). Data: CC BY 4.0. Code: preview; no explicit root LICENSE observed. Data licensing does not license code; parity between preview code and paper v2 is unverified.
+[Ask Now, Use Later: Benchmarking the Proactivity Gap in Long-Lived LLM Agents](https://arxiv.org/html/2605.28108v3) — v3, 2026-09-15; author metadata lists EMNLP 2026 Main.
 
-<a id="execution-evaluation"></a>
-## Evaluation C: task execution and interaction
+**Checked / reading scope:** 2026-11-01; abstract, §§3.1–3.2, Limitations, Ethical Considerations; official README and NOTICE.
 
-These can test a personal assistant's ability to act, but most are **general-agent, web / GUI, or service-domain benchmarks**, not personal-specific evaluations. AppWorld includes simulated personal apps and people, but not longitudinal personalization with real users.
-
-<a id="benchmark-assistantbench"></a>
-### B14. AssistantBench · Realistic web information tasks
-
-[AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?](https://aclanthology.org/2024.emnlp-main.505/) — EMNLP 2024.
-
-**Checked / reading scope:** 2026-10-31; Paper abstract and relevant §3.4 automatic-evaluation passages; official project page, code entry point, and dataset card.
-
-- **Input → output:** A task requiring web search and synthesis → a string, number, or structured answer. The original benchmark has 214 tasks.
-- **Measures:** Answer accuracy, answer rate, precision, and exact match, rather than an agent's own completion claim.
-- **Limits:** Primarily information gathering, not writes to real accounts. Web changes and answer freshness affect reproducibility; persistent preferences are not tested.
-- **Resources:** [Project](https://assistantbench.github.io/), [code](https://github.com/oriyor/assistantbench), [data](https://huggingface.co/datasets/AssistantBench/AssistantBench).
-
-<a id="benchmark-gaia"></a>
-### B15. GAIA · General-assistant problem solving
-
-[GAIA: a benchmark for General AI Assistants](https://arxiv.org/abs/2311.12983) — 2023 preprint.
-
-**Checked / reading scope:** 2026-10-31; Paper abstract and relevant §3.2 evaluation passages; official dataset-card task, split, gating, and redistribution notes.
-
-- **Input → output:** A natural-language question, sometimes with files / multimodal material → a short, verifiable answer. The paper contains 466 questions at three difficulty levels.
-- **Measures:** Type-aware normalized, near-exact answer matching; tasks involve browsing, tools, multimodality, and reasoning.
-- **Limits:** Single-question correctness is not personalization, background proactivity, or long-horizon reliability. Development and hidden-answer test sets differ.
-- **Resources:** [Official dataset card and leaderboard entry point](https://huggingface.co/datasets/gaia-benchmark/GAIA). Access is gated; the authors prohibit resharing the dataset in crawlable form.
-
-<a id="benchmark-appworld"></a>
-### B16. AppWorld · A sandbox for cross-app personal tasks
-
-[AppWorld: A Controllable World of Apps and People for Benchmarking Interactive Coding Agents](https://arxiv.org/abs/2407.18901) — ACL 2024.
-
-**Checked / reading scope:** 2026-10-31; Paper task overview and relevant §3.2 evaluation / §7 limitations passages; official project page, README, and licensing notes.
-
-- **Input → output:** User instruction, simulated initial app state, and API documentation → interactive code / calls changing state. The paper has 750 tasks across nine apps.
-- **Measures:** Database-state tests; TGC requires all tests for a task, while SGC requires success on every task variant in a scenario.
-- **Limits:** Simulated APIs are not live services or GUIs. The original benchmark differs from later AppWorld-UL user-in-the-loop tasks.
-- **Resources:** [Project](https://appworld.dev/appworld/), [code / data download workflow](https://github.com/StonyBrookNLP/appworld). Protected content has additional encrypted-redistribution requirements: [license notes](https://github.com/StonyBrookNLP/appworld#-license).
-
-<a id="benchmark-tau-bench"></a>
-### B17. τ-bench · Tools, users, and domain rules
-
-[τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains](https://arxiv.org/abs/2406.12045) — 2024 preprint.
-
-**Checked / reading scope:** 2026-10-31; Paper abstract, §3 reward/pass^k definitions, and relevant §6 discussion passages; official README outdated-task and migration warnings.
-
-- **Input → output:** Simulated user dialogue, domain policies, and APIs → conversation and tool actions. Original domains are airline and retail services.
-- **Measures:** Final database versus target state, plus required information in replies. **pass^k measures success on all k repeated trials, unlike pass@k's at-least-one-success criterion.**
-- **Limits:** Service-agent workflows are not persistent personal assistance. Correct final state does not establish process-level compliance; user simulation affects results.
-- **Resources:** [Original code / data](https://github.com/sierra-research/tau-bench). The official README now labels these tasks outdated and directs readers to τ³-bench. Distinguish historical reproduction from newer versions.
-
-<a id="benchmark-webarena"></a>
-### B18. WebArena · Reproducible web interaction
-
-[WebArena: A Realistic Web Environment for Building Autonomous Agents](https://arxiv.org/abs/2307.13854) — 2023 preprint, revised 2024.
-
-**Checked / reading scope:** 2026-10-31; Paper abstract and relevant §3 task/evaluation passages; official README version, environment, and implementation notes.
-
-- **Input → output:** High-level intent and web observations → browser actions, final page state, or an answer. The paper contains 812 tasks.
-- **Measures:** Functional outcomes: answers, navigation destinations, or page state, rather than a fixed click sequence.
-- **Limits:** Self-hosted sites support reproducibility but do not cover every live website, login obstacle, or ongoing personalization. Results are not universal browser success rates.
-- **Resources:** [Official code, environments, evaluation](https://github.com/web-arena-x/webarena). Pin task revisions and site images before comparing runs.
-
-<a id="benchmark-osworld"></a>
-### B19. OSWorld · Desktop and cross-app workflows
-
-[OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments](https://arxiv.org/abs/2404.07972) — 2024.
-
-**Checked / reading scope:** 2026-10-31; Paper abstract and introduction task/state-evaluation overview; official project-page version and resource notes.
-
-- **Input → output:** A task, initial desktop / file state, and screenshots or accessibility trees → computer actions and final artifacts. The paper has 369 tasks.
-- **Measures:** Task-specific execution-based evaluators; observation modes, action spaces, and step budgets affect comparability.
-- **Limits:** Not a long-term user-relationship test; depends on VM / software versions. Original OSWorld, OSWorld-Verified, and OSWorld 2.0 differ; some cloud-document tasks require extra setup.
-- **Resources:** [Official project and version links](https://os-world.github.io/), [code / tasks](https://github.com/xlang-ai/OSWorld).
-
-<a id="benchmark-androidworld"></a>
-### B20. AndroidWorld · Parameterized mobile tasks
-
-[AndroidWorld: A Dynamic Benchmarking Environment for Autonomous Agents](https://arxiv.org/abs/2405.14573) — 2024 preprint, revised 2025.
-
-**Checked / reading scope:** 2026-10-31; Paper abstract, §3.4 state-based rewards, and Appendix A limitations passages; official project page and README.
-
-- **Input → output:** Natural-language task, emulator state, and screen / UI tree → Android actions. There are 116 base tasks across 20 apps with randomized parameters.
-- **Measures:** Initialization, success checks, and teardown inspect device state; parameter variation supports robustness testing.
-- **Limits:** 116 is not the total number of randomized instances. Primarily open-source / system apps; generalization to commercial apps, other devices, or Chinese interfaces is unproven.
-- **Resources:** [Project](https://google-research.github.io/android_world/), [environment / task code](https://github.com/google-research/android_world).
+- **Input → output:** Ordinary simulated-user tasks → eliciting preferences useful later, not needed now. History is then frozen; test users are offline.
+- **Measures:** TSAcc deterministically checks the first relevant tool decision, macro-averaged by user; asking, acquisition, and application are reported separately.
+- **Limits:** Twenty synthetic personas, fixed rules, and model routing do not establish changing real preferences or interruption costs. More questions need not help.
+- **Resources:** [Official code/data](https://github.com/BUPT-GAMMA/ATRBench). Code: Apache-2.0; NOTICE separately attributes source personas under CC BY 4.0. Do not assume one license covers every asset. Not run.
 
 <a id="benchmark-ask-before-plan"></a>
 ### B30. Ask-before-Plan · Clarification before commitment
@@ -865,10 +738,42 @@ These can test a personal assistant's ability to act, but most are **general-age
 - **Limits:** Component tests supply correct upstream outputs; integral-framework final planning also receives ground-truth conversation (Appendix B.3). Neither establishes fully free-running end-to-end performance or longitudinal profiling.
 - **Resources:** [Code](https://github.com/magicgh/Ask-before-Plan), [data](https://huggingface.co/datasets/magicgh/Ask-before-Plan). README declares MIT code and CC BY 4.0 data / environment. Separate environment download; not installed.
 
-<a id="safety-evaluation"></a>
-## Evaluation D: privacy norms and adversarial safety
+<a id="benchmark-prefdisco"></a>
+### B38. PrefDisco · Proactively discovering communication preferences
 
-Distinguish inappropriate sharing from malicious instructions in external content. These evaluations provide evidence about specific risks, **not full privacy, security, or compliance certification**. Interpret low violation rates alongside task utility.
+[PrefDisco: Benchmarking Proactive Personalized Reasoning](https://arxiv.org/html/2510.00177v2) — [ICLR 2026](https://proceedings.iclr.cc/paper_files/paper/2026/hash/82d50077a0e140b524a18f380c95d55a-Abstract-Conference.html); inspected arXiv v2, March 4, 2026. V1 used the *Personalized Reasoning* title.
+
+**Verified / actual reading scope:** 2026-11-01; v2 §2 preference modeling/metrics, §3 benchmark construction, relevant §4 experimental-setting passages, and Limitations; arXiv version history and author README. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
+
+- **Evaluation:** Converts static reasoning questions into cold-start interactions with generated personas and passive simulated users. Preference alignment and factual correctness remain separate outcomes.
+- **Limits:** Primarily communication preferences—not content preferences, longitudinal change or demonstrated human utility. Over-personalization and sycophancy are outside scope.
+- **Resources:** [Author repository](https://github.com/stellalisy/PrefDisco) provides construction and evaluation tools; repository reuse license remains unconfirmed. Its newer PEP documentation should not automatically be attributed to the inspected v2. An earlier workshop-version relationship remains unverified.
+
+<a id="benchmark-latent-information"></a>
+### B39. Latent Information Discovery · Eliciting hidden preferences
+
+[Do LLMs Recognize Your Latent Preferences?](https://arxiv.org/html/2510.17132v1) — arXiv v1, October 20, 2025.
+
+**Verified / actual reading scope:** 2026-11-01; v1 §3 tasks/evaluation protocol, relevant Appendix A judge/user-comparison descriptions, and Appendix D data sources; arXiv version history. Selected passages, not a line-by-line full-paper review; no installation, execution, or experimental reproduction.
+
+- **Evaluation:** A User–Assistant–Judge setup covers 20 Questions, personalized QA and summarization. Reports all-preference success and average stopping turns, counting failures at the maximum turn budget.
+- **Limits:** GPT-4o simulates both user and judge; preferences are fixed and user answers truthful. Object guessing is a diagnostic, not itself a personal-assistant task. Judge approval does not establish human satisfaction.
+- **Resources:** Appendix documents generation and source datasets. PrefEval-derived generation code carries CC-BY-NC-4.0 restrictions; document-source terms vary. An original complete code/data release was not verified.
+
+<a id="benchmark-userville"></a>
+### B43. UserVille · Hidden tasks and interaction preferences
+
+Same paper as M30; do not count twice. [Original paper](https://arxiv.org/html/2511.02208v2); reading scope and resource limitations as above.
+
+- **Automated component:** Obscures task descriptions and uses preference-conditioned LLM users; 20 interaction preferences include eight held out. Code localization uses F1, BrowseComp-Plus uses EM; personalization covers only sessions containing a question.
+- **Human component:** v2 includes 33 programmers and 300 evaluations on SWE-Bench tasks. Participants could see descriptions and gold patches; this is not natural longitudinal deployment. Satisfaction is PPP 3.75 versus GPT-5 3.79, but reported resolution is 71% versus 85%. Do not report satisfaction alone.
+- **Interpretation:** Table 1 composite means are 62.04 versus Seed-OSS-36B 45.32. The +16.72 comparison is against Seed, not GPT-5, and is not task-success percentage points.
+
+<a id="evaluation-d-privacy-norms-and-adversarial-safety"></a>
+<a id="safety-evaluation"></a>
+## Evaluation: Privacy, authorization and safety
+
+What may be shared or done, and what can go wrong? Contextual disclosure, authorization violations, persistent sycophancy and adversarial extraction are different questions. This group includes direct personal-context risks and transferable attack environments, plus ecosystem measurement (B63), not only conventional benchmarks. Interpret low violation rates alongside task utility. No single score establishes compliance or security.
 
 <a id="benchmark-privacylens"></a>
 ### B21. PrivacyLens · Leakage without an attacker
@@ -1070,6 +975,126 @@ Contains 44,100 synthetic cases across eight domains and dialogue/email formats,
 **Can LLMs Keep a Secret? Testing Privacy Implications of Language Models via Contextual Integrity Theory** — ICLR 2024 Spotlight; reviewed version: arXiv 2310.17884v2 (2024-06-28). [Paper v2](https://arxiv.org/html/2310.17884v2) | [Code and data](https://github.com/skywalker023/confaide) | [MIT license](https://github.com/skywalker023/confaide/blob/main/LICENSE)
 
 **Benchmark.** Four tiers assess sensitivity, contextual information flow, secret sharing and meeting-output disclosure. Reviewed §3–5, annotation/metric appendices and repository license. Scenarios are templated/model-generated; tiers 1–3 have human annotations, while Tier 4 uses synthetic meeting transcripts rather than private meeting records. The 39%/57% GPT-4/ChatGPT result is **mean Tier-4 summary leakage across 10 runs with privacy-preserving instructions**, not worst-case leakage. Relevant to personal-assistant privacy, but not a personalization method, access-control mechanism or consent guarantee. Official repository: MIT.
+
+<a id="evaluation-b-transferable-memory-and-sequential-tasks"></a>
+<a id="transferable-memory-evaluation"></a>
+## Evaluation: Transferable memory and sequential tasks
+
+Can general memory and cross-session dependencies support later tasks? These are useful neighboring capabilities, not evidence of learning an individual user. Compare with [personal-memory evaluation](#personal-memory-evaluation), without pooling their scores.
+
+<a id="benchmark-memoryagentbench"></a>
+### B12. MemoryAgentBench · Incremental memory and conflicting updates
+
+[Evaluating Memory in LLM Agents via Incremental Multi-Turn Interactions](https://arxiv.org/html/2507.05257v1) — 2025 preprint; the repository identifies ICLR 2026. This entry pins v1, 2025-07-07.
+
+**Checked / reading scope:** 2026-10-31; Abstract, incremental construction, Appendix A / Table 5 tasks and metrics, official README and dataset card.
+
+- **Input → output:** Incrementally ingested material followed by queries → factual answers, intent labels, recommendations, or summaries; examples include updating conflicting facts and learning banking intent labels from examples.
+- **Measures:** v1 groups accurate retrieval, test-time learning, long-range understanding, and conflict resolution. Subtasks use SubEM, Recall, accuracy, ROUGE, or model judgments.
+- **Limits:** General memory-component evaluation, not a complete personal assistant. Chunked ingestion is not longitudinal human interaction; conflict resolution is not privacy erasure. Later selective-forgetting terminology must not silently replace v1 settings or results.
+- **Resources:** [Official code](https://github.com/HUST-AI-HYZ/MemoryAgentBench), [dataset card](https://huggingface.co/datasets/ai-hyz/MemoryAgentBench): both mark MIT. Check upstream terms for repackaged datasets separately.
+
+<a id="benchmark-memoryarena"></a>
+### B13. MemoryArena · Cross-session action dependencies
+
+[Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks](https://arxiv.org/html/2602.16313v2) — inspected v2, 2026-09-17; project name: MemoryArena.
+
+**Checked / reading scope:** 2026-10-31; Abstract, §3.1 task construction, §4.2 metrics, project page, repository root, and dataset card.
+
+- **Input → output:** Session-separated dependent subtasks, observations, and previous experience → subsequent actions and answers, such as compatible follow-up purchases or accumulating group-travel constraints. v2 has 701 task groups across shopping, travel, progressive search, math, and physics.
+- **Measures:** Overall success rate (SR), subtask progress (PS), and constraint-level soft progress (sPS). Partial progress is not full-chain success.
+- **Limits:** General sequential tasks, partly relevant to personal assistants. It couples memory to action rather than only historical QA, but does not establish months-long real-user reliability.
+- **Resources:** [Project](https://memoryarena.github.io/), [official code](https://github.com/ZexueHe/MemoryArena), [data](https://huggingface.co/datasets/ZexueHe/memoryarena). Data: CC BY 4.0. Code: preview; no explicit root LICENSE observed. Data licensing does not license code; parity between preview code and paper v2 is unverified.
+
+<a id="evaluation-c-task-execution-and-interaction"></a>
+<a id="execution-evaluation"></a>
+## Evaluation: Transferable execution and interaction
+
+Can the agent solve tasks and operate tools, apps or interfaces? Web research, sandbox function calls and GUI trajectories are distinct protocols. AppWorld’s simulated personal apps and people are not longitudinal personalization with real users. Personal-looking environments do not by themselves test learned preferences; see [personalized planning and action](#planning-action-evaluation) for that question.
+
+<a id="benchmark-assistantbench"></a>
+### B14. AssistantBench · Realistic web information tasks
+
+[AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?](https://aclanthology.org/2024.emnlp-main.505/) — EMNLP 2024.
+
+**Checked / reading scope:** 2026-10-31; Paper abstract and relevant §3.4 automatic-evaluation passages; official project page, code entry point, and dataset card.
+
+- **Input → output:** A task requiring web search and synthesis → a string, number, or structured answer. The original benchmark has 214 tasks.
+- **Measures:** Answer accuracy, answer rate, precision, and exact match, rather than an agent's own completion claim.
+- **Limits:** Primarily information gathering, not writes to real accounts. Web changes and answer freshness affect reproducibility; persistent preferences are not tested.
+- **Resources:** [Project](https://assistantbench.github.io/), [code](https://github.com/oriyor/assistantbench), [data](https://huggingface.co/datasets/AssistantBench/AssistantBench).
+
+<a id="benchmark-gaia"></a>
+### B15. GAIA · General-assistant problem solving
+
+[GAIA: a benchmark for General AI Assistants](https://arxiv.org/abs/2311.12983) — 2023 preprint.
+
+**Checked / reading scope:** 2026-10-31; Paper abstract and relevant §3.2 evaluation passages; official dataset-card task, split, gating, and redistribution notes.
+
+- **Input → output:** A natural-language question, sometimes with files / multimodal material → a short, verifiable answer. The paper contains 466 questions at three difficulty levels.
+- **Measures:** Type-aware normalized, near-exact answer matching; tasks involve browsing, tools, multimodality, and reasoning.
+- **Limits:** Single-question correctness is not personalization, background proactivity, or long-horizon reliability. Development and hidden-answer test sets differ.
+- **Resources:** [Official dataset card and leaderboard entry point](https://huggingface.co/datasets/gaia-benchmark/GAIA). Access is gated; the authors prohibit resharing the dataset in crawlable form.
+
+<a id="benchmark-appworld"></a>
+### B16. AppWorld · A sandbox for cross-app personal tasks
+
+[AppWorld: A Controllable World of Apps and People for Benchmarking Interactive Coding Agents](https://arxiv.org/abs/2407.18901) — ACL 2024.
+
+**Checked / reading scope:** 2026-10-31; Paper task overview and relevant §3.2 evaluation / §7 limitations passages; official project page, README, and licensing notes.
+
+- **Input → output:** User instruction, simulated initial app state, and API documentation → interactive code / calls changing state. The paper has 750 tasks across nine apps.
+- **Measures:** Database-state tests; TGC requires all tests for a task, while SGC requires success on every task variant in a scenario.
+- **Limits:** Simulated APIs are not live services or GUIs. The original benchmark differs from later AppWorld-UL user-in-the-loop tasks.
+- **Resources:** [Project](https://appworld.dev/appworld/), [code / data download workflow](https://github.com/StonyBrookNLP/appworld). Protected content has additional encrypted-redistribution requirements: [license notes](https://github.com/StonyBrookNLP/appworld#-license).
+
+<a id="benchmark-tau-bench"></a>
+### B17. τ-bench · Tools, users, and domain rules
+
+[τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains](https://arxiv.org/abs/2406.12045) — 2024 preprint.
+
+**Checked / reading scope:** 2026-10-31; Paper abstract, §3 reward/pass^k definitions, and relevant §6 discussion passages; official README outdated-task and migration warnings.
+
+- **Input → output:** Simulated user dialogue, domain policies, and APIs → conversation and tool actions. Original domains are airline and retail services.
+- **Measures:** Final database versus target state, plus required information in replies. **pass^k measures success on all k repeated trials, unlike pass@k's at-least-one-success criterion.**
+- **Limits:** Service-agent workflows are not persistent personal assistance. Correct final state does not establish process-level compliance; user simulation affects results.
+- **Resources:** [Original code / data](https://github.com/sierra-research/tau-bench). The official README now labels these tasks outdated and directs readers to τ³-bench. Distinguish historical reproduction from newer versions.
+
+<a id="benchmark-webarena"></a>
+### B18. WebArena · Reproducible web interaction
+
+[WebArena: A Realistic Web Environment for Building Autonomous Agents](https://arxiv.org/abs/2307.13854) — 2023 preprint, revised 2024.
+
+**Checked / reading scope:** 2026-10-31; Paper abstract and relevant §3 task/evaluation passages; official README version, environment, and implementation notes.
+
+- **Input → output:** High-level intent and web observations → browser actions, final page state, or an answer. The paper contains 812 tasks.
+- **Measures:** Functional outcomes: answers, navigation destinations, or page state, rather than a fixed click sequence.
+- **Limits:** Self-hosted sites support reproducibility but do not cover every live website, login obstacle, or ongoing personalization. Results are not universal browser success rates.
+- **Resources:** [Official code, environments, evaluation](https://github.com/web-arena-x/webarena). Pin task revisions and site images before comparing runs.
+
+<a id="benchmark-osworld"></a>
+### B19. OSWorld · Desktop and cross-app workflows
+
+[OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments](https://arxiv.org/abs/2404.07972) — 2024.
+
+**Checked / reading scope:** 2026-10-31; Paper abstract and introduction task/state-evaluation overview; official project-page version and resource notes.
+
+- **Input → output:** A task, initial desktop / file state, and screenshots or accessibility trees → computer actions and final artifacts. The paper has 369 tasks.
+- **Measures:** Task-specific execution-based evaluators; observation modes, action spaces, and step budgets affect comparability.
+- **Limits:** Not a long-term user-relationship test; depends on VM / software versions. Original OSWorld, OSWorld-Verified, and OSWorld 2.0 differ; some cloud-document tasks require extra setup.
+- **Resources:** [Official project and version links](https://os-world.github.io/), [code / tasks](https://github.com/xlang-ai/OSWorld).
+
+<a id="benchmark-androidworld"></a>
+### B20. AndroidWorld · Parameterized mobile tasks
+
+[AndroidWorld: A Dynamic Benchmarking Environment for Autonomous Agents](https://arxiv.org/abs/2405.14573) — 2024 preprint, revised 2025.
+
+**Checked / reading scope:** 2026-10-31; Paper abstract, §3.4 state-based rewards, and Appendix A limitations passages; official project page and README.
+
+- **Input → output:** Natural-language task, emulator state, and screen / UI tree → Android actions. There are 116 base tasks across 20 apps with randomized parameters.
+- **Measures:** Initialization, success checks, and teardown inspect device state; parameter variation supports robustness testing.
+- **Limits:** 116 is not the total number of randomized instances. Primarily open-source / system apps; generalization to commercial apps, other devices, or Chinese interfaces is unproven.
+- **Resources:** [Project](https://google-research.github.io/android_world/), [environment / task code](https://github.com/google-research/android_world).
 
 <a id="personalization-methods"></a>
 <a id="methods-c-personalization-and-preference-learning"></a>
