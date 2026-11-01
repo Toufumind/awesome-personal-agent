@@ -12,7 +12,7 @@ Personal AI agents: projects, products, and research.
 
 [简体中文](README.md) · **English**
 
-**[31 projects](#source-projects) · [Products](docs/PRODUCTS.en.md) · [Papers](docs/PAPERS.en.md)**
+**[31 projects](#source-projects) · [Products](docs/PRODUCTS.en.md) · [Papers](docs/PAPERS.en.md) · [Timeline](docs/PRODUCTS.en.md#release-timeline)**
 
 </div>
 
