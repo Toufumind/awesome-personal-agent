@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **138 篇不同论文**：75 个评测条目、72 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm 与 Operationalizing Contextual Integrity 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **146 篇不同论文**：79 个评测条目、79 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B75、M16–M72、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B79、M16–M79、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -645,6 +645,39 @@
 - **边界 / 反例**：单独 DPO 未稳定带来个性化收益，多信息推理仍困难；“主动性”指回答中的建议，不是自主触发或外部操作。
 - **资源**：[代码](https://github.com/12kimih/HiCUPID)、[数据](https://huggingface.co/datasets/12kimih/HiCUPID)、[评估模型](https://huggingface.co/12kimih/Llama-3.2-3B-HiCUPID) 均公开并标 Apache-2.0；基于 Llama-3.2 的模型仍需注意其底座 Community License，不能据项目标签推定所有组成均无额外限制。
 
+<a id="benchmark-implexconv"></a>
+### B76.ImplexConv：跨会话隐式推理
+
+用支持性和反对性隐式情境测试个性化问答；论文报告 2,500 个约百会话样本。生成推理情境结合既有数据集的干扰内容，并进行选择性人工核查，不是实地用户研究。使用不同生成与评测模型不能证明无污染。
+
+- 原文与版本：[Toward Multi-Session Personalized Conversation: A Large-Scale Dataset and Hierarchical Tree Framework for Implicit Reasoning，2503.07018v1](https://arxiv.org/html/2503.07018v1)，2025-03-10。
+- 交叉条目：M74；同篇仅计一次。正文残留 IMPersona/IMPACT 名称，不另计论文。
+- 资产：[官方代码库](https://github.com/Kaylee0501/ImplexConv) 有框架与评测文件，代码许可未核实。当前数据卡 [opposed](https://huggingface.co/datasets/Kaylee0501/ImplexConv-opposed) 1,550 + [supportive](https://huggingface.co/datasets/Kaylee0501/ImplexConv-supportive) 814 = 2,364，不同于论文总数；数据卡 MIT 标注不外推至代码。
+- 阅读范围：§§3–6、limitations、README、数据卡、仓库根目录。
+
+<a id="benchmark-context-time-memory"></a>
+### B77.时间与上下文敏感记忆评测
+
+在 12 组模拟、人工编辑的 LoCoMo 对话上添加填充和模拟时间戳，评估时间、时间加内容及歧义时间查询。指标是相关回复 ID 的 recall/F2，不是答案正确率或真人任务成功率。
+
+- 原文与版本：[Toward Conversational Agents with Context and Time Sensitive Long-term Memory，2406.00057v2](https://arxiv.org/html/2406.00057v2)，2024-06-04。资源引用颠倒 Time/Context 顺序，仍属同篇。
+- 交叉条目：M75；同篇仅计一次。
+- 资产：[TemporalMemoryDataset](https://github.com/Zyphra/TemporalMemoryDataset) 可见对话与测试数据，未核实方法代码或明确仓库许可。论文 CC BY 4.0 不外推至仓库。
+- 阅读范围：§§3–6、Appendix A.1–A.3、README、仓库根目录。
+
+<a id="benchmark-evoarena"></a>
+### B79. EvoArena · PersonaMem-Evo 子集
+
+**限定直接评测：合成偏好演变；其余子集相邻**
+
+[论文](https://arxiv.org/html/2606.13681v2) · arXiv v2，2026-06-17。方法见 M79；同一论文只计一次。
+
+PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一题测试迁移、组合、冲突解决及时间轨迹推理；persona-only／无上下文过滤旨在排除捷径。它不是实际用户纵向研究。Terminal-Bench-Evo 和 SWE-Chain-Evo 仅提供可迁移执行／版本适应证据。
+
+**资源与复现：** [官方数据卡](https://huggingface.co/datasets/Aiden0526/PersonaMem-Evo)列出 10 个人设、505 个样本；128k 链接字段为空，viewer 解析失败，未见许可元数据。[代码库](https://github.com/Aiden0526/EvoArena)不是经核实的全套发布，许可仍待添加。论文 CC BY 4.0 不替代资产许可。
+
+**核验日期／实际阅读范围：** 2026-11-01；版本页、§§3–6、附录 A／E 相关段落、仓库 README／根目录及 PersonaMem-Evo 数据卡；未运行复现。
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -958,6 +991,21 @@
 **实际阅读范围：** §§3–4、数据构建、威胁模型、指标、复现 checklist 与版本页。
 
 <a id="tmp-m-pearl"></a>
+
+<a id="benchmark-ci-bench"></a>
+### B78. CI-Bench
+
+**直接风险评测：情境相关的个人信息披露**
+
+[论文](https://arxiv.org/html/2409.13903v1) · arXiv v1，2024-09-20。
+
+44,100 个合成测试案例覆盖八个领域、对话与邮件，分别考查情境理解、规范识别、披露适当性判断及回复生成。不是 PrivaCI-Bench，也不是软件工程领域同名 CI-Bench。主要研究社会规范，并未验证个人隐私偏好学习。实验使用 Gemini 1.0 Ultra／Pro／Nano，分阶段报告 AUC：规范识别低于情境参数识别；显式规范提高适当性判断；回复生成 AUC 约 0.3–0.5，不是全 benchmark 单一总分。
+
+**边界：** 两位专家标注存在主观／文化偏差；二元标签、单情境且样本间无状态；不包含情境切换，假设身份真实、交互诚实。不能据此推断抗提示注入、身份验证或完整代理执行安全。
+
+**资源与复现：** 未核实官方代码／数据下载及其许可；论文 CC BY-NC-SA 4.0 不等于资源授权。
+
+**核验日期／实际阅读范围：** 2026-11-01；版本页、Benchmark、Dataset、Experiments、Limitations，以及生成评测相关附录段落；未运行复现。
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -1749,6 +1797,85 @@
 **资源与复现：** [作者仓库](https://github.com/Ancientshi/PersonaX) 含 MIT 代码与数据子集，但 README 明示 EasyRec 客户端不完整复现 AgentCF/Agent4Rec。[许可范围](https://github.com/Ancientshi/PersonaX/blob/master/LICENSE)明确排除 Amazon 数据、notebook 输出、EasyRec，以及第三方代码、依赖和权重；这些资产不随项目 MIT 许可获得授权。此范围由独立审查补充，本条原始 NOTICE 抓取曾遇 cache miss。
 
 **实际阅读范围：** PDF §§4–5、Limitations/Ethics、官方仓库 README/文件树。
+
+<a id="method-plum"></a>
+### M73.PLUM：按序参数化对话记忆
+
+将历史对话扩增为正负问答，按顺序训练逐用户 LoRA，采用加权交叉熵。实验从 100 条真人撰写的 OpenAssistant 提示出发，由模型生成回复和问答，并非真人长期部署。Llama-3-8B-Instruct 在带系统提示的配置下，闭合式问答准确率为 81.5%，低于最佳对话 RAG 的 86.5%。支持个人历史记忆研究，不证明任务执行闭环；重复或冲突主题未测试。
+
+- 原文与版本：[On the Way to LLM Personalization: Learning to Remember User Conversations，2411.13405v1](https://arxiv.org/html/2411.13405v1)，2024-11-20。
+- 资产：未核实作者代码或数据发布。论文为 arXiv 非独占分发许可，不构成代码许可。
+- 阅读范围：§§3–6、limitations/ethics、数据生成说明。
+
+<a id="method-tacitree"></a>
+### M74.TaciTree：层级事实检索
+
+对事实聚类、逐层摘要并选择相关子树。在采用生成推理情境、既有数据集干扰内容和选择性人工核查的 ImplexConv 上，支持性问答达到 70.8%；反对性问答即使用 o1 也仅 29.70%。检索改善不等同稳健推理、真人长期使用或行动成功。
+
+- 原文与版本：[Toward Multi-Session Personalized Conversation: A Large-Scale Dataset and Hierarchical Tree Framework for Implicit Reasoning，2503.07018v1](https://arxiv.org/html/2503.07018v1)，2025-03-10。
+- 交叉条目：B76；同篇仅计一次，数据规模差异见该条。
+- 资产：[官方代码库](https://github.com/Kaylee0501/ImplexConv) 可见框架与评测文件，未核实代码许可。论文 CC BY 4.0、数据卡 MIT 均不可自动外推为代码许可。
+- 阅读范围：§§3–6、limitations、README、数据卡、仓库根目录。
+
+<a id="method-context-time-memory"></a>
+### M75.改写、元数据路由与表链检索
+
+结合查询消歧、元数据/语义路由、表链操作和向量检索。在模拟对话评测中，GPT-3.5 在非歧义两类查询上的平均 recall/F2 为 90.32/55.27；这是检索指标，不是答案或行动成功率。仅测两个 LLM、一个嵌入模型，主要为单跳问题；未测歧义的时间加内容查询。
+
+- 原文与版本：[Toward Conversational Agents with Context and Time Sensitive Long-term Memory，2406.00057v2](https://arxiv.org/html/2406.00057v2)，2024-06-04。
+- 交叉条目：B77；同篇仅计一次。
+- 资产：[TemporalMemoryDataset](https://github.com/Zyphra/TemporalMemoryDataset) 可见数据；方法代码与明确仓库许可未核实。论文的代码发布承诺不等于已发布代码；论文 CC BY 4.0 不外推至仓库。
+- 阅读范围：§§3–6、Appendix A.1–A.3、README、仓库根目录。
+
+<a id="method-prime"></a>
+### M76.PRIME：个人语义记忆与个性化思考
+
+研究情景与语义记忆配置，再以自蒸馏生成个性化思考；**主要报告配置不包含 episodic memory**。CMV 使用真实 Reddit 历史，涉及 41 位作者、133 个测试查询、7,514 段历史互动，但属于离线回复排序，不是用户与 agent 的现场实验。Llama-3.1-8B Hit@3 为 45.79，非个性化基线为 36.77；不能外推为行动成功或在线适应证据。
+
+- 原文与版本：[PRIME: Large Language Model Personalization with Cognitive Dual-Memory and Personalized Thought Process，2507.04607v3](https://arxiv.org/html/2507.04607v3)，2025-09-26。仓库短标题为同篇别名。
+- 资产：[官方仓库](https://github.com/launchnlp/LM_Personalization) 有 README 和数据；框架代码仍标为整理中，许可未核实。论文 arXiv 非独占分发许可不构成代码许可。
+- 阅读范围：§§3–7、limitations、README、仓库根目录。
+
+核验边界：仅检查上述原文章节与资源页；未安装复现、训练、独立跑分或安全审计。资产状态核验于 2026-11-01。
+
+<a id="method-memweaver"></a>
+### M77. MemWeaver
+
+**直接方法：历史行为与长期偏好双层记忆**
+
+[论文](https://arxiv.org/html/2510.07713v2) · arXiv v2，2026-01-26；WWW 2026。
+
+将历史文本组织为时间／语义图，通过查询引导随机游走提取行为记忆，并由阶段性摘要合成长程偏好记忆。实验采用时间切分的 LaMP-1–5／7，底座为 Qwen3-8B 与 Llama-3.1-8B-Instruct；Qwen3-8B 的 LaMP-1 accuracy 从 CFRAG 的 0.6566 提升至 0.6733。v2 附录还含 OpinionQA、Amazon Reviews 与 ChangeMyView。属于离线历史材料上的个性化预测／生成，不是真人长期部署、工具执行或隐私保障证据。
+
+**资源与复现：** [官方代码](https://github.com/fishsure/MemWeaver)含数据处理、生成、评测及运行脚本；根目录和 README 未见明确代码许可证。论文 CC BY 4.0 不自动覆盖代码或上游数据。
+
+**核验日期／实际阅读范围：** 2026-11-01；版本页、§§3–4、附录 C 相关实验、官方 README 与根目录文件树；未运行复现。
+
+<a id="method-sgmem"></a>
+### M78. SGMem
+
+**直接方法：长期会话的句子图检索**
+
+[论文](https://arxiv.org/html/2509.21212v1) · arXiv v1，2025-09-25。
+
+用句子相似图连接不同粒度原始对话，结合向量检索、图扩展及摘要／事实／洞见。不需要实体关系抽取，但派生记忆仍调用 LLM。实验为 LongMemEval 500 问和 LoCoMo 随机抽取的 500 问；Qwen2.5-32B-Instruct 同时回答及担任 LLM judge。LoCoMo 全上下文基线为 0.558，高于 SGMem-SF Top-10 的 0.542，不能概括为胜过所有基线。构造会话上的离线 QA 增益，不是真实用户长期使用、行动闭环或情境完整性保障。
+
+**资源与复现：** 原文及定向检索未核实官方代码／数据发布与许可证，不标注“开源”。论文采用 arXiv perpetual non-exclusive license。
+
+**核验日期／实际阅读范围：** 2026-11-01；版本页、§§3–5、附录 A 数据说明及原文资源链接；未运行复现。
+
+<a id="method-evomem"></a>
+### M79. EvoMem
+
+**限定直接方法：保留记忆更新证据的 patch 历史**
+
+[论文](https://arxiv.org/html/2606.13681v2) · arXiv v2，2026-06-17。与 B79 为同一论文。
+
+只对修订、覆盖或重新解释旧记忆的非加性更新追加 patch，保存前后状态、理由与证据；纯新增观察可留在基础记忆。按需联合检索当前状态与 patch。直接个人相关证据来自 A-Mem 上的合成 PersonaMem-Evo；平均 step accuracy 为 47.3→49.0、chain accuracy 为 40.0→43.2，step 按单题计分，chain 要求关联链内全题答对；但 GLM-5.1 两项下降，不应写成普遍提升。保留历史不等于建立披露授权或隐私边界。
+
+**资源与复现：** [官方仓库](https://github.com/Aiden0526/EvoArena)根目录有 PersonaMem 与 Terminal 实现目录，未见 README 所述 SWE 目录；README 仍含待发布及待添加许可证说明。代码／数据不按论文许可推定可自由复用。
+
+**核验日期／实际阅读范围：** 2026-11-01；§§4–6、主结果表、附录 A，以及官方仓库 README／根目录；未运行复现。表中 SWE Qwen chain 的 12.2→10.1 被标为 +2.1，汇总结果引用须保留此内部一致性警示。
 
 <a id="human-studies"></a>
 ## 人机研究：真实使用与互动
