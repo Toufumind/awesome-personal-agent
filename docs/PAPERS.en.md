@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **128 distinct papers**: 70 evaluation entries, 66 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, and THEANINE/TeaFarm each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **138 distinct papers**: 75 evaluation entries, 72 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, and Operationalizing Contextual Integrity each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B70, M16–M66, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B75, M16–M72, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -601,6 +601,42 @@ Extends 1,000 TripCraft plans of 3/5/7 days with model-generated, human-selected
 - **Boundary**: constructed stories, not lifelong participant observation; counterfactual QA is not comprehensive security certification.
 - **Resources**: [code](https://github.com/kimnamssya/Theanine) / [data](https://huggingface.co/datasets/LangAGI-Lab/teafarm); current dataset has 200 rows. Appendix J specifies academic/non-commercial use; check upstream terms separately.
 
+<a id="benchmark-personal-laps"></a>
+### B71. Doing Personal LAPS · Human-involved multi-session preference data
+
+[Doing Personal LAPS: LLM-Augmented Dialogue Construction for Personalized Multi-Session Conversational Search](https://arxiv.org/abs/2405.03480v1) — SIGIR 2024; [proceedings DOI](https://doi.org/10.1145/3626772.3657815).
+
+**Checked / reading scope:** 2026-11-01; construction §3, recommendation/evaluation §4, results §5 including Tables 7–8, and repository resource/license documentation.
+
+- **Construction / input → output:** One worker writes both dialogue roles with LLM guidance, expressing actual preferences. Histories support preference extraction and personalized recommendation across recipe and movie domains, totaling 1,406 dialogues.
+- **Measurement:** Dialogue quality/diversity, extraction, preference utilization, and human judgments of recommendations and rationales.
+- **Boundary / counterexample:** Constructed self-dialogues are not deployment logs. Preference memory improves recipe recommendations and rationales in both domains, but not movie recommendation quality; movie utilization F1 is numerically slightly lower (.424 to .419); the paper does not support inferring a statistically significant decrease.
+- **Resources:** The [MIT-labelled repository](https://github.com/informagi/laps) includes data, collection and evaluation code, and downstream resources. Listed as data/evaluation evidence, not general autonomous action capability.
+
+<a id="benchmark-lamp-qa"></a>
+### B72. LaMP-QA · Personalized long-form answers
+
+[LaMP-QA: A Benchmark for Personalized Long-form Question Answering](https://aclanthology.org/2025.emnlp-main.60/) — EMNLP 2025 Main; arXiv `2506.00137v2` is the same work.
+
+**Checked / reading scope:** 2026-11-01; formulation, construction, metrics, baselines and experiments §§2–5, limitations, repository documentation and dataset card.
+
+- **Input → output:** Real StackExchange question histories plus a current title → personalized long-form answers. The current post narrative is withheld from generation and used for evaluation.
+- **Measurement:** Rubric-based requirement coverage and human comparisons; PlanPers/RAG wins are 35%/26% over 100 comparisons, with the remainder tied.
+- **Boundary / counterexample:** Real posts are not assistant deployment logs. Narratives may omit needs; annotators are not the original users. Requirement coverage is not deployment satisfaction, privacy protection or action execution.
+- **Resources:** [Code](https://github.com/LaMP-Benchmark/LaMP-QA) and [data](https://huggingface.co/datasets/alireza7/LaMP-QA) are accessible. The paper identifies upstream SE-PQA as CC-BY-SA 4.0; a separate downstream code/data license was not verified. Do not substitute the article license. LaMP-QA is distinct from LaMP and LongLaMP.
+
+<a id="benchmark-hicupid"></a>
+### B73. HiCUPID · Synthetic personalized dialogue and proxy evaluation
+
+[Exploring the Potential of LLMs as Personalized Assistants: Dataset, Evaluation, and Analysis](https://aclanthology.org/2025.acl-long.504/) — ACL 2025 Main. HiCUPID is the resource name; arXiv `2506.01262v1` is the same paper.
+
+**Checked / reading scope:** 2026-11-01; construction §3, evaluation §4, results §5/Tables 3–4, license Appendix A12, and official repository/data/model cards.
+
+- **Input → output:** Synthetic preference, profile and schedule dialogues → personalized single-/multi-information answers for 1,500 synthetic users, not real interaction logs.
+- **Measurement:** GPT-4o and distilled Llama-3.2 evaluators, separate seen-user/unseen-question and unseen-user/unseen-question settings, and human evaluation of four LLMs’ zero-shot outputs on 100 persona QA pairs sampled from Test Set 1—not 100 responses in total.
+- **Boundary / counterexample:** DPO alone does not consistently improve personalization in the reported settings; multi-information reasoning remains difficult. Proactiveness means suggestions in responses, not autonomous initiation or external actions.
+- **Resources:** [Code](https://github.com/12kimih/HiCUPID), [data](https://huggingface.co/datasets/12kimih/HiCUPID) and [evaluator](https://huggingface.co/12kimih/Llama-3.2-3B-HiCUPID) cards claim Apache-2.0; the Llama-3.2 base-model Community License remains a separate consideration. The project label does not establish that every component is free of additional restrictions.
+
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
@@ -882,6 +918,38 @@ Executes 246 tasks on self-hosted web replicas with synthetic user data derived 
 - **Measures**: extraction count/efficiency, retrieval count, complete/any extraction rates; up to three attempts per prompt. Dataset queries plus generated solutions are not a survey of live multi-user services.
 - **Boundary**: no user/session memory isolation in the studied setup; not evidence that properly isolated products share the vulnerability, nor proof of comprehensive privacy compliance.
 - **Resources**: [official code](https://github.com/wangbo9719/MEXTRA); no overarching root/README license observed. Check upstream terms separately.
+
+<a id="benchmark-operationalizing-ci"></a>
+### B74. Operationalizing Contextual Integrity in Privacy-Conscious Assistants
+
+**Evaluation: form-filling disclosure** · Unique paper key: `CI`
+
+[Paper](https://arxiv.org/html/2408.02373v2) · v2, 2024-09-13
+
+126 synthetic forms across 14 scenarios with eight human norm annotators, not live delegated submissions. Structured data, a single sharing action, and fieldwise processing constrain the evaluation. Ask-user outputs are labels, not demonstrated interactive consent. Leakage counts non-refusal in fields that should not be filled, even if the generated value is wrong. Societal norms are not individualized authorization or comprehensive compliance.
+
+**Assets and reproduction：** Article: CC BY 4.0. Official standalone data/runnable benchmark release and formal venue were not verified; reproduction is not established.
+
+**Actual reading scope：** Sections 2–6, Appendix C label aggregation, version metadata.
+
+Method entry: [M70](#method-contextual-integrity-supervisor); same paper, not counted again.
+
+<a id="tmp-m-ci"></a>
+
+<a id="benchmark-execution-prompt-injection"></a>
+### B75. Simple Prompt Injection Attacks Can Leak Personal Data Observed by LLM Agents During Task Execution
+
+**Evaluation: runtime personal-data exfiltration** · Unique paper key: `EXFIL`
+
+[Paper](https://arxiv.org/html/2506.01055v1) · v1, 2025-06-01
+
+Attacks runtime-observed data in a fictional AgentDojo banking environment: 16 original tasks and 48 in the extension. Not training-data extraction or real customer research. User/system instructions are trusted; attackers control external input and have white-box access **or** knowledge of the retrieval system (alternative assumptions, not necessarily both). Any sensitive disclosure counts toward aggregate ASR, not necessarily passwords. Zero ASR in the small setting does not generalize to the expanded suite.
+
+**Assets and reproduction：** Article: CC BY 4.0. Checklist promises the new dataset after acceptance; official release was not verified. AgentDojo availability does not establish reproduction of added assets. NeurIPS formatting style is not acceptance.
+
+**Actual reading scope：** Sections 3–4, data construction, threat model, metrics, reproducibility checklist, version page.
+
+<a id="tmp-m-pearl"></a>
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -1586,6 +1654,86 @@ Three gpt-3.5-turbo roles—user, system and moderator—use repurposed DuRecDia
 - **Evidence**: component study collected Muse 2 EEG from 30 subjects over 40 music-video trials each; consent/anonymization reported. LOSO with five-fold tuning yields SVM per-emotion accuracies of Happy .77, Angry .78, Sad .76 and Relaxed .80. End-to-end dialogue evidence is a controlled real-session example.
 - **Boundary**: classifier accuracy is not emotional-support efficacy; in-vivo system evaluation remains future work. Inferred labels do not establish reliable access to actual mental states or clinical benefit.
 - **Resources**: institutional PDF marked all rights reserved; no official code/data release identified. Reported privacy handling is not an independent security audit.
+
+<a id="method-llm-personalize"></a>
+### M67. LLM-Personalize · Preference-aligned embodied planning
+
+[LLM-Personalize: Aligning LLM Planners with Human Preferences via Reinforced Self-Training for Housekeeping Robots](https://aclanthology.org/2025.coling-main.98/) — COLING 2025; arXiv `2404.14285v3` is the same work.
+
+**Checked / reading scope:** 2026-11-01; method §3, experimental setup and Table 1 in §4, limitations §6, and author repository documentation and license label.
+
+- **Input → output:** Local observations, instructions and preference feedback → scene-graph-based plans and low-level actions; imitation learning followed by preference-filtered self-training.
+- **Evidence / measurement:** Four simulated Housekeep scenes with human-annotated placement preferences; five test tasks per scene and five runs per task. The reported success metric measures net correction of misplaced objects and can be negative; it is not episode completion.
+- **Boundary / counterexample:** On the Scene 4 test split, ST2 scores 20.4 versus 25.7 for imitation learning alone (IL). However, ST2 improves over ST1 in all four test scenes; these baselines must not be conflated. No physical-robot or real-household deployment is validated.
+- **Resources:** The [author repository](https://github.com/gdg94/codellmpersonalize) is MIT-labelled and includes planning, simulation and training code; legacy OpenAI SDK, GPT-3.5 and Habitat dependencies limit claims of immediate reproducibility.
+
+<a id="method-personal-travel-solver"></a>
+### M68. Personal Travel Solver · Implicit preferences and constraint solving
+
+[Personal Travel Solver: A Preference-Driven LLM-Solver System for Travel Planning](https://aclanthology.org/2025.acl-long.1339/) — ACL 2025 Main. RealTravel is this paper's dataset, not a separate paper.
+
+**Checked / reading scope:** 2026-11-01; dataset and methods §§3.1–3.8, results §4, evaluation Appendix B, and repository README/file listing.
+
+- **Input → output:** Travel requests, review histories and a closed database → itineraries produced through LLM-based processing and SCIP optimization.
+- **Data / measurement:** Real Google Local reviews and POI metadata support requests constructed through constraint sampling, feasibility checks and LLM verbalization. The 1,000-example test set yields 96.60% final constraint pass rate; personalization is separately judged by DeepSeek-V3.
+- **Boundary / counterexample:** Constraint feasibility is not traveler satisfaction, booking execution or real-world deployment. Real reviews do not make constructed requests real commissions.
+- **Resources:** The [official linked repository](https://github.com/cliftclift/PTS) exposes RealTravel data/processing resources. A complete PTS solver release and an explicit top-level license were not verified; do not label it a fully open-source system.
+
+<a id="method-memory-r1"></a>
+### M69. Memory-R1
+
+**Method: learned memory management** · Unique paper key: `R1`
+
+[Paper](https://arxiv.org/html/2508.19828v5) · v5, 2026-01-14
+
+Separately RL-trained memory operations and retrieval filtering/answering. Training uses LoCoMo, with MSC and LongMemEval evaluation. Offline dialogue QA does not establish live use, tool execution, or secure erasure. Reported 152/81/1307 split counts disagree with the stated 1:1:8 ratio; user/dialogue-disjointness was not established. Appendix B says 24 preceding turns whereas Algorithm 1 says 50; do not silently reconcile them.
+
+**Assets and reproduction：** [Author repository](https://github.com/yansikuan/memory-r1): Apache-2.0, but README/assets only and code still marked coming soon. LoCoMo derivatives retain CC BY-NC 4.0; article uses the arXiv nonexclusive license. Not a runnable author release.
+
+**Actual reading scope：** Sections 3–4, limitations, Appendices B/D, version metadata, repository README/file tree.
+
+<a id="tmp-b-ci"></a>
+
+<a id="method-contextual-integrity-supervisor"></a>
+### M70. Information-flow-card supervisor
+
+**方法；唯一论文键 / Method; unique paper key: `CI`**
+
+[Same paper](https://arxiv.org/html/2408.02373v2) · v2, 2024-09-13
+
+An information-flow card structures context, actors, receiver, and disclosed information before a reasoning supervisor controls filling. Compared with self-censoring, binary, and ordinary reasoning supervisors. Prompt/few-shot controls are not hard authorization mechanisms; adversarial robustness and live interaction remain unverified.
+
+Evaluation, sources, licensing, reading scope, and reproduction limits: [B74](#benchmark-operationalizing-ci). Not an H deployment study.
+
+<a id="tmp-b-exfil"></a>
+
+<a id="method-pearl"></a>
+### M71. Pearl
+
+**Adjacent method: writing-retrieval calibration** · Unique paper key: `PEARL`
+
+[Paper](https://arxiv.org/html/2311.09180v2) · v2, 2024-11-05; CustomNLP4U 2024
+
+Calibrates retrieval by historical documents’ benefit to personalized generation, also supporting poor-retrieval detection and revision. WorkSm evaluation requests are author-written, while its training requests are synthesized by GPT-4; AITA lacks timestamps. Evaluation on both datasets is offline. Reference/stance metrics and LLM judging do not establish live-user satisfaction, authorized sending, or privacy controls.
+
+**Assets and reproduction：** [Publication](https://aclanthology.org/2024.customnlp4u-1.16/): CustomNLP4U workshop, not ACL main. Private WorkSm and closed APIs limit reproduction; official code/weights unverified. Read arXiv article: CC BY-NC-ND 4.0, not a license to underlying data.
+
+**Actual reading scope：** Sections 4–5, Appendix E, version and publication records.
+
+<a id="tmp-m-personax"></a>
+
+<a id="method-personax"></a>
+### M72. PersonaX
+
+**Adjacent method: cached recommendation personas** · Unique paper key: `PERSONAX`
+
+[Paper](https://aclanthology.org/2025.findings-acl.300.pdf) · Findings ACL 2025, pp. 5764–5787
+
+Clusters/samples long histories and generates cached persona snippets offline. Amazon CDs/Vinyl and Books ranking uses the last interaction plus nine sampled negatives. Offline ranking is not live satisfaction or general assistance. Streaming freshness remains untested; latency analysis assumes a persona refresh every ten calls.
+
+**Assets and reproduction：** [Author repository](https://github.com/Ancientshi/PersonaX) includes MIT code and data subsets, but README explicitly disclaims full AgentCF/Agent4Rec reproduction by its EasyRec client. The [license scope](https://github.com/Ancientshi/PersonaX/blob/master/LICENSE) explicitly excludes Amazon data, notebook outputs, EasyRec, and third-party code, dependencies, and weights; project MIT terms do not authorize those assets. This scope was supplied by independent review; the original NOTICE fetch for this entry encountered a cache miss.
+
+**Actual reading scope：** PDF sections 4–5, limitations/ethics, official README/file tree.
 
 <a id="human-studies"></a>
 ## Human studies: real use and interaction
