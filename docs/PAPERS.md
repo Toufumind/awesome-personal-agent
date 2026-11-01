@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **68 篇不同论文**：44 个评测条目、34 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille 与 PUMA/PersonalWAB 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **78 篇不同论文**：48 个评测条目、42 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem 与 PrivacyLens-Live/PrivacyChecker 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B44、M16–M34 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B48、M16–M42 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -401,6 +401,42 @@
 - **解释**：function accuracy 检查工具与参数格式，result accuracy 对商品使用排名、对评论使用嵌入相似度，不能合成通用成功率。
 - **边界**：作者称历史按80/10/10划分，又写画像使用全部历史；复现需审计预处理，当前不能断言已证实泄漏。模拟器、推断画像与未验证隐私保护均限制真实助理结论。
 
+<a id="benchmark-triptailor"></a>
+### B45. TripTailor · 个性化旅行计划评测
+
+[TripTailor: A Real-World Benchmark for Personalized Travel Planning](https://aclanthology.org/2025.findings-acl.503/) — Findings of ACL 2025，July。
+
+**核验日期 / 阅读范围：**2026-11-01；论文 §3、§4、Appendix B.1、Limitation；官方仓库 README、完整文件树和 release 元数据。
+
+- **输入→输出：**单轮旅行请求/偏好与中国旅行沙箱→行程。多数实验预先提供搜索信息（含参考行程所需 POI），不能直接当作开放式搜索和规划的端到端成绩。
+- **数据/测量：**真实 POI、旅行平台行程经补全和 LLM 改写，查询由模型构造；先由 LLM 从自然语言计划抽取关键实体与活动，再由脚本对照沙箱检查可行性/合理性；不是直接对原始计划进行纯确定性评估。模型裁判与奖励模型另对照参考行程评价个性化。
+- **边界：**不是数千真人请求；中国场景、单轮交互和模型查询/裁判偏差限制泛化，不验证预订或实际旅行。
+- **资源：**公开代码、data.7z；main，最后推送 2025-10-22，无 GitHub release。README 无许可声明、完整树无 LICENSE/COPYING、GitHub license=null；复用许可未确立。
+
+<a id="benchmark-mpr"></a>
+### B46. MPR · 多跳个人事实推理
+
+[Explicit v.s. Implicit Memory: Exploring Multi-hop Complex Reasoning Over Personalized Information](https://arxiv.org/html/2508.13250v1) — arXiv v1，2025-08-18；方法见 M38，同一论文只计一次。
+
+**核验日期 / 阅读范围：**2026-11-01；§3–6；官方 README、完整文件树和 release 元数据。
+
+- **输入 → 输出：**合成用户图及模型生成的单跳事实陈述与问题 → 2–10 跳个人事实答案；不是观察到的真人历史。
+- **测量：**规范化答案精确匹配；实验使用均衡的 2,700 题子集。Oracle 与普通检索设置须分别报告。
+- **边界：**不是工具执行、在线偏好变化或长期满意度评测。表 2 写 108,000 QA，§3.3.3 写 10,800；保留数量矛盾，不静默修正。
+- **资源：**[官方仓库](https://github.com/nuster1128/MPR)，master，最后推送 2025-08-24，无 release、无声明的仓库许可；README 链接 Drive 数据，但本次无法读取归档。论文 CC BY 4.0 不自动覆盖代码/数据复用。
+
+<a id="benchmark-familytool"></a>
+### B47. FamilyTool · 多跳个人知识到工具参数
+
+[FamilyTool: A Multi-hop Personalized Tool Use Benchmark](https://arxiv.org/html/2504.06766v2) — 2025 预印本；查阅 v2，2025-05-26。
+
+**核验日期 / 阅读范围**：2026-11-01；§§4–6、§9、附录 C.2；官方 README、仓库许可元数据及根目录 LICENSE 查询。
+
+- **输入 → 输出**：合成家庭关系 / 偏好 KG、带说话人身份的请求及候选工具 → 工具调用及参数；KGETool 先抽取相关子图，再生成调用。
+- **测量**：483 个基础、455 个扩展样例，均使用 102 个工具；分别覆盖 1–4、2–6 个关系跳数。子图抽取的 EM / F1 / coverage 等与调用 EM、工具选择准确率、参数值准确率分开；golden sub-KG 与实际抽取子图不能混报。
+- **边界**：家庭、偏好和请求由合成与人工检查构建，主要测试静态调用生成，不是实际完成预订、长期家庭部署或开放多轮执行。最长跳数样例较少；正确参数不等于已获授权或执行成功。
+- **资源**：[官方代码 / 数据](https://github.com/yxzwang/FamilyTool)含基础 / 扩展 JSONL、KG 与流水线。根目录 `LICENSE` 查询返回 404，仓库许可字段为空；**复用许可未确认**，不能由公开可读推定为 MIT 等开放许可。MTU-Bench / UnifiedToolHub 上游资源另核对条款。
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -595,6 +631,18 @@
 - **测量**：结合完整轨迹与状态证据，分别判断任务完成和越权。
 - **边界**：通用委托边界评测，不是个性化规划方法；模拟服务与 judge 不代表真实部署风险率。
 - **资源**：[官方代码 / 任务](https://github.com/PEACH-Research-Lab/AuthorizationBench)。README 声明原创软件 / 基准制品 MIT，第三方材料另计；公开 6,864 份判定但仅保留 4,981 份原始轨迹，不能视为完整轨迹全集。未运行。
+
+<a id="benchmark-privacylens-live"></a>
+### B48. PrivacyLens-Live · 动态工具 / 多代理信息披露
+
+[Privacy in Action: Towards Realistic Privacy Mitigation and Evaluation for LLM-Powered Agents](https://aclanthology.org/2025.findings-emnlp.925/) — Findings of EMNLP 2025；方法原文查阅 [arXiv v1，2025-09-22](https://arxiv.org/html/2509.17488v1)。方法见 M41；同一论文只计一次。
+
+**核验日期 / 阅读范围**：2026-11-01；§§3–4.5、Limitations；ACL 论文元数据及作者资源链接。
+
+- **输入 → 输出**：由 PrivacyLens 轨迹重建的私人内容与请求，经 MCP 工具 / 双代理交互 → 最终发送动作；不是直接观察自然发生的真人任务。
+- **测量**：论文先用 493 个静态 PrivacyLens 样例评估缓解；Live 初始使用 150 个 Gmail / Notion 样例，另加 36 个三工具流程。泄露率、helpfulness 与按 helpfulness 调整的泄露率分开；静态与 live、模型及部署位置必须注明。
+- **边界**：Gmail / Notion 测试账号有实际工具交互，但内容来自重建样例；A2A 是关键组件的复现，不能视为所有协议实现的互操作或安全测试。更复杂流程仍有残余泄露；不证明完整隐私合规或抵抗提示注入。
+- **资源**：作者给出[代码 / 数据短链接](https://aka.ms/privacy_in_action)，但本次抓取被 robots.txt 拒绝，**发布内容及代码 / 数据许可未确认**；不要写成已验证可复现。它扩展已有 PrivacyLens，不是原始 PrivacyLens 的同名版本更新。
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -988,6 +1036,102 @@
 - **证据与边界**：Amazon/Yelp 真实评论记录上的离线生成，输入还包括目标评分和标题；不是多轮对话、无条件偏好预测或工具执行。主表跨五个温度取均值，不是相同配置的五个随机种子。跨用户信息使用还需隐私/同意约束。
 - **一致性问题**：论文附录说测试用倒数第三条评论，当前代码用最后一条；不能把文字冲突直接断言为已证实泄漏，复现前应核对数据。
 - **资源**：[作者代码](https://github.com/SnowCharmQ/DPL)根目录未见许可；[DPL-main](https://huggingface.co/datasets/SnowCharmQ/DPL-main)与[DPL-meta](https://huggingface.co/datasets/SnowCharmQ/DPL-meta)标 **CC BY-NC 4.0**，不能沿用论文伦理段的宽泛 MIT 说法。上游条款另查。
+
+<a id="method-guided-profile-generation"></a>
+### M35. Guided Profile Generation · 引导式画像生成
+
+[Guided Profile Generation Improves Personalization with LLMs](https://arxiv.org/html/2409.13093v1) — arXiv v1，2024-09-19。
+
+**核验日期 / 阅读范围：**2026-11-01；§3–6、任务定义、指标和结果表。
+
+- **方法：**按任务提问帮助消化个人历史，再生成自然语言画像，供后续回答使用；主实验仍保留原始历史。
+- **评测：**Amazon 历史构成四选一购买预测、LaMP-7 文风重写、PER-CHAT 回复生成；分别看准确率、词面指标、语义相似度，不是同一“画像质量分”。
+- **边界：**真人来源历史上的离线构造任务，不是持续用户实验；单来源文本、主要一个 GPT-3.5 版本。不能证明画像准确性、持续更新或执行能力；购买预测收益部分来自减少拒答；PER-CHAT 回复生成收益弱且不一致。
+- **资源：**未核实官方代码或新增数据发布。论文 CC BY 4.0 不覆盖上游数据。
+
+<a id="method-knowledge-graph-tuning"></a>
+### M36. Knowledge Graph Tuning · 反馈驱动事实更新
+
+[Knowledge Graph Tuning: Real-time Large Language Model Personalization based on Human Feedback](https://arxiv.org/html/2405.19686v1) — arXiv v1，2024-05-30。
+
+**核验日期 / 阅读范围：**2026-11-01；§4、§5.1–5.4、§6：方法、实验设置、指标、消融和局限。
+
+- **方法：**从问题与答案反馈提取三元组，增删外部知识图谱，优化检索与回答概率；不更新 LLM 权重。
+- **评测：**顺序输入 CounterFact 与 GPT-4 辅助构造的 CounterFactExtension；测原问及改写问的事实编辑效果、延迟和显存。
+- **边界：**反事实 QA 是个性化事实更新代理，不是真人偏好变化实验；关系反馈消融由 GPT-4 模拟用户。效果依赖指令遵循及关系提取；概率比较不等于开放任务完成率。
+- **资源：**未核实官方可用发布及代码/数据许可；论文 CC BY 4.0。先前通过 GitHub connector 直接 GET https://api.github.com/repos/W-R-Liu/KGT 返回明确 NOT_FOUND / HTTP 404；该链接来自二手页，不应写作已核实官方实现，也不能据此认定永不存在。
+
+<a id="method-emg-rag"></a>
+### M37. EMG-RAG · 可编辑个人记忆图
+
+[Crafting Personalized Agents through Retrieval-Augmented Generation on Editable Memory Graphs](https://aclanthology.org/2024.emnlp-main.281/) — EMNLP 2024；方法核验版本为 [arXiv v1，2024-09-28](https://arxiv.org/html/2409.19401v1)。
+
+**核验日期 / 阅读范围：**2026-11-01；arXiv §4–5.2、§7；ACL 出版元数据及 PDF 方法概述。
+
+- **方法：**层级记忆图支持插入、删除和替换；RL 选择相关记忆交给冻结 LLM。
+- **评测：**真实助理对话/截图，经 GPT-4 提取记忆、生成 QA 标签；QA 用 ROUGE/BLEU，填表、提醒和导航用关键实体精确匹配；另测四周连续编辑。
+- **真人证据：**另报一个月线上 A/B 适配，收集真人问题及人工答案，不能称“纯离线/全合成”。但这些分数不是满意度或完整外部操作成功率。
+- **边界/资源：**RL 训练需反复查询 LLM；图中删除不证明日志/备份删除。未核实公开业务数据或官方实现。arXiv 论文 CC0 不授权私人数据。
+
+<a id="method-hybridmem"></a>
+### M38. HybridMem · 检索与分簇参数记忆
+
+[Explicit v.s. Implicit Memory: Exploring Multi-hop Complex Reasoning Over Personalized Information](https://arxiv.org/html/2508.13250v1) — arXiv v1，2025-08-18；基准见 B46，同一论文只计一次。
+
+**核验日期 / 阅读范围：**2026-11-01；§3 实验设置、§4–5 对比及 §6 混合记忆；官方 README、完整文件树和 release 元数据。
+
+- **方法：**聚类用户陈述，为不同簇分别训练 LoRA adapter；推理时检索陈述，再以投票选择相关 adapter。
+- **评测：**MPR 合成个人事实的多跳 QA，以规范化精确匹配比较显式、隐式和混合记忆；结合不同推理结构分析，不能跨设置混报。
+- **边界：**不证明真实用户持续受益、在线记忆更新、隐私删除或行动执行。基准规模存在正文/表格矛盾，见 B46。
+- **资源：**[官方仓库](https://github.com/nuster1128/MPR)，master，最后推送 2025-08-24，无 release 或声明的仓库许可；Drive 数据归档本次未能读取。论文 CC BY 4.0 不自动授权代码/数据；未安装或复现。
+
+<a id="method-coloragent"></a>
+### M39. ColorAgent · 个性化移动 GUI 执行与澄清
+
+[ColorAgent: Building A Robust, Personalized, and Interactive OS Agent](https://arxiv.org/html/2510.19386v2) — 2025 技术报告；查阅 v2，2025-10-24。
+
+**核验日期 / 阅读范围**：2026-11-01；§§2–6，重点 §4 实验、§5 个性化 / 交互及 §6 后续工作；官方 README、LICENSE 与 ColorGUI-32B 模型卡。
+
+- **机制**：step-wise RL、自演进训练及检索、任务编排、分层反思；从历史轨迹提炼 SOP 与用户画像，重写当前请求 / SOP；另训练 ask-agent 进行澄清。这里主要是 **Android 移动端，不是桌面执行**。
+- **证据**：AndroidWorld / AndroidLab 测动态环境任务成功；MobileIAR 测与用户意图标注一致的动作，VeriOS-Bench 测逐步动作匹配。不能把整体任务成功率直接称为个性化分数，也不能把逐步正确率视为完整任务完成率。
+- **边界**：未证明真人长期满意度；作者指出现有任务与真实复杂使用存在差距，沙箱及细粒度权限仍待完善。遇到不确定情境询问用户不是全面安全保障。
+- **资源**：[官方 MobileUse 仓库](https://github.com/MadeAgents/mobile-use)支持该报告，代码 [MIT](https://github.com/MadeAgents/mobile-use/blob/main/LICENSE)。2026-07-10 后续发布的 [ColorGUI-32B](https://huggingface.co/MadeAgents/ColorGUI-32B)模型卡标 Apache-2.0，基于 Qwen3-VL；**不等同于论文中的 GUI-Owl / Qwen2.5 实验检查点**。固定所用代码、模型与评测版本。
+
+<a id="method-warpp"></a>
+### M40. Agent WARPP · 用户属性驱动的运行时流程裁剪
+
+[Agent WARPP: Workflow Adherence via Runtime Parallel Personalization](https://arxiv.org/html/2507.19543v1) — 2025 预印本；ICML 2025 Multi-Agent Systems Workshop；查阅 v1，2025-07-23。
+
+**核验日期 / 阅读范围**：2026-11-01；§§3–6、§§8–9；官方仓库 README 与 LICENSE。
+
+- **机制**：无需额外训练；Personalizer 根据用户属性裁剪条件流程及工具集合，并与模拟身份验证并行，再交给 Fulfillment 执行。保留相关工具的成功、失败与用户回答分支；这是属性条件化执行，不是持续学习个人偏好。
+- **证据**：银行、航班、医院付款共五种意图，各 50 个样例；使用合成客户数据与 GPT-4o 模拟用户。分别报告轨迹匹配 / LCS、工具 F1、参数匹配、延迟及 judge 评价的裁剪相关性 / 完整性。
+- **边界**：多数工具调用与 MFA 为模拟，部分复杂流程连接真实 API；不能因此称为生产部署或已验证身份安全。作者明确将安全、隐私、人参与及会话质量排除在本研究范围外；高负载、变化 API 与更复杂流程仍待检验。
+- **资源**：[官方代码 / 数据](https://github.com/emiliamazzo/WARPP)，[MIT LICENSE](https://github.com/emiliamazzo/WARPP/blob/main/LICENSE)已核对；工作坊论文不要标作 ICML 主会论文。
+
+<a id="method-privacychecker"></a>
+### M41. PrivacyChecker · 决策时的信息流隐私判断
+
+[Privacy in Action](https://aclanthology.org/2025.findings-emnlp.925/) — Findings of EMNLP 2025；查阅 [arXiv v1](https://arxiv.org/html/2509.17488v1)。评测见 B48；同一论文只计一次。
+
+**核验日期 / 阅读范围**：2026-11-01；§3 方法 / 实验、§4 MCP 部署与扩展实验、Limitations；ACL 元数据与作者资源链接。
+
+- **机制**：在行动决策时用提示明确提取 contextual-integrity 信息流，逐流判断可否披露；可选择加入隐私指南，主实验未使用可选指南。可放入系统提示、特定工具说明或独立 MCP 工具。
+- **证据**：同时检查隐私泄露与任务帮助程度；静态 PrivacyLens、live MCP、MCP + A2A 和更复杂流程分别报告，不能把一个设置的降幅泛化至全部部署。
+- **边界**：仍会因流提取、判断和行动不一致而泄露；记忆投毒等对抗场景不是主要验证范围。它是提示驱动缓解，不是强制访问控制、密码学保证或法规合规证明；独立检查工具也不能仅凭名称推断不可绕过。
+- **资源**：同上[作者短链接](https://aka.ms/privacy_in_action)；抓取被 robots.txt 拒绝，当前发布包与许可未确认。论文公开不代表实现已获开放许可。
+
+<a id="method-agentraft"></a>
+### M42. AgentRaft · 执行过程中数据过度暴露检测
+
+[AgentRaft: Automated Detection of Data Over-Exposure in LLM Agents](https://arxiv.org/html/2603.07557v1) — 2026 预印本；查阅 v1，2026-03-08。
+
+**核验日期 / 阅读范围**：2026-11-01；§§3–6，包括实验设置、组件评测与局限；原文资源链接与定向资源检索。
+
+- **机制**：由类型兼容性与语义判断构建跨工具调用图，合成触发指定路径的请求，结合运行时污点轨迹与多模型投票判断非必要数据是否传至外部。
+- **证据**：6,675 是爬取工具的生态调查规模；实际实验为四类场景选定工具集，在 AgentDojo 中实现功能，并使用生成的 PII / 业务资产与 GPT-5.1 Agent。57.07% 指所测 608 条潜在调用链中的 347 条，不是全部商业 Agent 的泄露率。
+- **边界**：依赖内部执行轨迹，未直接审计封闭商业 Agent 或终端用户真实部署。图边准确性、请求有效性、泄露检测与成本指标不能混报；LLM 判断错误和动态工具变化仍有限制。法规文本参与投票不构成法律认证；提示注入检测与运行时防御的扩展讨论不等于已证实安全能力。
+- **资源**：原文未找到作者实现 / 数据发布链接，定向检索亦未确认；**发布状态与实现许可未确认**。AgentDojo 是实验底座，其开放许可不能替代 AgentRaft 实现许可。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
