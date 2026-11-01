@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **146 distinct papers**: 79 evaluation entries, 79 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, and EvoArena/EvoMem each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **154 distinct papers**: 81 evaluation entries, 86 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, and DAM/DABench each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B79, M16–M79, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B81, M16–M86, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -669,6 +669,29 @@ PersonaMem-Evo generates interaction histories and evolving preferences from syn
 **Resources:** The [official data card](https://huggingface.co/datasets/Aiden0526/PersonaMem-Evo) reports 10 personas/505 examples, empty 128k links, a broken viewer, and no license metadata. The [repository](https://github.com/Aiden0526/EvoArena) is not a verified complete release; its license remains pending. The paper’s CC BY 4.0 does not establish asset permissions.
 
 **Verification date / actually read:** 2026-11-01; version page, §§3–6, relevant Appendices A/E, repository README/root, and PersonaMem-Evo data card. No reproduction run.
+
+<a id="benchmark-indievaluecatalog"></a>
+### B80. Benchmark — IndieValueCatalog
+
+[Can Language Models Reason about Individualistic Human Values and Preferences?](https://aclanthology.org/2025.acl-long.336/) — ACL 2025 main-conference long paper; examined [arXiv:2410.03868v2, May 31, 2025](https://arxiv.org/html/2410.03868v2).
+
+**Checked / reading scope**: November 1, 2026; relevant §§2–4, limitations/ethics, Appendix B, official README/root listing.
+
+- **Task and metrics**: Predict unseen individual value choices from WVS statements; accuracy and inequity metrics.
+- **Evidence**: 93,279 real survey respondents; 800 held out, not interactive-agent users.
+- **Limits**: Adjacent individual-value modeling; static surveys/single-prompt limitations; demographics cannot replace individual evidence. Privacy, manipulation and autonomy remain concerns.
+- **Resources and rights**: [Official repository](https://github.com/liweijiang/indievalue) provides conversion/metadata code and links converted labels. WVS research-use, non-redistribution terms remain separate from the paper's CC BY license; no root code license observed.
+
+<a id="benchmark-dabench"></a>
+### B81. Benchmark — DABench
+
+[DABench / Dynamic Affective Memory Management](https://arxiv.org/html/2510.27418v1) — arXiv:2510.27418v1, October 31, 2025 preprint; conference acceptance not verified. Same paper as [DAM-LLM](#method-dam-llm).
+
+**Checked / reading scope**: November 1, 2026; relevant §§3–6, Appendix A.3–A.4 and arXiv metadata.
+
+- **Composition**: 2,500 observation sequences; 100 simulated sessions/1,000 turns; 500 query-memory pairs. All dialogue/memory explicitly GPT-4-generated.
+- **Measurement and limits**: GPT-4 ratings of accuracy, coherence, memory reference, emotional resonance, personalization and fluency do not establish real emotional improvement, clinical benefit or an unbiased judge.
+- **Resources**: Appendix prompts/parameters are partial: A.3.2 does not supply the complete simulated-session generation prompt, so full reproducibility is not established. No official code/data release or artifact license located. Method/benchmark entries count as one paper.
 
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
@@ -1861,6 +1884,85 @@ Records append-only patches only for non-additive revisions, overwrites, or rein
 **Resources:** [Repository](https://github.com/Aiden0526/EvoArena) contains PersonaMem and Terminal directories; the advertised SWE directory was absent. README retains pending-release/license statements. Paper CC BY 4.0 does not establish asset permissions.
 
 **Verification date / actually read:** 2026-11-01; §§4–6, main results, Appendix A, README/root. No reproduction run. Internal table warning: SWE Qwen chain 12.2→10.1 is labeled +2.1.
+
+<a id="method-evolving-conditional-memory"></a>
+### M80. Method — Evolving Conditional Memory
+
+[Personalized Large Language Model Assistant with Evolving Conditional Memory](https://aclanthology.org/2025.coling-main.254/) — COLING 2025; the same work as arXiv:2312.17257 (first submitted in 2023; v2 October 13, 2024). Count once.
+
+**Checked / reading scope**: November 1, 2026; relevant passages in §§3–5, limitations/ethics, Appendix A.1/Table 7 and construction details, and arXiv version history.
+
+- **Mechanism**: Select utterances worth retaining; store contextual conditions separately from knowledge, with reflective retrieval/query expansion.
+- **Evidence**: 300 knowledge, 200 feedback and 200 continuation cases; GPT-4-constructed evaluation using existing source datasets and pseudo-human feedback, scored using ROUGE/GPT-4. Three annotators also checked 50 samples/task; knowledge/feedback/continuation qualified rates were 60%/84%/81%.
+- **Limits**: Direct personal-memory research, not longitudinal real-user deployment; GPT-4-only experiments, without resolved timestamp/forgetting mechanisms.
+- **Resources**: Prompts/construction described; no official code/data release located or artifact license established.
+
+<a id="method-lc-rag-copa"></a>
+### M81. Method with human evidence — LC-RAG / Copa
+
+[Personalizing Student-Agent Interactions Using Log-Contextualized Retrieval-Augmented Generation (RAG)](https://arxiv.org/html/2505.17238v3) — AIED25 Workshop on Epistemics and Decision-Making in AI-Supported Education; arXiv v3, April 18, 2026. Not an AIED main-conference paper.
+
+**Checked / reading scope**: November 1, 2026; relevant §§3–5 passages, arXiv metadata, official supplement README/root listing.
+
+- **Mechanism**: RQ1 uses GPT-3.5-Turbo to summarize student discourse/logs for retrieval; Copa also compares student and expert computational models.
+- **Evidence**: RQ1: 18 consented student contributors and 216 segments across five embedding configurations, with GPT-4o judging retrieval comparisons. RQ2: 18 unique Copa participants in qualitative classroom/focus-group studies, including two who also participated in RQ1; these samples must not be added as disjoint populations.
+- **Limits**: Adjacent education personalization, not persistent personal memory; one of five embeddings substantially underperforms, with incorrect advice/overreliance and no causal learning-gain proof.
+- **Resources and rights**: IRB approval, student assent and parental consent reported. The [official supplementary repository](https://github.com/claytoncohn/AIED25_Supplementary_Materials) contains six prompt files and a README; no raw student data or root license observed.
+
+<a id="method-dam-llm"></a>
+### M82. Method — DAM-LLM
+
+[Dynamic Affective Memory Management for Personalized LLM Agents](https://arxiv.org/html/2510.27418v1) — arXiv:2510.27418v1, October 31, 2025 preprint; conference acceptance not verified.
+
+**Checked / reading scope**: November 1, 2026; relevant §§3–6, Appendix A.3–A.4 and arXiv metadata.
+
+- **Mechanism**: Object/aspect sentiment-confidence weights, Bayesian-inspired updates, entropy compression, metadata filtering and semantic reranking.
+- **Evidence and limits**: Direct affective-memory method; Qwen-Max system, synthetic data/GPT-4 judging, not real-user or clinical efficacy evidence; synchronous update overhead remains a limitation.
+- **Resources**: Appendix prompts/parameters are partial: A.3.2 does not supply the complete simulated-session generation prompt, so full reproducibility is not established. No official code/data release or artifact license located. See [DABench](#benchmark-dabench); count this paper once.
+
+<a id="method-bi-mem"></a>
+### M83. Bi-Mem: Calibrating local memories against a global persona
+
+[Bi-Mem: Bidirectional Construction of Hierarchical Memory for Personalized LLMs via Inductive-Reflective Agents](https://arxiv.org/html/2601.06490v1) — arXiv v1, 2026-01-10.
+
+**Type / capability:** A personalized conversational-memory method combining bottom-up fact–scene–persona construction, top-down calibration and associative retrieval.
+
+**Evidence / boundaries:** LoCoMo is human-refined, LLM-generated dialogue—not longitudinal natural-user evidence. GPT-4o-mini F1 is 49.74 versus Mem0’s 45.08; adversarial questions are excluded. Reported results average at least three seeds. The authors identify dependence on backbone reasoning and relatively stable personas. The paper describes the original 50-dialogue corpus, while the repository supplies `locomo10.json`; the evaluated sample scope needs reconciliation.
+
+**Resources / actual reading:** [Code and data](https://github.com/tohsaka-sb/Bi-Mem) are accessible, but no root LICENSE was found. The paper’s CC BY 4.0 does not establish artifact licensing. Read: methods, experiments, limitations, Appendix B.2, repository README and directory listing. No reproduction run.
+
+<a id="method-memgas"></a>
+### M84. MemGAS: Query-adaptive memory granularity and association
+
+[From Single to Multi-Granularity: Toward Long-Term Memory Association and Selection of Conversational Agents](https://arxiv.org/html/2505.19549v2) — arXiv v2, 2025-09-29; author repository reports ICLR 2026 acceptance. The v1 title (2025-05-26) was *Towards Multi-Granularity Memory Association and Selection for Long-Term Conversational Agents*. Stable ID `2505.19549`: count once.
+
+**Type / capability:** Conversational memory using session, turn, summary and keyword representations, GMM associations, entropy routing, Personalized PageRank and LLM filtering.
+
+**Evidence / boundaries:** Evaluation covers LongMemEval-s/m, LoCoMo and Long-MT-Bench+. These are constructed or reconstructed benchmarks, not a longitudinal natural-user study. [LongMemEval](https://arxiv.org/html/2410.10813) mixes natural-source and synthetic sessions; LoCoMo is human–LLM co-created. LongMemEval-s GPT-4o-judge performance reaches 60.20; however, LoCoMo’s GPT-4o-judge score (not F1) of 41.07 trails SeCom’s 44.21 and HippoRAG2’s 45.62. Some expensive large-context baselines are missing.
+
+**Resources / actual reading:** The [author repository](https://github.com/quqxui/MemGAS) provides reference Python code and dataset-download instructions; no root LICENSE was found. Its later TypeScript plugin is distinct from the experimental implementation. Read: §§2–3, Appendices A/G, version records, README and directory listing, plus LongMemEval construction passages. OpenReview required browser verification; acceptance is confirmed only through the author repository. No reproduction run.
+
+<a id="method-o-mem"></a>
+### M85. O-Mem: Dynamic persona, event and multi-channel memory
+
+[O-Mem: Omni Memory System for Personalized, Long Horizon, Self-Evolving Agents](https://arxiv.org/html/2511.13593v3) — arXiv v3, 2025-12-10. Use the [arXiv version record](https://arxiv.org/abs/2511.13593), not the anomalous August 2026 date rendered in HTML.
+
+**Type / capability:** Personal-context memory that updates user attributes and events and retrieves persona-, topic- and clue-related context.
+
+**Evidence / boundaries:** Offline evaluation uses human–LLM-created LoCoMo, [simulated PERSONAMEM conversations](https://arxiv.org/html/2504.14225) and a curated PDR-Bench subset of 50 queries from 25 users. The latter derives from real-user interactions but is not evidence of longitudinal deployment. With GPT-4.1, reported LoCoMo F1 is 51.67 and PERSONAMEM accuracy 62.99. The report explicitly presents an initial design: single runs, no fixed seed or uncertainty statistics, variable shared infrastructure and some proprietary baselines copied from publications. Token-controlled comparison is limited to LoCoMo/GPT-4.1. PDR-Bench is already B40; do not count the subset as a new benchmark.
+
+**Resources / actual reading:** [O-Mem](https://github.com/OPPO-PersonalAI/O-Mem) and [PDR-Bench](https://github.com/OPPO-PersonalAI/PersonalizedDeepResearchBench) have Apache-2.0 repository licenses; upstream data rights remain separate. The paper’s Hugging Face link is a paper page. Read: §§3–5, evaluation caveats, version history, repository README / directory / licensing, and PERSONAMEM’s simulation description. No reproduction run.
+
+<a id="method-eclair"></a>
+### M86. ECLAIR: Enterprise clarification [Adjacent capability]
+
+[ECLAIR: Enhanced Clarification for Interactive Responses](https://arxiv.org/html/2503.15739v1) — IAAI-25 Emerging Applications, AAAI proceedings 39(28):28864–28870; read arXiv v1, 2025-03-19. [Official publication record](https://ojs.aaai.org/index.php/AAAI/article/view/35152). This is the full paper, not demonstration `2503.20791`.
+
+**Type / capability:** An adjacent enterprise clarification method, not demonstrated long-term personalization. It combines sentence-, product- and entity-ambiguity agent outputs and domain grounding to decide whether to clarify and generate a question.
+
+**Evidence / boundaries:** Evaluation uses 100 filtered hard cases from natural AEP customer queries—not random production traffic. Clarification-needed precision improves .732→.904, while recall falls .833→.635 and F1 .779→.746; macro F1 improves .520→.657. User-profile retrieval is future work. The 98% precision figure is a deployment target, not an achieved result. No longitudinal personalization benefit is established.
+
+**Resources / actual reading:** No official code or customer-data release was found in this check; the arXiv distribution license does not license such artifacts. Read: architecture, experiments, lessons, deployment sections and official publication record; searched author resources. No reproduction run.
 
 <a id="human-studies"></a>
 ## Human studies: real use and interaction
