@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **118 篇不同论文**：66 个评测条目、60 个方法条目及 8 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE 与 Searching for Privacy Risks 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **128 篇不同论文**：70 个评测条目、66 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks 与 THEANINE/TeaFarm 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B66、M16–M60、H1–H8 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B70、M16–M66、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -572,6 +572,43 @@
 
 **实读范围：** v1 §2–3、§5及Appendix A；代码/数据入口由原文提供，未独立复现或确认再利用许可。
 
+<a id="benchmark-perltqa"></a>
+### B68. 个人记忆问答 / Personal-memory QA
+
+[PerLTQA: A Personal Long-Term Memory Dataset for Memory Classification, Retrieval, and Synthesis in Question Answering](https://arxiv.org/html/2402.16288v1) — 查阅 / reviewed v1, 2024-02-26；[SIGHAN-10 2024 发表版](https://aclanthology.org/2024.sighan-1.18/)标题末段改为 / published title uses “Fusion”。
+
+
+- **阅读范围**：§§3–5、生成及验证附录；官方 README / LICENSE。
+- **输入 → 输出**：合成人物的画像、社会关系、事件、对话及问题 → 记忆类型、检索结果与答案。ChatGPT / Wikipedia 提供种子，GPT-3.5 生成并经人工检查；8,593 道 QA 覆盖 30 个人物，不是 30 名长期真人用户。
+- **测量**：分类 P/R/F1/accuracy、Recall@K、记忆锚点 MAP、模型判断的正确性 / 连贯性。
+- **边界**：合成 QA 不证明真人满意度、执行能力或隐私安全。
+- **资源**：[代码 / 数据](https://github.com/Elvin-Yiming-Du/PerLTQA)、[数据许可 CC BY-NC 4.0](https://github.com/Elvin-Yiming-Du/PerLTQA/blob/main/LICENSE.txt)。README 记录 2025-12-22 一致性修复；固定 revision，勿混同原论文数据。
+
+<a id="benchmark-personaconvbench"></a>
+### B69. 多用户对话历史 / Multi-user conversational history
+
+[A Personalized Conversational Benchmark: Towards Simulating Personalized Conversations](https://arxiv.org/html/2505.14106v2) — [NeurIPS 2025 MTI-LLM workshop（非主会 / not main conference）](https://research.adobe.com/publication/a-personalized-conversational-benchmark-towards-simulating-personalized-conversations/)；方法与实验查阅 / methods and experiments reviewed in arXiv v2, 2025-05-25。
+
+
+- **阅读范围**：§§2–4、附录 C；官方 `Latest` README 与数据卡。
+- **输入 → 输出**：十领域 Reddit 原始帖子构建的既往对话 / 用户轨迹 → 二分类标签、社区反馈分预测或下一条用户文本。
+- **测量**：accuracy/F1/MCC、回归误差、生成相似度；各任务分开比较。论文规定按时间提供历史并遮蔽目标文本，未独立审计实现。
+- **比较口径**：§C.3 的文本生成对除 Claude 外的模型生成 10 个候选，再按最高 SBERT 分选取 best-of-10；Claude 仅一个候选。因此跨模型生成分数不是相同采样预算下的单次生成比较。
+- **边界**：“sentiment” 标签来自 Reddit 评分，不是经过验证的个人情绪；历史数据评测不等于真实部署或心理支持效果。
+- **资源**：[代码](https://github.com/PERSONA-bench/PERSONA/tree/Latest)、[数据](https://huggingface.co/datasets/PERSONABench/PERSONA-Bench)。HF 标 MIT，仓库数据表却写 research-only / Reddit TOS；许可存在不一致，不能称为无限制 MIT 数据。
+
+<a id="benchmark-teafarm"></a>
+### B70. 反事实记忆压力测试 / Counterfactual memory stress test
+
+[Towards Lifelong Dialogue Agents via Timeline-based Memory Management](https://arxiv.org/html/2406.10996v3) — NAACL 2025；查阅 / reviewed v3, 2025-01-29。方法见 / method: **M65**；同一论文 / same paper。
+
+
+- **阅读范围**：§§3–5、附录 D/E/J；官方代码 / 数据入口。
+- **输入 → 输出**：MSC / Conversation Chronicles 的五会话历史、合成续话与反事实问题 → 回答；TeaBag 含 100 个原始 episode、200 对 QA 与 200 段 GPT-4 合成第六会话。
+- **测量**：正确回忆且不被错误前提误导的成功率；不与普通生成质量混为一项。
+- **边界**：人物故事是人工构造内容，不是真人终身观察；反事实问答也不是全面对抗安全认证。
+- **资源**：[代码](https://github.com/kimnamssya/Theanine)、[数据](https://huggingface.co/datasets/LangAGI-Lab/teafarm)（当前 200 行）。附录 J 指定学术 / 非商业用途；数据与上游条款仍应分别确认。
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -841,6 +878,18 @@
 **边界：** 将政策作为许可样本是构造假设，非独立法律审计；法律规范未覆盖个人、文化、伦理期待。单次评测、固定提示，未检验提示敏感性；不是运行时权限执行或专业法律判断系统。
 
 **实读范围：** ACL原文§3–5、Limitations、Ethical Considerations。代码入口来自原文；未安装或核实再利用许可。
+
+<a id="benchmark-mextra"></a>
+### B67. 记忆抽取风险 / Memory extraction risk
+
+[Unveiling Privacy Risks in LLM Agent Memory](https://arxiv.org/html/2502.13172v2) — ACL 2025 main；查阅 / reviewed v2, 2025-06-03。
+
+
+- **阅读范围**：§§2–6、限制讨论、附录 B–C；官方仓库 README / 根目录。
+- **输入 → 输出**：黑盒查询访问及不同程度的系统知识 → 从检索到的历史查询—解答记忆中抽取查询；主实验为 EHRAgent 与 RAP/WebShop，静态 200 条记忆。
+- **测量**：独立抽取数、抽取效率、检索数、完全 / 任意抽取率；每个提示最多尝试三次。记忆由数据集查询及代理生成解答构成，不是正在运行的多用户服务调查。
+- **边界**：研究设置没有用户 / 会话级记忆隔离；不能外推为隔离良好的产品同样泄漏，亦非完整隐私合规评测。
+- **资源**：[官方代码](https://github.com/wangbo9719/MEXTRA)。所查根目录 / README 未见明确总许可；上游代码与数据条款需分别确认。
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -1501,6 +1550,58 @@
 
 **实读范围：** v2 §3–4、Limitations、Ethical Considerations；代码/数据链接来自原文，未复现。不另列第二个benchmark条目。
 
+<a id="method-plus"></a>
+### M61. PLUS — 共训练用户文字摘要与个性化奖励模型
+- **论文**：*Learning to summarize user information for personalized reinforcement learning from human feedback*，ICLR 2026；arXiv v4（2026-08-26）。
+- **方法与证据**：PPO 优化用户摘要，交替训练摘要条件奖励模型；Pets/UltraFeedback 为构造偏好任务，PRISM 为既有真人对话数据。PRISM 使用1,000位用户训练，已知用户奖励预测准确率62.9%（BTL 59.8%），未见用户预测仍困难。
+- **边界**：GPT-4o 的72%胜率由依据用户自述偏好训练的 oracle 奖励模型判定，非人类投票或部署满意度；正文“308用户×2提示”与附录“906提示”不一致，不合并样本口径。online co-adaptation 指训练循环，非真实用户持续在线学习；摘要编辑是未来方向。训练对超参敏感，文字摘要不自动提供隐私保护。
+- **资源与实读范围**：[v4](https://arxiv.org/html/2507.13579v4) §§4–7、伦理/复现说明、附录F；[官方项目页](https://sites.google.com/stanford.edu/plus/home)及其[代码](https://github.com/nam630/pluralistic_user_summary_public)。代码 Apache-2.0；论文 CC BY-NC-SA 4.0。未核实完整训练权重/数据发布。
+
+<a id="method-user-profile-ablation"></a>
+### M62. Understanding the Role of User Profile — 历史响应与上下文顺序消融
+- **论文**：*Understanding the Role of User Profile in the Personalization of Large Language Models*，arXiv v1（2024-06-22）；未确认正式发表场所。
+- **方法与证据**：在LaMP六任务（排除LaMP-6）比较用户历史输入、响应、映射关系及顺序；主要使用微调 Flan-T5-base，另测冻结 Llama2-7B-chat。报告验证集结果，非不可用的隐藏测试集；没有新招募用户试验。历史响应通常贡献较大，仅保留历史响应的上下文可容纳更多记录，靠前画像在该设置影响较大。
+- **边界**：这是现有画像条件化机制分析，不是新通用执行Agent。结果限定于所测模型、任务、提示及输入长度；不能推出所有模型都应丢弃历史输入、忽略映射，或普遍存在相同位置效应。自动任务指标不等于真实用户满意度或长期适配效果。
+- **资源与实读范围**：[原文](https://arxiv.org/html/2406.17803v1) §§3–5、附录A/B；[官方代码](https://github.com/Bingo-W/Personalisation-in-LLM)。代码 MIT；论文 CC BY 4.0。既有LaMP资源不是该论文新发布的数据集。
+
+<a id="method-opencha"></a>
+### M63. openCHA — 健康范围内的个体数据与分析工具编排
+- **论文**：*Conversational health agents: a personalized large language model-powered agent framework*，JAMIA Open 8(4), ooaf067，2025-07-06；[DOI](https://doi.org/10.1093/jamiaopen/ooaf067)。早期 arXiv v5（2024-09-25）为两个演示、四用例；正式版为两个演示、五用例，不混用版本。
+- **方法与证据**：planner/executor、数据管道及外部分析工具组合个体健康记录、知识检索与多步操作。正式版总结100道糖尿病问题、500次情绪问题测试及45人既有居家监测数据的PPG心率估计；这些是不同用例，不能汇总为统一参与者试验。
+- **边界**：健康研究框架，不是治疗改善、诊断安全或长期临床部署证据。真实纵向健康数据不等于Agent进行了纵向干预。表现取决于外部来源及配置；论文明确HIPAA/GDPR合规取决于实施，框架本身不管理部署与扩展性。
+- **资源与实读范围**：[正式版](https://academic.oup.com/jamiaopen/article/8/4/ooaf067/8186991) 方法、演示/用例、Table 4与讨论；对照[v5](https://arxiv.org/html/2310.02374v5) §§3–5；[官方代码](https://github.com/Institute4FutureHealth/CHA) MIT，含文档/示例/测试。代码许可不是临床使用认证或数据再使用授权。
+
+<a id="method-scrapmem"></a>
+### M64. ScrapMem — 多模态视觉压缩与事件图记忆
+- **论文**：*ScrapMem: A Bio-inspired Framework for On-device Personalized Agent Memory via Optical Forgetting*，arXiv v2（2026-05-25）；未确认正式发表场所。
+- **方法与证据**：多模态资料汇为scrapbook pages，以事件图检索并随资料年龄降低JPEG质量/分辨率。在ATM-Bench既有四年个人资料上，No-Forget 的 Joint@10/Recall@10 为51.0/70.3；表1遗忘配置为46.9/66.1。93%节省对应 Timed-Gentle（4302.9→299.5 MiB，Joint@10 46.3），不是51.0配置。
+- **边界**：四年资料不等于四年Agent部署。Qwen3-VL-2B处理记忆，GPT-5-mini API作评判；实读实验段未报告具体终端硬件、延迟、能耗或端到端离线实测。压缩会丢失日期、时刻、地址，可能诱发错误推断；不等于安全擦除或隐私保证。
+- **资源与实读范围**：[v2](https://arxiv.org/html/2605.03804v2) §§4–5、附录B及版本信息。论文与定向搜索未确认官方代码/权重发布；arXiv永久非独占分发许可不是软件开源许可。
+
+<a id="method-theanine"></a>
+### M65. 时间线记忆 / Timeline-based memory
+
+[Towards Lifelong Dialogue Agents via Timeline-based Memory Management](https://arxiv.org/html/2406.10996v3) — NAACL 2025；查阅 / reviewed v3, 2025-01-29。评测见 / evaluation: **B70**；同一论文 / same paper。
+
+
+- **阅读范围**：§§2–6、附录 D/E/J；官方 README / 根目录。
+- **机制**：保留旧记忆，以时间及关系连接图节点；检索完整时间线、按当前对话精炼后辅助生成。
+- **证据**：MSC / Conversation Chronicles 上的自动、模型与人工评测及消融；TeaFarm 另测反事实问题下的记忆使用。
+- **边界**：“lifelong” 是系统目标，不是终身真人研究；保留旧记忆不解决撤回同意、删除及权限隔离。
+- **资源**：[官方代码](https://github.com/kimnamssya/Theanine)。所查根目录未见独立代码 LICENSE；论文附录的非商业数据条款不应自动解释为代码授权，项目网站模板许可也不等于研究资源许可。
+
+<a id="method-ariel"></a>
+### M66. 脑电辅助情绪适配 / EEG-assisted emotional adaptation
+
+[ARIEL: Brain-Computer Interfaces meet Large Language Models for Emotional Support Conversation](https://iris.uniroma1.it/handle/11573/1727073) — UMAP **Adjunct** ’24, pp.601–609；DOI 10.1145/3631700.3665193。
+
+
+- **阅读范围**：机构记录及所附出版 PDF §§3–5。
+- **机制**：脑电分类得到的情绪标签与文本消息，经硬提示模板输入 LLaMA 2 Chat。
+- **证据**：组件研究采集 30 人、每人 40 个音乐视频试次的 Muse 2 EEG；论文报告知情同意及匿名化。LOSO 与五折调参下，SVM 分情绪（per-emotion）准确率分别为 Happy .77、Angry .78、Sad .76、Relaxed .80；端到端对话仅提供受控真实会话示例。
+- **边界**：分类准确率不是心理支持疗效；in-vivo 系统评估仍列为未来工作。不得将推断标签写成对真实心理状态的可靠读取或临床有效性。
+- **资源**：上述机构 PDF 为 all rights reserved；所查来源未找到官方代码 / 数据发布。作者所述隐私处理不等于独立安全审计。
+
 <a id="human-studies"></a>
 ## 人机研究：真实使用与互动
 
@@ -1570,6 +1671,13 @@
 - **方法与证据**：约一周田野研究（流程允许 7–10 天），26 人完成田野阶段，分析 22 人的资料，结合日记、访谈与设计活动；研究用户如何定制情感支持角色、头像和 TTS 输出。**不支持语音输入**。
 - **边界**：设计探针，不是心理健康疗效试验；短期、亚洲文化样本不能证明长期获益。可调记忆是受访者提出的设计机会，不应写成已实现功能。研究团队访问控制与云端存储描述不构成安全保证。
 - **资源与实读范围**：[论文](https://arxiv.org/html/2504.12943v2) §§3–4、6–8；[作者原型页](https://xizhengxi.com/prototypes.html)。未确认官方代码/数据发布或软件许可；arXiv 分发许可不等于开源许可。
+
+<a id="human-financial-advisors"></a>
+### H9. Personalized Financial Advisors — 偏好获取、建议质量与主观信任
+- **论文**：*Are Generative AI Agents Effective Personalized Financial Advisors?*，SIGIR 2025；arXiv v2（2025-04-15）。
+- **方法与证据**：Llama-3.1-8B 先通过对话获取偏好，再讨论四只股票；比较非个性化/个性化及外向/尽责人格。招募64人，分析保留60人（个性化29人、人格31人）。参与者扮演三个专家设计的投资者画像，并非表达自己的真实投资需求。专家偏好获取对照每画像3名参与者。
+- **边界**：测偏好获取准确率、与专家资产排序的相关性及信任/满意度，不测真实交易收益或长期理财效果。错误偏好获取可能导致不适配建议；外向人格较受喜欢不等于建议更好。单校受控角色扮演不能支持替代专业顾问的结论。
+- **资源与实读范围**：[原文](https://arxiv.org/html/2504.05862v2) §§3–5、结论及版本信息；[官方补充仓库](https://github.com/TTsamurai/LLMAdvisor_supplementary) 的画像、提示词及分析脚本说明。仓库 README 声明 MIT；所读 arXiv v2 为 CC BY 4.0（不代表 SIGIR 出版版许可）。未核实完整原始参与者数据发布。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
