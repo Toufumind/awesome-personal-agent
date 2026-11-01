@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **154 distinct papers**: 81 evaluation entries, 86 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, and DAM/DABench each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **162 distinct papers**: 83 evaluation entries, 92 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, and DAM/DABench each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B81, M16–M86, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B83, M16–M92, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -693,6 +693,13 @@ PersonaMem-Evo generates interaction histories and evolving preferences from syn
 - **Measurement and limits**: GPT-4 ratings of accuracy, coherence, memory reference, emotional resonance, personalization and fluency do not establish real emotional improvement, clinical benefit or an unbiased judge.
 - **Resources**: Appendix prompts/parameters are partial: A.3.2 does not supply the complete simulated-session generation prompt, so full reproducibility is not established. No official code/data release or artifact license located. Method/benchmark entries count as one paper.
 
+<a id="benchmark-tripcraft"></a>
+### B82. Persona-conditioned travel planning
+
+**TripCraft: A Benchmark for Spatio-Temporally Fine Grained Travel Planning** — ACL 2025 Long Papers; version: 2025.acl-long.834 (arXiv alias 2502.20508). [Publication](https://aclanthology.org/2025.acl-long.834/) | [Code and access terms](https://github.com/Soumyabrata2003/TripCraft)
+
+**Benchmark.** Evaluates persona-conditioned itineraries using temporal, spatial, ordering and preference metrics. Reviewed §3–4, limitations and official README. Its 1,000 queries combine real-world place data with constructed queries/personas and adjusted flight dates; human-refined references are not real-traveler validation. Embedding-based persona similarity does not establish satisfaction. No booking execution or authorization is tested. Data require application; internal research/commercial use and modification are permitted. Modifications must retain the paper citation and README; redistribution outside the requesting organization is prohibited. No root code license confirmed.
+
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
@@ -1021,6 +1028,13 @@ Contains 44,100 synthetic cases across eight domains and dialogue/email formats,
 **Resources:** Official downloadable code/data and asset licenses remain unverified. Paper license: CC BY-NC-SA 4.0.
 
 **Verification date / actually read:** 2026-11-01; version page; Benchmark, Dataset, Experiments, Limitations; relevant response-evaluation appendix passages. No reproduction run.
+
+<a id="benchmark-confaide"></a>
+### B83. Contextual privacy
+
+**Can LLMs Keep a Secret? Testing Privacy Implications of Language Models via Contextual Integrity Theory** — ICLR 2024 Spotlight; reviewed version: arXiv 2310.17884v2 (2024-06-28). [Paper v2](https://arxiv.org/html/2310.17884v2) | [Code and data](https://github.com/skywalker023/confaide) | [MIT license](https://github.com/skywalker023/confaide/blob/main/LICENSE)
+
+**Benchmark.** Four tiers assess sensitivity, contextual information flow, secret sharing and meeting-output disclosure. Reviewed §3–5, annotation/metric appendices and repository license. Scenarios are templated/model-generated; tiers 1–3 have human annotations, while Tier 4 uses synthetic meeting transcripts rather than private meeting records. The 39%/57% GPT-4/ChatGPT result is **mean Tier-4 summary leakage across 10 runs with privacy-preserving instructions**, not worst-case leakage. Relevant to personal-assistant privacy, but not a personalization method, access-control mechanism or consent guarantee. Official repository: MIT.
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -1963,6 +1977,70 @@ Records append-only patches only for non-additive revisions, overwrites, or rein
 **Evidence / boundaries:** Evaluation uses 100 filtered hard cases from natural AEP customer queries—not random production traffic. Clarification-needed precision improves .732→.904, while recall falls .833→.635 and F1 .779→.746; macro F1 improves .520→.657. User-profile retrieval is future work. The 98% precision figure is a deployment target, not an achieved result. No longitudinal personalization benefit is established.
 
 **Resources / actual reading:** No official code or customer-data release was found in this check; the arXiv distribution license does not license such artifacts. Read: architecture, experiments, lessons, deployment sections and official publication record; searched author resources. No reproduction run.
+
+<a id="method-alignx"></a>
+### M87. User-level preference alignment
+
+**From 1,000,000 Users to Every User: Scaling Up Personalized Preference for User-level Alignment** — ACL 2026 Long Papers, 2026.acl-long.1391; also reviewed arXiv 2503.15463v3 (2025-05-22). [Publication](https://aclanthology.org/2026.acl-long.1391/) | [arXiv v3](https://arxiv.org/html/2503.15463v3) | [New code repository](https://github.com/AntResearchNLP/AlignX-Family) | [Standalone repository](https://github.com/JinaLeejnl/AlignX) | [Dataset card](https://huggingface.co/datasets/JinaLeejnl/AlignX)
+
+**Method/data.** AlignX supports persona-conditioned and preference-bridged AlignXpert alignment. Reviewed arXiv v3 §3–7 and limitations/ethics appendices, final ACL 2026 results/limitations/ethics, repositories and dataset card. Over 1.3M constructed examples are not that many verified users; forum/alignment sources underpin assembled/generated personas. Offline accuracy and model judging do not establish longitudinal adaptation or action authorization. Identifier removal/PII filtering are not consent or privacy guarantees. HF advertises MIT for data; root code licensing remains unconfirmed. Keep paper totals separate from current viewer counts.
+
+<a id="method-caffeine"></a>
+### M88. Context-aware persona refinement
+
+**Commonsense-augmented Memory Construction and Management in Long-term Conversations via Context-aware Persona Refinement** — EACL 2024 Short Papers, 2024.eacl-short.11; reviewed arXiv 2401.14215v3 (2024-02-12). [Publication](https://aclanthology.org/2024.eacl-short.11/) | [Paper v3](https://arxiv.org/html/2401.14215v3) | [Code](https://github.com/ktio89/Caffeine-Persona-Refinement)
+
+**Method.** COMET expansion, an NLI contradiction graph and LLM resolution/disambiguation/preservation refine persona memory. Reviewed §2–3 methods/experiments, §6–7 limitations/ethics, human-evaluation appendix and repository. MSC/Persona-Chat contains human-authored benchmark dialogues, not verified autobiographical histories. Response judging samples 50 responses; refinement judging retains 89 pairs after screening. Commonsense/NLI errors create a plausible false-profile risk; user confirmation, memory-disclosure permissions and external actions are not evaluated. Code is accessible, but no root license is confirmed; paper licensing does not license code.
+
+<a id="method-memochat"></a>
+### M89. MemoChat
+
+**MemoChat: Tuning LLMs to Use Memos for Consistent Long-Range Open-Domain Conversation** | 2023, arXiv 2308.08239v2 (2023-08-23; formal venue unverified). **Scope: transferable conversational memory, not an external-action agent.** Structured topic/summary/dialogue memos support iterative memorization, retrieval and response generation. Its 54 MT-Bench+ checks are expert-constructed from expanded and combined MT-Bench dialogues; downstream consistency is GPT-4 judged, not longitudinal evidence from personal users or completed tasks. Experiments use a 2k context setting; reported challenges include prompt copying, catastrophic forgetting and prompt-order sensitivity. Code, data, training/testing/judging scripts and weight links are available. **Code is MIT; model weights are declared CC-BY-NC-SA-4.0.** Reproduction was not executed.
+
+Sources:
+- [Exact version and metadata](https://arxiv.org/abs/2308.08239v2)
+- [Original method and evaluation, §§3–4 and Appendix C](https://arxiv.org/html/2308.08239v2)
+- [Author repository: artifacts and distinct code/model licenses](https://github.com/LuJunru/MemoChat)
+
+Actual inspection: version page; original method, training-instruction, experimental-setup, evaluation and challenge passages; repository directory and README workflow, weights and licensing statements. Weights were not downloaded/validated, scripts were not run, and training data were not audited item by item.
+
+<a id="method-safari"></a>
+### M90. SAFARI / KBP
+
+**Large Language Models as Source Planner for Personalized Knowledge-grounded Dialogues (SAFARI)** | Findings of EMNLP 2023, pp. 9556–9569; inspected arXiv 2310.08840v1 (2023-10-13). **Scope: knowledge-source planning under persona–knowledge dependencies; KBP is the accompanying dataset, not a separate paper.** Source selection, retrieval and response assembly use dependency relationships supplied in advance. KBP contains 2,477 Chinese dialogues and 24,554 utterances; annotators author both roles using assigned system personas and knowledge, rather than recording natural personal-user deployment. Human evaluation covers 100 responses per model with three annotators and excludes planning effects from that comparison. **The automated metrics have a separate test-selection risk: Appendix C evaluates the NLI model on the KBP test set every 500 training iterations, retains the checkpoint with the highest test performance, and uses it to compute P.C/K.C. Automated consistency scores may therefore be optimistic; this is not an untouched-test evaluator. This caveat concerns NLI-based metrics, not the separately reported human ratings above.** Limitations include cascading errors, retrieval noise, outdated knowledge and untested source types. **Source calls are not external actions or authorization validation.** The author repository contains data and implementation directories, but no root license was found and GitHub license metadata is null. Reuse permission remains unverified; no reproduction was run.
+
+Sources:
+- [Formal venue, canonical plural title and DOI 10.18653/v1/2023.findings-emnlp.641](https://aclanthology.org/2023.findings-emnlp.641/)
+- [Exact arXiv version; abstract-page title uses singular Dialogue](https://arxiv.org/abs/2310.08840v1)
+- [Original data collection, method, evaluation and limitations, §§3–6, Limitations, Ethics Statement and Appendices C/E](https://arxiv.org/html/2310.08840v1)
+- [Author repository, default branch master](https://github.com/hrwise-nlp/SAFARI)
+
+Actual inspection: formal publication metadata; arXiv data-collection, method, evaluation and limitation sections, plus Appendix C on NLI checkpoint selection and Appendix E on human/NLI evaluation differences; repository root, README and GitHub license metadata. Verified the presence of kbp.zip, lora, tools and unsupervised; did not unpack the dataset or execute the implementation.
+
+<a id="method-unims-rag"></a>
+### M91. UniMS-RAG
+
+**UniMS-RAG: A Unified Multi-source Retrieval-Augmented Generation for Personalized Dialogue Systems** | 2024, arXiv 2401.13256v3 (2024-11-26; formal venue unverified). **Scope: unified source selection, relevance evaluation and personalized response generation.** Acting/evaluation tokens support joint training; relevance and NLI consistency guide iterative evidence/response refinement. Evaluation uses DuLeMon Both and KBP, involving user personas, system personas and external knowledge—not uniformly personal-user memory. “Acting” selects retrieval sources; **it does not demonstrate authorized external execution.** Human evaluation uses 100 responses per dataset/model and three annotators, with approximately 82% agreement. **Important caveat: §V-D selects the NLI evaluator checkpoint by its highest KBP test-set performance. Automated consistency scores may therefore be optimistic; this is not an untouched-test evaluator.** A dedicated official implementation and its license were not verified. Training details and upstream code links are provided; reproduction was not executed.
+
+Sources:
+- [Exact version and metadata](https://arxiv.org/abs/2401.13256v3)
+- [Original method, datasets and metrics, §§IV–V; evaluator selection §V-D; human evaluation §VII-D](https://arxiv.org/html/2401.13256v3)
+
+Actual inspection: version page; original method, datasets, metrics, training/evaluator-selection, main-result and human-evaluation passages; targeted searches for an official implementation and venue. No dedicated official implementation was verified; this does not establish that none exists. No evaluator retraining or independent score reproduction was performed.
+
+<a id="method-vaiage"></a>
+### M92. Vaiage
+
+**Vaiage: A Multi-Agent Solution to Personalized Travel Planning** | 2025, arXiv 2505.10922v1 (2025-05-16; formal venue unverified). **Scope: a multi-agent travel-planning prototype grounded in stated user constraints and external map/weather data.** It generates attractions, routes and budgets with interactive adjustment. Quantitative results primarily use **GPT-4/GPT-3.5 proxy judges**; 8.5/10 is not observed user satisfaction. Human-in-the-loop and qualitative claims do not establish a clearly specified participant sample and human-study protocol. The abstract and main text describe the no-API variant’s 6.8 differently, so avoid treating it as an unambiguous overall score. Booking integration and long-term personalization are future work: **real booking completion and authorization safety are not established.** Public application/evaluation artifacts exist, but no root license was found and GitHub license metadata is null. Multiple API credentials are required; reuse permission and complete reproducibility remain unverified.
+
+Sources:
+- [Exact version and metadata](https://arxiv.org/abs/2505.10922v1)
+- [Original architecture and interface, §§3–4; evaluation §5; future booking integration §6](https://arxiv.org/html/2505.10922v1)
+- [Author repository and dependency/setup documentation](https://github.com/Binwen6/Vaiage)
+- [Inspected evaluation sample: four-day request, two itinerary day objects, score 9](https://github.com/Binwen6/Vaiage/blob/main/evaluation%20score.txt)
+- [Evaluation directory; existence verified](https://github.com/Binwen6/Vaiage/tree/main/evaluation)
+
+Actual inspection: version page; original architecture, user-flow, evaluation and conclusion passages; repository directory, README, license metadata and evaluation score.txt. That sample requests four days but contains only two itinerary day objects and still receives 9/10: a concrete warning about judge reliability, not an estimated population error rate. evaluation/eval.json could not be retrieved: connector HTTP 400 (too large or unsupported), followed by a web cache miss. Complete human-evaluation data inspection is not claimed. The system was not installed, executed or independently reproduced.
 
 <a id="human-studies"></a>
 ## Human studies: real use and interaction
