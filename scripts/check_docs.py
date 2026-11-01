@@ -108,14 +108,43 @@ PAPER_SECTIONS = {
     'user-understanding-methods': 'M', 'planning-action-methods': 'M',
     'proactive-clarification-methods': 'M', 'privacy-safety-methods': 'M',
 }
+PAPER_SECTION_ALIASES = {
+    'agent-methods': 'planning-action-methods',
+    'personalization-methods': 'user-understanding-methods',
+}
 PAPER_ENTRY = re.compile(r'^###\s+([BMH][1-9]\d*)\.\s+')
 REVIEW_LABEL = re.compile(r'^\s*\*\*(?:待审\s*[：:]|English review\s*:)\*\*', re.I | re.M)
+
+
+def check_section_aliases(text, name):
+    """Legacy aliases must share the canonical section's immediate anchor group."""
+    errors, anchors = [], []
+    for line in text.splitlines():
+        anchor = re.fullmatch(r'\s*<a id="([^\"]+)"></a>\s*', line)
+        if anchor:
+            anchors.append(anchor[1])
+            continue
+        if not line.strip():
+            continue
+        for alias, canonical in PAPER_SECTION_ALIASES.items():
+            if alias in anchors and (canonical not in anchors
+                    or not re.match(r'^##\s+', line)
+                    or [a for a in anchors if a in PAPER_SECTIONS][-1] != canonical):
+                errors.append(f'{name}: section alias #{alias} must immediately precede '
+                              f'its H2 with canonical #{canonical}')
+        anchors = []
+    # A trailing alias group has no heading to bind to.
+    for alias, canonical in PAPER_SECTION_ALIASES.items():
+        if alias in anchors:
+            errors.append(f'{name}: section alias #{alias} has no following H2 '
+                          f'for #{canonical}')
+    return errors
 
 
 def paper_catalog(text, name):
     """Read current PAPERS conventions; IDs need not appear in numerical order."""
     text = visible_text(text)
-    errors, entries, order = [], {}, []
+    errors, entries, order = check_section_aliases(text, name), {}, []
     section, pending_anchor, current = None, None, None
     if REVIEW_LABEL.search(text):
         errors.append(f'{name}: forbidden review label')
