@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **170 篇不同论文**：86 个评测条目、99 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **176 篇不同论文**：86 个评测条目、105 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory 与 EvoArena/EvoMem 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B86、M16–M99、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B86、M16–M105、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -1343,6 +1343,39 @@ AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐�
 - **资源与权利**：[官方仓库](https://github.com/tml1026/Lifelong-Personalized-Agent)已公开代码、生成脚本和data文件；root/README未见LICENSE；复用权利、完整benchmark一致性和复现未核，不应仅复述摘要的未来发布承诺。
 - **实际阅读范围**：元数据、§§3–4相关段落、表1–2、§6、仓库README/root/data目录；未运行代码、逐条审计数据或核实真人种子同意流程。
 
+<a id="method-finpersona"></a>
+### M101. FinPersona：金融偏好对话 demo
+
+**类型：方法/系统；金融研究原型，人评证据有限。** 对话获取投资偏好、形成画像，再结合股票信息讨论单一目标股票。Big Five 设置控制的是顾问人格，不是推断用户人格。20 名外部用户的初步评测缺少详细协议和量化结果，不能支持投资收益、情绪健康改善或安全部署结论。历史金融资料需要持续更新；RAG 被列为扩展方向。论文提醒用户核实信息并咨询专业金融顾问。未核实代码、数据许可或详细隐私治理。
+
+**版本与资源：** ECIR 2025 conference demonstration，Volume V，pp.13–18，DOI [10.1007/978-3-031-88720-8_3](https://doi.org/10.1007/978-3-031-88720-8_3)。[作者发表记录](https://javiersanzcruza.github.io/pubs)提供作者稿、视频与海报。出版商 DOI 本次工具访问失败，会议记录与作者稿已核实；不要将其他同名 FinPersona 项目合并。
+
+**实际阅读范围：** [六页作者稿](https://javiersanzcruza.github.io/assets/papers/ecir2025_demo.pdf)，尤其 §§2–3、脚注4–5；作者发表记录。没有将 demo 当作收益或临床有效性研究。
+
+<a id="method-cue-cot"></a>
+### M103. Cue-CoT：用户状态推断
+
+[Cue-CoT: Chain-of-thought Prompting for Responding to In-depth Dialogue Questions with LLMs](https://arxiv.org/html/2305.11792v2) — 实际阅读 arXiv v2，2023-10-15；发表于 [Findings of EMNLP 2023](https://aclanthology.org/2023.findings-emnlp.806/)。
+
+**实际阅读：**摘要、§§3–5、局限相关段落；官方 README/根目录。
+
+- **机制：**推断人格、情绪、心理线索后生成回应；O-Cue 同次输出，M-Cue 分步推断并选示例。
+- **证据：**六个中英数据集、五模型。人格对话由 ChatGPT 基于 Quora/Zhihu 问答种子推断人格并续写；其余四个数据集复用既有语料。主要用 ChatGPT 对 helpfulness/acceptability 成对评判胜率；三名硕士对每数据集100对回答进行人评，以核验自动评分一致性。
+- **边界：**未直接验证中间推断正确性；存在提示/顺序敏感性。不是持久画像准确性、人格诊断或临床疗效证据。
+- **资源/许可：**[官方仓库](https://github.com/hrwise-nlp/Cue-CoT)提供 benchmark/demo；README 的3k公开数据说明同时排除 PsyQA，生成/评测代码仍标“即将发布”。数据限研究，遵守上游政策；未建立论坛用户同意证据。
+
+<a id="method-pag"></a>
+### M104. 摘要增强个性化（综述简称 PAG）
+
+[Integrating Summarization and Retrieval for Enhanced Personalization via Large Language Models](https://arxiv.org/html/2310.20081v1) — v1，2023-10-30；[官方出版页](https://www.amazon.science/publications/integrating-summarization-and-retrieval-for-enhanced-personalization-via-large-language-models)列 CIKM 2023 Personalized Generative AI workshop。PAG 非所读原文明确命名。
+
+**实际阅读：**摘要、§§2–4、表1–3及官方出版页。
+
+- **机制：**离线任务相关摘要＋运行时 BM25 检索，微调 FlanT5-base。
+- **证据：**LaMP 六个公开任务、用户隔离划分，排除私有 LaMP-6；三次实验均值。75%指检索条目4→1，不是总 token 或成本；五任务相当/更好，LaMP-4较差。
+- **边界：**作者承认任务狭窄；语音助手是应用动机，不是线上部署或真实用户收益证明；未建立跨应用画像授权或临床验证证据。
+- **资源/许可：**未核实论文专属官方代码；使用 LaMP 不产生新 benchmark。论文 CC BY-SA 4.0 不替代数据/模型许可。
+
 <a id="memory-methods"></a>
 ## 方法：记忆与长期状态
 
@@ -1785,6 +1818,38 @@ persona 分类过滤、用户/机器人分库、相似度去重替换、上下�
 2510.07925v1报告**五天pilot**；IJCAI-26后续概述另述**三周探索研究**。不得移植时长/显著性结论或未经核验合并报告。**参与者是否重叠未知。** 本次仅读2510元数据、摘要/§2.2及IJCAI网页相关段落，未独立复核三周样本或统计。
 
 IUI 2026 DOI线索 `10.1145/3742413.3789222`；ACM fetch返回403。venue以官方IJCAI引用支持，不声称读过出版全文或已建立版本内容等价。
+
+<a id="method-hltm"></a>
+### M100. HLTM：企业相邻的个人化语义记忆
+
+**类型：方法/系统；企业招聘场景，不是通用个人生活代理。** 按业务权限组织树状记忆，结合多视图检索、溯源和增量更新。评测包含真实生产日志衍生的专家标注数据及 LongMemEval-s；线上反馈比较不是已证实的随机实验。租户隔离结果只适用于文中测试，不能外推为全面隐私保证。区分查询响应时延与完整增量索引耗时，不能将架构中的分钟级更新窗口当作整个索引实测刷新时间。
+
+**版本与资源：** [arXiv 2604.26197v3](https://arxiv.org/abs/2604.26197v3)，2026-05-30；KDD 2026 Applied Data Science track。论文 CC BY-NC-ND 4.0 不代表软件许可；未在已读材料中核实公开实现或内部招聘数据集。
+
+**实际阅读范围：** [原文](https://arxiv.org/html/2604.26197v3) §§3–6、Tables 1–3/6–8、Appendices C–D；版本/会议信息页。未声称逐页全文审计。
+
+<a id="method-comedy"></a>
+### M102. COMEDY / Dolphin：长期对话压缩
+
+**类型：方法/系统；记忆压缩与个性化对话。** 统一模型完成记忆提取、压缩和回复生成，采用混合任务训练及 DPO。Dolphin 源于真实 X Eva 用户—角色交互，但训练标注和回复经过 GPT-4-Turbo 生成及人工修订，不能称为纯真人语料。评测主要是离线记忆指标和对话人评，不证明生产效率或健康效益。作者声明去标识化；未查明明确同意流程，不能把作者声明当作独立隐私验证。
+
+**版本：** [COLING 2025 条目](https://aclanthology.org/2025.coling-main.51/)，pp.755–773，元数据标题为“Compress to Impress: Unleashing the Potential of Compressive Memory in Real-World Long-Term Conversations”；[所链接 PDF](https://aclanthology.org/2025.coling-main.51.pdf)首页为“Beyond Retrieval: Embracing Compressive Memory in Real-World Long-Term Conversations”。[arXiv 2402.11975v2](https://arxiv.org/abs/2402.11975v2)为 2024-07-01，五名作者；COLING 六名作者，须保留版本差异。
+
+**资源：** [官方代码](https://github.com/nuochenpku/COMEDY)可访问，但完整训练/测试集开放情况未证实：train 链接指向作者主页，test 为无链接占位。根目录未见项目许可文件；[DPO 数据卡](https://huggingface.co/datasets/Nuo97/Dolphin-DPO)为空、viewer 不可用。[7B](https://huggingface.co/Nuo97/COMEDY_7B)、[13B-DPO](https://huggingface.co/Nuo97/COMEDY_13B_DPO)模型卡及 DPO 卡标注 Apache-2.0，不构成全项目或基座模型许可清查。
+
+**实际阅读范围：** COLING PDF §§2–3、limitations/ethics、Appendices B–F；Anthology/arXiv 元数据；官方代码 README、数据与模型卡。未下载审查完整语料或权重。
+
+<a id="method-malp"></a>
+### M105. MaLP / DPeM：医疗个性化记忆
+
+[LLM-based Medical Assistant Personalization with Short- and Long-Term Memory Coordination](https://arxiv.org/html/2309.11696v3) — 实际阅读 arXiv v3，2024-04-04；发表于 [NAACL 2024](https://aclanthology.org/2024.naacl-long.132/)；[v1旧题名](https://arxiv.org/abs/2309.11696v1)为 *Memory-Augmented LLM Personalization with Short- and Long-Term Memory Coordination*，同篇只计一次。
+
+**实际阅读：**摘要、§§2–4、附录A/B、版本记录；官方 README/根目录。
+
+- **机制：**工作/短期/长期记忆协调，频次阈值迁入长期记忆，结合领域适配与用户 LoRA。
+- **证据：**画像来自 Medical-Dialogue-System，再经模型自聊；医疗领域适配使用 HealthCareMagic-100k/iCliniq。60模拟用户、10,920段自聊对话；QA、偏好分类、回应胜率。两名医学背景硕士筛查100个数据样本，94%未发现安全问题；另由两名硕士评100对回应，用于核验自动评分一致性。
+- **边界：**94%仅是小规模数据样本安全筛查，不是临床安全、患者结局或疗效证明。非真实患者纵向试验；长期记忆未展示删除/更正/同意治理。
+- **资源/许可：**[官方仓库](https://github.com/MatthewKKai/MaLP)展示数据、生成/记忆/训练代码；LICENSE 为 MIT，但 README 的 License 节另称研究用途。两信号不可推定无限商用，也不证明上游医疗语料/模型权利、患者同意及商业授权链完整。
 
 <a id="agent-methods"></a>
 <a id="方法-b规划工具反思主动性与协作"></a>
