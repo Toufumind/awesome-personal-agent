@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **78 distinct papers**: 48 evaluation entries and 42 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, and PrivacyLens-Live/PrivacyChecker each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **88 distinct papers**: 55 evaluation entries and 48 method entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, and PENGUIN/RAISE each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B48 and M16–M42 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B55 and M16–M48 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -237,7 +237,7 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 
 [Personal Large Language Model Agents: A Case Study on Tailored Travel Planning](https://aclanthology.org/2024.emnlp-industry.37/) — EMNLP 2024 Industry Track. Title follows ACL metadata; the PDF ends with Tailored Travel Planners.
 
-**Checked / reading scope:** 2026-11-01; abstract, §1, §4.2 and result tables; draft, not reproduced.
+**Checked / reading scope:** 2026-11-01; abstract, §1, §4.2 and result tables; not reproduced.
 
 - **Input → output:** User models, personal queries and travel information → personalized itineraries.
 - **Measures:** Delivery, constraint and final pass rates; separately, judge preference between personal and generic plans.
@@ -249,7 +249,7 @@ These benchmarks directly involve user history, preferences, or proactive help. 
 
 [Inferring the Unspoken: Aligning Embodied Agents with Implicit Preferences](https://arxiv.org/abs/2502.00858v4) — First submitted 2025; v4, 2026-09-08, marked EMNLP 2026 on arXiv. Earlier title: Learning to Plan with Personalized Preferences. Method: M17.
 
-**Checked / reading scope:** 2026-11-01; v4 abstract and version history only; preliminary draft.
+**Checked / reading scope:** 2026-11-01; v4 abstract and version history only; preliminary review.
 
 - **Input → output:** Demonstrations and new situations → preference-aligned embodied plans; 5,000 evaluation groups, 290 preferences.
 - **Measures:** Compares given versus inferred preferences; exact metrics remain unverified.
@@ -437,6 +437,67 @@ Same paper as M31; do not count twice. [Original paper](https://arxiv.org/html/2
 - **Limits:** synthetic data undergo model-based and human checks; evaluation focuses on static generated calls, not completed transactions, longitudinal household deployment or open-ended multi-turn execution. Longest-hop cases are sparse; argument correctness proves neither authorization nor execution.
 - **Resources:** [official code/data](https://github.com/yxzwang/FamilyTool). Root LICENSE returned 404 and repository license metadata was null: **reuse license unconfirmed**. Check upstream MTU-Bench / UnifiedToolHub terms separately.
 
+<a id="benchmark-compass"></a>
+### B49. Feasibility versus preference optimization
+
+[COMPASS](https://arxiv.org/html/2510.07043v2) — inspected v2, April 16, 2026; venue unverified.
+
+**Read:** §§3–6, Appendix H and repository documentation/license; not executed.
+
+- Evaluates 281 travel-planning tasks with tools and simulated users.
+- FR measures hard-constraint feasibility; OR-A% measures whether a solution ranks within the top A% of feasible solutions by utility. These are distinct, and OR-A% need not mean exact optimality. Real-source catalogs and simulator annotation do not demonstrate real bookings or user benefit.
+- [Repository](https://github.com/sunnytqin/compass) has an MIT root license; database completeness and third-party rights remain unaudited.
+- **Deduplication:** Repository acronym expansion denotes the same work; no separate method entry needed.
+
+<a id="benchmark-aware-us"></a>
+### B50. Preference-aware infeasible-query repair
+
+[AWARE-US](https://arxiv.org/html/2601.02643v2) — inspected v2, March 1, 2026; acceptance unverified.
+
+**Read:** §§3–7, Tables 1–5, repository and dataset card; not executed.
+
+- Tests clarification and repair on 122 synthetic-persona car queries.
+- In Table 5, the SFT+DPO-trained Qwen3-8B local-weighting method achieves 48% Car match. This metric is gated on correct constraint relaxation; that does not establish that correctly relaxed cases form its denominator. It is not satisfaction. Conflicting S2/S3 labels require reconciliation before quoting subgroup results. Testing is limited to structured car queries and static preferences; preference drift is outside scope.
+- [Code](https://github.com/mhtkrmz/Infeasible-task) and [dataset](https://huggingface.co/datasets/MehmetKurmaz/AWARE-US) are accessible; reuse licenses unconfirmed.
+- **Deduplication:** Weighting/ranking methods may cross-link here; count the paper once. Inferred preferences do not authorize relaxing real hard constraints.
+
+
+<a id="benchmark-ptbench"></a>
+### B51. PTBench · Personal preferences in tool selection and parameters
+
+[Advancing and Benchmarking Personalized Tool Invocation for LLMs](https://arxiv.org/html/2505.04072v1) — preprint, v1, 2025-05-07. Same paper as M46; count once.
+
+**Actual reading scope:** §§3–4 and §5.1–5.3, especially Tables 1–2; official repository file listing and README. Remaining appendices not comprehensively inspected.
+
+- **Input → output:** user profile/behavior, query and candidate APIs → preferred platform and parameterized calls.
+- **Measures/evidence:** 1,083 human-verified synthetic test examples; 80 profiles, 360 APIs, five domains; six held-out profiles. Separately measures platform, query/profile parameters and complete output accuracy.
+- **Limits:** human checking is not naturalistic user interaction. Static generated calls do not establish successful transactions, authorization or longitudinal adaptation. Table 1 is internally inconsistent: its train 7,096 plus test 1,083 equals 8,179, not the printed total 8,197. Dataset-total prose is also inconsistent. Preserve labeled split counts and flag the unresolved total; do not treat the whole table as reconciled ground truth.
+- **Resources:** [official code/test data](https://github.com/hyfshadow/PTBench); training/model release and reuse license unverified.
+
+<a id="benchmark-pal-bench"></a>
+### B52. PAL-Bench · Requirements and preferences from long-term personal histories
+
+[Mem-PAL: Towards Memory-based Personalized Dialogue Assistants for Long-term User-Agent Interaction](https://arxiv.org/html/2511.13410v2) — v2, 2025-11-26; AAAI 2026 Oral. Same paper as M47.
+
+**Actual reading scope:** PAL-Bench construction/tasks, H²Memory framework and Experiments, including external validation; repository README and file listing. Appendices were sampled, not comprehensively read.
+
+- **Input → output:** behavioral logs plus dialogue history → restated requirements, proposed/selected solutions, multi-turn responses.
+- **Measures:** BLEU, GPT-4 implicit-need judgments, solution-selection scores and pairwise dialogue judgments.
+- **Boundary:** PAL-Set has 100 synthetic users, approximately 29 sessions and 9.4 simulated months each; human verification does not make this a longitudinal user study. Multi-turn users are simulated by an LLM. External validation covers only LongMemEval’s single-session-preference subset and uses the dialogue components (Topic Outline + Principle), not the complete four-component system.
+- **Resources/language:** [official code/data](https://github.com/hzp3517/Mem-PAL). README identifies the English version as a DeepSeek-V3 translation without item-by-item human verification. Appendix B states an intended PAL-Set release under CC BY-NC 4.0; this author statement uses future-release wording and is separate from verifying the distributed dataset’s terms or the implementation’s license. Repository reuse-license verification remains incomplete.
+
+<a id="benchmark-memento"></a>
+### B53. MEMENTO · Applying personal memories to embodied tasks
+
+[Embodied Agents Meet Personalization: Investigating Challenges and Solutions Through the Lens of Memory Utilization](https://arxiv.org/html/2505.16348v4) — v4, 2026-02-13; ICLR 2026.
+
+**Actual reading scope:** §§3–4, overview of memory-design contribution, Appendix A.1–A.2; author project and repository README. Detailed §6 algorithm/ablations and extended Appendix E were not comprehensively read; method cross-index remains provisional.
+
+- **Input → output:** personal object meanings/routines and episodic memories → object-rearrangement actions.
+- **Measures:** matched acquisition/utilization goals, single/joint memories, percent complete, success rate and planning cost; 438 episodes across 12 Habitat scenes with generated personal knowledge.
+- **Boundary:** main setting guarantees gold memories among retrieved candidates and oracle perception/motor skills. It isolates memory utilization, not unconstrained retrieval or real-world robot reliability. Synthetic users, no conversational clarification. GPT-4o joint-memory success drops 30.5 percentage points relative to its matched acquisition baseline.
+- **Resources/identity:** [official repository](https://github.com/Connoriginal/MEMENTO), MIT repository with Habitat/PARTNR dependencies. README’s older subtitle “Exploring Memory Utilization for Personalized Assistance” denotes the same paper.
+
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
@@ -560,7 +621,7 @@ These can test a personal assistant's ability to act, but most are **general-age
 
 [Ask-before-Plan: Proactive Language Agents for Real-World Planning](https://aclanthology.org/2024.findings-emnlp.636/) — Findings of EMNLP 2024; method: M18.
 
-**Checked / reading scope:** 2026-11-01; abstract, evaluation in §5.1–5.2 and Appendix B.2–B.3; official README; draft.
+**Checked / reading scope:** 2026-11-01; abstract, evaluation in §5.1–5.2 and Appendix B.2–B.3; official README.
 
 - **Input → output:** Dialogue and environment feedback → questions, calls and travel plans.
 - **Measures:** Clarification, call correctness and plan constraint / final pass rates, separately.
@@ -625,7 +686,7 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 
 [Act on Your Behalf, Beyond Your Authorization: Benchmarking LLM Agent Authorization Alignment](https://arxiv.org/html/2610.27548v2) — 2026 preprint; v2, 2026-10-21.
 
-**Checked / reading scope:** 2026-11-01; abstract, §4.1 metrics and official README; draft.
+**Checked / reading scope:** 2026-11-01; abstract, §4.1 metrics and official README.
 
 - **Input → output:** Scoped delegation and sandbox state → action trajectories; 286 tasks.
 - **Measures:** Completion and authorization violations, using trajectories and state evidence.
@@ -643,6 +704,31 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 - **Measures:** 493 static cases; initially 150 Gmail/Notion live cases, plus 36 three-tool cases. Distinguish leakage, helpfulness and helpfulness-adjusted leakage; label model, deployment strategy and static/live setting.
 - **Limits:** test-account API execution is real, but content is benchmark-derived—not naturalistic user deployment. A2A reproduces selected components. Residual complex-workflow leakage remains; this is neither comprehensive compliance nor injection resistance testing.
 - **Resources:** [author release shortlink](https://aka.ms/privacy_in_action) fetch was denied by robots.txt. **Released contents and implementation/data licenses remain unverified.** This is a distinct paper extending PrivacyLens, not a duplicate entry for the original benchmark.
+
+<a id="benchmark-privacybench"></a>
+### B54. PrivacyBench · Leakage versus over-secrecy in personal conversation
+
+[PrivacyBench: A Conversational Benchmark for Evaluating Privacy in Personalized AI](https://arxiv.org/html/2512.24848v1) — preprint, v1, 2025-12-31.
+
+**Actual reading scope:** §§3–8, Table 2, Appendix C.3; Table 2 additionally checked in [PDF p.8](https://arxiv.org/pdf/2512.24848); official code/data repository listings and READMEs.
+
+- **Input → output:** synthetic social profiles, documents and secrets → multi-turn RAG responses under direct/indirect probing.
+- **Measures:** leakage, over-secrecy, inappropriate retrieval and persona consistency; 48 synthetic users, 31,972 documents, five assistants, up to ten rounds.
+- **Numerical warning:** printed direct averages 16.31%→5.43% do not equal simple means of displayed model rows, 17.064%→7.38%. Overall 15.80%→5.12% is author-reported, not reconciled. 26.56% is a worst-model direct result, not the baseline average. Prompting is not uniformly beneficial: Kimi-K2 direct-probe leakage increases from 14.58% to 18.13%.
+- **Limits:** explicit/full-secret leakage excludes hints and partial disclosures; standard RAG only, not universal agent privacy/compliance. Human judge validation is not a real-user deployment. Distinct from PrivacyLens/PrivacyLens-Live/PrivacyChecker.
+- **Resources:** [code](https://github.com/sri-ja/privacy-bench), [data](https://github.com/sri-ja/privacy-bench-dataset); reuse licenses unverified. No separate method paper for the prompt mitigation.
+
+<a id="benchmark-penguin"></a>
+### B55. PENGUIN · Safety conditioned on individual context
+
+[Personalized Safety in LLMs: A Benchmark and A Planning-Based Agent Approach](https://arxiv.org/html/2505.18882v5) — v5, 2026-01-13; [NeurIPS 2025](https://papers.nips.cc/paper_files/paper/2025/hash/8c2bb821410066459be64d03a4dc5719-Abstract-Conference.html). Same paper as M48.
+
+**Actual reading scope:** §§3–4, §5 method overview/results, Limitations and Ethical Statement; official project/repository README. MCTS mathematical appendices and all additional experiments not comprehensively inspected.
+
+- **Input → output:** query with/without structured user background → context-sensitive answer.
+- **Measures:** risk sensitivity, empathy and user-specific alignment; 14,000 scenarios, equally Reddit-derived/synthetic, seven domains. GPT-4o judging checked against three annotators on 350 cases.
+- **Limits:** proxy response scores, not measured harm reduction. Rich-context Reddit selection, manually defined attributes and equal acquisition costs constrain generalization.
+- **Resources:** [official implementation](https://github.com/yuchenlwu/PersonalizedSafety), [project](https://personalized-safety.github.io/); README contains stale clone/runner references. Availability checked, reproduction not attempted; README’s MIT claim was not independently checked against a license file.
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -824,7 +910,7 @@ This group includes direct proactive-assistant research and transferable skill-l
 
 [Inferring the Unspoken](https://arxiv.org/abs/2502.00858v4) — Same paper as B29; count once.
 
-**Checked / reading scope:** 2026-11-01; v4 abstract only; preliminary draft.
+**Checked / reading scope:** 2026-11-01; v4 abstract only; preliminary review.
 
 - **Mechanism:** Express preferences inferred from multimodal demonstrations in language, then condition action plans on them.
 - **Limits:** An interpretable intermediate representation does not guarantee correct inference. Evaluation, resources and reading limitations: [B29](#benchmark-pbp).
@@ -834,7 +920,7 @@ This group includes direct proactive-assistant research and transferable skill-l
 
 [Ask-before-Plan](https://aclanthology.org/2024.findings-emnlp.636/) — Same paper as B30; count once.
 
-**Checked / reading scope:** 2026-11-01; abstract, evaluation setup, Appendix B.3 and official README training / inference entries; draft.
+**Checked / reading scope:** 2026-11-01; abstract, evaluation setup, Appendix B.3 and official README training / inference entries.
 
 - **Mechanism:** Three specialized roles; trajectory tuning for clarification and static execution, memory recollection for dynamic execution.
 - **Limits:** Role separation is not persistent profiling or authorization. Integrated final planning still uses ground-truth conversation (Appendix B.3); do not label it fully free-running. Resources and licenses: [B30](#benchmark-ask-before-plan).
@@ -1132,6 +1218,66 @@ This group includes direct proactive-assistant research and transferable skill-l
 - **Evidence:** 6,675 describes crawled ecosystem tools. Experiments use selected toolsets in four AgentDojo scenarios, generated PII/business assets and GPT-5.1 agents. The 57.07% figure denotes 347/608 tested potential call chains—not commercial-agent prevalence.
 - **Limits:** requires internal traces; closed commercial agents and actual end-user deployments were not directly audited. Separate graph quality, prompt validity, detection and cost metrics. LLM errors and changing tools remain limitations; regulation-informed voting is not compliance certification, and proposed injection/runtime defenses are not validated guarantees.
 - **Resources:** no author implementation/data release established from the paper or targeted search; **release status and implementation license unverified**. AgentDojo’s license does not license AgentRaft itself.
+
+<a id="method-rlpf"></a>
+### M43. Prediction-guided user-profile compression
+
+[RLPF](https://arxiv.org/html/2409.04421v2) — AAAI 2025; inspected v2, January 17, 2025.
+
+**Read:** §§2–5, Appendix I task definitions, version record and resource search; not executed.
+
+- Trains a history summarizer using future-activity prediction and length rewards; prediction selects the actual next item against three randomly selected negative options, rather than searching an unrestricted catalog.
+- Offline evaluation uses MovieLens 2015/2003, Amazon reviews and Google Local reviews; some transfer tasks regress. It does not establish continual profile updating, action execution or privacy protection.
+- Official implementation/new-data release not verified; paper licensing does not license upstream assets.
+- **Deduplication:** Conference and arXiv versions count once.
+
+<a id="method-ld-agent"></a>
+### M44. Event memory and personas for long-term dialogue
+
+[Hello Again!](https://aclanthology.org/2025.naacl-long.272/) — NAACL 2025; publication PDF; arXiv alias `2406.05925`.
+
+**Read:** §§3–4, limitations, Appendix A, official README and license; not executed.
+
+- Combines event memory, topic retrieval and user/agent personas.
+- MSC role-play and generated CC dialogues do not establish authentic longitudinal utility. Text-overlap metrics, persona-classification accuracy and human response-quality ratings are separate measures, not action-success rates.
+- [Implementation](https://github.com/leolee99/LD-Agent) is MIT; linked Drive assets unverified; CC release remains a README TODO.
+- **Deduplication:** One publication, including its arXiv version.
+
+<a id="method-aloe"></a>
+### M45. Interactive individual-preference alignment
+
+[Aligning LLMs with Individual Preferences via Interaction](https://aclanthology.org/2025.coling-main.511/) — COLING 2025; method inspected in [v2](https://arxiv.org/html/2410.03642v2), December 15, 2024.
+
+**Read:** §§2–5, publication metadata and repository; no full version comparison or execution.
+
+- Uses generated preference conversations for SFT and DPO.
+- Evaluation uses 100 personas and ten-turn interactions with GPT-4o as both simulated user and alignment judge. Human rating checks are not longitudinal user trials; this does not validate continual online training or tool execution.
+- [Code/data directories](https://github.com/ShujinWu-0814/ALOE) are accessible; no root license found; checkpoints unverified.
+- **Deduplication:** ALOE is the same paper’s benchmark. Cross-link if needed; do not count twice.
+
+<a id="method-ptool"></a>
+### M46. PTool · Synthetic training for personalized tool invocation
+
+Same [paper](https://arxiv.org/html/2505.04072v1) and reading scope as B51.
+
+- **Mechanism:** structured API/profile synthesis, role-play query/solution generation, rule/model validation, then LoRA SFT.
+- **Evidence/boundary:** Qwen2.5-7B overall accuracy 7.38%→26.78%; generated-call evaluation, not live tool execution.
+
+<a id="method-h2memory"></a>
+### M47. H²Memory · Concrete and abstract personal memory
+
+Same [paper](https://arxiv.org/html/2511.13410v2) and reading scope as B52; count once, including PAL-Set alias.
+
+- **Mechanism:** four components—Log Graph, Background, Topic Outline and Principle—with updates and linked retrieval.
+- **Evidence/boundary:** improves the listed PAL-Bench baselines; simulated/judge-rated performance is not demonstrated real-user satisfaction or autonomous action success.
+
+<a id="method-raise"></a>
+### M48. RAISE · Selective acquisition of personal safety context
+
+Same [paper](https://arxiv.org/html/2505.18882v5) and reading scope as B55; count once.
+
+- **Mechanism:** offline LLM-guided MCTS caches acquisition paths; online retrieval guides questions and sufficiency/abstention decisions.
+- **Boundary:** evaluated with benchmark contexts; not evidence of safe real-world counseling or validated permission to collect sensitive attributes.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
