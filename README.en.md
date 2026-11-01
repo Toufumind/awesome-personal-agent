@@ -12,7 +12,7 @@ Research, evaluation, and practice for personal agents.
 
 [简体中文](README.md) · **English**
 
-**[31 projects](#source-projects) · [Products](docs/PRODUCTS.en.md) · [Papers](docs/PAPERS.en.md) · [Surveys](docs/SURVEYS.en.md) · [Timeline](docs/PRODUCTS.en.md#release-timeline)**
+**[33 projects](#source-projects) · [Products](docs/PRODUCTS.en.md) · [Papers](docs/PAPERS.en.md) · [Surveys](docs/SURVEYS.en.md) · [Timeline](docs/PRODUCTS.en.md#release-timeline)**
 
 </div>
 
@@ -20,6 +20,7 @@ Research, evaluation, and practice for personal agents.
 ## Contents
 
 - [Persistent assistants](#personal-assistants)
+- [Home, voice & wearables](#home-voice-wearables)
 - [Mobile agents](#mobile-agents)
 - [Desktop knowledge & work](#desktop-assistants)
 - [Computer & browser use](#computer-and-browser)
@@ -52,6 +53,14 @@ Stars are displayed via Shields.io and may be cached; they indicate interest, no
 - [ZeroClaw](https://github.com/zeroclaw-labs/zeroclaw) [![ZeroClaw GitHub stars](https://img.shields.io/github/stars/zeroclaw-labs/zeroclaw?style=flat&label=Stars)](https://github.com/zeroclaw-labs/zeroclaw) — Rust runtime for messaging, webhooks, and hardware events.
 
 [ Setup & caveats → ](docs/GUIDE.en.md#personal-assistants)
+
+<a id="home-voice-wearables"></a>
+### Home, voice & wearables
+
+- [Home Assistant Assist](https://github.com/home-assistant/core) [![Home Assistant Core GitHub stars](https://img.shields.io/github/stars/home-assistant/core?style=flat&label=Stars)](https://github.com/home-assistant/core) — Home voice and device control with configurable LLM tools. **Ollama home control remains experimental.**
+- [Omi](https://github.com/BasedHardware/omi) [![Omi GitHub stars](https://img.shields.io/github/stars/BasedHardware/omi?style=flat&label=Stars)](https://github.com/BasedHardware/omi) — Phone / wearable voice memory, tasks, and integration automations. **Source, cloud service, and hardware are distinct.**
+
+[ Deployment & selection notes → ](docs/GUIDE.en.md#home-voice-wearables)
 
 <a id="mobile-agents"></a>
 ### Mobile agents
@@ -107,7 +116,7 @@ Stars are displayed via Shields.io and may be cached; they indicate interest, no
 <a id="experimental-related"></a>
 ## Experimental related projects
 
-This coding research prototype is included as an architecture reference, outside the 31 personal-agent source projects above.
+This coding research prototype is included as an architecture reference, outside the 33 personal-agent source projects above.
 
 - [dsh-superagent](https://github.com/deepseek-ai/dsh-superagent-prototype) [![dsh-superagent GitHub stars](https://img.shields.io/github/stars/deepseek-ai/dsh-superagent-prototype?style=flat&label=Stars)](https://github.com/deepseek-ai/dsh-superagent-prototype) — A DeepSeek-team proactive coding agent for one GitHub repository, built on DeepSeek Harness with optional Feishu integration. **Research prototype, not an official product; not tested here.** [Evidence](docs/SOURCES.en.md#deepseek-superagent)
 
@@ -135,7 +144,7 @@ Use test data and minimal permissions; require approval for sensitive actions. L
 
 [Scope](docs/GUIDE.en.md#scope) · [Evaluation guide](docs/GUIDE.en.md#comparison) · [Safety checklist](docs/GUIDE.en.md#safety) · [Task guide](docs/LANDSCAPE.en.md) · [Trial protocols](docs/TASKS.en.md)
 
-Documentation review: **2026-10-31**. Not hands-on tests, reproductions, or security audits; trial protocols remain unexecuted. [Evidence & dates](docs/SOURCES.en.md) (products and papers have separate review dates).
+Initial documentation review: **2026-10-31**; two home / wearable additions: **2026-11-01**. Not hands-on tests, reproductions, or security audits; trial protocols remain unexecuted. [Evidence & dates](docs/SOURCES.en.md) (products and papers have separate review dates).
 
 <a id="related-lists"></a>
 ## Related lists
