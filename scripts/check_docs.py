@@ -4,7 +4,9 @@
 """Offline checks for this repository's Markdown conventions (Python 3.9+).
 
 Checks inline Markdown links/images, reference definitions, HTML href/src,
-explicit HTML anchors and ordinary ATX headings. Not a general Markdown renderer:
+explicit HTML anchors and ordinary ATX headings. PAPERS additionally checks IDs,
+section families, bilingual external URL sets and review-label residues.
+Not a general Markdown renderer:
 prefer explicit anchors for complex headings; exotic Markdown needs manual review.
 Does not fetch external URLs, change files, judge translation quality, or evaluate
 agents. Run from any directory: python3 scripts/check_docs.py [repository-root].
@@ -95,6 +97,84 @@ def parse(text):
     return anchors, links, duplicates
 
 
+# Stable section anchors, not translated heading text or numerical ID ranges.
+PAPER_SECTIONS = {
+    'personal-evaluation': 'B', 'transferable-memory-evaluation': 'B',
+    'execution-evaluation': 'B', 'safety-evaluation': 'B',
+    'memory-methods': 'M', 'agent-methods': 'M',
+    'personalization-methods': 'M', 'human-studies': 'H',
+}
+PAPER_ENTRY = re.compile(r'^###\s+([BMH][1-9]\d*)\.\s+')
+REVIEW_LABEL = re.compile(r'^\s*\*\*(?:待审\s*[：:]|English review\s*:)\*\*', re.I | re.M)
+
+
+def paper_catalog(text, name):
+    """Read current PAPERS conventions; IDs need not appear in numerical order."""
+    text = visible_text(text)
+    errors, entries, order = [], {}, []
+    section, pending_anchor, current = None, None, None
+    if REVIEW_LABEL.search(text):
+        errors.append(f'{name}: forbidden review label')
+    for line in text.splitlines():
+        anchor = re.fullmatch(r'\s*<a id="([^"]+)"></a>\s*', line)
+        if anchor:
+            pending_anchor = anchor[1]
+            continue
+        if re.match(r'^##\s+', line):
+            section = pending_anchor if pending_anchor in PAPER_SECTIONS else None
+            pending_anchor, current = None, None
+            continue
+        match = PAPER_ENTRY.match(line)
+        if match:
+            identifier = match[1]
+            if identifier in entries:
+                errors.append(f'{name}: duplicate paper ID {identifier}')
+            if PAPER_SECTIONS.get(section) != identifier[0]:
+                errors.append(f'{name}: {identifier} outside its {identifier[0]} section')
+            entries[identifier] = {'section': section, 'lines': [line]}
+            order.append(identifier)
+            current = identifier
+        elif re.match(r'^###\s+', line) and (section or re.match(r'^###\s+[BMH]\d', line)):
+            errors.append(f'{name}: malformed paper entry heading: {line}')
+            current = None
+        elif current:
+            entries[current]['lines'].append(line)
+        if line.strip():
+            pending_anchor = None
+    for prefix in 'BMH':
+        numbers = {int(i[1:]) for i in entries if i.startswith(prefix)}
+        if not numbers:
+            errors.append(f'{name}: missing {prefix} entries')
+        elif min(numbers) != 1 or max(numbers) != len(numbers):
+            errors.append(f'{name}: non-contiguous {prefix} IDs')
+    for entry in entries.values():
+        entry['urls'] = {html.unescape(url) for url in parse('\n'.join(entry.pop('lines')))[1]
+                         if url.lower().startswith(('https://', 'http://', '//'))}
+    return entries, order, errors
+
+
+def check_papers(root):
+    """Offline bilingual catalog integrity, only when PAPERS files are present."""
+    paths = [root / 'docs' / name for name in ('PAPERS.md', 'PAPERS.en.md')]
+    if not any(p.exists() for p in paths):
+        return []  # General checker remains usable on non-catalog fixtures.
+    if not all(p.is_file() and not p.is_symlink() for p in paths):
+        return ['PAPERS: both regular bilingual files are required']
+    zh, zh_order, errors = paper_catalog(paths[0].read_text(encoding='utf-8'), 'PAPERS.md')
+    en, en_order, other = paper_catalog(paths[1].read_text(encoding='utf-8'), 'PAPERS.en.md')
+    errors.extend(other)
+    if zh_order != en_order:
+        errors.append('PAPERS: bilingual paper ID/order mismatch')
+    for identifier in sorted(zh.keys() & en.keys()):
+        if zh[identifier]['section'] != en[identifier]['section']:
+            errors.append(f'PAPERS: {identifier} bilingual section mismatch')
+        if zh[identifier]['urls'] != en[identifier]['urls']:
+            errors.append(f'PAPERS: {identifier} bilingual external URL mismatch; '
+                          f"only Chinese={sorted(zh[identifier]['urls'] - en[identifier]['urls'])}; "
+                          f"only English={sorted(en[identifier]['urls'] - zh[identifier]['urls'])}")
+    return errors
+
+
 def check(root):
     root = Path(root).resolve()
     files = sorted(p for p in root.rglob('*.md')
@@ -135,6 +215,7 @@ def check(root):
             elif url.fragment and target.suffix == '.md':
                 if target not in parsed or unquote(url.fragment) not in parsed[target][0]:
                     errors.append(f'{relative}: missing Markdown anchor: {link}')
+    errors.extend(check_papers(root))
     return errors, len(parsed)
 
 
@@ -148,7 +229,7 @@ def main():
         return 1
     if errors:
         return 1
-    print(f'PASS: {count} Markdown files; local links/anchors and bilingual file presence. '
+    print(f'PASS: {count} Markdown files; local links/anchors, bilingual file presence and PAPERS integrity. '
           'External URLs, translation accuracy, and agent performance not assessed.')
     return 0
 
