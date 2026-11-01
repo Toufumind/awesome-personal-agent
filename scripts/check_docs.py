@@ -101,6 +101,8 @@ def parse(text):
 PAPER_SECTIONS = {
     'personal-evaluation': 'B', 'transferable-memory-evaluation': 'B',
     'execution-evaluation': 'B', 'safety-evaluation': 'B',
+    'user-profile-evaluation': 'B', 'personal-memory-evaluation': 'B',
+    'planning-action-evaluation': 'B', 'proactive-clarification-evaluation': 'B',
     'memory-methods': 'M', 'agent-methods': 'M',
     'personalization-methods': 'M', 'human-studies': 'H',
     'user-understanding-methods': 'M', 'planning-action-methods': 'M',
