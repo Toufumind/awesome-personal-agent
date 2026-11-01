@@ -202,6 +202,29 @@ This separate group contains 1 candidate, not a confirmed public-signup offering
 
 **Third-party research note—not official documentation or our hands-on test:** Supermemory founder Dhravya Shah’s [September 20, 2026 black-box teardown](https://supermemory.ai/blog/reverse-engineering-instinct-memory/) reports keyword hits, some paraphrase / typo misses, and one roughly 23-hour-16-minute write delay that motivated a daily-batch hypothesis. The author had no source access and operates a memory product. These are historical observations and hypotheses, not proof of current retrieval, a fixed write schedule, complete architecture, deletion guarantees, or self-service availability.
 
+<a id="exit-and-data-lifecycle"></a>
+## Exit and data lifecycle: three-product comparison
+
+**Checked: 2026-11-01 (UTC); official documents only, no login or hands-on test.** Disconnection, forgetting memory, account deletion, and training choices are separate controls. This table does not verify erasure, retract sent content, or establish cancellation of accepted tasks. Unknown means the reviewed sources did not establish the detail—not that the feature does not exist.
+
+| Dimension | Town | Poke | Grok Bot |
+| --- | --- | --- | --- |
+| Disconnect / revoke | Trust page says disconnection immediately cuts integration access; do not infer deletion of stored sessions or memories.[T1] | Disconnect Google in the service or revoke through Google account permissions. Complete procedures for other integrations are unknown.[P1] | Pause/delete routines, sign out of shared-computer websites, uninstall connectors, and revoke at the source service; deleting a Bot does not substitute for these steps.[G1] |
+| Remove memory / Bot | Review, change, or request removal of memories; backend erasure deadline for individual memories unknown.[T2] | Individual-memory deletion procedure and erasure deadline, separate from account deletion, unknown.[P1][P2] | Official documentation says to request forgetting in chat and ask the saving Bot to remove shared facts; conversation reset keeps memory, while Bot deletion removes its memory and other content. Shared-computer files and sign-ins may remain. This repository has not verified backend erasure.[G2] |
+| Delete account / retention | Delete through Settings. Trust page states immediate soft deletion and permanent removal within 30 days. Privacy policy retains legal, accounting, dispute, and other retention grounds: not an unconditional physical-erasure guarantee. Backup deadline unknown.[T1][T3] | FAQ directs users to Delete Account in privacy settings; process may take up to 24 hours. Backup removal can take longer and legal holds can extend retention—not a 24-hour guarantee for every copy.[P2] | Use account settings to delete the Cursor account; backend retention follows applicable Cursor terms. Policy uses purpose/legal-need-based retention, without a universal erasure deadline.[G1][G3] |
+| Training choice | Trust page says off by default, managed in Settings → Privacy; Google data excluded. Privacy policy permits other training uses and provides an opt-out. Default settings are not zero retention.[T1][T3] | Policy permits training except for users selecting Maximum Privacy; this is neither account deletion nor zero retention.[P1] | Applicable Cursor account settings govern. Grok Bot requires storage and does not support Legacy Privacy Mode. Cursor policy lists training exceptions for security review, submitted feedback, and explicit consent.[G1][G3] |
+| Export | Full self-service conversation/memory export and formats unverified. | Full self-service conversation/memory export and formats unverified. | Full self-service conversation/memory export and formats unverified. |
+
+[T1]: https://www.town.com/trust
+[T2]: https://www.town.com/docs/features/context-and-memory
+[T3]: https://www.town.com/privacy-policy
+[P1]: https://poke.com/privacy
+[P2]: https://poke.com/faq
+[G1]: https://docs.x.ai/grok-bot/approvals-security-and-privacy
+[G2]: https://docs.x.ai/grok-bot/bots
+[G3]: https://cursor.com/privacy
+
+
 ## Six checks beyond “can it do this?”
 
 1. **Actual access:** Opening a website, downloading an app, subscribing, and having a particular agent feature enabled are four separate checks.
@@ -212,3 +235,4 @@ This separate group contains 1 candidate, not a confirmed public-signup offering
 6. **Real cost:** Record plan, credits, model, duration, interventions, and outputs. One demonstration is not a success rate.
 
 Contributions should include a verification date and official sources. Claims of hands-on testing additionally need task inputs, environment / versions, account region and plan, permissions, process records, and verifiable results. Never submit credentials or private account data.
+
