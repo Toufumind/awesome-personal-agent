@@ -12,7 +12,7 @@
 
 **简体中文** · [English](README.en.md)
 
-**[31 个项目](#source-projects) · [产品目录](docs/PRODUCTS.md) · [论文目录](docs/PAPERS.md) · [发布时间线](docs/PRODUCTS.md#release-timeline)**
+**[31 个项目](#source-projects) · [产品目录](docs/PRODUCTS.md) · [论文目录](docs/PAPERS.md) · [研究综述](docs/SURVEYS.md) · [发布时间线](docs/PRODUCTS.md#release-timeline)**
 
 <a id="目录--contents"></a>
 </div>
