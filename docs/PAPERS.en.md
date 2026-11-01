@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **118 distinct papers**: 66 evaluation entries, 60 method entries, and 8 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, and Searching for Privacy Risks each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **128 distinct papers**: 70 evaluation entries, 66 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, and THEANINE/TeaFarm each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B66, M16–M60, and H1–H8 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B70, M16–M66, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -564,6 +564,43 @@ Extends 1,000 TripCraft plans of 3/5/7 days with model-generated, human-selected
 
 **Read:** v1 §§2–3, §5 and Appendix A. Paper-provided code/data links; no independent reproduction or reuse-license verification.
 
+<a id="benchmark-perltqa"></a>
+### B68. 个人记忆问答 / Personal-memory QA
+
+[PerLTQA: A Personal Long-Term Memory Dataset for Memory Classification, Retrieval, and Synthesis in Question Answering](https://arxiv.org/html/2402.16288v1) — 查阅 / reviewed v1, 2024-02-26；[SIGHAN-10 2024 发表版](https://aclanthology.org/2024.sighan-1.18/)标题末段改为 / published title uses “Fusion”。
+
+
+- **Scope**: §§3–5, generation/validation appendices; README/LICENSE.
+- **Input → output**: synthetic profiles, relationships, events, dialogues and questions → memory classes, retrieved memories and answers. GPT-3.5 generation uses ChatGPT/Wikipedia seeds with human checks. 8,593 QA items cover 30 fictional characters, not longitudinal participants.
+- **Measures**: classification P/R/F1/accuracy, Recall@K, anchor MAP and model-judged correctness/coherence.
+- **Boundary**: not real-user utility, action execution or privacy/security validation.
+- **Resources**: repository above; dataset CC BY-NC 4.0. README records a 2025-12-22 consistency update: pin the revision rather than equating current data with the paper snapshot.
+
+<a id="benchmark-personaconvbench"></a>
+### B69. 多用户对话历史 / Multi-user conversational history
+
+[A Personalized Conversational Benchmark: Towards Simulating Personalized Conversations](https://arxiv.org/html/2505.14106v2) — [NeurIPS 2025 MTI-LLM workshop（非主会 / not main conference）](https://research.adobe.com/publication/a-personalized-conversational-benchmark-towards-simulating-personalized-conversations/)；方法与实验查阅 / methods and experiments reviewed in arXiv v2, 2025-05-25。
+
+
+- **Scope**: §§2–4, appendix C; official `Latest` README/data card.
+- **Input → output**: prior conversational/user trajectories constructed from raw Reddit posts in ten domains → binary label, community-score forecast or next-user text.
+- **Measures**: accuracy/F1/MCC, regression errors and generation similarity; separate protocols. Temporal access and target masking are reported, not independently audited.
+- **Comparison protocol**: §C.3 generates 10 candidates for every model except Claude and selects the highest-SBERT candidate; Claude uses one candidate. Cross-model generation scores therefore do not represent single-response performance under equal sampling budgets.
+- **Boundary**: “sentiment” is score-derived, not validated personal emotion. Historical evaluation is not deployed-assistant or mental-health effectiveness evidence.
+- **Resources**: code/data above. HF says MIT; repository says research-only/Reddit TOS. Resolve this discrepancy before reuse; do not describe data as unrestricted MIT.
+
+<a id="benchmark-teafarm"></a>
+### B70. 反事实记忆压力测试 / Counterfactual memory stress test
+
+[Towards Lifelong Dialogue Agents via Timeline-based Memory Management](https://arxiv.org/html/2406.10996v3) — NAACL 2025；查阅 / reviewed v3, 2025-01-29。方法见 / method: **M65**；同一论文 / same paper。
+
+
+- **Scope**: §§3–5, appendices D/E/J; official resources.
+- **Input → output**: five-session MSC/Conversation Chronicles histories, synthetic continuations and counterfactual questions → answers. TeaBag has 100 source episodes, 200 QA pairs and 200 GPT-4-generated sixth sessions.
+- **Measure**: successful recall despite false premises, distinct from ordinary response quality.
+- **Boundary**: constructed stories, not lifelong participant observation; counterfactual QA is not comprehensive security certification.
+- **Resources**: code/data above; current dataset has 200 rows. Appendix J specifies academic/non-commercial use; check upstream terms separately.
+
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
@@ -833,6 +870,18 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 **Limits:** Treating policies as permitted examples is a construction assumption, not an independent legal audit. Legal norms omit personal, cultural and ethical expectations. Results use single runs and fixed prompts without sensitivity testing. This is neither runtime authorization enforcement nor professional legal judgment.
 
 **Read:** ACL paper §§3–5, Limitations and Ethical Considerations. Code link is supplied by the paper; installation and reuse licensing were not verified.
+
+<a id="benchmark-mextra"></a>
+### B67. 记忆抽取风险 / Memory extraction risk
+
+[Unveiling Privacy Risks in LLM Agent Memory](https://arxiv.org/html/2502.13172v2) — ACL 2025 main；查阅 / reviewed v2, 2025-06-03。
+
+
+- **Scope**: §§2–6, limitations, appendices B–C; official README/root listing.
+- **Input → output**: black-box queries and varying implementation knowledge → historical queries extracted from retrieved query–solution memories. Main tests use EHRAgent and RAP/WebShop with static 200-record memories.
+- **Measures**: extraction count/efficiency, retrieval count, complete/any extraction rates; up to three attempts per prompt. Dataset queries plus generated solutions are not a survey of live multi-user services.
+- **Boundary**: no user/session memory isolation in the studied setup; not evidence that properly isolated products share the vulnerability, nor proof of comprehensive privacy compliance.
+- **Resources**: official code above; no overarching root/README license observed. Check upstream terms separately.
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -1487,6 +1536,58 @@ Three gpt-3.5-turbo roles—user, system and moderator—use repurposed DuRecDia
 
 **Read:** v2 §§3–4, Limitations and Ethical Considerations; paper-provided code/data link, no reproduction. Listed once as a method, without a second benchmark entry.
 
+<a id="method-plus"></a>
+### M61. PLUS — co-training textual user summaries and personalized rewards
+- **Paper:** *Learning to summarize user information for personalized reinforcement learning from human feedback*, ICLR 2026; arXiv v4 (2026-08-26).
+- **Method and evidence:** PPO optimizes summaries while a summary-conditioned reward model is alternately trained. Pets/UltraFeedback use constructed preferences; PRISM contains existing human conversations. Training uses 1,000 PRISM users; known-user reward accuracy is 62.9% versus BTL's 59.8%, while unseen-user prediction remains difficult.
+- **Limits:** GPT-4o's 72% win rate is assessed by an oracle reward model trained on self-reported preferences, not human votes or deployed satisfaction. Main-text “308 users × two prompts” conflicts with appendix “906 prompts”; do not merge denominators. Online co-adaptation means the training loop, not continuous learning from deployed users. Editable summaries are future work. Hyperparameter sensitivity and sensitive-profile exposure remain concerns.
+- **Resources and reading:** [v4](https://arxiv.org/html/2507.13579v4), §§4–7, ethics/reproducibility and Appendix F; [official project](https://sites.google.com/stanford.edu/plus/home) and linked [code](https://github.com/nam630/pluralistic_user_summary_public). Code Apache-2.0; paper CC BY-NC-SA 4.0. Complete weights/data release not verified.
+
+<a id="method-user-profile-ablation"></a>
+### M62. Understanding the Role of User Profile — historical responses and context ordering
+- **Paper:** *Understanding the Role of User Profile in the Personalization of Large Language Models*, arXiv v1 (2024-06-22); publication venue not confirmed.
+- **Method and evidence:** Ablations on six LaMP tasks (excluding LaMP-6) vary historical inputs, responses, mappings and ordering. Main experiments use fine-tuned Flan-T5-base, with frozen Llama2-7B-chat checks. Results use validation sets because hidden tests were unavailable; no newly recruited user study. Historical responses generally contribute more, output-only contexts fit more records, and earlier profiles matter more in these settings.
+- **Limits:** An analysis of profile conditioning, not a new general-purpose execution agent. Findings are specific to tested models, tasks, prompts and context budgets; they do not justify universally discarding inputs/mappings or assuming a universal position effect. Automatic task scores do not establish user satisfaction or longitudinal adaptation.
+- **Resources and reading:** [Paper](https://arxiv.org/html/2406.17803v1), §§3–5 and Appendices A/B; [official code](https://github.com/Bingo-W/Personalisation-in-LLM). Code MIT; paper CC BY 4.0. LaMP is an existing resource, not a newly released dataset from this paper.
+
+<a id="method-opencha"></a>
+### M63. openCHA — health-scoped orchestration of personal data and analytical tools
+- **Paper:** *Conversational health agents: a personalized large language model-powered agent framework*, JAMIA Open 8(4), ooaf067, published 2025-07-06; [DOI](https://doi.org/10.1093/jamiaopen/ooaf067). Earlier arXiv v5 (2024-09-25) has two demos/four use cases; the journal version has two demos/five use cases. Keep versions separate.
+- **Method and evidence:** Planner/executor, data pipe and external analytical tools combine personal health records, knowledge retrieval and multistep operations. Journal examples include 100 diabetes questions, 500 emotion-question tests and PPG heart-rate estimation on existing home-monitoring data from 45 people. These are distinct use cases, not one pooled participant trial.
+- **Limits:** A health research framework, not evidence of treatment improvement, diagnostic safety or longitudinal clinical deployment. Longitudinal source data are not longitudinal agent intervention. Performance depends on configured sources; HIPAA/GDPR compliance is implementation-dependent, and the framework does not manage deployment/scalability.
+- **Resources and reading:** [Journal paper](https://academic.oup.com/jamiaopen/article/8/4/ooaf067/8186991), methods, demonstrations/use cases, Table 4 and discussion; compared with [v5](https://arxiv.org/html/2310.02374v5), §§3–5. [Official code](https://github.com/Institute4FutureHealth/CHA) is MIT and includes documentation/examples/tests—not clinical certification or permission to reuse health data.
+
+<a id="method-scrapmem"></a>
+### M64. ScrapMem — visual compression and event-graph multimodal memory
+- **Paper:** *ScrapMem: A Bio-inspired Framework for On-device Personalized Agent Memory via Optical Forgetting*, arXiv v2 (2026-05-25); publication venue not confirmed.
+- **Method and evidence:** Multimodal records become scrapbook pages, indexed by an event graph and degraded through age-dependent JPEG quality/resolution. On ATM-Bench's existing four-year personal archive, No-Forget scores 51.0 Joint@10/70.3 Recall@10; Table 1's forgetting setting scores 46.9/66.1. The 93% storage saving belongs to Timed-Gentle (4302.9→299.5 MiB; Joint@10 46.3), not the 51.0 setting.
+- **Limits:** Four years of source data do not establish four years of agent deployment. Qwen3-VL-2B processes memory; GPT-5-mini API judges results. The inspected experiments do not report specific endpoint hardware, latency, energy or end-to-end offline-device validation. Compression loses dates, times and addresses and can induce incorrect inference; it is not secure deletion or a privacy guarantee.
+- **Resources and reading:** [v2](https://arxiv.org/html/2605.03804v2), §§4–5, Appendix B and metadata. No official code/weights release confirmed in the paper or targeted search. Its arXiv perpetual non-exclusive distribution license is not an open-source software license.
+
+<a id="method-theanine"></a>
+### M65. 时间线记忆 / Timeline-based memory
+
+[Towards Lifelong Dialogue Agents via Timeline-based Memory Management](https://arxiv.org/html/2406.10996v3) — NAACL 2025；查阅 / reviewed v3, 2025-01-29。评测见 / evaluation: **B70**；同一论文 / same paper。
+
+
+- **Scope**: §§2–6, appendices D/E/J; official README/root listing.
+- **Mechanism**: retain old memories, link graph nodes by time and relations, retrieve complete timelines, then refine them for current dialogue and response generation.
+- **Evidence**: automatic, model and human evaluation plus ablations on MSC/Conversation Chronicles; TeaFarm separately stresses counterfactual recall.
+- **Boundary**: “lifelong” is an architectural aim, not lifelong human evidence. Retention does not establish consent withdrawal, deletion or permission isolation.
+- **Resources**: official code above; no standalone root code LICENSE observed. Non-commercial dataset terms and website-template licensing should not be substituted for code authorization.
+
+<a id="method-ariel"></a>
+### M66. 脑电辅助情绪适配 / EEG-assisted emotional adaptation
+
+[ARIEL: Brain-Computer Interfaces meet Large Language Models for Emotional Support Conversation](https://iris.uniroma1.it/handle/11573/1727073) — UMAP **Adjunct** ’24, pp.601–609；DOI 10.1145/3631700.3665193。
+
+
+- **Scope**: institutional record and attached published PDF §§3–5.
+- **Mechanism**: EEG-classified emotion labels and messages enter hard-prompt templates for LLaMA 2 Chat.
+- **Evidence**: component study collected Muse 2 EEG from 30 subjects over 40 music-video trials each; consent/anonymization reported. LOSO with five-fold tuning yields SVM per-emotion accuracies of Happy .77, Angry .78, Sad .76 and Relaxed .80. End-to-end dialogue evidence is a controlled real-session example.
+- **Boundary**: classifier accuracy is not emotional-support efficacy; in-vivo system evaluation remains future work. Inferred labels do not establish reliable access to actual mental states or clinical benefit.
+- **Resources**: institutional PDF marked all rights reserved; no official code/data release identified. Reported privacy handling is not an independent security audit.
+
 <a id="human-studies"></a>
 ## Human studies: real use and interaction
 
@@ -1552,6 +1653,13 @@ A chat-to-course pipeline maintains a dynamic learner graph using inferred needs
 - **Evidence:** Approximately week-long field study (protocol: 7–10 days): 26 completed fieldwork; data from 22 participants were analyzed, combining diaries, interviews and design activities. Supports persona/avatar customization and TTS output, **not voice input**.
 - **Limits:** A design probe, not an efficacy trial. Short duration and Asian-cultural sample do not establish lasting mental-health benefit. Adjustable memory is a requested design opportunity, not an implemented capability. Research-team access restrictions/cloud storage do not establish security guarantees.
 - **Resources/read scope:** [Paper](https://arxiv.org/html/2504.12943v2), §§3–4,6–8; [author prototype page](https://xizhengxi.com/prototypes.html). No official code/data release or software license confirmed; arXiv distribution permission is not an open-source license.
+
+<a id="human-financial-advisors"></a>
+### H9. Personalized Financial Advisors — elicitation, advice quality and perceived trust
+- **Paper:** *Are Generative AI Agents Effective Personalized Financial Advisors?*, SIGIR 2025; arXiv v2 (2025-04-15).
+- **Method and evidence:** Llama-3.1-8B elicits preferences and discusses four stocks, comparing non-personalized/personalized advice and extroverted/conscientious personas. Of 64 recruits, 60 remained in analysis: 29 personalization and 31 persona participants. Humans role-played three expert-designed investor profiles rather than expressing their own investment needs. The expert elicitation comparison used three participants per profile.
+- **Limits:** Measures elicitation accuracy, agreement with expert asset rankings and subjective trust/satisfaction—not investment returns or long-term financial outcomes. Elicitation errors can lead to unsuitable advice; greater liking for an extroverted advisor does not imply better advice. Single-university role-play does not establish replacement of professional advisors.
+- **Resources and reading:** [Paper](https://arxiv.org/html/2504.05862v2), §§3–5, conclusion and metadata; [official supplement](https://github.com/TTsamurai/LLMAdvisor_supplementary), describing profiles, prompts and analysis scripts. README declares MIT; the inspected arXiv v2 is CC BY 4.0 (not a statement of the SIGIR publication license). Complete raw participant-data release not verified.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
