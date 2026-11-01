@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **57 篇不同论文**：37 个评测条目、27 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA 与 MemGuide/MS-TOD 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **63 篇不同论文**：42 个评测条目、29 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD 与 Me-Agent/User FingerTip 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B37、M16–M27 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B42、M16–M29 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -327,6 +327,61 @@
 - **测量**：GPT-4 judge、Joint Goal Accuracy、完成轮数、成功率与人工质量评分。论文报告 132 personas、956 task goals；官方 README 记录 2,860 sessions。
 - **边界**：基于 SGD 种子与 GPT-4 生成，每任务构造三个时间有序会话，人工验证；每 session 简化为单 service / intent。槽位与确认式对话的成功不等于真实预订、支付或长周期真人效用。
 - **版本 / 资源**：2505.20231v1（2025-05-26）题为 *Bridging the Long-Term Gap: A Memory-Active Policy for Multi-Session Task-Oriented Dialogue*，v2（2025-08-13）改为 MemGuide，不能重复计数。[官方代码 / 数据](https://github.com/Elvin-Yiming-Du/MS_TOD_Memory)；未见根目录许可，代码与数据的再利用条款未核实。
+
+<a id="benchmark-prefdisco"></a>
+### B38. PrefDisco · 主动发现沟通偏好
+
+[PrefDisco: Benchmarking Proactive Personalized Reasoning](https://arxiv.org/html/2510.00177v2) — [ICLR 2026](https://proceedings.iclr.cc/paper_files/paper/2026/hash/82d50077a0e140b524a18f380c95d55a-Abstract-Conference.html)；查阅 arXiv v2，2026-03-04。v1 题名为 *Personalized Reasoning: Just-in-time Personalization and Why LLMs Fail at It*。
+
+**核验日期／实际阅读范围**：2026-11-01；v2 §2 偏好建模与指标、§3 基准构造、§4 实验设置相关段落及 Limitations；arXiv 版本记录与作者 README。 非全文逐项通读；未安装、运行或复现实验。
+
+- **评什么**：将静态推理题转换为冷启动多轮任务，以生成画像和被动用户模拟器考察询问、偏好发现与回答适配；PrefAlign 与题目正确率分别报告。
+- **边界**：主要测沟通偏好，不是内容偏好、长期偏好变化或真人效用；不覆盖过度个性化与迎合行为。
+- **资源**：[作者代码](https://github.com/stellalisy/PrefDisco)提供构造、下载与评测入口；未确认仓库复用许可。当前 README 的 PEP 扩展不能直接视为所读 v2 的实验；先前 workshop 版本关系未核实。
+
+<a id="benchmark-latent-information"></a>
+### B39. Latent Information Discovery · 通过对话揭示隐藏偏好
+
+[Do LLMs Recognize Your Latent Preferences?](https://arxiv.org/html/2510.17132v1) — arXiv v1，2025-10-20。
+
+**核验日期／实际阅读范围**：2026-11-01；v1 §3 任务与评测协议、附录 A 的 judge／用户比较相关说明、附录 D 数据来源；arXiv 版本记录。 非全文逐项通读；未安装、运行或复现实验。
+
+- **评什么**：20 Questions、个性化问答与摘要；用户、助理、judge 三角色，报告满足全部隐藏偏好的成功率及平均停止轮数；失败样本按轮次上限计入后者。
+- **边界**：用户与 judge 均由 GPT-4o 模拟；偏好固定且用户如实回应。猜物游戏是信息发现诊断，不等于个性化应用；模型判分不证明真人满意度。
+- **资源**：论文附录给出数据构造与来源；问答生成沿用的 PrefEval 代码有 CC-BY-NC-4.0 限制，摘要文档来源条款各异。未核实作者完整代码／数据发布，不能据此断言没有资源。
+
+<a id="benchmark-pdr-bench"></a>
+### B40. PDR-Bench · 研究报告是否适合这个用户
+
+[Towards Personalized Deep Research: Benchmarks and Evaluations](https://arxiv.org/html/2509.25106v3) — ICLR 2026；查阅 v3，2026-03-04。
+
+**核验日期／实际阅读范围**：2026-11-01；v3 §3 数据构造、§4 PQR 评测相关段落、附录 A 限制及 B.1–B.2 设置／子集选择；作者 README、根目录与 LICENSE。 非全文逐项通读；未安装、运行或复现实验。
+
+- **评什么**：50 个研究任务、25 个志愿者画像，构成 250 个任务—用户配对；PQR 分别评价个性化、内容质量和事实／引用可靠性。
+- **边界**：结构化画像来自真人，但动态交互由专业标注员模拟。中文采集后提供英文版本；附录描述 250→150→50 的筛选，不能把总规模当成全部实测覆盖。报告适配不等于安全执行或长期真人效用。
+- **资源**：[作者代码与数据](https://github.com/OPPO-PersonalAI/PersonalizedDeepResearchBench)，根许可 Apache-2.0；需模型与检索 API，第三方资产另查条款。
+
+<a id="benchmark-personalens"></a>
+### B41. PersonaLens · 多领域个性化对话
+
+[PersonaLens: A Benchmark for Personalization Evaluation in Conversational AI Assistants](https://aclanthology.org/2025.findings-acl.927/) — Findings ACL 2025；查阅 [arXiv v1](https://arxiv.org/html/2506.09902v1)，2025-06-11。
+
+**核验日期／实际阅读范围**：2026-11-01；v1 §2 画像／任务／模拟协议、§3 实验设置、§4 评测相关段落及 Limitations；ACL 出版记录、作者 README 与 LICENSE.md。 非全文逐项通读；未安装、运行或复现实验。
+
+- **评什么**：111 项任务、20 个领域；模拟用户与 judge 评价个性化、任务完成、自然度与连贯性。
+- **边界**：1,500 个画像采用 PRISM 真人统计属性，但偏好、历史摘要和情境由 LLM 生成；不是 1,500 位真人的助理使用实验。§3 明确全部实验仅随机抽样 50 个画像，包含 3,283 单域及 813 多域对话；构建规模不能当作实测规模。预订、购买仅为对话模拟，没有真实系统执行；人口属性条件化还可能引入刻板印象。
+- **资源**：[作者代码与数据](https://github.com/amazon-science/PersonaLens)，已核验 `LICENSE.md` 为 **CC-BY-NC-4.0**；运行依赖 Amazon Bedrock 权限。
+
+<a id="benchmark-user-fingertip"></a>
+### B42. User FingerTip · 从模糊指令恢复应用与内容偏好
+
+[Me-Agent: A Personalized Mobile Agent with Two-Level User Habit Learning for Enhanced Interaction](https://arxiv.org/html/2601.20162v1) — arXiv v1，2026-01-28；与 M29 为同一论文。
+
+**核验日期／实际阅读范围**：2026-11-01；v1 §3 User FingerTip 构造与统计、§5.1–5.2 指标与结果及表 3、Limitations；arXiv 版本记录、作者仓库根目录与 README。 非全文逐项通读；未安装、运行或复现实验。
+
+- **评什么**：在 FingerTip 基础上删除应用名或模糊化内容；报告 60 用户、33 应用、300 条 Type I 与 267 条 Type II 指令，分别测应用选择、内容偏好与执行表现。
+- **边界**：总条数与“每用户 15 条训练、5 条测试”的表述需进一步澄清，不能称未见用户测试。表 3 应用选择率 100% 不等于任务全成功，其 TSR 为 80%／50%；未建立长期真人部署证据。
+- **资源**：[作者仓库](https://github.com/Gianthaha/personal-mobile-agent)标 MIT，已有代码目录，但 README 仍预告更新；完整基准发布与可复现性未确认。
 
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
@@ -835,6 +890,28 @@
 - **证据**：MultiHop-RAG、200 条合成企业任务及 SciQAG 动态权限场景。企业任务没有 gold answers，主要报告资源调用，不能宣传为准确率验证。
 - **关联与边界**：适用于个人代理的多用户数据边界，但主要是协作权限管理，不是个人偏好学习。形式化策略与受控实验不等于实现安全审计或防所有推断泄漏。
 - **资源**：本次未核实官方代码 / 数据发布与许可；survey 中重复引文不另算论文。
+
+<a id="method-rgmem"></a>
+### M28. RGMem · 分层演化用户画像
+
+[RGMem: Renormalization Group-inspired Memory Evolution for Language Agents](https://arxiv.org/html/2510.16392v3) — arXiv 标注 ICML 2026 接收；查阅 v3，2026-06-02。早期 “…Group-based…User Profile” 是同一论文。
+
+**核验日期／实际阅读范围**：2026-11-01；v3 §3 方法相关段落、附录 B.1 评测协议；arXiv 版本／接收记录、作者 README 与仓库根目录。 非全文逐项通读；未安装、运行或复现实验。
+
+- **机制**：将对话事实与用户推断逐层聚合进知识图谱，以阈值更新区分快变证据与较稳定特征，再结合多尺度检索回答；是外部记忆演化，不是底座持续训练。
+- **证据／边界**：LOCOMO 使用 LLM judge，PersonaMem-128k 使用选择题准确率，三次运行取均值；不能混成通用分数，也不证明长期真人效用、画像真实性或隐私安全。
+- **资源**：[作者实现](https://github.com/fenhg297/RGMem)标 MIT；依赖 Elasticsearch、Neo4j、Redis 等组件，未运行验证。
+
+<a id="method-me-agent"></a>
+### M29. Me-Agent · 用经验与分层记忆解释模糊指令
+
+[Me-Agent](https://arxiv.org/html/2601.20162v1) — 与 B42 同一论文，不另计。
+
+**核验日期／实际阅读范围**：2026-11-01；v1 §4.2–4.4 方法、§5.1–5.2 设置与结果相关段落及 Limitations；作者仓库根目录与 README。 非全文逐项通读；未安装、运行或复现实验。
+
+- **机制**：VLM 评价执行轨迹，提炼自然语言经验用于提示词；分层记忆按应用检索流程和内容偏好。方法称无参数更新，不应写成对基础模型进行个性化微调。
+- **证据／边界**：User FingerTip 与通用移动任务评测；UI 更新会使位置与流程经验失效，当前地点等情境因素未充分纳入。推断“常用选择”不等于获得新操作授权。
+- **资源**：[作者实现](https://github.com/Gianthaha/personal-mobile-agent)；数据规模、资源完整性与许可范围的限制同 B42。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
