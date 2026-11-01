@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **108 distinct papers**: 61 evaluation entries, 55 method entries, and 7 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, and PENGUIN/RAISE each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **118 distinct papers**: 66 evaluation entries, 60 method entries, and 8 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, and Searching for Privacy Risks each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B61, M16–M55, and H1–H7 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B66, M16–M60, and H1–H8 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -542,6 +542,28 @@ Contains **2,020 simulated episodes in HM3D/Habitat** with explicit ownership de
 
 **Reading scope:** §3–5, Appendix A privacy/licensing and Appendix B annotation; official repository timeline, result-version notes and dataset card. Targeted methods/evaluation/ethics/annotation plus release records; no raw personal-data inspection.
 
+<a id="benchmark-triptide"></a>
+### B65. TripTide · Personalized itinerary revision after disruption
+
+[TripTide: A Benchmark for Adaptive Travel Planning under Disruptions](https://arxiv.org/html/2510.21329v1) — arXiv 2510.21329v1, 2025-10-24; no verified conference publication.
+
+Extends 1,000 TripCraft plans of 3/5/7 days with model-generated, human-selected disruptions and human-revised reference plans, severity levels and two tolerance profiles. GPT-4o, Qwen2.5-7B and Phi-4-mini are evaluated for constraints, semantic/spatial/sequential changes and disruption response; Llama judging assesses GPT-4o outputs only; three experts reviewing 100 revisions supplement metrics.
+
+**Limits:** §4.2 evaluates the entire dataset without a predefined train/test split; results diagnose planning behavior rather than establish held-out generalization. Simulated disruptions and predefined personas are not real travel deployment. Responsiveness is not measured latency; minimal edits do not establish executability. Perceived quality and hard constraints can disagree. Live inventory, transaction authorization and user satisfaction are untested. Residual 2018 venue/DOI template text is not publication evidence.
+
+**Read:** v1 §§3–6 and relevant appendix passages; paper-provided anonymous code link, no reproduction.
+
+<a id="benchmark-convomem"></a>
+### B66. ConvoMem · Full context as a strong memory baseline
+
+[ConvoMem Benchmark: Why Your First 150 Conversations Don't Need RAG](https://arxiv.org/html/2511.10523v1) — arXiv 2511.10523v1, 2025-11-13.
+
+75,336 QA pairs cover user/assistant facts, abstention, preferences, changing facts and implicit connections. Synthetic enterprise personas feed scenario, evidence and conversation generation; evidence and filler share a pipeline with multi-model validation. Full context, Mem0 and two-stage extraction are compared for accuracy, cost and latency, with histories tested up to 300 conversations.
+
+**Limits:** The title's 150-conversation threshold is conditional on the data, models and costs, not universal. These are not longitudinal real-user logs. Missing-information abstention is not privacy/permission refusal; consent, deletion, access isolation and leakage protection are untested.
+
+**Read:** v1 §§2–3, §5 and Appendix A. Paper-provided code/data links; no independent reproduction or reuse-license verification.
+
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
@@ -782,6 +804,35 @@ Distinguish inappropriate sharing from malicious instructions in external conten
 **English review:** Executes 246 tasks on self-hosted web replicas with synthetic user data derived from human seeds. Final-state checks measure utility; GPT-4o judges action-text disclosure. Leakage rate is the fraction of instances with leakage; privacy performance equals 1 minus leakage rate. The 98% human agreement validates only one GPT-4o/axtree run. Its threat model excludes malicious actors and external attacks: this is inadvertent data minimization, not prompt-injection defense. Prompting reduces leakage without guaranteeing privacy. Official resources combine CC BY-NC 4.0, MIT components and additional Llama 3.1-derived data terms.
 
 **Reading scope:** v3 §3 threat model, data, metrics and mitigation; §4–5 evaluation/discussion; arXiv venue metadata and official README licensing section. Targeted methods, evaluation and discussion plus venue/resource records; environments not deployed.
+
+<a id="benchmark-privacy-risk-search"></a>
+### B62. Searching for Privacy Risks — multi-turn impersonation and forged consent
+- **Paper/cross-reference:** ICLR 2026 / arXiv v3; method: **M59**.
+- **Evidence:** Training-5 and Testing-100 configurations, default ten simulations per test configuration; Gemini judge agrees with human labels on 98.5% of 200 actions. Primarily synthetic agent interactions, not a human-subject study. v3 adds an Atlas/GPT-5.1/live-Outlook-interface case study: three successful attacks in five trials.
+- **Limits:** Not product-wide incidence. Simulated subjects grant no subsequent consent, leaving legitimate sharing untested. Judge agreement is not a security guarantee. Distinguish v3’s leak velocity from leak rate; do not mix older metric names/results.
+- **Resources/read scope:** Same paper/version and licensing boundaries as **M59**. Authors state no human subjects or personally identifiable data; the real email interface does not imply real victim data.
+
+<a id="benchmark-personal-data-flows"></a>
+### B63. Third-party GPT data flows and policy traceability
+
+[Personal Data Flows and Privacy Policy Traceability in Third-party LLM Apps in the GPT Ecosystem](https://petsymposium.org/popets/2026/popets-2026-0015.pdf) — PoPETs 2026(1), 273–295; DOI 10.56553/popets-2026-0015.
+
+**Ecosystem measurement, not a conventional task benchmark.** GPTStore.ai's April 2024 crawl and BeeTrove supply 5,286 GPTs with extractable Action schemas and 44,102 parameters. Personal-information classification and policy parsing assess disclosure traceability: approximately 35% of parameters fall into sensitive/identifying categories; 792 GPTs, about 15% of the overall sample, have complete traceability. Of those, 753 have relevant Action parameters classified entirely as NON_PI, with no personal-information transmission identified through those parameters. Thus 15% is not the complete-disclosure rate among personal-data-collecting apps (§4.4.5).
+
+**Limits:** Large-scale findings concern schema-indicated flows, not observed production traffic for every GPT. Three controlled endpoints provide a separate active audit. Disclosure is not authorization or a privacy guarantee. Subsequent processing is outside scope; English-policy restrictions, classifier error and platform specificity remain.
+
+**Read:** Published PDF §§3.1–3.5, 4.1/4.4 and 5.3; targeted reading, no independent reproduction.
+
+<a id="benchmark-privaci"></a>
+### B64. PrivaCI-Bench · Context understanding and compliance classification
+
+[PrivaCI-Bench: Evaluating Privacy with Contextual Integrity and Legal Compliance](https://aclanthology.org/2025.acl-long.518/) — ACL 2025 Long Papers, July 2025, 10544–10559.
+
+6,351 compliance-classification samples and 147,840 multiple-choice questions draw on legal/enforcement cases, OPP-115/APP-350 policies, and AI Act checker-derived synthetic scenarios. Three authors and two law-school students correct parsing errors; three authors conduct sampled quality checks of LLM-assisted CI annotation. Evaluation covers permitted/prohibited/not-applicable classification and context understanding, comparing direct prompting, CoT, RAG and annotated CI/legal context. Classification reports accuracy, precision, recall and F1; multiple-choice probing reports accuracy.
+
+**Limits:** Treating policies as permitted examples is a construction assumption, not an independent legal audit. Legal norms omit personal, cultural and ethical expectations. Results use single runs and fixed prompts without sensitivity testing. This is neither runtime authorization enforcement nor professional legal judgment.
+
+**Read:** ACL paper §§3–5, Limitations and Ethical Considerations. Code link is supplied by the paper; installation and reuse licensing were not verified.
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -1397,6 +1448,45 @@ A restricted-plan interpreter and IFC combine persistent private-data, permissio
 
 **Reading scope:** §3–5, threat model, components, human review and LLM-judge setup; anonymous repository entry point. Targeted benchmark, framework and evaluation reading; repository landing-page check, no code audit.
 
+<a id="method-encode-store-retrieve"></a>
+### M56. Encode–Store–Retrieve — language-encoded egocentric memory
+- **Paper:** *Encode-Store-Retrieve: Augmenting Human Memory through Language-Encoded Egocentric Perception*, ISMAR 2024; arXiv `2308.05822` v3, 2024-10-18. An author page also uses the “Enhancing Memory Augmentation” title variant.
+- **Evidence:** ego-LLaVA video-to-text, Chroma retrieval and GPT-4. Alongside QA-Ego4D, 12 participants completed controlled household tasks using HoloLens 2, with recall tested 5–7 days later. Participant ratings: system 4.1/5 versus human responses 2.5/5.
+- **Limits:** Framewise encoding loses temporal actions/counting; no longitudinal real-world deployment. Device independence does not establish synchronization. Server uploads/text encoding are not privacy or isolation guarantees.
+- **Resources/read scope:** [Author PDF](https://pokristensson.com/pubs/ShenEtAlISMAR2024a.pdf), §§3–7; [version record](https://arxiv.org/abs/2308.05822). No official implementation, weights or software/data reuse license confirmed. QA-Ego4D is an existing dataset, not a new release here.
+
+<a id="method-livia"></a>
+### M57. Livia — AR emotional companionship and compressed memory
+- **Paper:** *Livia: An Emotion-Aware AR Companion Powered by Modular AI Agents and Progressive Memory Compression*, AIVR 2025 author-accepted manuscript; arXiv v1, 2025-08-12.
+- **Evidence:** Emotion/dialogue/memory/orchestration modules, TBC/DIMF compression and AR. §8 reports 200 excerpts from 50 users, 38 participants over four weeks, 24 interviewees and 11,504 conversation turns; these denominators must not be combined.
+- **Limits:** Young North American English-speaking sample; comparison allocation insufficiently described. Evaluation supplies no corresponding loneliness scale, pre/post statistics or significance test supporting the abstract’s efficacy claim. **No clinical/mental-health efficacy conclusion.** Facial-expression sensing is future work; encryption/consent/storage are requirements, not verified guarantees.
+- **Resources/read scope:** [Manuscript](https://arxiv.org/pdf/2509.05298), §§3–10; [venue/version](https://arxiv.org/abs/2509.05298). Manuscript CC BY-NC-ND 4.0; no official code/data release or software license confirmed.
+
+<a id="method-aipom"></a>
+### M58. AIPOM — inspectable, editable multi-agent plans
+- **Paper:** *AIPOM: Agent-aware Interactive Planning for Multi-Agent Systems*, EMNLP 2025 System Demonstrations, 85–96.
+- **Evidence:** Chat plus editable task/agent/dependency/output graphs. Experiments use 50 GSM8K and 50 BBH arithmetic tasks with corrupted plans; pilot: nine LLM-experienced industry research-organization participants (interns, engineers and research scientists), 12 math tasks. Feedback was postprocessed, without asking users to accept/reject actual refinements.
+- **Limits:** Plan inspection/refinement, not permission enforcement, sensitive-action authorization or security guarantees; not general-user longitudinal trust evidence. Centrally orchestrated modules are not autonomous proactive agents.
+- **Resources/read scope:** [Paper](https://aclanthology.org/2025.emnlp-demos.7.pdf), §§2–4,6, Appendix C; [official code/demo](https://github.com/megagonlabs/aipom). Root LICENSE: BSD-3-Clause. Data/dependencies retain separate terms; README adds third-party-material restrictions. Web search is disabled by default. Not reproduced.
+
+<a id="method-privacy-risk-search"></a>
+### M59. Searching for Privacy Risks — alternating attack/defense instruction search
+- **Paper/cross-reference:** *Searching for Privacy Risks in LLM Agents via Simulation*, ICLR 2026; arXiv v3, 2026-05-08. Evaluation: **B62**; count once.
+- **Method:** LLM trajectory analysis, parallel search and cross-thread propagation alternately optimize attacker/defender instructions, discovering impersonation/forged consent and prompt-level identity-verification state machines.
+- **Limits:** Model instructions, not formal permission enforcement or cryptographic authentication; no guaranteed leakage prevention. Legitimate consent-sharing and deployment reliability remain separate questions.
+- **Resources/read scope:** [v3](https://arxiv.org/html/2508.10880v3), §§3–4, ethics, Appendix G; [official code](https://github.com/SALT-NLP/search_privacy_risk), [trajectories](https://huggingface.co/datasets/SALT-NLP/search_privacy_risk). Dataset MIT-tagged; no root code license observed. Do not transfer dataset licensing to code. Viewer errors do not prove source files unavailable. Not reproduced.
+
+<a id="method-topdial"></a>
+### M60. TopDial · Role-playing generation for personalized target-oriented dialogue
+
+[Target-oriented Proactive Dialogue Systems with Personalization: Problem Formulation and Dataset Curation](https://arxiv.org/html/2310.07397v2) — EMNLP 2023; arXiv v1 2023-10-11, read v2 2023-10-13.
+
+Three gpt-3.5-turbo roles—user, system and moderator—use repurposed DuRecDial 2.0, sampled profile slots and Big Five descriptions to generate 18,009 dialogues with system-side act/topic targets. Model/human comparison covers 100 targets; equal-sized DialoGPT/Alpaca-7B training and mixed-source testing assess training utility through BLEU, knowledge F1, persona F1 and target success.
+
+**Limits:** Synthetic roles and offline metrics do not establish real-user acceptance of proactive help. Hallucination and mistaken moderator termination remain. Refusal-based termination triggers on the second explicit rejection of the target act, not the first; this is not a deployment safety guarantee. Authors emphasize target constraints, privacy and bot-identity transparency.
+
+**Read:** v2 §§3–4, Limitations and Ethical Considerations; paper-provided code/data link, no reproduction. Listed once as a method, without a second benchmark entry.
+
 <a id="human-studies"></a>
 ## Human studies: real use and interaction
 
@@ -1455,6 +1545,13 @@ A chat-to-course pipeline maintains a dynamic learner graph using inferred needs
 - **Method/evidence:** Interactive memory objects support extraction, organization, inclusion/exclusion, weighting and combination through prompts and RAG. Twelve people completed a within-subject comparison, reusing writing, programming or trip-planning conversations one day later; conditions shared underlying generation/retrieval capabilities.
 - **Boundary:** Findings concern interaction control and user experience, not longitudinal memory accuracy or autonomous memory management. Convenience sampling, controlled tasks and a one-day gap limit deployment claims.
 - **Resources/reading scope:** [Author PDF](https://www.jeffjianzhao.com/papers/memolet.pdf#page=1) §4.6, §§5–6 and §8 reviewed. The author copy specifies personal use and no redistribution; open code/data licenses unconfirmed.
+
+<a id="human-chatlab"></a>
+### H8. ChatLab — customizable personas, avatars and voice output
+- **Paper:** *Customizing Emotional Support: How Do Individuals Construct and Interact With LLM-Powered Chatbots*, CHI 2025; arXiv v2, 2025-04-18.
+- **Evidence:** Approximately week-long field study (protocol: 7–10 days): 26 completed fieldwork; data from 22 participants were analyzed, combining diaries, interviews and design activities. Supports persona/avatar customization and TTS output, **not voice input**.
+- **Limits:** A design probe, not an efficacy trial. Short duration and Asian-cultural sample do not establish lasting mental-health benefit. Adjustable memory is a requested design opportunity, not an implemented capability. Research-team access restrictions/cloud storage do not establish security guarantees.
+- **Resources/read scope:** [Paper](https://arxiv.org/html/2504.12943v2), §§3–4,6–8; [author prototype page](https://xizhengxi.com/prototypes.html). No official code/data release or software license confirmed; arXiv distribution permission is not an open-source license.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
