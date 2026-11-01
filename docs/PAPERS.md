@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **88 篇不同论文**：55 个评测条目、48 个方法条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory 与 PENGUIN/RAISE 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **98 篇不同论文**：57 个评测条目、53 个方法条目及 3 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory 与 PENGUIN/RAISE 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B55、M16–M48 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B57、M16–M53、H1–H3 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -22,6 +22,7 @@
 - [方法：记忆与长期状态](#memory-methods)
 - [方法：规划、工具、反思、主动性与协作](#agent-methods)
 - [方法：个性化与偏好学习](#personalization-methods)
+- [人机研究](#human-studies)
 - [怎样比较与复现](#reproducibility)
 - [来源与许可边界](#sources-and-rights)
 
@@ -497,6 +498,32 @@
 - **评测：** 获得记忆/使用记忆阶段保持目标相同；区分单记忆/联合记忆，统计目标完成比例、成功率和规划成本。438个回合、12个 Habitat 场景，个人知识由模型生成。
 - **边界：** 主设置确保检索候选含正确记忆，并采用理想感知与运动技能，隔离的是记忆利用，而非无约束检索或现实机器人可靠性。使用合成个人信息，缺少对话澄清。GPT-4o 联合记忆任务相对对应获得记忆阶段成功率下降30.5个百分点。
 - **资源/身份：** [官方仓库](https://github.com/Connoriginal/MEMENTO)，MIT 仓库，依赖 Habitat/PARTNR。README 旧副标题 “Exploring Memory Utilization for Personalized Assistance” 指同一论文。
+
+<a id="benchmark-realmem"></a>
+### B56. RealMem
+
+**Benchmark：长期项目状态与跨会话记忆**
+
+[RealMem: Benchmarking LLMs in Real-World Memory-Driven Interaction](https://aclanthology.org/2026.findings-acl.703/) · **Findings of ACL 2026**；arXiv:2601.06966v1。
+
+- **测什么：** 11 类项目场景、2,000 余段合成跨会话对话中的状态更新、时间推理和个人目标对齐；不是自然用户长期部署数据。
+- **证据：** 正式版 Table 2 中，GPT-4o memory-only QA 为 MemoryOS 0.567、oracle 0.804；另有 30 个实例、两名 NLP 背景标注者的人类核验，不能等同用户效果实验。
+- **边界：** 正式版较 arXiv v1 增补 LightMem、全文上下文基线和评估说明；应以正式版为准。合成数据及模型裁判仍限制外推。
+- **资源：** [官方代码与数据](https://github.com/AvatarMemory/RealMemBench)；实际 LICENSE 为 **Apache-2.0**，README 的 MIT 徽章与之不一致。
+- **实际阅读：** arXiv 方法与结果；ACL 正式 PDF 的结果表、局限及人工评估协议；官方 README/LICENSE。未复现。
+
+<a id="benchmark-personal"></a>
+### B57. PersONAL
+
+**Benchmark：用户物品归属、导航与空间定位**
+
+[PersONAL: Towards a Comprehensive Benchmark for Personalized Embodied Agents](https://arxiv.org/abs/2509.19843) · **ICRA 2026**（[帕多瓦大学机构记录](https://unifind.unipd.it/resource/item/894811?language=en-US)确认题名、作者与会议）；本次实读版本为 **arXiv v1，2025-09-24**，未将其结果自动视为会议最终版结果。
+
+- **测什么：** 基于显式物品归属描述，在 HM3D/Habitat 场景中执行个性化主动导航或预探索后的物体定位；共 **2,020 个 episode**。
+- **证据：** 导航人类基线包含五名真人；不是家庭用户部署。另有三房间办公室 LoCoBot 可行性实验，定位成功 **5/15**。
+- **边界：** 静态归属不代表动态偏好学习或终身适应；人类定位使用可交互 GLB 场景，与模型地图输入不同。POG 正文的 25% 与 Table V 的总分 16.8% 不一致，勿直接引用前者为总体结果。
+- **资源：** [官方仓库](https://github.com/ZiliottoFilippoDev/PersONAL)为 **CC-BY-4.0**；数据、生成程序及 [baselines 分支](https://github.com/ZiliottoFilippoDev/PersONAL/tree/baselines)代码已存在。HM3D 另需 Matterport 访问及上游许可。
+- **实际阅读：** arXiv v1 §§III–VII、结果表、官方主分支及 baseline README/目录、帕多瓦大学发表元数据；未核对会议最终版全文，未运行机器人或基线。
 
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
@@ -1278,6 +1305,94 @@
 
 - **机制：** 离线 LLM 引导 MCTS 缓存属性获取路径；在线检索指导提问，并判断信息是否足够/是否暂缓回答。
 - **边界：** 使用基准中的用户背景进行评估；不证明现实咨询安全，也不构成收集敏感属性的授权依据。
+
+<a id="method-prelude"></a>
+### M49. PRELUDE / CIPHER · 从用户修改推断上下文相关偏好
+
+- **论文与版本：** [Aligning LLM Agents by Learning Latent Preference from User Edits](https://arxiv.org/html/2404.15269v3)，NeurIPS 2024；arXiv v3，2024-11-23。PRELUDE 是框架、CIPHER 是算法，同一篇论文只计一次。
+- **机制：** 从输出及其修改推断文字化偏好，检索相近上下文的偏好并聚合进生成提示；不微调基础模型。
+- **证据：** 摘要写作与邮件写作各进行 200 轮 GPT-4 模拟用户交互，报告三个随机种子；最佳配置相对不学习基线的累计 token 编辑距离分别下降约 31% / 73%。另在 summarization 任务上有七名人工评审，每组比较 15 对输出；三名人工编辑按指定偏好修改输出。
+- **边界：** 人工评审不是自然长期用户在线学习；主实验偏好由文档来源预设，编辑距离不等于真实时间节省或满意度，仍与已知真实偏好的 oracle 有差距。
+- **资源与实读：** [官方代码与数据入口](https://github.com/gao-g/prelude)，仓库 MIT 许可，不替代来源数据自身许可。实读 v3 §§4.1–4.4、机制与指标段落，以及 NeurIPS 元数据和仓库资源页；未复现。
+
+<a id="method-curio"></a>
+### M50. CURIO · 用用户模型的改进奖励主动发现偏好
+
+- **论文与版本：** [Enhancing Personalized Multi-Turn Dialogue with Curiosity Reward](https://arxiv.org/html/2504.03206v3)，[NeurIPS 2025](https://proceedings.nips.cc/paper_files/paper/2025/hash/e48d5af30c95be08762489c5141f7fbc-Abstract-Conference.html)；arXiv v3，2025-10-02。
+- **机制：** 在多轮 RLHF 中加入逐轮用户类型信念改进的内在奖励；比较准确率、熵和势函数差分等奖励设计。
+- **证据：** 运动推荐任务将采样属性按规则映射到八类策略；200 段模拟对话中最佳 DiffAcc 成功率 87.5%，MTRLHF 为 68.5%，SFT 为 54%。教育对话采用两种预设学习偏好。十名学生评审生成对话，非作为实时学习者使用系统。
+- **边界：** 静态预设类型与 LLM 用户模拟限制外推；某些熵奖励出现偏向单一类型的行为。人工评审中 DiffLogAcc 相对 MTRLHF 的个性化偏好胜率约 76%，但附录的 152/200 与表格的 75.75% 不完全一致。质量偏好 90/200、p=.179，不能解释为证明等效；也未测量真实学习或健康效果。
+- **资源与实读：** [作者项目页](https://sites.google.com/cs.washington.edu/curio)已核验，未核实官方代码、权重、数据集或其许可证，不标为开源。实读 v3 方法、§§4–5、局限、附录 B.1–B.3 及官方会议信息；未复现。
+
+<a id="method-grounded-memory"></a>
+### M51. A Grounded Memory System · 从视觉观察构建实体记忆
+
+- **论文与版本：** [A Grounded Memory System For Smart Personal Assistants](https://arxiv.org/html/2505.06328v1)，arXiv v1，2025-05-09；ESWC 2025 TEXT2KG workshop，非 ESWC 主会论文。
+- **机制：** GPT-4o 对重叠视频窗口生成描述并标识实体；Neo4j 存储带向量的记忆笔记与时间/实体图。检索 agent 在语义检索、PageRank 图扩展和 text-to-Cypher 间选择。
+- **证据：** iPhone 家庭场景视频原型与代表性问答；不是对照实验、用户研究或公开基准。展示问答被作者标为正确，不应改写成评测准确率 100%。
+- **边界：** 不能据此断言优于标准 RAG、具备可靠长期实体一致性或已在失智症照护中验证；扩展规模、长期实体消歧及更多模态均属于后续工作。
+- **资源与实读：** 未核实官方代码/数据发布及其许可。实读 §§3–5 与 arXiv 版本/工作坊元数据；未复现。
+
+<a id="method-iotgpt"></a>
+### M52. IoTGPT
+
+**方法：个性化设备执行与子任务记忆复用**
+
+[Leveraging LLMs for Efficient and Personalized Smart Home Automation](https://arxiv.org/abs/2601.04680) · **arXiv v1，2026-01-08**；未确认正式发表场所。
+
+- **机制：** Decompose–Derive–Refine 流程、层级任务记忆和环境属性偏好表，将指令转换为 SmartThings 操作并复用子任务。
+- **证据：** 97 个任务、26 个模拟设备；warm 条件重做已学习任务的改写版本。15 名真人参加短时研究，但偏好来自 **100 条 GPT-4o 合成日志**，不是参与者自身历史。
+- **边界：** 不证明真实家庭长期个性化；偏好冲突和设备副作用尚未完整处理。**不安全或幻觉指令仍需用户审核**，自动安全防护属于未来工作。
+- **资源：** 尚未找到并核实作者官方实现与许可证；不写成已开源。
+- **实际阅读：** 系统、实现、比较实验、两项用户研究及局限章节；未安装或复现。
+
+<a id="method-gaap"></a>
+### M53. GAAP
+
+**方法：运行时信息流控制与披露授权**
+
+[An AI Agent Execution Environment to Safeguard User Data](https://arxiv.org/abs/2604.19657) · **arXiv v3，2026-09-24**；未确认正式发表场所。
+
+- **机制：** 受限计划解释器与信息流控制，结合持久化私有数据、权限和披露日志，约束跨步骤、跨任务的数据披露。
+- **保证范围：** 针对恶意模型/提供方及外部服务；依赖正确执行、用户授权和经核验的工具语义标注。**提示词中直接输入的秘密、提示时序元数据及数据/系统完整性不在保证内**。
+- **证据：** 自建 20 任务、七类攻击测试未出现成功披露；AgentDojo/AgentDyn 在批准全部披露的条件下仅测效用。不是普遍安全证明或真人可用性研究；论文报告显著费用/延迟开销。
+- **资源：** [源码公开](https://github.com/rssta/gaap)，但未发现 LICENSE，GitHub 许可字段为空；不声称具备开源使用授权。
+- **实际阅读：** v3 威胁模型、设计、评估与讨论；官方 README、目录和许可元数据；未安全审计。
+
+<a id="human-studies"></a>
+## 人机研究：真实使用与互动
+
+以下研究记录真实人的体验，不作为 benchmark 分数或长期效果证明。
+
+<a id="human-agent-memory-expectations"></a>
+### H1. Users’ Expectations and Practices with Agent Memory · 用户对记忆的理解和控制需求
+
+- **论文与版本：** [作者原文](https://younghokim.net/files/papers/jones-agent-memory-chi25lbw.pdf)，CHI EA 2025 late-breaking work，8 页；[DOI](https://doi.org/10.1145/3706599.3720158)。不是主会完整研究论文、benchmark 或 agent 算法。
+- **研究设计：** 六名 24–35 岁的真实用户接受 30–45 分钟访谈；均将工具使用熟练度自评为 4/5。另对 54 个 Reddit 讨论线程作归纳主题分析。
+- **发现：** 用户对记忆机制存在不完整心理模型，希望按任务、项目和领域组织/隔离记忆；五名受访者提出不相关任务记忆应分离。既有做法包括分开聊天、定制角色/指令和不同账号。
+- **边界：** 小型探索性质性研究；线程不是 54 名实验参与者。不能据此估计总体比例、证明层级记忆的因果收益或声称实现了访问控制。
+- **资源与实读：** 实读方法、发现及附录访谈提纲/问卷/社区名单。未核实原始研究数据或代码公开；作者 PDF 为作者保留版权并允许指定个人/课堂复制，不等于开放数据或开源许可。
+
+<a id="human-memoro"></a>
+### H2. Memoro · 实时记忆辅助的简洁交互
+
+- **论文与版本：** [Memoro: Using Large Language Models to Realize a Concise Interface for Real-Time Memory Augmentation](https://arxiv.org/html/2403.02135)，CHI 2024，arXiv v1，2024-03-04；[DOI](https://doi.org/10.1145/3613904.3642450)。按系统与真实人机实验收录，不作为 benchmark。
+- **机制与设计：** 音频转录和向量检索，经骨传导耳机返回简短提示；显式 Query 和用户按键触发的 Queryless 模式。20 名 18–32 岁参与者进行约一小时、四条件平衡顺序的实验室研究，围绕虚构人物资料与研究者交谈；谈话期间不新增外部记忆。
+- **证据：** 回答平均字符数由 Baseline 的 115.4 降至 Query 的 16.6；正确率 Query 84%、Queryless 70.7%。回忆信心和困难度是自报指标，不是客观长期记忆提升。多项对话指标无显著差异，但自然度显著低于无系统条件，不能笼统声称毫无干扰。
+- **边界与资源：** Queryless 不是自主主动干预；隐私同意为前提，旁观者权限控制未解决。[官方参考实现](https://github.com/wazeerzulfikar/memoro/)为 MIT 许可、非维护中产品；其另述 V2 老年人实地研究不属于本篇，V2 代码不在该仓库。实读系统、§§4–5、§7 及仓库版本/许可说明；未复现。
+
+<a id="human-loom"></a>
+### H3. LOOM
+
+**人机研究：由日常对话驱动的主动学习辅助（非 benchmark）**
+
+[LOOM: Personalized Learning Informed by Daily LLM Conversations Toward Long-Term Mastery via a Dynamic Learner Memory Graph](https://arxiv.org/abs/2511.21037) · **AAAI 2026 PerFM Workshop**；arXiv v1，2025-11-26，非 AAAI 主会论文。
+
+- **系统：** 对话摘要、主题与课程规划、内容生成及动态学习者记忆图，结合完成记录与自报掌握程度调整建议。
+- **真人证据：** 便利抽样的 **10 人、约两天**形成性研究；要求各自产生 10–15 段反映日常问题的新对话。主要观察是自报相关性、连贯性和知识缺口发现。
+- **边界：** 无对照、前后测或延迟保持测试；**不能声称提高长期掌握程度**。内容质量、重复及模型推断“已掌握”仍有问题。
+- **资源：** PDF 提供[匿名代码/演示入口](https://anonymous.4open.science/r/LoomDemo)，本次访问返回 **HTTP 403**；内容及许可证未核实。
+- **实际阅读：** 原文系统、研究方法、结果和局限；[PDF](https://arxiv.org/pdf/2511.21037) 的 workshop 标注及资源脚注；未运行系统。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
