@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **162 distinct papers**: 83 evaluation entries, 92 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, and DAM/DABench each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **170 distinct papers**: 86 evaluation entries, 99 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, DAM/DABench, DuLeMon/PLATO-LTM, and ActMem/ActMemEval each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B83, M16–M92, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B86, M16–M99, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -704,6 +704,37 @@ PersonaMem-Evo generates interaction histories and evolving preferences from syn
 
 **Benchmark.** Evaluates persona-conditioned itineraries using temporal, spatial, ordering and preference metrics. Reviewed §3–4, limitations and official README. Its 1,000 queries combine real-world place data with constructed queries/personas and adjusted flight dates; human-refined references are not real-traveler validation. Embedding-based persona similarity does not establish satisfaction. No booking execution or authorization is tested. Data require application; internal research/commercial use and modification are permitted. Modifications must retain the paper citation and README; redistribution outside the requesting organization is prohibited. No root code license confirmed.
 
+<a id="benchmark-dulemon"></a>
+### B84.  Benchmark
+
+**DuLeMon**, from **Long Time No See! Open-Domain Conversation with Long-Term Persona Memory** | [Findings of ACL 2022](https://aclanthology.org/2022.findings-acl.207/); [2203.05797v2](https://arxiv.org/html/2203.05797v2), 2022-03-14, following March 11 v1. Same-paper method: **M95**.
+
+Chinese mutual-persona conversation with supplied role descriptions and persona grounding: 27,501 crowdsourced role-play dialogues, not natural longitudinal user histories. Human evaluation rates bot–bot conversations using PLATO-LTM as the user simulator: ten episodes × four sessions × sixteen rounds per chatbot. Human rating is not longitudinal human use.
+
+**Resources/license:** the [official directory](https://github.com/PaddlePaddle/Research/tree/master/NLP/ACL2022-DuLeMon) supplies a dataset download script. Parent repository [Apache 2.0](https://github.com/PaddlePaddle/Research/blob/master/LICENSE); separate terms for externally downloaded data unverified. **Inspected:** §3 construction, §5 evaluation, ethics, Appendices A/B, version history, official README/directory and parent license; dataset not downloaded/unpacked.
+
+<a id="benchmark-actmemeval"></a>
+### B85.  Benchmark: ActMemEval
+
+[ActMem: Bridging the Gap Between Memory Retrieval and Reasoning in LLM Agents](https://arxiv.org/html/2603.00026v2) — 2603.00026v2, revised 2026-06-17; preprint, venue unverified.
+
+- **Task:** Memory-dependent implicit constraints across safety/health, feasibility, time-space-procedure, availability, preferences and reuse opportunities; not executed actions.
+- **Samples:** 327 synthetic questions, averaging 67.25 sessions and 120k tokens. Gemini generation, Claude validation and three researcher checks; not longitudinal human users.
+- **Measurement:** Evidence recall and QA accuracy judged by DeepSeek-V3, with sampled human-agreement checks. Scores do not establish execution safety, authorization enforcement or causal identification.
+- **Resources/rights:** [Official repository](https://github.com/nju-websoft/ActMem) exposes `dataset/ActMemEval.json` (96,837,216 bytes); only directory metadata was checked, not individual records. Root MIT differs from Appendix G's dataset CC BY 4.0 plus academic-research-only wording; reuse scope remains unresolved.
+- **Reading scope:** arXiv metadata, relevant §§3–5 text, Tables 1–2 and Appendices F/G. No experiment execution or complete visual figure inspection. Same paper as the method entry below.
+
+<a id="benchmark-engramabench"></a>
+### B86.  Benchmark: EngramaBench
+
+[EngramaBench: Evaluating Long-Term Conversational Memory with Structured Graph Retrieval](https://arxiv.org/html/2604.21229v1) — 2604.21229v1, 2026-04-23; preprint, venue unverified.
+
+- **Samples/tasks:** Five entirely synthetic personas, 100 conversations, 150 queries: factual, cross-space, temporal, abstention and synthesis. No real user data.
+- **Evidence:** Shared GPT-4o answering model. Global composite: full context 0.6186, Engrama 0.5367, Mem0 0.4809. Engrama leads full context on the cross-space slice only: 0.6532 versus 0.6291, n=30, with limited statistical power—not global superiority.
+- **Limits:** Token-F1 synthesis scoring; incomplete runtime evidence-provenance auditing; costs are query-time only, excluding memory construction. Not production validation.
+- **Resources/rights:** [Repository](https://github.com/julianacunadc/engramabench/blob/main/README.md) provides data, scorer, public baselines and canonical results; [MIT license text](https://github.com/julianacunadc/engramabench/blob/main/LICENSE) verified. **Proprietary Engrama is excluded.** DOI `10.5281/zenodo.19697774` is linked by the paper/repository; the Zenodo record could not be inspected.
+- **Reading scope:** Metadata, relevant §§3–8, limitations/ethics and cost appendix text; repository README/LICENSE. No scorer execution, record-by-record data audit or proprietary-system reproduction.
+
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
@@ -1281,6 +1312,29 @@ Sources:
 Actual inspection: version page; original method, datasets, metrics, training/evaluator-selection, main-result and human-evaluation passages; targeted searches for an official implementation and venue. No dedicated official implementation was verified; this does not establish that none exists. No evaluator retraining or independent score reproduction was performed.
 
 <a id="methods-a-memory-and-persistent-state"></a>
+<a id="method-persistent-user-profiles"></a>
+### M93.  Method
+
+**Enabling Personalized Long-term Interactions in LLM-based Agents through Persistent Memory and User Profiles** | [2510.07925v1](https://arxiv.org/html/2510.07925v1), 2025-10-09. Only v1 in inspected history; formal venue unverified.
+
+Coordinated retrieval, validation and generation combine short-term context, summaries, persistent memory and incremental JSON user profiles. Offline evaluation uses GVD, LoCoMo and LongMemEval. A separate five-day smartphone pilot enrolled seven people; four completed and three left after day one, with approximately ten minutes of daily interaction. Completers valued recall; three criticized long/generic responses and three reported ambiguous-follow-up failures, without establishing whether these were the same participants.
+
+Results do not uniformly beat RAG: GPT-4o/LongMemEval correctness is 72.8% versus RAG’s 77.7%; some Gemini 2 coordinator-removal ablations perform better. Short duration, attrition and subjective feedback do not establish long-term benefit; proactivity remains future work.
+
+**Resources/license:** paper CC BY 4.0; dedicated official code/data and software licensing unverified. **Inspected:** §§3–5, Table 1, pilot setup/results, conclusion/future work and version history; implementation not run.
+
+<a id="method-ai-persona"></a>
+### M99.  Method: AI PERSONA — WIP
+
+[AI PERSONA: Towards Life-long Personalization of LLMs](https://arxiv.org/html/2412.13103v1) — 2412.13103v1, 2024-12-17; arXiv still marks **Work in progress**; venue unverified.
+
+- **Mechanism:** Historical-session management, tool simulation/interfaces and periodic persona-profile updates without retraining.
+- **Samples:** PersonaBench has 200 profiles and over 6,000 synthetic points. Volunteer profiles are seeds, not a longitudinal human-interaction cohort.
+- **Evaluation:** LLM-judged helpfulness/personalization, profile similarity and utterances needed to satisfy a simulated user. GPT-4o uses the full benchmark; other models use ten-persona subsets.
+- **Limits:** Chinese-native-speaker seed/annotation bias; “life-long” names the task, not observed lifetime effectiveness.
+- **Resources/rights:** [Official repository](https://github.com/tml1026/Lifelong-Personalized-Agent) contains public code, generation scripts and data files. No LICENSE observed in root/README; reuse rights, full-benchmark completeness and reproduction remain unverified. Do not repeat the abstract's future-release promise as the current state.
+- **Reading scope:** Metadata, relevant §§3–4, Tables 1–2, §6, repository README/root/data listings; no code execution, record-by-record audit or volunteer seed-consent verification.
+
 <a id="memory-methods"></a>
 ## Methods: Memory and persistent state
 
@@ -1675,6 +1729,56 @@ Sources:
 
 Actual inspection: version page; original method, training-instruction, experimental-setup, evaluation and challenge passages; repository directory and README workflow, weights and licensing statements. Weights were not downloaded/validated, scripts were not run, and training data were not audited item by item.
 
+<a id="method-plato-ltm"></a>
+### M95.  Method
+
+**PLATO-LTM** | Same [Findings of ACL 2022 paper](https://aclanthology.org/2022.findings-acl.207/) / [2203.05797v2](https://arxiv.org/html/2203.05797v2), 2022-03-14. Cross-index: **B84**; do not count as another paper.
+
+Persona filtering, separate user/bot stores, similarity-based deduplication/replacement and contextual retrieval condition response generation without long-session training data. Simulated-dialogue consistency is 0.87 versus PLATO-FT’s 0.40. However, coherence (0–2 scale) is 1.67 versus PLATO-2’s 1.70; PLATO-FT scores 1.59, and the paper discusses small-dataset fine-tuning hurting coherence. Not every quality dimension improves.
+
+An earlier direct personal-memory foundation, not a tool-executing agent. Similarity replacement does not establish full contradiction or temporal-state handling. **Resources/license:** despite the paper’s release claim, the [official README](https://github.com/PaddlePaddle/Research/tree/master/NLP/ACL2022-DuLeMon) still marks the PLATO-LTM framework **Coming soon**; do not claim a complete released implementation. Parent repository Apache 2.0 does not establish external-data terms. **Inspected:** §4 extraction/read-write/generation, §5.3.3, Table 5, Appendix B and official resources; model not run.
+
+<a id="method-xmemory"></a>
+### M96.  Method
+
+**Beyond RAG for Agent Memory: Retrieval by Decoupling and Aggregation (xMemory)** | [2602.02007v4](https://arxiv.org/html/2602.02007v4), 2026-05-12; earlier versions February 2, February 25 and April 11. The [official README](https://raw.githubusercontent.com/HU-xiaobai/xMemory/main/README.md) announces NeurIPS 2026 acceptance on 2026-09-24: verified as an author-repository claim, not independently against official conference records.
+
+Segment messages, decouple fact/update components, aggregate a revisable hierarchy, incrementally split/merge, select complementary evidence top-down and expand source text using uncertainty. Offline QA on LoCoMo and PerLTQA uses three readers. Qwen3-8B/LoCoMo F1 is 43.98 versus naive RAG’s 36.48; inference tokens/query are 4,711 versus 8,633. **This comparison excludes construction costs.**
+
+No new human trial or broad task-execution validation. Limitations include construction overhead, extraction errors and potentially unfavorable costs with few future queries. Privacy/deletion/correction safeguards are recommendations, not verified guarantees.
+
+**Resources/license:** [official implementation](https://github.com/HU-xiaobai/xMemory) and [MIT license](https://github.com/HU-xiaobai/xMemory/blob/main/LICENSE) verified; paper CC BY 4.0. Quick Start identifies a released Llama implementation; exact v4 correspondence unverified. MIT software licensing does not override PerLTQA’s noncommercial terms. **Inspected:** v4 §§3–5, main/ablation results, Appendix B asset licensing, selected Appendix C results, E/F limitations/impact, history and official README/directory/LICENSE; no reproduction run.
+
+<a id="method-actmem"></a>
+### M97.  Method: ActMem
+
+[ActMem: Bridging the Gap Between Memory Retrieval and Reasoning in LLM Agents](https://arxiv.org/html/2603.00026v2) — 2603.00026v2, revised 2026-06-17; preprint, venue unverified. Cross-entry, not another paper.
+
+- **Mechanism:** Atomic facts and clustering; semantic/inferred-causal graph, PMI filtering and counterfactual commonsense-assisted secondary retrieval.
+- **Evidence:** With DeepSeek-V3, QA is 76.52% versus NaiveRAG 61.79%, but evidence recall is lower: 71.66% versus 85.57%. QA gains do not imply superior recall. This is the synthetic ActMemEval setting described above, not executed user tasks.
+- **Limits:** Inferred links and commonsense can fail; synthetic QA does not establish reliable real-world execution.
+- **Resources/rights:** [Repository](https://github.com/nju-websoft/ActMem) root shows dataset/LICENSE/.gitignore/README; README contains only the title, with no implementation directory observed. Dataset release exists, full implementation release is unverified. Root MIT and paper dataset CC BY 4.0/academic-only wording must remain distinct.
+- **Reading scope:** Metadata, relevant §§3–5, Tables 1–2, Appendices F/G and repository listings/README; no code execution, full dataset audit or complete figure inspection.
+
+<a id="method-caim"></a>
+### M98.  Method: CAIM
+
+[CAIM: Development and Evaluation of a Cognitive AI Memory Framework for Long-Term Interaction with Intelligent Agents](https://arxiv.org/html/2505.13044v1) — 2505.13044v1, 2025-05-19: version actually inspected.
+
+- **Mechanism:** Memory Controller, ontology/tag retrieval and Post-Thinking maintenance.
+- **Evidence:** GVD synthetic ten-day histories for 15 simulated users, 100 English questions, three human annotators—not a ten-day human-user deployment. GPT-3.5 retrieval is 83.3% versus MemoryBank 76.3%; GLM trails some baselines, so gains are not universal.
+- **Limits:** Detailed lists/recipes, relative-time references and split-fact connections can fail; query learning and real-user validation remain future work in this version.
+- **Resources:** [Official repository](https://github.com/rebeccawesthaeusser/CAIM) documents implementation/evaluation entrypoints and MIT licensing; not executed or reproduced.
+- **Reading scope:** v1 metadata, relevant §§3–6 methods/evaluation/limitations and result-table text, official README. IUI 2026 full text was not read.
+
+#### Version and follow-on distinction
+
+The [official IJCAI-26 doctoral-consortium paper](https://ijcai.org/proceedings/2026/953) distinguishes short CAIM (IUI Companion 2025, pp.22–25), full-title CAIM (IUI 2026, pp.134–143), and [2510.07925v1](https://arxiv.org/html/2510.07925v1), the personalization extension—not an arXiv revision or duplicate.
+
+2510.07925v1 reports a **five-day pilot**; the later IJCAI account describes a **three-week exploratory study**. Do not transfer durations/significance claims or merge the reports without verification. **Participant overlap is unverified.** Here, only 2510 metadata, abstract/§2.2 and relevant IJCAI webpage passages were read; the later cohort/statistics were not independently established.
+
+IUI 2026 DOI lead: `10.1145/3742413.3789222`. Publisher fetch returned 403; the official IJCAI reference supports venue, not a claim of having inspected the published full text or established version equivalence.
+
 <a id="agent-methods"></a>
 <a id="methods-b-planning-tools-reflection-proactivity-and-coordination"></a>
 <a id="planning-action-methods"></a>
@@ -1885,6 +1989,19 @@ Sources:
 - [Evaluation directory; existence verified](https://github.com/Binwen6/Vaiage/tree/main/evaluation)
 
 Actual inspection: version page; original architecture, user-flow, evaluation and conclusion passages; repository directory, README, license metadata and evaluation score.txt. That sample requests four days but contains only two itinerary day objects and still receives 9/10: a concrete warning about judge reliability, not an estimated population error rate. evaluation/eval.json could not be retrieved: connector HTTP 400 (too large or unsupported), followed by a web cache miss. Complete human-evaluation data inspection is not claimed. The system was not installed, executed or independently reproduced.
+
+<a id="method-valuepilot"></a>
+### M94.  Method
+
+**ValuePilot: A Two-Phase Framework for Value-Driven Decision-Making** | Two distinct IDs, one method family:
+- [2503.04569v1](https://arxiv.org/html/2503.04569v1), 2025-03-06, five authors.
+- [2512.13716v1](https://arxiv.org/html/2512.13716v1), 2025-12-09, seven authors. [Metadata](https://arxiv.org/abs/2512.13716) reports acceptance at the LAW Workshop at NeurIPS 2025, not the main conference.
+
+Generated value-annotated scenarios, T5 value assessment, contextual/feasibility scoring and PROMETHEE rank actions using supplied six-dimensional personal value weights. The dataset contains 11,938 scenarios and 100,255 actions. Human questionnaire rankings are not deployment trials.
+
+**Sample-reporting discrepancy:** March §4.3 reports 40 people, but Appendix D explicitly says ten remained after screening. December reports 40 and omits the screening sentence while retaining DMM scores of 73.16% OS-Sim and 46.14% First-Acc. The 10-versus-40 discrepancy remains unresolved. The strongest comparison changes from GPT-4o-mini to GPT-5; do not mix versions’ baselines. Score differences are percentage points, despite misleading relative-percentage wording in the papers.
+
+Synthetic scenarios, directly supplied ratings and simplified value representations do not demonstrate longitudinal preference learning, actual execution or authorization. **Resources/license:** March paper uses arXiv’s nonexclusive license; December paper CC BY 4.0. Official code/data release and associated licenses unverified. **Inspected:** both versions’ methods, experiments/results, Appendix D questionnaires/sample descriptions, limitations and metadata; no raw questionnaires or reproduction run.
 
 <a id="proactive-clarification-methods"></a>
 ## Methods: Proactivity and clarification
