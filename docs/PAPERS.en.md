@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **138 distinct papers**: 75 evaluation entries, 72 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, and Operationalizing Contextual Integrity each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **146 distinct papers**: 79 evaluation entries, 79 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, and EvoArena/EvoMem each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B75, M16–M72, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B79, M16–M79, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -637,6 +637,39 @@ Extends 1,000 TripCraft plans of 3/5/7 days with model-generated, human-selected
 - **Boundary / counterexample:** DPO alone does not consistently improve personalization in the reported settings; multi-information reasoning remains difficult. Proactiveness means suggestions in responses, not autonomous initiation or external actions.
 - **Resources:** [Code](https://github.com/12kimih/HiCUPID), [data](https://huggingface.co/datasets/12kimih/HiCUPID) and [evaluator](https://huggingface.co/12kimih/Llama-3.2-3B-HiCUPID) cards claim Apache-2.0; the Llama-3.2 base-model Community License remains a separate consideration. The project label does not establish that every component is free of additional restrictions.
 
+<a id="benchmark-implexconv"></a>
+### B76. ImplexConv: cross-session implicit reasoning
+
+Tests personalized QA through supportive/opposed implicit scenarios; the paper reports 2,500 examples of roughly 100 sessions. Generated reasoning scenarios are combined with existing-dataset distractors and selective human verification, not a field study. Separate generation/evaluation models do not establish contamination freedom.
+
+- Paper/version: [Toward Multi-Session Personalized Conversation: A Large-Scale Dataset and Hierarchical Tree Framework for Implicit Reasoning, 2503.07018v1](https://arxiv.org/html/2503.07018v1), 2025-03-10.
+- Cross-reference: M74; same paper, counted once. Internal IMPersona/IMPACT naming remnants are not separate papers.
+- Assets: [Official repository](https://github.com/Kaylee0501/ImplexConv) contains framework/evaluation files; code license unverified. Current cards list [opposed](https://huggingface.co/datasets/Kaylee0501/ImplexConv-opposed) 1,550 + [supportive](https://huggingface.co/datasets/Kaylee0501/ImplexConv-supportive) 814 = 2,364 examples, unlike the paper’s total. Their MIT data label does not establish code licensing.
+- Inspected: §§3–6, limitations, README, dataset cards, repository root.
+
+<a id="benchmark-context-time-memory"></a>
+### B77. Context- and time-sensitive memory evaluation
+
+Adds padding and simulated timestamps to 12 simulated, human-edited LoCoMo logs; tests temporal, temporal-plus-content, and ambiguous temporal queries. Recall/F2 measure retrieved response IDs, not answer accuracy or real-user task success.
+
+- Paper/version: [Toward Conversational Agents with Context and Time Sensitive Long-term Memory, 2406.00057v2](https://arxiv.org/html/2406.00057v2), 2024-06-04. Reversed Time/Context wording in the resource citation is an alias.
+- Cross-reference: M75; same paper, counted once.
+- Assets: [TemporalMemoryDataset](https://github.com/Zyphra/TemporalMemoryDataset) exposes conversation/test data; method code and explicit repository license unverified. The paper’s CC BY 4.0 does not establish repository licensing.
+- Inspected: §§3–6, Appendix A.1–A.3, README, repository root.
+
+<a id="benchmark-evoarena"></a>
+### B79. EvoArena · PersonaMem-Evo subset
+
+**Conditionally direct evaluation: synthetic preference evolution**
+
+[Paper](https://arxiv.org/html/2606.13681v2) · arXiv v2, 2026-06-17. Method: M79; count the shared paper once.
+
+PersonaMem-Evo generates interaction histories and evolving preferences from synthetic personas, testing four-way single-pattern transfer, multi-pattern synthesis, conflict resolution, and temporal-trajectory inference, with persona-only/no-context shortcut filtering. It is not a real-user longitudinal study. Terminal-Bench-Evo and SWE-Chain-Evo supply adjacent, transferable evidence.
+
+**Resources:** The [official data card](https://huggingface.co/datasets/Aiden0526/PersonaMem-Evo) reports 10 personas/505 examples, empty 128k links, a broken viewer, and no license metadata. The [repository](https://github.com/Aiden0526/EvoArena) is not a verified complete release; its license remains pending. The paper’s CC BY 4.0 does not establish asset permissions.
+
+**Verification date / actually read:** 2026-11-01; version page, §§3–6, relevant Appendices A/E, repository README/root, and PersonaMem-Evo data card. No reproduction run.
+
 <a id="transferable-memory-evaluation"></a>
 ## Evaluation B: transferable memory and sequential tasks
 
@@ -950,6 +983,21 @@ Attacks runtime-observed data in a fictional AgentDojo banking environment: 16 o
 **Actual reading scope：** Sections 3–4, data construction, threat model, metrics, reproducibility checklist, version page.
 
 <a id="tmp-m-pearl"></a>
+
+<a id="benchmark-ci-bench"></a>
+### B78. CI-Bench
+
+**Direct risk evaluation: context-sensitive personal-information disclosure**
+
+[Paper](https://arxiv.org/html/2409.13903v1) · arXiv v1, 2024-09-20.
+
+Contains 44,100 synthetic cases across eight domains and dialogue/email formats, testing context understanding, norm identification, appropriateness judgments, and response generation. Distinct from PrivaCI-Bench and the software-engineering namesake. It focuses on social norms rather than learned individual privacy preferences. Gemini 1.0 Ultra/Pro/Nano are evaluated with stage-specific AUC: norm identification trails context-parameter identification; explicit norms improve appropriateness judgments; response-generation AUC is approximately 0.3–0.5, not an overall benchmark score.
+
+**Limits:** Two-expert labeling, subjective/cultural variation, binary labels, stateless single-context samples, no context transitions, and assumed honest identities. Not an end-to-end agent-security or injection-resistance test.
+
+**Resources:** Official downloadable code/data and asset licenses remain unverified. Paper license: CC BY-NC-SA 4.0.
+
+**Verification date / actually read:** 2026-11-01; version page; Benchmark, Dataset, Experiments, Limitations; relevant response-evaluation appendix passages. No reproduction run.
 
 <a id="memory-methods"></a>
 ## Methods A: memory and persistent state
@@ -1734,6 +1782,85 @@ Clusters/samples long histories and generates cached persona snippets offline. A
 **Assets and reproduction：** [Author repository](https://github.com/Ancientshi/PersonaX) includes MIT code and data subsets, but README explicitly disclaims full AgentCF/Agent4Rec reproduction by its EasyRec client. The [license scope](https://github.com/Ancientshi/PersonaX/blob/master/LICENSE) explicitly excludes Amazon data, notebook outputs, EasyRec, and third-party code, dependencies, and weights; project MIT terms do not authorize those assets. This scope was supplied by independent review; the original NOTICE fetch for this entry encountered a cache miss.
 
 **Actual reading scope：** PDF sections 4–5, limitations/ethics, official README/file tree.
+
+<a id="method-plum"></a>
+### M73. PLUM: sequential parametric conversation memory
+
+Augments conversations into positive/negative QA and sequentially trains a per-user LoRA with weighted cross-entropy. Evaluation starts from 100 human-written OpenAssistant prompts but uses generated replies and QA—not longitudinal deployment. Llama-3-8B-Instruct closed-question accuracy with a system prompt is 81.5%, below the best conversation-RAG baseline’s 86.5%. Evidence concerns history retention, not task execution; repeated/conflicting topics remain untested.
+
+- Paper/version: [On the Way to LLM Personalization: Learning to Remember User Conversations, 2411.13405v1](https://arxiv.org/html/2411.13405v1), 2024-11-20.
+- Assets: No author code/data release verified. The paper’s arXiv non-exclusive distribution license is not a code license.
+- Inspected: §§3–6, limitations/ethics, data-generation description.
+
+<a id="method-tacitree"></a>
+### M74. TaciTree: hierarchical fact retrieval
+
+Clusters facts, summarizes hierarchically, and selects relevant subtrees. On ImplexConv’s generated reasoning scenarios with existing-dataset distractors and selective human verification, supportive QA reaches 70.8%; opposed QA reaches only 29.70% even with o1. Better retrieval is not robust reasoning, longitudinal human use, or action success.
+
+- Paper/version: [Toward Multi-Session Personalized Conversation: A Large-Scale Dataset and Hierarchical Tree Framework for Implicit Reasoning, 2503.07018v1](https://arxiv.org/html/2503.07018v1), 2025-03-10.
+- Cross-reference: B76; same paper, counted once. See that entry for released-data count differences.
+- Assets: [Official repository](https://github.com/Kaylee0501/ImplexConv) exposes framework/evaluation files; code license unverified. Neither the paper’s CC BY 4.0 nor the cards’ MIT data label automatically licenses the code.
+- Inspected: §§3–6, limitations, README, dataset cards, repository root.
+
+<a id="method-context-time-memory"></a>
+### M75. Rewriting, metadata routing, and chain-of-table retrieval
+
+Combines query disambiguation, metadata/semantic routing, table operations, and vector retrieval. On simulated conversations, GPT-3.5 averages 90.32 recall/55.27 F2 across the two unambiguous categories: retrieval metrics, not answer or action success. Evidence covers two LLMs, one embedder, and mainly single-hop queries; ambiguous temporal-plus-content queries are untested.
+
+- Paper/version: [Toward Conversational Agents with Context and Time Sensitive Long-term Memory, 2406.00057v2](https://arxiv.org/html/2406.00057v2), 2024-06-04.
+- Cross-reference: B77; same paper, counted once.
+- Assets: [TemporalMemoryDataset](https://github.com/Zyphra/TemporalMemoryDataset) exposes data; method code and explicit repository license unverified. A promised code release is not an observed release; the paper’s CC BY 4.0 does not establish repository licensing.
+- Inspected: §§3–6, Appendix A.1–A.3, README, repository root.
+
+<a id="method-prime"></a>
+### M76. PRIME: personal semantic memory and personalized thinking
+
+Studies episodic/semantic memory configurations and self-distills personalized thinking; **the main reported PRIME configuration excludes episodic memory**. CMV uses real Reddit histories from 41 authors, 133 evaluation queries, and 7,514 historical interactions, but evaluates offline reply ranking—not live human-agent interaction. Llama-3.1-8B Hit@3 is 45.79 versus 36.77 without personalization; this does not establish action success or online adaptation.
+
+- Paper/version: [PRIME: Large Language Model Personalization with Cognitive Dual-Memory and Personalized Thought Process, 2507.04607v3](https://arxiv.org/html/2507.04607v3), 2025-09-26. The repository’s shortened title is an alias.
+- Assets: [Official repository](https://github.com/launchnlp/LM_Personalization) exposes README and data; framework code is marked as being cleaned; license unverified. The paper’s arXiv non-exclusive distribution license is not a code license.
+- Inspected: §§3–7, limitations, README, repository root.
+
+Verification boundary: Only the specified paper sections and resource pages were inspected. No installation, training, independent benchmarking, or security audit was performed. Resource status checked on 2026-11-01.
+
+<a id="method-memweaver"></a>
+### M77. MemWeaver
+
+**Direct method: behavioral and long-term preference memory**
+
+[Paper](https://arxiv.org/html/2510.07713v2) · arXiv v2, 2026-01-26; WWW 2026.
+
+Combines query-guided walks over temporal/semantic behavior graphs with phase-level summaries synthesized into a global preference memory. Evaluation uses time-split LaMP-1–5/7 with Qwen3-8B and Llama-3.1-8B-Instruct; Qwen3-8B LaMP-1 accuracy is 0.6733 versus CFRAG’s 0.6566; v2 additionally reports OpinionQA, Amazon Reviews, and ChangeMyView. These are offline personalization experiments, not longitudinal deployment, tool execution, or privacy guarantees.
+
+**Resources:** [Official code](https://github.com/fishsure/MemWeaver) includes processing, generation, evaluation, and runner files. No explicit code license was found in the root or README; the paper’s CC BY 4.0 does not license code or upstream data.
+
+**Verification date / actually read:** 2026-11-01; version page, §§3–4, relevant Appendix C experiments, official README and root listing. No reproduction run.
+
+<a id="method-sgmem"></a>
+### M78. SGMem
+
+**Direct method: sentence-graph retrieval for conversational memory**
+
+[Paper](https://arxiv.org/html/2509.21212v1) · arXiv v1, 2025-09-25.
+
+Combines sentence graphs, vector retrieval, graph expansion, and generated summaries/facts/insights. Avoiding entity-relation extraction does not eliminate LLM-generated memory. Evaluates 500 LongMemEval questions and 500 sampled LoCoMo questions, with Qwen2.5-32B-Instruct answering and serving as LLM judge. LoCoMo full-context accuracy is 0.558, above SGMem-SF Top-10 at 0.542: not a win over every baseline. Constructed-dialogue QA is not evidence of longitudinal real-user use, action completion, or contextual-integrity protection.
+
+**Resources:** No official implementation/data release or corresponding license verified. The paper uses the arXiv perpetual non-exclusive license.
+
+**Verification date / actually read:** 2026-11-01; version page, §§3–5, Appendix A dataset descriptions, and paper-linked resources. No reproduction run.
+
+<a id="method-evomem"></a>
+### M79. EvoMem
+
+**Conditionally direct method: evidence-bearing memory patches**
+
+[Paper](https://arxiv.org/html/2606.13681v2) · arXiv v2, 2026-06-17. Same paper as B79.
+
+Records append-only patches only for non-additive revisions, overwrites, or reinterpretations, preserving before/after states, rationales, and evidence; purely additive observations can remain in base memory. Personal-agent evidence comes from A-Mem on synthetic PersonaMem-Evo: average step accuracy rises from 47.3 to 49.0 and chain accuracy from 40.0 to 43.2, step scores individual questions while chain requires every linked question correct; GLM-5.1 regresses on both; gains are not universal. Historical retention does not establish disclosure authorization or privacy boundaries.
+
+**Resources:** [Repository](https://github.com/Aiden0526/EvoArena) contains PersonaMem and Terminal directories; the advertised SWE directory was absent. README retains pending-release/license statements. Paper CC BY 4.0 does not establish asset permissions.
+
+**Verification date / actually read:** 2026-11-01; §§4–6, main results, Appendix A, README/root. No reproduction run. Internal table warning: SWE Qwen chain 12.2→10.1 is labeled +2.1.
 
 <a id="human-studies"></a>
 ## Human studies: real use and interaction
