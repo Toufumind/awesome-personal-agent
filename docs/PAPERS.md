@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **128 篇不同论文**：70 个评测条目、66 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks 与 THEANINE/TeaFarm 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **138 篇不同论文**：75 个评测条目、72 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm 与 Operationalizing Contextual Integrity 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B70、M16–M66、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B75、M16–M72、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -609,6 +609,42 @@
 - **边界**：人物故事是人工构造内容，不是真人终身观察；反事实问答也不是全面对抗安全认证。
 - **资源**：[代码](https://github.com/kimnamssya/Theanine)、[数据](https://huggingface.co/datasets/LangAGI-Lab/teafarm)（当前 200 行）。附录 J 指定学术 / 非商业用途；数据与上游条款仍应分别确认。
 
+<a id="benchmark-personal-laps"></a>
+### B71. Doing Personal LAPS · 人工参与的多会话偏好数据
+
+[Doing Personal LAPS: LLM-Augmented Dialogue Construction for Personalized Multi-Session Conversational Search](https://arxiv.org/abs/2405.03480v1) — SIGIR 2024；[正式 DOI](https://doi.org/10.1145/3626772.3657815)。
+
+**核验日期 / 阅读范围**：2026-11-01；原文 §3 数据构造、§4 推荐与评测、§5 结果及 Tables 7–8；作者仓库的数据、下游任务和许可说明。
+
+- **构造 / 输入 → 输出**：LLM 指导单个人工工作者编写双方对话，表达工作者实际偏好；跨会话历史 → 偏好抽取与个性化推荐。食谱、电影两域共 1,406 段对话。
+- **测量**：对话多样性与质量、偏好抽取、偏好利用，以及推荐质量和解释的人类评价。
+- **边界 / 反例**：这是人工参与构造的 self-dialogue，不是自然部署日志。偏好记忆改善食谱推荐和两域解释，但**电影推荐质量未改善**，电影偏好利用 F1 数值从 .424 略降至 .419；原文不支持据此推断显著下降。
+- **资源**：[官方数据 / 代码](https://github.com/informagi/laps)，仓库标 MIT；包含构造、评测及下游资源。以数据/评测条目收录，不把推荐实验写成通用自主行动能力。
+
+<a id="benchmark-lamp-qa"></a>
+### B72. LaMP-QA · 个性化长回答
+
+[LaMP-QA: A Benchmark for Personalized Long-form Question Answering](https://aclanthology.org/2025.emnlp-main.60/) — EMNLP 2025 Main；arXiv `2506.00137v2` 为同一工作。
+
+**核验日期 / 阅读范围**：2026-11-01；原文 §§2–5 问题定义、构造、指标、基线和实验，Limitations；作者代码 README、文件列表与数据卡。
+
+- **输入 → 输出**：真实 StackExchange 历史提问组成用户画像，结合当前问题标题 → 个性化长回答；当前问题正文隐藏于生成过程，用于构造评价需求。
+- **测量**：LLM 按个性化 rubric 评估需求覆盖；另有人类成对评价。100 组 PlanPers/RAG 比较中，胜出比例为 35%/26%，其余为平局。
+- **边界 / 反例**：真实帖子不等于助手部署日志；评审不是原提问者，隐藏正文未必包含全部需求。需求覆盖不能代替真实满意度、隐私保护或行动完成。
+- **资源**：[代码](https://github.com/LaMP-Benchmark/LaMP-QA)、[数据](https://huggingface.co/datasets/alireza7/LaMP-QA)。上游 SE-PQA 在文中标 CC-BY-SA 4.0；未确认当前下游代码/数据的独立许可，不能套用论文许可证。与 LaMP、LongLaMP 分别计为不同论文。
+
+<a id="benchmark-hicupid"></a>
+### B73. HiCUPID · 合成个性化对话与代理评估
+
+[Exploring the Potential of LLMs as Personalized Assistants: Dataset, Evaluation, and Analysis](https://aclanthology.org/2025.acl-long.504/) — ACL 2025 Main；HiCUPID 为资源名，arXiv `2506.01262v1` 同文。
+
+**核验日期 / 阅读范围**：2026-11-01；原文 §3 构造、§4 评估、§5 结果及 Tables 3–4、Appendix A12 许可；官方仓库、数据卡与评估模型卡。
+
+- **输入 → 输出**：合成用户的偏好、画像和日程对话 → 单信息或多信息个性化回答；共 1,500 个合成用户，不能标为真人交互日志。
+- **测量**：GPT-4o 与蒸馏 Llama-3.2 评估；区分已见用户/未见问题和未见用户/未见问题，另在 Test Set 1 抽取 100 个 persona QA pair，对 4 个 LLM 的零样本输出进行人类评价；不是总计 100 条回答。
+- **边界 / 反例**：单独 DPO 未稳定带来个性化收益，多信息推理仍困难；“主动性”指回答中的建议，不是自主触发或外部操作。
+- **资源**：[代码](https://github.com/12kimih/HiCUPID)、[数据](https://huggingface.co/datasets/12kimih/HiCUPID)、[评估模型](https://huggingface.co/12kimih/Llama-3.2-3B-HiCUPID) 均公开并标 Apache-2.0；基于 Llama-3.2 的模型仍需注意其底座 Community License，不能据项目标签推定所有组成均无额外限制。
+
 <a id="transferable-memory-evaluation"></a>
 ## 评测 B：可迁移记忆与连续任务
 
@@ -890,6 +926,38 @@
 - **测量**：独立抽取数、抽取效率、检索数、完全 / 任意抽取率；每个提示最多尝试三次。记忆由数据集查询及代理生成解答构成，不是正在运行的多用户服务调查。
 - **边界**：研究设置没有用户 / 会话级记忆隔离；不能外推为隔离良好的产品同样泄漏，亦非完整隐私合规评测。
 - **资源**：[官方代码](https://github.com/wangbo9719/MEXTRA)。所查根目录 / README 未见明确总许可；上游代码与数据条款需分别确认。
+
+<a id="benchmark-operationalizing-ci"></a>
+### B74. Operationalizing Contextual Integrity in Privacy-Conscious Assistants
+
+**评测：填表信息披露** · 唯一论文键: `CI`
+
+[论文](https://arxiv.org/html/2408.02373v2) · v2, 2024-09-13
+
+126 张合成表单、14 类场景，由 8 名真人标注必要性/相关性。真人标注不是实际用户委托线上提交。评测是结构化数据、单次分享、逐字段处理；“询问用户”是标签，不是交互同意的验证。泄漏指标包含不该填写处的非拒绝输出，即便内容不正确。社会规范不等于个体授权，亦非全面隐私合规。
+
+**资源与复现：** 文章 CC BY 4.0；未核实官方独立数据或可运行 benchmark 发布，不能承诺复现。正式会场未确认。
+
+**实际阅读范围：** §§2–6、Appendix C 标注聚合、版本元数据。
+
+方法另见 [M70](#method-contextual-integrity-supervisor)，同篇不重复计数。
+
+<a id="tmp-m-ci"></a>
+
+<a id="benchmark-execution-prompt-injection"></a>
+### B75. Simple Prompt Injection Attacks Can Leak Personal Data Observed by LLM Agents During Task Execution
+
+**评测：执行时个人数据外泄** · 唯一论文键: `EXFIL`
+
+[论文](https://arxiv.org/html/2506.01055v1) · v1, 2025-06-01
+
+在虚构银行 AgentDojo 环境攻击途中已观察的个人信息，16 个原始任务并扩至 48 个。不是训练数据提取或真实客户研究。威胁模型信任用户/系统指令，攻击者控制外部输入，且具有白盒访问权限，或知晓检索系统（两者为可选条件，不要求同时具备）。任何敏感数据泄漏即可算成功，整体 ASR 不等于密码泄漏率；小设置零 ASR 不可推广到扩展任务。
+
+**资源与复现：** 文章 CC BY 4.0；checklist 仍称新数据录用后发布，未核实官方独立发布。AgentDojo 公开不代表全部新增资产可复现。“NeurIPS formatting style”不是录用。
+
+**实际阅读范围：** §§3–4、数据构建、威胁模型、指标、复现 checklist 与版本页。
+
+<a id="tmp-m-pearl"></a>
 
 <a id="memory-methods"></a>
 ## 方法 A：记忆与长期状态
@@ -1601,6 +1669,86 @@
 - **证据**：组件研究采集 30 人、每人 40 个音乐视频试次的 Muse 2 EEG；论文报告知情同意及匿名化。LOSO 与五折调参下，SVM 分情绪（per-emotion）准确率分别为 Happy .77、Angry .78、Sad .76、Relaxed .80；端到端对话仅提供受控真实会话示例。
 - **边界**：分类准确率不是心理支持疗效；in-vivo 系统评估仍列为未来工作。不得将推断标签写成对真实心理状态的可靠读取或临床有效性。
 - **资源**：上述机构 PDF 为 all rights reserved；所查来源未找到官方代码 / 数据发布。作者所述隐私处理不等于独立安全审计。
+
+<a id="method-llm-personalize"></a>
+### M67. LLM-Personalize · 偏好驱动具身规划
+
+[LLM-Personalize: Aligning LLM Planners with Human Preferences via Reinforced Self-Training for Housekeeping Robots](https://aclanthology.org/2025.coling-main.98/) — COLING 2025；arXiv `2404.14285v3` 为同一工作。
+
+**核验日期 / 阅读范围**：2026-11-01；原文 §3 方法、§4 实验设置及 Table 1、§6 局限；作者仓库 README、文件列表及许可标识。
+
+- **输入 → 输出**：局部场景观察、任务指令与偏好反馈 → 场景图驱动的高层行动及低层执行；以模仿学习启动，再筛选符合偏好的交互进行强化自训练。
+- **证据 / 测量**：Housekeep 仿真，使用其人类标注的物体—容器偏好；4 个场景，每场景 5 个测试任务、每任务 5 次运行。“成功率”是净纠正错放物体的比例，可为负，**不是整项任务完成率**。
+- **边界 / 反例**：Scene 4 测试集的 ST2 得分为 20.4，低于仅模仿学习（IL）的 25.7；但 ST2 相对 ST1 在四个测试场景均提升，不能混淆比较基线。没有真实家庭或实体机器人部署验证。
+- **资源**：[作者代码](https://github.com/gdg94/codellmpersonalize)，仓库标 MIT；含规划、仿真和微调流程，依赖旧版 OpenAI SDK、GPT-3.5 和 Habitat。公开不代表当前可直接复现。
+
+<a id="method-personal-travel-solver"></a>
+### M68. Personal Travel Solver · 隐式偏好与约束求解
+
+[Personal Travel Solver: A Preference-Driven LLM-Solver System for Travel Planning](https://aclanthology.org/2025.acl-long.1339/) — ACL 2025 Main。RealTravel 是同文数据集，不另计论文。
+
+**核验日期 / 阅读范围**：2026-11-01；原文 §§3.1、3.2–3.8 方法与数据构建、§4 结果、Appendix B 指标；作者仓库 README 与顶层文件列表。
+
+- **输入 → 输出**：旅行请求、评论历史及封闭旅行数据库 → 满足显式约束、兼顾推断偏好的行程；结合 LLM 与 SCIP 数值求解器。
+- **数据 / 测量**：Google Local 评论与 POI 元数据是真实来源，但旅行请求由约束采样、可解性验证和 LLM 改写构造。测试集 1,000 条；最终约束通过率 96.60%，个性化另由 DeepSeek-V3 成对裁判评价。
+- **边界 / 反例**：约束通过不等于真实旅客满意，也不证明能够预订或执行行程；真人评论不能将构造任务变成真实委托。
+- **资源**：[官方入口](https://github.com/cliftclift/PTS) 当前提供 RealTravel 数据及处理目录；未确认完整 PTS 求解实现公开，未见顶层明确许可证，勿标作“完整开源系统”。
+
+<a id="method-memory-r1"></a>
+### M69. Memory-R1
+
+**方法：学习式记忆管理** · 唯一论文键: `R1`
+
+[论文](https://arxiv.org/html/2508.19828v5) · v5, 2026-01-14
+
+分别以 RL 训练增改删记忆的管理器与检索筛选/回答器。仅在 LoCoMo 训练，并在 MSC、LongMemEval 测试；离线对话 QA，不是真人长期使用、工具执行或安全删除验证。报告 152/81/1307 问题划分，但“1:1:8”与数量不完全一致；未确认按用户/对话隔离。Appendix B 的 24-turn 与 Algorithm 1 的 50-turn 不一致，不能自行补正。
+
+**资源与复现：** [作者仓库](https://github.com/yansikuan/memory-r1) 为 Apache-2.0，但只有 README/assets，仍称 code coming soon，不能声称已发布可运行实现。LoCoMo 派生数据保留 CC BY-NC 4.0；文章为 arXiv 非独占许可。
+
+**实际阅读范围：** §§3–4、Limitations、Appendix B/D、版本元数据和仓库 README/文件树。
+
+<a id="tmp-b-ci"></a>
+
+<a id="method-contextual-integrity-supervisor"></a>
+### M70. Information-flow-card supervisor
+
+**方法；唯一论文键 / Method; unique paper key: `CI`**
+
+[同篇原文](https://arxiv.org/html/2408.02373v2) · v2, 2024-09-13
+
+通过信息流卡明确语境、主体、接收方与披露信息，再由推理监督器控制填表。与自我审查、二分类及普通推理监督比较。提示与 few-shot 策略不构成硬授权机制；攻击鲁棒性及真实用户交互仍待验证。
+
+评测、来源、许可、阅读范围与复现限制均见 [B74](#benchmark-operationalizing-ci)。不是 H 类部署研究。
+
+<a id="tmp-b-exfil"></a>
+
+<a id="method-pearl"></a>
+### M71. Pearl
+
+**相邻方法：写作检索校准** · 唯一论文键: `PEARL`
+
+[论文](https://arxiv.org/html/2311.09180v2) · v2, 2024-11-05; CustomNLP4U 2024
+
+以个人历史文档对生成的帮助训练检索器，支持低质量检索检测和修订。WorkSm 私有企业帖子与 AITA 评论离线评估；WorkSm 评测请求由作者编写，训练请求由 GPT-4 合成；AITA 缺少时间信息。参考文本/立场指标和 LLM 判断不是真人满意度；不验证对外发送、收件人授权或隐私控制。
+
+**资源与复现：** [正式出版](https://aclanthology.org/2024.customnlp4u-1.16/) 为 CustomNLP4U workshop，非 ACL main。WorkSm 私有、依赖闭源 API，未核实官方代码/权重。所读 arXiv 文章 CC BY-NC-ND 4.0，不外推为数据许可。
+
+**实际阅读范围：** §§4–5、Appendix E、版本及正式出版页。
+
+<a id="tmp-m-personax"></a>
+
+<a id="method-personax"></a>
+### M72. PersonaX
+
+**相邻方法：推荐画像缓存** · 唯一论文键: `PERSONAX`
+
+[论文](https://aclanthology.org/2025.findings-acl.300.pdf) · Findings ACL 2025, pp. 5764–5787
+
+将长行为历史聚类选样，离线生成多画像片段并检索。Amazon CDs/Vinyl 与 Books 排序：最后交互正例加 9 个采样负例。离线排序不是真人满意度或通用助理执行；流式行为与画像过期未验证。延迟分析含每 10 次调用刷新一次画像的摊销假设。
+
+**资源与复现：** [作者仓库](https://github.com/Ancientshi/PersonaX) 含 MIT 代码与数据子集，但 README 明示 EasyRec 客户端不完整复现 AgentCF/Agent4Rec。[许可范围](https://github.com/Ancientshi/PersonaX/blob/master/LICENSE)明确排除 Amazon 数据、notebook 输出、EasyRec，以及第三方代码、依赖和权重；这些资产不随项目 MIT 许可获得授权。此范围由独立审查补充，本条原始 NOTICE 抓取曾遇 cache miss。
+
+**实际阅读范围：** PDF §§4–5、Limitations/Ethics、官方仓库 README/文件树。
 
 <a id="human-studies"></a>
 ## 人机研究：真实使用与互动
