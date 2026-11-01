@@ -1,5 +1,7 @@
 # Awesome Personal Agent
 
+![Awesome Personal Agent banner](assets/banner.png)
+
 精选个人 AI Agent：源码项目、可用产品与研究论文。
 
 **简体中文** · [English](README.en.md)
