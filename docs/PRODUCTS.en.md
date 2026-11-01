@@ -39,6 +39,39 @@
 
 See the corresponding entries for supporting sources, platforms, and permission boundaries.
 
+<a id="release-timeline"></a>
+## Release timeline
+
+**Checked on 2026-11-01.** Public introductions and general releases are separate milestones. See each product entry for current plans and regional limits.
+
+| Date | Product | Stage / scope | Source |
+| --- | --- | --- | --- |
+| 2025-02-26 | [Alexa+](#alexa) | Announced; US Early Access planned | [Original](https://www.aboutamazon.com/news/devices/amazon-2025-devices-alexa-event-live-updates) |
+| 2025-04-02 | [Genspark Super Agent](#genspark) | Introduced | [Original](https://www.genspark.ai/blog/genspark-super-agent) |
+| 2025-07-09 | [Comet Assistant](#comet) | Limited release | [Original](https://www.perplexity.ai/en-GB/hub/blog/comet-is-now-available-to-everyone-worldwide) |
+| 2025-09-08 | [Poke](#poke) | Public launch; access applications | [Original](https://www.webwire.com/ViewPressRel.asp?aId=343533) |
+| 2026-01-12 | [Claude Cowork](#claude-cowork) | Research preview; Max, macOS | [Original](https://support.claude.com/en/articles/12138966-release-notes) |
+| 2026-03-19 | [Poke](#poke) | GA; screening and waitlist removed | [Original](https://poke.com/docs/release-notes) |
+| 2026-04-09 | [Claude Cowork](#claude-cowork) | GA; paid plans | [Original](https://claude.com/resources/articles/cowork-for-enterprise) |
+| 2026-05-19 | [Gemini Tasks](#gemini) | Spark begins rolling out to trusted testers | [Original](https://gemini.google/release-notes/) |
+| 2026-07-09 | [ChatGPT Work](#chatgpt-work) | Staged rollout begins | [Original](https://openai.com/index/chatgpt-for-your-most-ambitious-work/) |
+| 2026-08-11 | [Grok Bot](#grok-bot) | Beta release | [Original](https://x.ai/news/introducing-grok-bot) |
+| 2026-09-08 | [Meta Muse](#muse) | Staged US rollout | [Original](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/) |
+
+<details>
+<summary>Date notes and unresolved entries</summary>
+
+- These are sourced milestones, not necessarily first disclosures. GA means general availability; previews, waitlists, and regional rollouts are labeled separately. Dates follow sources without converting unspecified time zones.
+- **[Manus](#manus):** Early official social posts were unreadable and displayed dates differ; first release remains unverified. [2026-09-28](https://manus.im/blog/introducing-manus-2-0) is the 2.0 release.
+- **[Town](#town):** First product release remains unverified; [2026-03-09](https://www.town.com/updates) establishes iOS GA.
+- **[Lindy](#lindy):** Search-index evidence dates the current Assistant launch to 2026-02-10, but the [original announcement](https://community.lindy.ai/x/announcements/43j9k4ynbcx0/lindy-assistant-is-live) now returns 502; verification is pending. The [early introduction](https://www.lindy.ai/blog/meet-lindy) labels 2023-03-21 Last Updated, not an established launch date.
+- **[Perplexity Computer](#perplexity-computer):** The [launch article](https://www.perplexity.ai/en-GB/hub/blog/introducing-perplexity-computer) confirms Max access at launch. The 2026-02-25 date comes from an official-index snapshot in search; the [index](https://hub-prod.perplexity.ai/) now returns 404, so the date awaits verification. The local Personal Computer is a separate milestone.
+- **[Copilot Cowork for personal accounts](#copilot):** First release under this name remains unverified; it is [still in Preview](https://support.microsoft.com/en-us/microsoft-365-copilot/get-started-with-cowork). Enterprise GA does not apply.
+- **[Instinct (candidate)](#instinct):** First release and full personal-assistant self-service access remain unverified; excluded from the 14 listed products.
+- Genspark refers only to Super Agent; Lindy refers to the current Assistant. The Gemini Spark → Task rename date is unknown; Muse's September 30 date is an article update. Index snapshots are not direct verification; inaccessible original links are retained for traceability.
+
+</details>
+
 ## Available products
 
 <a id="chatgpt-work"></a>
