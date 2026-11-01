@@ -12,7 +12,7 @@
 
 **简体中文** · [English](README.en.md)
 
-**[31 个项目](#source-projects) · [产品目录](docs/PRODUCTS.md) · [论文目录](docs/PAPERS.md) · [研究综述](docs/SURVEYS.md) · [发布时间线](docs/PRODUCTS.md#release-timeline)**
+**[33 个项目](#source-projects) · [产品目录](docs/PRODUCTS.md) · [论文目录](docs/PAPERS.md) · [研究综述](docs/SURVEYS.md) · [发布时间线](docs/PRODUCTS.md#release-timeline)**
 
 <a id="目录--contents"></a>
 </div>
@@ -21,6 +21,7 @@
 ## 目录
 
 - [常驻个人助理](#personal-assistants)
+- [家居、语音与可穿戴](#home-voice-wearables)
 - [手机 Agent](#mobile-agents)
 - [桌面知识与办公](#desktop-assistants)
 - [电脑与浏览器执行](#computer-and-browser)
@@ -53,6 +54,14 @@ Stars 由 Shields.io 展示，可能有缓存延迟；仅反映关注度，不�
 - [ZeroClaw](https://github.com/zeroclaw-labs/zeroclaw) [![ZeroClaw GitHub stars](https://img.shields.io/github/stars/zeroclaw-labs/zeroclaw?style=flat&label=Stars)](https://github.com/zeroclaw-labs/zeroclaw) — 支持消息、webhook 与硬件事件的 Rust 运行时。
 
 [ 部署与选型提醒 → ](docs/GUIDE.md#personal-assistants)
+
+<a id="home-voice-wearables"></a>
+### 家居、语音与可穿戴
+
+- [Home Assistant Assist](https://github.com/home-assistant/core) [![Home Assistant Core GitHub stars](https://img.shields.io/github/stars/home-assistant/core?style=flat&label=Stars)](https://github.com/home-assistant/core) — 家居语音与设备控制；可配置 LLM 工具调用。**Ollama 家居控制仍属实验性。**
+- [Omi](https://github.com/BasedHardware/omi) [![Omi GitHub stars](https://img.shields.io/github/stars/BasedHardware/omi?style=flat&label=Stars)](https://github.com/BasedHardware/omi) — 手机 / 可穿戴语音记忆、任务与集成自动化；**源码、云服务和硬件须分开看。**
+
+[ 部署与选型提醒 → ](docs/GUIDE.md#home-voice-wearables)
 
 <a id="手机-agent--mobile-agents"></a>
 <a id="mobile-agents"></a>
@@ -111,7 +120,7 @@ Stars 由 Shields.io 展示，可能有缓存延迟；仅反映关注度，不�
 <a id="experimental-related"></a>
 ## 实验性相关项目
 
-以下编程研究原型仅供架构参考，不计入上方 31 个个人 Agent 源码项目。
+以下编程研究原型仅供架构参考，不计入上方 33 个个人 Agent 源码项目。
 
 - [dsh-superagent](https://github.com/deepseek-ai/dsh-superagent-prototype) [![dsh-superagent GitHub stars](https://img.shields.io/github/stars/deepseek-ai/dsh-superagent-prototype?style=flat&label=Stars)](https://github.com/deepseek-ai/dsh-superagent-prototype) — DeepSeek 团队的单 GitHub 仓库主动编程 Agent，基于 DeepSeek Harness，可选接入飞书。**研究原型，非正式产品；未实测。** [依据](docs/SOURCES.md#deepseek-superagent)
 
@@ -141,7 +150,7 @@ Stars 由 Shields.io 展示，可能有缓存延迟；仅反映关注度，不�
 
 [收录范围](docs/GUIDE.md#scope) · [如何比较](docs/GUIDE.md#comparison) · [安全清单](docs/GUIDE.md#safety) · [任务导读](docs/LANDSCAPE.md) · [试验协议](docs/TASKS.md)
 
-源码项目文档核验：**2026-10-31**。未安装实测、复现或审计；试验协议尚未执行。[来源与日期](docs/SOURCES.md)（产品与论文分别记录）。
+源码项目首批文档核验：**2026-10-31**；家居 / 可穿戴新增两项：**2026-11-01**。未安装实测、复现或审计；试验协议尚未执行。[来源与日期](docs/SOURCES.md)（产品与论文分别记录）。
 
 <a id="相关清单--related-lists"></a>
 <a id="related-lists"></a>
