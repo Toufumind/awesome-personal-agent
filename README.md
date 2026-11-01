@@ -8,7 +8,7 @@
 
 <div align="center">
 
-精选个人 AI Agent：源码项目、可用产品与研究论文。
+关注个人 Agent 的研究、评测与实践。
 
 **简体中文** · [English](README.en.md)
 
