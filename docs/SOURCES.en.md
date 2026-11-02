@@ -133,7 +133,7 @@ The following lists were read to understand their scope and discover candidates.
 
 ## Review scope and maintenance
 
-- The README now contains **33 source entries: 30 main-category entries and 3 separate previews**, across six main use categories and one preview section. The original 14 are retained, with 15 earlier additions, 2 personal-work additions, and 2 home / wearable additions (19 additions total). Product and paper directories are excluded from this count; this is not a complete market survey.
+- The README now contains **34 source entries: 31 main-category entries and 3 separate previews**, across six main use categories and one preview section. The original 14 are retained, with 15 earlier additions, 2 personal-work additions, 2 home / wearable additions, and [Octop](#octop) (20 additions total). Product and paper directories are excluded from this count; this is not a complete market survey.
 - Stars, commit dates, and quantitative reliability are not used for ranking. Pinned commits support evidence tracing, not an activity score. Unverified metrics are not inferred.
 - A main-branch README does not establish that every version supports a capability. Check the specific release again before installation.
 - A readable page shows only that the source was accessible at review time—not software security, service availability, or future link stability.
@@ -146,7 +146,7 @@ The following lists were read to understand their scope and discover candidates.
 
 **Documentation reviewed: 2026-11-01 (UTC)**. The DeepSeek team's [official repository README](https://github.com/deepseek-ai/dsh-superagent-prototype#readme) and [MIT license](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/main/LICENSE) describe a proactive coding research prototype for one GitHub repository, built on DeepSeek Harness with optional Feishu integration. It is neither an official DeepSeek product nor production-ready software; some designs discussed in the article are not implemented. [Repository metadata](https://api.github.com/repos/deepseek-ai/dsh-superagent-prototype) records creation at **2026-10-31 09:32:46 UTC**; this is not treated as an article or product release date.
 
-The main list excludes coding-only tools, so this is an experimental architecture reference, **outside the 33 source projects**. Documentation review only: no installation, execution, audit, or experiment reproduction. Capabilities of the internal instance are not assumed to exist in the public prototype.
+The main list excludes coding-only tools, so this is an experimental architecture reference, **outside the 34 source projects**. Documentation review only: no installation, execution, audit, or experiment reproduction. Capabilities of the internal instance are not assumed to exist in the public prototype.
 
 <a id="home-voice-additions"></a>
 ## Home / wearable additions: Home Assistant Assist and Omi
@@ -157,3 +157,10 @@ The main list excludes coding-only tools, so this is an experimental architectur
 - **Omi:** [README](https://github.com/BasedHardware/omi#readme) · [MIT](https://github.com/BasedHardware/omi/blob/main/LICENSE) · [Overview](https://help.omi.me/en/articles/13135007-overview) · [Apps](https://help.omi.me/en/articles/13153599-omi-apps) · [Recording consent](https://help.omi.me/en/articles/13153576-using-omi-with-phone-only) · [Privacy](https://www.omi.me/pages/privacy). Distinguish capture, memory, task generation, and external execution. Source quick start connects to cloud; no offline or zero-retention guarantee. Third-party App permissions, backend deletion timing, complete regional access, and charges were not verified.
 
 Omi’s formal policy is effective **2026-10-31**: conversation audio may be stored encrypted for features such as playback, so the older help article’s no-audio-retention statement must not be carried forward. Training requires explicit permission according to the vendor; this is not zero retention. Account deletion includes a 14-day lock / restoration window and legal-retention exceptions; backend erasure was not verified.
+
+<a id="octop"></a>
+## Persistent-assistant addition: Octop
+
+**Documentation checked: 2026-11-02.** [Official repository](https://github.com/TencentCloud/Octop); [README](https://github.com/TencentCloud/Octop/blob/a40f54a8099b1faebc89c680ec1e1ece8b97a4e6/README.md) and [MIT LICENSE](https://github.com/TencentCloud/Octop/blob/a40f54a8099b1faebc89c680ec1e1ece8b97a4e6/LICENSE) pinned to the [v1.0.3b2 commit](https://github.com/TencentCloud/Octop/commit/a40f54a8099b1faebc89c680ec1e1ece8b97a4e6). The [release](https://github.com/TencentCloud/Octop/releases/tag/v1.0.3b2) published desktop and Python packages on 2026-11-02.
+
+Read multi-user/agent, memory, cron, channels, browser, installation and roadmap descriptions. AgentTeams is beta, mobile clients remain in closed testing, and managed agents/self-evolution remain planned. Models, OAuth/MCP and messaging services have separate permission/regional constraints. No installation, signature verification or multi-user isolation audit; self-hosting is not treated as a privacy guarantee.
