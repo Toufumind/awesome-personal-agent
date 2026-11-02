@@ -2,7 +2,9 @@
 
 [English](PRODUCTS.en.md) · [返回主清单](../README.md)
 
-**核验日期：2026-10-31（UTC）。** 本页收录 **14 项已有官方开放说明的商业 / 专有 personal-agent 产品**（含明确标注的地区分批开放、实验性与预览），另列 **1 项公开介绍但自助可用性未核实的候选 Instinct**。后者不计入前述 14 项；两组都不替代主清单中的开源应用、运行时与框架。排序按使用方式，不是推荐排名。
+**核验日期：2026-10-31（UTC）。** 本页收录 **18 项已有官方开放说明的商业 / 专有 personal-agent 产品**（含明确标注的地区分批开放、实验性与预览），另列 **1 项公开介绍但自助可用性未核实的候选 Instinct**。后者不计入前述 18 项；两组都不替代主清单中的开源应用、运行时与框架。排序按使用方式，不是推荐排名。
+
+**新增条目核验：2026-11-02。** Boardy、Motion、Bee Frontier 与 Qira；其余条目保留原日期。
 
 ## 怎么读
 
@@ -27,6 +29,10 @@
 | [Grok Bot](#grok-bot) | 有长期记忆的 Bot 与持久云电脑 | 已提供；合资格付费计划；同一用户的 Bots 共用云电脑 |
 | [Poke](#poke) | 消息里的个人助理与生活事务 | 已提供；Poke Human 是另有套餐条件的真人服务 |
 | [Alexa+](#alexa) | 家庭语音、日程、设备与生活服务 | 美国已开放；其他地区阶段和能力不同 |
+| [Boardy](#boardy) | 职业人脉匹配与双向同意介绍 | 已提供；18+，基础免费、有配额，不保证匹配 |
+| [Motion](#motion) | 任务优先级与日历自动重排 | 已提供；付费方案 / 试用，非通用电脑 Agent |
+| [Bee Frontier](#bee-frontier) | 对话记忆、摘要与行动项 | Amazon.com 已上市；硬件与 Bee Pro 分开收费 |
+| [Lenovo & Motorola Qira](#qira) | 跨设备知识、会议与上下文建议 | 兼容机型下载 / 分批推送；非全球全机型开放 |
 | [Meta Muse](#muse) | 消息里的长期目标与云电脑执行 | 美国分批开放；不是全球全面可用 |
 | [Gemini Tasks](#gemini) | Google 上下文、浏览器与定时任务 | 已开放但仍属实验性；地区限制明显 |
 | [Copilot Cowork（个人版）](#copilot) | Microsoft 365 文件、邮件与日程 | **Preview**；美国 / 加拿大，Premium / Pro |
@@ -67,7 +73,7 @@
 - **[Lindy](#lindy)：** 搜索索引显示现款 Assistant 于 2026-02-10 上线，但[原公告](https://community.lindy.ai/x/announcements/43j9k4ynbcx0/lindy-assistant-is-live)当前返回 502，待复核。[早期介绍](https://www.lindy.ai/blog/meet-lindy)的 2023-03-21 标为 Last Updated，不当作首发日。
 - **[Perplexity Computer](#perplexity-computer)：** [原文](https://www.perplexity.ai/en-GB/hub/blog/introducing-perplexity-computer)确认发布时向 Max 开放；2026-02-25 来自搜索中的官方索引快照，[索引](https://hub-prod.perplexity.ai/)当前返回 404，日期待复核。它与本机 Personal Computer 分开记。
 - **[Copilot Cowork（个人版）](#copilot)：** 现名首发日待核实；[当前仍为 Preview](https://support.microsoft.com/en-us/microsoft-365-copilot/get-started-with-cowork)，不套用企业版 GA 日期。
-- **[Instinct（候选）](#instinct)：** 首发日和完整个人版自助开放均待核实，不计入 14 项已收录产品。
+- **[Instinct（候选）](#instinct)：** 首发日和完整个人版自助开放均待核实，不计入 18 项已收录产品。
 - Genspark 行只指 Super Agent；Lindy 行只讨论现款 Assistant。Gemini Spark → Task 改名日期未知；Muse 的 09-30 是文章更新日。索引快照不等于原文直接核验，失效原链接仅供追溯。
 
 </details>
@@ -185,6 +191,27 @@
 
 **建议首测（未执行）：** 在支持的地区添加一条无私人信息的测试提醒并删除，先不启用购物或门锁控制。
 
+<a id="boardy"></a>
+### Boardy — 职业人脉介绍
+
+- **用途 / 入口：** 经短信、WhatsApp 或邮件说明职业目标，由服务寻找匹配并在双方同意后介绍；不保证匹配，有介绍配额。[官方 FAQ](https://www.boardy.ai/faq)
+- **费用 / 边界：** 基础聊天与介绍免费，部分活动合作功能付费；18+。完整地区/渠道覆盖未核实，FAQ 与条款对首次通话流程的描述不同，按实际开通流程确认。专有托管服务，非开源软件。[条款](https://www.boardy.ai/terms-and-conditions)
+- **核验：2026-11-02。** 读取 FAQ 与条款；未注册、通话或实际介绍联系人。
+
+<a id="motion"></a>
+### Motion — 任务与日历自动排程
+
+- **用途 / 入口：** 自动安排任务，并随会议或计划变化重排日历；提供个人/团队方案及试用，属于时间管理专项助理，不是通用电脑操作 Agent。[功能](https://www.usemotion.com/features/ai-calendar) · [套餐](https://www.usemotion.com/pricing)
+- **费用 / 边界：** 付费订阅；价格随计费周期、席位与额度变化。专有服务，需账号及日历权限；完整地区清单未确认。[服务条款](https://www.usemotion.com/legal/terms-of-service)
+- **核验：2026-11-02。** 读取功能、套餐与条款；未注册或连接日历。
+
+<a id="bee-frontier"></a>
+### Bee Frontier — 可穿戴对话记忆与行动项
+
+- **用途 / 入口：** 将对话转为摘要、记忆与行动项；订阅 Bee Pro 并连接支持的邮件/日历服务后，可起草跟进邮件或创建日历邀请。官方产品页列 iOS / Android。Amazon.com 已上市，硬件标价 US$74.99；不要与仍标为即将上市的 Bee Eclipse 混淆。[产品页](https://bee.computer/products/frontier) · [Amazon 发布说明](https://www.aboutamazon.com/news/devices/amazon-personal-ai-bee-frontier-bee-eclipse)
+- **费用 / 边界：** 基础购买含摘要与 14 天记忆；集成、待办建议、个人聊天及桌面端等需 Bee Pro（US$11.99/月，按实际购买条件）。商业硬件/服务，需联网；全球配送与完整地区支持未核实。处理音频前取得适用同意，端侧处理宣传不等于全程离线。[Bee 条款](https://digprjsurvey.amazon.com/csad/help/node/TpkN2t4aokRkZRDAVJ)
+- **核验：2026-11-02。** 读取官方发布、产品与条款；未购买、佩戴或验证隐私实现。
+
 ## 分批开放：不要当作全球可用
 
 <a id="muse"></a>
@@ -196,6 +223,13 @@
 - **边界：** 官方称 VM 数据不分享给 Meta 广告系统，但训练使用需单独退出；当前 Secure VM 不等于 Meta 技术上无法访问。Confidential VM、AI 眼镜、Shop Pay、1Password 在所核官方说明中仍属未来项，不计作已交付。[安全与数据说明](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse) · [发布说明](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
 
 **建议首测（未执行）：** 在已开放账户中把公开资料整理成计划，检查任务记录与停止操作；先不接邮箱、不购物、不替他人发送消息。
+
+<a id="qira"></a>
+### Lenovo & Motorola Qira — 兼容设备上的跨设备助理
+
+- **用途 / 入口：** 个人知识、会议摘要、上下文行动建议与连接应用；兼容 Lenovo PC 已有下载，Motorola 随支持机型/系统分批推送，不能写成全部设备可用。[产品页](https://www.lenovo.com/us/en/qira/) · [2026-09-03 推广说明](https://news.lenovo.com/pressroom/press-releases/lenovo-motorola-qira-expands-reach-across-devices-apps-markets/)
+- **边界：** 专有设备软件；机型、地区、语言及服务分别限制，Expedia 集成在产品页标美国限定。本地与混合模式能力不同，云功能需联网且有用量限制；完整地区表与统一收费未核实，不依据不同步的区域支持页宣称全球开放。[官方 FAQ](https://support.lenovo.com/gb/en/solutions/qira-faq)
+- **核验：2026-11-02。** 读取产品、推广与 FAQ；未安装或验证具体账号/机型资格。
 
 ## 实验性与预览：不要当作全面正式开放
 
