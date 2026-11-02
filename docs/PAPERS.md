@@ -264,7 +264,7 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **资源与许可**：[官方代码](https://github.com/liweijiang/indievalue)含转换/元数据并链接转换标签；WVS 为研究用途、禁止再分发，论文 CC BY 不覆盖该限制；根目录未见代码许可。
 
 <a id="benchmark-dulemon"></a>
-### B84. 评测
+### B84. DuLeMon
 
 **DuLeMon**，出自 **Long Time No See! Open-Domain Conversation with Long-Term Persona Memory**｜[Findings of ACL 2022](https://aclanthology.org/2022.findings-acl.207/)；[2203.05797v2](https://arxiv.org/html/2203.05797v2)，2022-03-14（v1 03-11）。同篇方法见 **M95**。
 
@@ -1346,7 +1346,7 @@ AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐�
 
 <a id="方法-a记忆与长期状态"></a>
 <a id="method-persistent-user-profiles"></a>
-### M93. 方法
+### M93. Enabling Personalized Long-term Interactions in LLM-based Agents through Persistent Memory and User Profiles
 
 **Enabling Personalized Long-term Interactions in LLM-based Agents through Persistent Memory and User Profiles**｜[2510.07925v1](https://arxiv.org/html/2510.07925v1)，2025-10-09，所查历史仅 v1；正式 venue 未核实。
 
@@ -1807,7 +1807,7 @@ AlignX 数据支持 AlignXpert 的画像条件对齐与中间偏好方向对齐�
 实际阅读范围：版本页面；原文方法、训练指令、实验设置、评估与挑战相关段落；仓库目录、README 的流程、权重及许可声明。未下载或验证权重、未执行脚本、未逐条审查全部训练数据。
 
 <a id="method-plato-ltm"></a>
-### M95. 方法
+### M95. PLATO-LTM
 
 **PLATO-LTM**｜同篇 [Findings of ACL 2022](https://aclanthology.org/2022.findings-acl.207/) / [2203.05797v2](https://arxiv.org/html/2203.05797v2)，2022-03-14；交叉引用 **B84**，不重复计论文。
 
@@ -1816,7 +1816,7 @@ persona 分类过滤、用户/机器人分库、相似度去重替换、上下�
 这是较早直接个人记忆基础，非工具执行代理；相似度替换不证明完整矛盾/时态更新治理。**资源/许可**：论文声称代码/数据已公开，但[官方 README](https://github.com/PaddlePaddle/Research/tree/master/NLP/ACL2022-DuLeMon)仍将 PLATO-LTM framework 标为 **Coming soon**；不能称完整实现已开源。父仓库 Apache 2.0，不据此推定外部数据条款。**实读范围**：§4 提取/读写/生成、§5.3.3、表5、附录 B 和官方资源；未运行模型。
 
 <a id="method-xmemory"></a>
-### M96. 方法
+### M96. xMemory
 
 **Beyond RAG for Agent Memory: Retrieval by Decoupling and Aggregation (xMemory)**｜[2602.02007v4](https://arxiv.org/html/2602.02007v4)，2026-05-12；v1 02-02、v2 02-25、v3 04-11。[官方 README](https://raw.githubusercontent.com/HU-xiaobai/xMemory/main/README.md) 2026-09-24 公告称 NeurIPS 2026 接收；仅核实作者仓库声明，未独立核实正式会议记录。
 
@@ -2171,7 +2171,7 @@ IUI 2026 DOI线索 `10.1145/3742413.3789222`；ACM fetch返回403。venue以官�
 实际阅读范围：版本页面；原文架构、用户流程、评估及结论相关段落；仓库目录、README、license 元数据及 evaluation score.txt。该样例请求四天，输出只有两个行程 day 对象仍获 9 分，是裁判可靠性的具体警示，不是总体错误率。evaluation/eval.json 因连接器 HTTP 400（文件过大或不支持）、网页回退 cache miss 而未读；不能声称已审完全部人工评估数据。未安装、执行或独立复现系统。
 
 <a id="method-valuepilot"></a>
-### M94. 方法
+### M94. ValuePilot
 
 **ValuePilot: A Two-Phase Framework for Value-Driven Decision-Making**｜两个独立 ID 并列、一个方法家族：
 - [2503.04569v1](https://arxiv.org/html/2503.04569v1)，2025-03-06，五位作者。
