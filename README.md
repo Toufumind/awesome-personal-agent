@@ -12,7 +12,7 @@
 
 **简体中文** · [English](README.en.md)
 
-**[33 个项目](#source-projects) · [产品目录](docs/PRODUCTS.md) · [论文目录](docs/PAPERS.md) · [研究综述](docs/SURVEYS.md) · [发布时间线](docs/PRODUCTS.md#release-timeline)**
+**[34 个项目](#source-projects) · [产品目录](docs/PRODUCTS.md) · [论文目录](docs/PAPERS.md) · [研究综述](docs/SURVEYS.md) · [发布时间线](docs/PRODUCTS.md#release-timeline)**
 
 <a id="目录--contents"></a>
 </div>
@@ -62,6 +62,7 @@ Stars 由 Shields.io 展示，可能有缓存延迟；仅反映关注度，不�
 - [Moltis](https://github.com/moltis-org/moltis) [![Moltis GitHub stars](https://img.shields.io/github/stars/moltis-org/moltis?style=flat&label=Stars)](https://github.com/moltis-org/moltis) — 支持语音、聊天与定时任务的助理服务器。
 - [nanobot](https://github.com/HKUDS/nanobot) [![nanobot GitHub stars](https://img.shields.io/github/stars/HKUDS/nanobot?style=flat&label=Stars)](https://github.com/HKUDS/nanobot) — 轻量 Python Agent，提供记忆、工具与多渠道入口。
 - [NanoClaw](https://github.com/nanocoai/nanoclaw) [![NanoClaw GitHub stars](https://img.shields.io/github/stars/nanocoai/nanoclaw?style=flat&label=Stars)](https://github.com/nanocoai/nanoclaw) — 以可定制代码和容器执行为核心的聊天助理。
+- [Octop](https://github.com/TencentCloud/Octop) [![Octop GitHub stars](https://img.shields.io/github/stars/TencentCloud/Octop?style=flat&label=Stars)](https://github.com/TencentCloud/Octop) — 多用户、多 Agent 自托管助理，支持记忆、定时任务与消息渠道。
 - [OpenClaw](https://github.com/openclaw/openclaw) [![OpenClaw GitHub stars](https://img.shields.io/github/stars/openclaw/openclaw?style=flat&label=Stars)](https://github.com/openclaw/openclaw) — 连接消息渠道、会话与工具的本地 Gateway。
 - [PicoClaw](https://github.com/sipeed/picoclaw) [![PicoClaw GitHub stars](https://img.shields.io/github/stars/sipeed/picoclaw?style=flat&label=Stars)](https://github.com/sipeed/picoclaw) — 轻量常驻助理，支持工具与提醒。**Pre-1.0，勿用于生产。**
 - [QwenPaw](https://github.com/agentscope-ai/QwenPaw) [![QwenPaw GitHub stars](https://img.shields.io/github/stars/agentscope-ai/QwenPaw?style=flat&label=Stars)](https://github.com/agentscope-ai/QwenPaw) — 原 CoPaw；聊天、办公文件与浏览器任务。**桌面版 Beta。**
@@ -134,7 +135,7 @@ Stars 由 Shields.io 展示，可能有缓存延迟；仅反映关注度，不�
 <a id="experimental-related"></a>
 ## 实验性相关项目
 
-以下编程研究原型仅供架构参考，不计入上方 33 个个人 Agent 源码项目。
+以下编程研究原型仅供架构参考，不计入上方 34 个个人 Agent 源码项目。
 
 - [dsh-superagent](https://github.com/deepseek-ai/dsh-superagent-prototype) [![dsh-superagent GitHub stars](https://img.shields.io/github/stars/deepseek-ai/dsh-superagent-prototype?style=flat&label=Stars)](https://github.com/deepseek-ai/dsh-superagent-prototype) — Router–Worker、事件驱动与持久任务状态的架构参考。单仓库编程研究原型，非正式产品；未实测。[依据](docs/SOURCES.md#deepseek-superagent)
 
@@ -164,7 +165,7 @@ Stars 由 Shields.io 展示，可能有缓存延迟；仅反映关注度，不�
 
 [收录范围](docs/GUIDE.md#scope) · [如何比较](docs/GUIDE.md#comparison) · [安全清单](docs/GUIDE.md#safety) · [任务导读](docs/LANDSCAPE.md) · [试验协议](docs/TASKS.md)
 
-源码项目首批文档核验：**2026-10-31**；家居 / 可穿戴新增两项：**2026-11-01**。未安装实测、复现或审计；试验协议尚未执行。[来源与日期](docs/SOURCES.md)（产品与论文分别记录）。
+源码项目首批文档核验：**2026-10-31**；家居 / 可穿戴新增两项：**2026-11-01**；Octop：**2026-11-02**。未安装实测、复现或审计；试验协议尚未执行。[来源与日期](docs/SOURCES.md)（产品与论文分别记录）。
 
 <a id="相关清单--related-lists"></a>
 <a id="related-lists"></a>
