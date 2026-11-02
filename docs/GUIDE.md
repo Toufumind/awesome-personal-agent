@@ -68,7 +68,7 @@
 
 以下按主要用途保留项目入口；同一项目的托管产品若另有收录，不视为另一套已验证能力。没有单独列出的付费条件与可用性，仍需按具体版本和服务核对。
 
-当前收录 **33 个源码项目：30 个主分类条目 + 3 个单列预览条目**，共六类主要用途及一个预览区。初始 14 项及首轮新增 15 项全部保留；前轮补充 [AstrBot 与 Eigent](SOURCES.md#personal-work-additions)；本轮补充 [Home Assistant Assist 与 Omi](SOURCES.md#home-voice-additions)，共新增 19 项。各轮固定 commit、许可和发布记录及仅文档核验的范围见来源记录。条目中的发布号不保证该版本具备主分支全部功能，`prerelease=false` 也不代表成熟或已经实测。新增条目的根许可仅指已读仓库代码，不自动覆盖模型、依赖、插件、商标或托管服务；详见 [扩充来源](SOURCES.md#expansion)。
+当前收录 **34 个源码项目：31 个主分类条目 + 3 个单列预览条目**，共六类主要用途及一个预览区。初始 14 项及首轮新增 15 项全部保留；前轮补充 [AstrBot 与 Eigent](SOURCES.md#personal-work-additions)；本轮补充 [Home Assistant Assist 与 Omi](SOURCES.md#home-voice-additions)，另补充 [Octop](SOURCES.md#octop)，累计新增 20 项。各轮固定 commit、许可和发布记录及仅文档核验的范围见来源记录。条目中的发布号不保证该版本具备主分支全部功能，`prerelease=false` 也不代表成熟或已经实测。新增条目的根许可仅指已读仓库代码，不自动覆盖模型、依赖、插件、商标或托管服务；详见 [扩充来源](SOURCES.md#expansion)。
 
 <a id="personal-assistants"></a>
 ### 常驻个人助理 · Persistent personal assistants
@@ -85,6 +85,7 @@
 | [Moltis](https://github.com/moltis-org/moltis) | 常驻个人助理服务器。Web、语音、聊天和 cron 驱动浏览器、命令、文件/记忆更新与通知。MIT。 | 观察到 20261023.01，可用发行二进制/Homebrew/Docker 路径。单二进制不代表无外部依赖；示例挂载 `docker.sock`，远程执行和主机挂载扩大权限。本轮未验签。 |
 | [nanobot](https://github.com/HKUDS/nanobot) | 应用 / 框架。Python 个人 Agent，提供 WebUI、终端和聊天入口，以及文件工具、记忆、MCP 与定时任务。 | 自备模型服务或本地模型；README 的源码功能与已发布稳定版可能不同，按所用版本核验。 |
 | [NanoClaw](https://github.com/nanocoai/nanoclaw) | 应用 / 运行时。强调可定制代码与容器执行的个人聊天助理，支持记忆和定时任务，渠道按需添加。 | 新地址是 `nanocoai/nanoclaw`；容器不是安全保证，需检查挂载、凭据、渠道共享与网络访问范围。 |
+| [Octop](https://github.com/TencentCloud/Octop) | 自托管应用 / 运行时。多用户、多 Agent、持久记忆、定时任务、消息渠道与浏览器操作；MIT。 | 核验 v1.0.3b2，提供 Windows / macOS / Linux 安装包；AgentTeams 为 Beta、手机端内测。需配置模型与渠道，自托管不等于纯离线或隔离已审计。[来源](SOURCES.md#octop) |
 | [OpenClaw](https://github.com/openclaw/openclaw) | 应用 / 运行时。通过本地 Gateway 管理会话、工具与消息渠道，支持持久状态、技能和可替换的模型服务。 | 官方提醒：未配置沙箱时，主会话工具可在宿主机执行。连接外部消息源或开放远程入口前先读安全文档。 |
 | [PicoClaw](https://github.com/sipeed/picoclaw) | 轻量常驻助理。WebUI、CLI 与聊天任务可调用工具、记忆和提醒，提供二进制、Docker 与 Android 运行路径。MIT。 | **Pre-1.0**：v0.3.1 与 nightly 分开，官方提示 v1.0 前勿部署生产。Android 可运行不等于能控制任意 App；低运行时资源占用不含完整本地大模型成本。 |
 | [QwenPaw（原 CoPaw）](https://github.com/agentscope-ai/QwenPaw) | 应用 / 常驻运行时。Console、TUI 与聊天渠道中的任务可生成摘要、办公文件、浏览器工作和通知。Apache-2.0。 | 非预发布 v2.2.2.post1；v2.3.0-beta.1 与桌面版均须保留 Beta 区分。Python/Docker 部署需配置模型和渠道；初始化 `--defaults` 会接受其声明的匿名遥测。CoPaw 不另计。 |
