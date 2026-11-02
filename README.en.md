@@ -12,7 +12,7 @@ Research, evaluation, and practice for personal agents.
 
 [简体中文](README.md) · **English**
 
-**[33 projects](#source-projects) · [Products](docs/PRODUCTS.en.md) · [Papers](docs/PAPERS.en.md) · [Surveys](docs/SURVEYS.en.md) · [Timeline](docs/PRODUCTS.en.md#release-timeline)**
+**[34 projects](#source-projects) · [Products](docs/PRODUCTS.en.md) · [Papers](docs/PAPERS.en.md) · [Surveys](docs/SURVEYS.en.md) · [Timeline](docs/PRODUCTS.en.md#release-timeline)**
 
 </div>
 
@@ -61,6 +61,7 @@ Stars are displayed via Shields.io and may be cached; they indicate interest, no
 - [Moltis](https://github.com/moltis-org/moltis) [![Moltis GitHub stars](https://img.shields.io/github/stars/moltis-org/moltis?style=flat&label=Stars)](https://github.com/moltis-org/moltis) — Assistant server with voice, chat, and scheduled tasks.
 - [nanobot](https://github.com/HKUDS/nanobot) [![nanobot GitHub stars](https://img.shields.io/github/stars/HKUDS/nanobot?style=flat&label=Stars)](https://github.com/HKUDS/nanobot) — Lightweight Python agent with memory, tools, and messaging channels.
 - [NanoClaw](https://github.com/nanocoai/nanoclaw) [![NanoClaw GitHub stars](https://img.shields.io/github/stars/nanocoai/nanoclaw?style=flat&label=Stars)](https://github.com/nanocoai/nanoclaw) — Customizable messaging assistant with container-based execution.
+- [Octop](https://github.com/TencentCloud/Octop) [![Octop GitHub stars](https://img.shields.io/github/stars/TencentCloud/Octop?style=flat&label=Stars)](https://github.com/TencentCloud/Octop) — Self-hosted multi-user, multi-agent assistant with memory, scheduled tasks and messaging channels.
 - [OpenClaw](https://github.com/openclaw/openclaw) [![OpenClaw GitHub stars](https://img.shields.io/github/stars/openclaw/openclaw?style=flat&label=Stars)](https://github.com/openclaw/openclaw) — Local Gateway connecting messaging channels, sessions, and tools.
 - [PicoClaw](https://github.com/sipeed/picoclaw) [![PicoClaw GitHub stars](https://img.shields.io/github/stars/sipeed/picoclaw?style=flat&label=Stars)](https://github.com/sipeed/picoclaw) — Lightweight assistant with tools and reminders. **Pre-1.0; not for production.**
 - [QwenPaw](https://github.com/agentscope-ai/QwenPaw) [![QwenPaw GitHub stars](https://img.shields.io/github/stars/agentscope-ai/QwenPaw?style=flat&label=Stars)](https://github.com/agentscope-ai/QwenPaw) — Formerly CoPaw; chat, office files, and browser tasks. **Desktop: Beta.**
@@ -130,7 +131,7 @@ Stars are displayed via Shields.io and may be cached; they indicate interest, no
 <a id="experimental-related"></a>
 ## Experimental related projects
 
-This coding research prototype is included as an architecture reference, outside the 33 personal-agent source projects above.
+This coding research prototype is included as an architecture reference, outside the 34 personal-agent source projects above.
 
 - [dsh-superagent](https://github.com/deepseek-ai/dsh-superagent-prototype) [![dsh-superagent GitHub stars](https://img.shields.io/github/stars/deepseek-ai/dsh-superagent-prototype?style=flat&label=Stars)](https://github.com/deepseek-ai/dsh-superagent-prototype) — An architectural reference for router–worker separation, event-driven orchestration, and persistent task state. A single-repository coding research prototype, not an official product; not tested here. [Evidence](docs/SOURCES.en.md#deepseek-superagent)
 
@@ -158,7 +159,7 @@ Use test data and minimal permissions; require approval for sensitive actions. L
 
 [Scope](docs/GUIDE.en.md#scope) · [Evaluation guide](docs/GUIDE.en.md#comparison) · [Safety checklist](docs/GUIDE.en.md#safety) · [Task guide](docs/LANDSCAPE.en.md) · [Trial protocols](docs/TASKS.en.md)
 
-Initial documentation review: **2026-10-31**; two home / wearable additions: **2026-11-01**. Not hands-on tests, reproductions, or security audits; trial protocols remain unexecuted. [Evidence & dates](docs/SOURCES.en.md) (products and papers have separate review dates).
+Initial documentation review: **2026-10-31**; two home / wearable additions: **2026-11-01**; Octop: **2026-11-02**. Not hands-on tests, reproductions, or security audits; trial protocols remain unexecuted. [Evidence & dates](docs/SOURCES.en.md) (products and papers have separate review dates).
 
 <a id="related-lists"></a>
 ## Related lists
