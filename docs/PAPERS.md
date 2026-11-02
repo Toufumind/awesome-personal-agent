@@ -4,9 +4,9 @@
 
 **先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
 
-文献与资源核验：**2026-10-31**。共 **183 篇不同论文**：86 个评测条目、112 个方法条目及 9 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory、EvoArena/EvoMem、DAM/DABench、DuLeMon/PLATO-LTM 与 ActMem/ActMemEval 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
+文献与资源核验：**2026-10-31**。共 **186 篇不同论文**：87 个评测条目、113 个方法条目及 10 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory、EvoArena/EvoMem、DAM/DABench、DuLeMon/PLATO-LTM 与 ActMem/ActMemEval 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
-**条目核验**：B25–B86、M16–M112、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。
+**条目核验**：B25–B86、M16–M112、H1–H9 核验于 2026-11-01；旧条目保留原核验日期。B87、M113、H10 核验于 2026-11-02。
 
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
@@ -1104,6 +1104,15 @@ PersonaMem-Evo 从合成人设生成互动历史与偏好变化，以四选一�
 - **边界**：116 是基础任务数，不是随机实例总数；以开源 / 系统应用为主，不保证对商业 App、不同手机或中文界面泛化。
 - **资源**：[官方论文项目页](https://google-research.github.io/android_world/)、[环境 / 任务代码](https://github.com/google-research/android_world)。
 
+<a id="benchmark-has-bench"></a>
+### B87. HAS-Bench · 可配置参与权的模拟协作评测
+
+[HAS-Bench: Evaluating LLM-Based Human-Agent Systems under Configurable Human Participation](https://arxiv.org/html/2607.04329v1) — arXiv v1，2026-07-05。
+
+- **评什么**：配置参与者权限及澄清、反馈、控制渠道，评价任务结果、协作过程与交互成本；属于可迁移的人机协作评测，不专测长期个人助理。
+- **边界**：主实验使用 GPT-4.1 模拟用户并担任裁判；另以其他模拟器做子集敏感性分析。抽样人工核验情境不等于真人交互实验，更不证明长期用户效用。
+- **核验 / 阅读范围**：2026-11-02；摘要、框架与 §5.1 模拟器/裁判设置、附录人工核验说明。未复现；代码、数据及其许可未核验。
+
 <a id="personalization-methods"></a>
 <a id="方法-c个性化与偏好学习"></a>
 <a id="user-understanding-methods"></a>
@@ -2183,6 +2192,15 @@ IUI 2026 DOI线索 `10.1145/3742413.3789222`；ACM fetch返回403。venue以官�
 
 合成情境、显式自报权重与简化价值表示；非长期偏好学习、实际执行或授权机制。**资源/许可**：早版 arXiv 非独占许可，后版论文 CC BY 4.0；未核实官方代码/数据发布及其许可。**实读范围**：两版方法、实验/结果、附录 D 问卷/样本、局限和元数据；未查看原始问卷或运行复现。
 
+<a id="method-personal-health-agent"></a>
+### M113. Personal Health Agent · 个人健康数据与多 Agent 协作
+
+[The anatomy of a personal health agent](https://www.nature.com/articles/s41586-026-11161-8) — Nature，2026-10-21 出版版。
+
+- **方法 / 证据**：协调数据分析、健康知识与教练 Agent，处理可穿戴及血检数据。出版版报告 11 项评测、超过 7,000 项标注和 1,350 小时评估；不要混用 [arXiv v2](https://arxiv.org/abs/2508.20148v2) 的 10 项 / 1,100 小时。
+- **边界**：整合系统由 **45 位真人扮演 WEAR-ME 数据衍生画像**评估；1,165 人是来源队列，不是纵向使用助理的人数。角色扮演、Fitbit 数据和部分 LLM 评分限制外推；未证明长期健康改善或临床替代能力。
+- **核验 / 阅读范围**：2026-11-02；出版商 HTML 摘要、Methods 中来源数据与整合系统真人评估段落、Discussion 限制及出版信息；初次访问受阻后已直接复核上述段落。未全文通读、复现或核验实现/数据许可。
+
 <a id="proactive-clarification-methods"></a>
 ## 方法：主动性与澄清
 
@@ -2440,6 +2458,15 @@ IUI 2026 DOI线索 `10.1145/3742413.3789222`；ACM fetch返回403。venue以官�
 - **方法与证据**：Llama-3.1-8B 先通过对话获取偏好，再讨论四只股票；比较非个性化/个性化及外向/尽责人格。招募64人，分析保留60人（个性化29人、人格31人）。参与者扮演三个专家设计的投资者画像，并非表达自己的真实投资需求。专家偏好获取对照每画像3名参与者。
 - **边界**：测偏好获取准确率、与专家资产排序的相关性及信任/满意度，不测真实交易收益或长期理财效果。错误偏好获取可能导致不适配建议；外向人格较受喜欢不等于建议更好。单校受控角色扮演不能支持替代专业顾问的结论。
 - **资源与实读范围**：[原文](https://arxiv.org/html/2504.05862v2) §§3–5、结论及版本信息；[官方补充仓库](https://github.com/TTsamurai/LLMAdvisor_supplementary) 的画像、提示词及分析脚本说明。仓库 README 声明 MIT；所读 arXiv v2 为 CC BY 4.0（不代表 SIGIR 出版版许可）。未核实完整原始参与者数据发布。
+
+<a id="human-olla"></a>
+### H10. OLLA · 盲人用户的桌面 Agent 使用研究
+
+[Are We There Yet? Assessing Computer-Use Agents for Blind Users’ Accessible Interaction with Desktop Applications](https://arxiv.org/html/2609.00524v1) — arXiv v1，2026-09-01；摘要页标注 EMNLP 2026 主会录用。
+
+- **证据**：8 位盲人读屏用户开展三周日记研究，在 12 个桌面应用中发出 1,258 条真实指令；部署使用 GPT-5，另四个模型事后重执行同批指令。最高成功率为 52.5%；访谈强调解释界面、恢复与学习支持。
+- **边界**：小样本、英语、Windows 桌面；不含网页应用，不代表可靠自主执行，也不宜把重执行对照当作五组用户部署。
+- **核验 / 阅读范围**：2026-11-02；摘要、研究设计、结果及限制。未运行原型或复现；实现及数据许可未核验。
 
 <a id="reproducibility"></a>
 ## 怎样比较与复现
