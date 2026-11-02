@@ -2,7 +2,10 @@
 
 [中文](PAPERS.md) · [Main list](../README.en.md)
 
-**Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
+**Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks. No independent reproduction was performed.
+
+<details>
+<summary>Review scope, dates, and counting notes</summary>
 
 Literature and resource check: **2026-10-31**. **186 distinct papers**: 87 evaluation entries, 113 method entries, and 10 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, DAM/DABench, DuLeMon/PLATO-LTM, and ActMem/ActMemEval each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
@@ -11,6 +14,8 @@ Literature and resource check: **2026-10-31**. **186 distinct papers**: 87 evalu
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
 Years and versions identify the listed paper, not the current project. Original task counts may differ from current code. Branches, dataset cards, and resource status are observations on the check date, not pinned reproduction snapshots. “Public” means an official entry point was found, not that commercial reuse is permitted, dependencies install, weights are complete, or results reproduce.
+
+</details>
 
 ## Contents
 
