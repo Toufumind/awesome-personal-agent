@@ -20,6 +20,20 @@
 <a id="start-here"></a>
 ## 目录
 
+### 研究脉络
+
+[研究综述](docs/SURVEYS.md) · [从研究问题开始](docs/PAPERS.md#reading-paths) · [任务导读](docs/LANDSCAPE.md)
+
+- **用户画像与偏好** — [方法](docs/PAPERS.md#user-understanding-methods) · [评测](docs/PAPERS.md#user-profile-evaluation)
+- **长期记忆** — [方法](docs/PAPERS.md#memory-methods) · [评测](docs/PAPERS.md#personal-memory-evaluation)
+- **规划与行动** — [方法](docs/PAPERS.md#planning-action-methods) · [评测](docs/PAPERS.md#planning-action-evaluation)
+- **主动性与澄清** — [方法](docs/PAPERS.md#proactive-clarification-methods) · [评测](docs/PAPERS.md#proactive-clarification-evaluation)
+- **隐私、授权与安全** — [方法](docs/PAPERS.md#privacy-safety-methods) · [评测](docs/PAPERS.md#safety-evaluation)
+
+[人机研究](docs/PAPERS.md#human-studies) · [可迁移记忆评测](docs/PAPERS.md#transferable-memory-evaluation) · [可迁移执行与交互评测](docs/PAPERS.md#execution-evaluation)
+
+### 项目分类
+
 - [常驻个人助理](#personal-assistants)
 - [家居、语音与可穿戴](#home-voice-wearables)
 - [手机 Agent](#mobile-agents)
