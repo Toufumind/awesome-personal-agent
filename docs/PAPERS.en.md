@@ -264,7 +264,7 @@ PersonaMem-Evo generates interaction histories and evolving preferences from syn
 - **Resources and rights**: [Official repository](https://github.com/liweijiang/indievalue) provides conversion/metadata code and links converted labels. WVS research-use, non-redistribution terms remain separate from the paper's CC BY license; no root code license observed.
 
 <a id="benchmark-dulemon"></a>
-### B84.  Benchmark
+### B84. DuLeMon
 
 **DuLeMon**, from **Long Time No See! Open-Domain Conversation with Long-Term Persona Memory** | [Findings of ACL 2022](https://aclanthology.org/2022.findings-acl.207/); [2203.05797v2](https://arxiv.org/html/2203.05797v2), 2022-03-14, following March 11 v1. Same-paper method: **M95**.
 
@@ -1338,7 +1338,7 @@ Actual inspection: version page; original method, datasets, metrics, training/ev
 
 <a id="methods-a-memory-and-persistent-state"></a>
 <a id="method-persistent-user-profiles"></a>
-### M93.  Method
+### M93. Enabling Personalized Long-term Interactions in LLM-based Agents through Persistent Memory and User Profiles
 
 **Enabling Personalized Long-term Interactions in LLM-based Agents through Persistent Memory and User Profiles** | [2510.07925v1](https://arxiv.org/html/2510.07925v1), 2025-10-09. Only v1 in inspected history; formal venue unverified.
 
@@ -1800,7 +1800,7 @@ Sources:
 Actual inspection: version page; original method, training-instruction, experimental-setup, evaluation and challenge passages; repository directory and README workflow, weights and licensing statements. Weights were not downloaded/validated, scripts were not run, and training data were not audited item by item.
 
 <a id="method-plato-ltm"></a>
-### M95.  Method
+### M95. PLATO-LTM
 
 **PLATO-LTM** | Same [Findings of ACL 2022 paper](https://aclanthology.org/2022.findings-acl.207/) / [2203.05797v2](https://arxiv.org/html/2203.05797v2), 2022-03-14. Cross-index: **B84**; do not count as another paper.
 
@@ -1809,7 +1809,7 @@ Persona filtering, separate user/bot stores, similarity-based deduplication/repl
 An earlier direct personal-memory foundation, not a tool-executing agent. Similarity replacement does not establish full contradiction or temporal-state handling. **Resources/license:** despite the paper’s release claim, the [official README](https://github.com/PaddlePaddle/Research/tree/master/NLP/ACL2022-DuLeMon) still marks the PLATO-LTM framework **Coming soon**; do not claim a complete released implementation. Parent repository Apache 2.0 does not establish external-data terms. **Inspected:** §4 extraction/read-write/generation, §5.3.3, Table 5, Appendix B and official resources; model not run.
 
 <a id="method-xmemory"></a>
-### M96.  Method
+### M96. xMemory
 
 **Beyond RAG for Agent Memory: Retrieval by Decoupling and Aggregation (xMemory)** | [2602.02007v4](https://arxiv.org/html/2602.02007v4), 2026-05-12; earlier versions February 2, February 25 and April 11. The [official README](https://raw.githubusercontent.com/HU-xiaobai/xMemory/main/README.md) announces NeurIPS 2026 acceptance on 2026-09-24: verified as an author-repository claim, not independently against official conference records.
 
@@ -2160,7 +2160,7 @@ Sources:
 Actual inspection: version page; original architecture, user-flow, evaluation and conclusion passages; repository directory, README, license metadata and evaluation score.txt. That sample requests four days but contains only two itinerary day objects and still receives 9/10: a concrete warning about judge reliability, not an estimated population error rate. evaluation/eval.json could not be retrieved: connector HTTP 400 (too large or unsupported), followed by a web cache miss. Complete human-evaluation data inspection is not claimed. The system was not installed, executed or independently reproduced.
 
 <a id="method-valuepilot"></a>
-### M94.  Method
+### M94. ValuePilot
 
 **ValuePilot: A Two-Phase Framework for Value-Driven Decision-Making** | Two distinct IDs, one method family:
 - [2503.04569v1](https://arxiv.org/html/2503.04569v1), 2025-03-06, five authors.
