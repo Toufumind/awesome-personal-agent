@@ -19,6 +19,20 @@ Research, evaluation, and practice for personal agents.
 <a id="start-here"></a>
 ## Contents
 
+### Research paths
+
+[Surveys](docs/SURVEYS.en.md) · [Start with a research question](docs/PAPERS.en.md#reading-paths) · [Task guide](docs/LANDSCAPE.en.md)
+
+- **User profiles & preferences** — [Methods](docs/PAPERS.en.md#user-understanding-methods) · [Evaluation](docs/PAPERS.en.md#user-profile-evaluation)
+- **Long-term memory** — [Methods](docs/PAPERS.en.md#memory-methods) · [Evaluation](docs/PAPERS.en.md#personal-memory-evaluation)
+- **Planning & action** — [Methods](docs/PAPERS.en.md#planning-action-methods) · [Evaluation](docs/PAPERS.en.md#planning-action-evaluation)
+- **Proactivity & clarification** — [Methods](docs/PAPERS.en.md#proactive-clarification-methods) · [Evaluation](docs/PAPERS.en.md#proactive-clarification-evaluation)
+- **Privacy, authorization & safety** — [Methods](docs/PAPERS.en.md#privacy-safety-methods) · [Evaluation](docs/PAPERS.en.md#safety-evaluation)
+
+[Human studies](docs/PAPERS.en.md#human-studies) · [Transferable memory evaluation](docs/PAPERS.en.md#transferable-memory-evaluation) · [Transferable execution & interaction evaluation](docs/PAPERS.en.md#execution-evaluation)
+
+### Project categories
+
 - [Persistent assistants](#personal-assistants)
 - [Home, voice & wearables](#home-voice-wearables)
 - [Mobile agents](#mobile-agents)
