@@ -2,7 +2,7 @@
 
 [简体中文](SURVEYS.md) · [Main list](../README.en.md) · [Papers and benchmarks](PAPERS.en.md) · [Task landscape](LANDSCAPE.en.md)
 
-**Build a field map before comparing methods or scores.** These six complementary surveys are separate from the methods and evaluation catalog; they are not additional benchmarks or agent systems.
+**Build a field map before comparing methods or scores.** These seven complementary surveys are separate from the methods and evaluation catalog; they are not additional benchmarks or agent systems.
 
 **Original-source check: 2026-11-01 (UTC).** Versions and reading scopes below describe the original sections actually inspected, not complete cover-to-cover reading, reproduction, or independent verification of every cited result. This is an editorial selection, not an exhaustive review or latest-paper leaderboard. Years do not denote product versions or peer-review status. Translation adds no verification.
 
@@ -49,6 +49,13 @@
 
 - **Reading scope:** governance (§5), evaluation (§6) and personal-assistant passages in §7.
 - **Useful for:** exposure through queries, tool arguments, memory and inter-agent messages. The authors identify an end-to-end, cross-surface evaluation gap under one policy; this is their assessment, not proof by this list that no such research exists anywhere.
+
+### S7 · Personal devices, architecture, efficiency and security
+
+[Personal LLM Agents: Insights and Survey about the Capability, Efficiency and Security](https://arxiv.org/html/2401.05459v2) — 2024; v2, 2024-05-08.
+
+- **Reading scope / date:** 2026-11-02; abstract, relevant architecture and expert-discussion passages, conclusion.
+- **Useful for:** Understanding agent architecture, capability, efficiency and security through personal data and devices; adds a foundational systems perspective. Literature synthesis and expert views are not end-user deployment studies or reliability benchmarks.
 
 ## A compact field map
 
