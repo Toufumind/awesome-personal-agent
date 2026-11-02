@@ -2,7 +2,9 @@
 
 [中文](PRODUCTS.md) · [Main list](../README.en.md)
 
-**Verified: 2026-10-31 (UTC).** This page covers **14 commercial / proprietary personal-agent products with official availability documentation**, including explicitly labeled regional rollouts, experimental features, and previews, plus **1 publicly described candidate, Instinct, whose self-service availability is unverified**. The candidate is excluded from the 14. Both groups complement—not replace—the open-source applications, runtimes, and frameworks in the main list. Order reflects usage patterns, not rankings.
+**Verified: 2026-10-31 (UTC).** This page covers **18 commercial / proprietary personal-agent products with official availability documentation**, including explicitly labeled regional rollouts, experimental features, and previews, plus **1 publicly described candidate, Instinct, whose self-service availability is unverified**. The candidate is excluded from the 18. Both groups complement—not replace—the open-source applications, runtimes, and frameworks in the main list. Order reflects usage patterns, not rankings.
+
+**New entries checked: 2026-11-02.** Boardy, Motion, Bee Frontier and Qira; other entries retain their original dates.
 
 ## Reading this page
 
@@ -27,6 +29,10 @@
 | [Grok Bot](#grok-bot) | Remembering Bots and a persistent cloud computer | Available on eligible paid plans; one user’s Bots share a computer |
 | [Poke](#poke) | Messaging-based personal assistance and everyday tasks | Available; Poke Human is a human service with separate plan requirements |
 | [Alexa+](#alexa) | Household voice, schedules, devices, services | Open in the US; stages and capabilities differ elsewhere |
+| [Boardy](#boardy) | Professional matching and mutually approved introductions | Available; 18+, basic use free, quotas and no guaranteed match |
+| [Motion](#motion) | Task priorities and automatic calendar reshuffling | Available; paid plans / trial, not general computer use |
+| [Bee Frontier](#bee-frontier) | Conversation memories, summaries and action items | Available on Amazon.com; hardware and Bee Pro charged separately |
+| [Lenovo & Motorola Qira](#qira) | Cross-device knowledge, meetings and contextual suggestions | Compatible-device downloads / staged rollout, not every device or market |
 | [Meta Muse](#muse) | Messaging, long-term goals, and cloud-computer execution | Rolling out in the US; not worldwide general availability |
 | [Gemini Tasks](#gemini) | Google context, browsers, scheduled work | Available but experimental; substantial regional restrictions |
 | [Copilot Cowork for personal accounts](#copilot) | Microsoft 365 files, email, calendars | **Preview**; US / Canada, Premium / Pro |
@@ -67,7 +73,7 @@ See the corresponding entries for supporting sources, platforms, and permission 
 - **[Lindy](#lindy):** Search-index evidence dates the current Assistant launch to 2026-02-10, but the [original announcement](https://community.lindy.ai/x/announcements/43j9k4ynbcx0/lindy-assistant-is-live) now returns 502; verification is pending. The [early introduction](https://www.lindy.ai/blog/meet-lindy) labels 2023-03-21 Last Updated, not an established launch date.
 - **[Perplexity Computer](#perplexity-computer):** The [launch article](https://www.perplexity.ai/en-GB/hub/blog/introducing-perplexity-computer) confirms Max access at launch. The 2026-02-25 date comes from an official-index snapshot in search; the [index](https://hub-prod.perplexity.ai/) now returns 404, so the date awaits verification. The local Personal Computer is a separate milestone.
 - **[Copilot Cowork for personal accounts](#copilot):** First release under this name remains unverified; it is [still in Preview](https://support.microsoft.com/en-us/microsoft-365-copilot/get-started-with-cowork). Enterprise GA does not apply.
-- **[Instinct (candidate)](#instinct):** First release and full personal-assistant self-service access remain unverified; excluded from the 14 listed products.
+- **[Instinct (candidate)](#instinct):** First release and full personal-assistant self-service access remain unverified; excluded from the 18 listed products.
 - Genspark refers only to Super Agent; Lindy refers to the current Assistant. The Gemini Spark → Task rename date is unknown; Muse's September 30 date is an article update. Index snapshots are not direct verification; inaccessible original links are retained for traceability.
 
 </details>
@@ -185,6 +191,27 @@ See the corresponding entries for supporting sources, platforms, and permission 
 
 **Suggested first test—not performed:** In a supported region, add and remove a nonsensitive test reminder before enabling purchasing or lock control.
 
+<a id="boardy"></a>
+### Boardy — Professional introductions
+
+- **Purpose / access:** Describe professional goals by text, WhatsApp or email; the service finds matches and introduces people only after both agree. Matches are not guaranteed and introduction quotas apply. [Official FAQ](https://www.boardy.ai/faq)
+- **Cost / boundary:** Basic conversations and introductions are free; some event-partner features are paid. Ages 18+. Full regional/channel coverage is unverified; FAQ and terms describe initial-call onboarding differently, so confirm the actual flow. Proprietary hosted service, not open-source software. [Terms](https://www.boardy.ai/terms-and-conditions)
+- **Checked: 2026-11-02.** Read FAQ and terms; no signup, call or actual introduction performed.
+
+<a id="motion"></a>
+### Motion — Automatic task and calendar scheduling
+
+- **Purpose / access:** Schedules tasks and reshuffles calendars when meetings or plans change; individual/team plans and a trial are offered. A time-management specialist, not a general computer-use agent. [Features](https://www.usemotion.com/features/ai-calendar) · [Plans](https://www.usemotion.com/pricing)
+- **Cost / boundary:** Paid subscription; pricing depends on billing period, seats and credits. Proprietary service requiring an account and calendar permissions; complete regional availability is unverified. [Service terms](https://www.usemotion.com/legal/terms-of-service)
+- **Checked: 2026-11-02.** Read features, plans and terms; no signup or calendar connection.
+
+<a id="bee-frontier"></a>
+### Bee Frontier — Wearable conversation memory and action items
+
+- **Purpose / access:** Turns conversations into summaries, memories and action items; with Bee Pro and supported email/calendar services connected, it can draft follow-up emails or create calendar invites. The official page lists iOS / Android. Available on Amazon.com at US$74.99 for hardware; distinct from Bee Eclipse, still described as coming soon. [Product](https://bee.computer/products/frontier) · [Amazon announcement](https://www.aboutamazon.com/news/devices/amazon-personal-ai-bee-frontier-bee-eclipse)
+- **Cost / boundary:** Purchase includes summaries and 14-day memory; integrations, suggested to-dos, personal chat, desktop access and other features require Bee Pro (US$11.99/month, subject to purchase terms). Commercial hardware/service requiring internet; worldwide shipping and complete regional support unverified. Obtain applicable recording consent; on-device processing claims do not establish fully offline operation. [Bee terms](https://digprjsurvey.amazon.com/csad/help/node/TpkN2t4aokRkZRDAVJ)
+- **Checked: 2026-11-02.** Read official announcement, product and terms; no purchase, wearable testing or privacy-implementation verification.
+
 ## Regional rollout—not worldwide availability
 
 <a id="muse"></a>
@@ -196,6 +223,13 @@ See the corresponding entries for supporting sources, platforms, and permission 
 - **Limits:** Meta states VM data is not shared with its ad systems; training requires a separate opt-out. Secure VM does not technically prevent Meta access. Reviewed sources still describe Confidential VM, AI glasses, Shop Pay, and 1Password as future features. [Safety / data](https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse) · [Announcement](https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/)
 
 **Suggested first test—not performed:** On an enabled account, organize public material into a plan and inspect task records and stopping; avoid email connections, purchases, and messaging others.
+
+<a id="qira"></a>
+### Lenovo & Motorola Qira — Cross-device assistance on compatible hardware
+
+- **Purpose / access:** Personal knowledge, meeting summaries, contextual action suggestions and connected apps. Compatible Lenovo PCs have downloads; Motorola rollout depends on supported devices and OS updates, not universal device access. [Product](https://www.lenovo.com/us/en/qira/) · [2026-09-03 rollout update](https://news.lenovo.com/pressroom/press-releases/lenovo-motorola-qira-expands-reach-across-devices-apps-markets/)
+- **Boundary:** Proprietary device software with separate hardware, region, language and service limits; the product page labels Expedia integration US-only. Local and hybrid modes differ; cloud functions require internet and have usage limits. Complete regional coverage and uniform pricing are unverified; regional support pages are not synchronized, so do not infer worldwide access. [Official FAQ](https://support.lenovo.com/gb/en/solutions/qira-faq)
+- **Checked: 2026-11-02.** Read product, rollout update and FAQ; no installation or account/device eligibility test.
 
 ## Experimental and preview—not general availability
 
