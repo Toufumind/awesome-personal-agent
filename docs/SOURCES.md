@@ -133,7 +133,7 @@ commit 日期是源码提交日期，发布日期是 GitHub `published_at`（均
 
 ## 核验范围和维护约定
 
-- README 源码板块目前为 **33 项：30 个主分类条目 + 3 个单列预览条目**，覆盖六类主要用途和一个预览区。初始 14 项保留，首轮新增 15 项，个人工作新增 2 项，家居 / 可穿戴再增 2 项（合计新增 19 项）；不含产品与论文目录，不是完整市场盘点。
+- README 源码板块目前为 **34 项：31 个主分类条目 + 3 个单列预览条目**，覆盖六类主要用途和一个预览区。初始 14 项保留，首轮新增 15 项，个人工作新增 2 项，家居 / 可穿戴再增 2 项、[Octop](#octop) 再增 1 项（合计新增 20 项）；不含产品与论文目录，不是完整市场盘点。
 - 不以 Star、commit 时间或量化可靠性作排名；固定 commit 只用于追溯证据，不是活跃度指标。本轮未核实的指标不作推断。
 - 参考主分支 README 不代表所有版本均支持该能力，安装前应再次核对具体版本。
 - 网页可读取只说明来源当时可访问，不说明软件安全、服务可用或未来链接稳定。
@@ -146,7 +146,7 @@ commit 日期是源码提交日期，发布日期是 GitHub `published_at`（均
 
 **文档核验：2026-11-01（UTC）**。DeepSeek 团队的 [官方仓库 README](https://github.com/deepseek-ai/dsh-superagent-prototype#readme) 与 [MIT 许可](https://github.com/deepseek-ai/dsh-superagent-prototype/blob/main/LICENSE) 表明：这是基于 DeepSeek Harness、面向单个 GitHub 仓库的主动编程研究原型，可选接入飞书；并非正式 DeepSeek 产品或生产就绪软件，文章中的部分设计尚未实现。[仓库元数据](https://api.github.com/repos/deepseek-ai/dsh-superagent-prototype) 的创建时间为 **2026-10-31 09:32:46 UTC**，不作为文章或产品发布日期。
 
-因本仓库主清单不收纯编程工具，此处仅作实验性架构参考，**不计入 33 个源码项目**。仅核验文档，未安装、运行、审计或复现实验；不将内部实例与公开原型的能力等同。
+因本仓库主清单不收纯编程工具，此处仅作实验性架构参考，**不计入 34 个源码项目**。仅核验文档，未安装、运行、审计或复现实验；不将内部实例与公开原型的能力等同。
 
 <a id="home-voice-additions"></a>
 ## 家居 / 可穿戴新增：Home Assistant Assist 与 Omi
@@ -157,3 +157,10 @@ commit 日期是源码提交日期，发布日期是 GitHub `published_at`（均
 - **Omi:** [README](https://github.com/BasedHardware/omi#readme) · [MIT](https://github.com/BasedHardware/omi/blob/main/LICENSE) · [Overview](https://help.omi.me/en/articles/13135007-overview) · [Apps](https://help.omi.me/en/articles/13153599-omi-apps) · [Recording consent](https://help.omi.me/en/articles/13153576-using-omi-with-phone-only) · [Privacy](https://www.omi.me/pages/privacy). 须区分采集、记忆、任务生成与外部执行。源码快速启动连接云，不保证离线或零留存。未核实所有第三方 Apps 权限、后台清除时限、完整地区和收费。
 
 Omi 正式隐私政策生效日期为 **2026-10-31**：可能加密保存会话音频以支持回放等功能，不能沿用旧帮助文档的“不保留音频”说法；训练需明确许可属于厂商声明，不是零留存保证。账户删除存在 14 天锁定 / 恢复期及法定保留例外，本仓库未验证后台清除。
+
+<a id="octop"></a>
+## 常驻助理补充：Octop
+
+**文档核验：2026-11-02。** [官方仓库](https://github.com/TencentCloud/Octop)；固定 [v1.0.3b2 提交](https://github.com/TencentCloud/Octop/commit/a40f54a8099b1faebc89c680ec1e1ece8b97a4e6) 的 [README](https://github.com/TencentCloud/Octop/blob/a40f54a8099b1faebc89c680ec1e1ece8b97a4e6/README.md) 与 [MIT LICENSE](https://github.com/TencentCloud/Octop/blob/a40f54a8099b1faebc89c680ec1e1ece8b97a4e6/LICENSE)；[发布页](https://github.com/TencentCloud/Octop/releases/tag/v1.0.3b2)于 2026-11-02 提供桌面及 Python 包。
+
+读取多用户/Agent、记忆、cron、渠道、浏览器功能、安装与路线图；AgentTeams 标 Beta、手机端内测，托管 Agent 与自演化等仍是计划。模型、OAuth/MCP、消息服务另受权限和地域条件约束；未安装、验签或审计多用户隔离，不采纳“自托管即隐私无妥协”的宣传结论。
