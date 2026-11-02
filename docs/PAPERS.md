@@ -2,7 +2,10 @@
 
 [English](PAPERS.en.md) · [返回主清单](../README.md)
 
-**先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。
+**先分清测了什么，再看分数。** 这里把 eval / benchmark 与 agent 方法 / 系统分开，并区分“直接研究个人上下文”“可迁移的通用记忆 / 执行能力”及“特定隐私 / 安全风险”。未独立复现。
+
+<details>
+<summary>核验范围、日期与计数说明</summary>
 
 文献与资源核验：**2026-10-31**。共 **186 篇不同论文**：87 个评测条目、113 个方法条目及 10 个人机研究条目；Proactive Agent、MemoProAgent、PbP/InTU、Ask-before-Plan/CEP、PersonalAlign/HIM-Agent、PEToolLLM/PEToolLLaMA、MemGuide/MS-TOD、Me-Agent/User FingerTip、PPP/UserVille、PUMA/PersonalWAB、MPR/HybridMem、PrivacyLens-Live/PrivacyChecker、PTBench/PTool、PAL-Bench/H²Memory、PENGUIN/RAISE、Searching for Privacy Risks、THEANINE/TeaFarm、Operationalizing Contextual Integrity、ImplexConv/TaciTree、Context-Time Memory、EvoArena/EvoMem、DAM/DABench、DuLeMon/PLATO-LTM 与 ActMem/ActMemEval 各同时贡献 benchmark 和方法，分别只计一次论文。来源为论文摘要与下列明示的原文段落、作者项目页、官方代码库和数据卡；**没有安装复现、独立跑分、模型训练或安全审计**。这是精选阅读入口，不是完整综述、最新论文榜或产品排名。
 
@@ -11,6 +14,8 @@
 **阅读范围**：每条记录实际读取的摘要、相关章节片段及资源页；未声称逐篇通读全文。翻译不构成额外核验。
 
 年份与版本标识对应所列论文，而不是当前项目版本。原论文任务数不代表当前代码；`main`、数据卡和资源状态只是核验日观察，并非锁定的复现快照。“公开”仅表示找到官方入口，不保证商业许可、依赖可安装、权重齐全或结果可复现。
+
+</details>
 
 ## 目录
 
