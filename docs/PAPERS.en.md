@@ -4,9 +4,9 @@
 
 **Understand what was measured before comparing scores.** This guide separates evaluations / benchmarks from methods / systems, and distinguishes direct personal-context research, transferable general memory / execution capabilities, and specific privacy / security risks.
 
-Literature and resource check: **2026-10-31**. **183 distinct papers**: 86 evaluation entries, 112 method entries, and 9 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, DAM/DABench, DuLeMon/PLATO-LTM, and ActMem/ActMemEval each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
+Literature and resource check: **2026-10-31**. **186 distinct papers**: 87 evaluation entries, 113 method entries, and 10 human-study entries. Proactive Agent, MemoProAgent, PbP/InTU, Ask-before-Plan/CEP, PersonalAlign/HIM-Agent, PEToolLLM/PEToolLLaMA, MemGuide/MS-TOD, Me-Agent/User FingerTip, PPP/UserVille, PUMA/PersonalWAB, MPR/HybridMem, PrivacyLens-Live/PrivacyChecker, PTBench/PTool, PAL-Bench/H²Memory, PENGUIN/RAISE, Searching for Privacy Risks, THEANINE/TeaFarm, Operationalizing Contextual Integrity, ImplexConv/TaciTree, Context-Time Memory, EvoArena/EvoMem, DAM/DABench, DuLeMon/PLATO-LTM, and ActMem/ActMemEval each contribute a benchmark and a method; each paper is counted once. Sources are paper abstracts and the explicitly identified passages below, author project pages, official repositories, and dataset cards. **No installation, independent benchmark run, model training, or security audit was performed.** This is a selective reading guide, not a comprehensive survey, latest-paper feed, or product ranking.
 
-**Entry checks:** B25–B86, M16–M112, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates.
+**Entry checks:** B25–B86, M16–M112, and H1–H9 were checked on 2026-11-01; earlier entries retain their original check dates. B87, M113 and H10 were checked on 2026-11-02.
 
 **Reading scope:** Each entry records the abstract, relevant passages, and resource pages actually consulted. No claim is made that every paper was read end to end. Translation is not an additional verification.
 
@@ -1096,6 +1096,15 @@ Can the agent solve tasks and operate tools, apps or interfaces? Web research, s
 - **Limits:** 116 is not the total number of randomized instances. Primarily open-source / system apps; generalization to commercial apps, other devices, or Chinese interfaces is unproven.
 - **Resources:** [Project](https://google-research.github.io/android_world/), [environment / task code](https://github.com/google-research/android_world).
 
+<a id="benchmark-has-bench"></a>
+### B87. HAS-Bench — Simulated collaboration with configurable participation
+
+[HAS-Bench: Evaluating LLM-Based Human-Agent Systems under Configurable Human Participation](https://arxiv.org/html/2607.04329v1) — arXiv v1, 2026-07-05.
+
+- **Measures:** Task outcomes, collaboration and interaction cost under configurable participant authority and clarification, feedback and control channels. Transferable collaboration evaluation, not specifically a long-term personal-assistant benchmark.
+- **Boundary:** Main experiments use GPT-4.1 as both user simulator and judge, with alternative simulators tested on a subset. Sampled human scenario verification is not a live-user interaction study or evidence of long-term utility.
+- **Checked / read:** 2026-11-02; abstract, framework, §5.1 simulator/judge setup and appendix human-verification descriptions. No reproduction; code, data and their licenses unverified.
+
 <a id="personalization-methods"></a>
 <a id="methods-c-personalization-and-preference-learning"></a>
 <a id="user-understanding-methods"></a>
@@ -2172,6 +2181,15 @@ Generated value-annotated scenarios, T5 value assessment, contextual/feasibility
 
 Synthetic scenarios, directly supplied ratings and simplified value representations do not demonstrate longitudinal preference learning, actual execution or authorization. **Resources/license:** March paper uses arXiv’s nonexclusive license; December paper CC BY 4.0. Official code/data release and associated licenses unverified. **Inspected:** both versions’ methods, experiments/results, Appendix D questionnaires/sample descriptions, limitations and metadata; no raw questionnaires or reproduction run.
 
+<a id="method-personal-health-agent"></a>
+### M113. Personal Health Agent — Personal health data and multi-agent collaboration
+
+[The anatomy of a personal health agent](https://www.nature.com/articles/s41586-026-11161-8) — Nature version of record, 2026-10-21.
+
+- **Method / evidence:** Coordinates data-science, health-domain and coaching agents over wearable and blood-test data. The published version reports 11 tasks, over 7,000 annotations and 1,350 evaluation hours; do not mix these with [arXiv v2](https://arxiv.org/abs/2508.20148v2)'s 10 tasks / 1,100 hours.
+- **Boundary:** **45 real participants role-played WEAR-ME-derived personas** in the integrated-system evaluation; 1,165 is the source cohort, not longitudinal assistant users. Role-play, Fitbit data and partial LLM judging limit generalization; long-term health gains or clinical replacement are not established.
+- **Checked / read:** 2026-11-02; publisher HTML abstract, Methods passages on source data and integrated-system human evaluation, Discussion limitations and publication metadata. These passages were directly rechecked after an initial access failure. No cover-to-cover reading, reproduction or implementation/data-license verification.
+
 <a id="proactive-clarification-methods"></a>
 ## Methods: Proactivity and clarification
 
@@ -2421,6 +2439,15 @@ A chat-to-course pipeline maintains a dynamic learner graph using inferred needs
 - **Method and evidence:** Llama-3.1-8B elicits preferences and discusses four stocks, comparing non-personalized/personalized advice and extroverted/conscientious personas. Of 64 recruits, 60 remained in analysis: 29 personalization and 31 persona participants. Humans role-played three expert-designed investor profiles rather than expressing their own investment needs. The expert elicitation comparison used three participants per profile.
 - **Limits:** Measures elicitation accuracy, agreement with expert asset rankings and subjective trust/satisfaction—not investment returns or long-term financial outcomes. Elicitation errors can lead to unsuitable advice; greater liking for an extroverted advisor does not imply better advice. Single-university role-play does not establish replacement of professional advisors.
 - **Resources and reading:** [Paper](https://arxiv.org/html/2504.05862v2), §§3–5, conclusion and metadata; [official supplement](https://github.com/TTsamurai/LLMAdvisor_supplementary), describing profiles, prompts and analysis scripts. README declares MIT; the inspected arXiv v2 is CC BY 4.0 (not a statement of the SIGIR publication license). Complete raw participant-data release not verified.
+
+<a id="human-olla"></a>
+### H10. OLLA — Desktop agents for blind users
+
+[Are We There Yet? Assessing Computer-Use Agents for Blind Users’ Accessible Interaction with Desktop Applications](https://arxiv.org/html/2609.00524v1) — arXiv v1, 2026-09-01; abstract-page metadata reports EMNLP 2026 main-conference acceptance.
+
+- **Evidence:** Eight blind screen-reader users completed a three-week diary study, issuing 1,258 real commands across 12 desktop applications. Deployment used GPT-5; four other models subsequently re-executed the commands. Highest success was 52.5%; interviews emphasize interface explanation, recovery and learning support.
+- **Boundary:** Small sample, English and Windows desktop scope; excludes web applications and does not establish reliable autonomy. Replay comparisons are not five model-specific user deployments.
+- **Checked / read:** 2026-11-02; abstract, study design, results and limitations. No prototype execution or reproduction; implementation and data licenses unverified.
 
 <a id="reproducibility"></a>
 ## Comparison and reproducibility
